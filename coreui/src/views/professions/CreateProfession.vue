@@ -4,7 +4,7 @@
       <CCard no-header>
         <CCardBody>
           <h3>
-            Ajouter Note
+            Ajouter Profession
           </h3>
           <CAlert
             :show.sync="dismissCountDown"
@@ -14,20 +14,7 @@
             ({{dismissCountDown}}) {{ message }}
           </CAlert>
 
-            <CInput label="Title" type="text" placeholder="Title" v-model="note.title"></CInput>
-
-            <CInput textarea="true" label="Content" :rows="9" placeholder="Content.." v-model="note.content"></CInput>
-
-            <CInput label="Applies to date" type="date" v-model="note.applies_to_date"></CInput>
-
-            <CSelect
-              label="Status" 
-              :value.sync="note.status_id"
-              :plain="true"
-              :options="statuses"
-            >
-            </CSelect>
-            <CInput label="Note type" type="text" v-model="note.note_type"></CInput>
+            <CInput label="Métier" type="text" placeholder="Métier" v-model="profession.metier"></CInput>
 
           <CButton color="primary" @click="store()">Ajouter</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
@@ -40,23 +27,18 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'EditNote',
+  name: 'EditProfession',
   props: {
     caption: {
       type: String,
-      default: 'Note id'
+      default: 'Profession id'
     },
   },
   data: () => {
     return {
-        note: {
-          title: '',
-          content: '',
-          applies_to_date: '',
-          status_id: null,
-          note_type: '',
+        profession: {
+          metier: '',
         },
-        statuses: [],
         message: '',
         dismissSecs: 7,
         dismissCountDown: 0,
@@ -70,18 +52,14 @@ export default {
     },
     store() {
         let self = this;
-        axios.post(  this.$apiAdress + '/api/notes?token=' + localStorage.getItem("api_token"),
-          self.note
+        axios.post(  this.$apiAdress + '/api/professions?token=' + localStorage.getItem("api_token"),
+          self.profession
         )
         .then(function (response) {
-            self.note = {
-              title: '',
-              content: '',
-              applies_to_date: '',
-              status_id: null,
-              note_type: '',
+            self.profession = {
+              metier: '',
             };
-            self.message = 'Successfully created note.';
+            self.message = 'Successfully created profession.';
             self.showAlert();
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
@@ -107,13 +85,13 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/notes/create?token=' + localStorage.getItem("api_token"))
-    .then(function (response) {
-        self.statuses = response.data;
-    }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: 'login' });
-    });
+    // axios.get(  this.$apiAdress + '/api/professions/create?token=' + localStorage.getItem("api_token"))
+    // .then(function (response) {
+    //     self.statuses = response.data;
+    // }).catch(function (error) {
+    //     console.log(error);
+    //     self.$router.push({ path: 'login' });
+    // });
   }
 }
 

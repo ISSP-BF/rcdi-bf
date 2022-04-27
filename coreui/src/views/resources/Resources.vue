@@ -3,8 +3,14 @@
     <CCol col="12" xl="12">
       <transition name="slide">
       <CCard>
+        <CCardHeader>
+            {{formName}}
+            <div class="card-header-actions">
+             <CButton color="primary" @click="createResource()">Ajouter</CButton>
+            </div>
+        </CCardHeader>
         <CCardBody>
-            <CButton color="primary" @click="createResource()">Create</CButton>
+            
             <CAlert
               :show.sync="dismissCountDown"
               color="primary"
@@ -19,19 +25,16 @@
             >
               <template #show="{item}">
                 <td>
-                  <CButton color="primary" @click="showResource( item.id )">Show</CButton>
+                  <div class="card-header-actions" style="display:inline-flex"> 
+                      <CButton color="secondary" @click="showResource( item.id )">Détail</CButton>
+                      &nbsp;
+                      <CButton color="primary" @click="editResource( item.id )"><CIcon name="cil-pencil"/></CButton>
+                      &nbsp;
+                      <CButton v-if="you!=item.id" color="danger" @click="deleteResource( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                  </div>
                 </td>
-              </template>
-              <template #edit="{item}">
-                <td>
-                  <CButton color="primary" @click="editResource( item.id )">Edit</CButton>
-                </td>
-              </template>
-              <template #delete="{item}">
-                <td>
-                  <CButton v-if="you!=item.id" color="danger" @click="deleteResource( item.id )">Delete</CButton>
-                </td>
-              </template>
+              </template> 
+               
             </CDataTable>
             <CPagination
                 :pages="maxPages"
@@ -52,7 +55,8 @@ export default {
   data: () => {
     return {
       items: [],
-      fields: ['show', 'edit', 'delete'],
+      formName:'',
+      fields: ['show'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,
@@ -108,7 +112,9 @@ export default {
       let self = this;
       axios.get(  this.$apiAdress + '/api/resource/' + self.$route.params.bread + '/resource?token=' + localStorage.getItem("api_token") + '&page=' + self.activePage )
       .then(function (response) {
+        console.log(response)
         self.items = response.data.datas
+        self.formName = response.data.formName
         self.fields = [];
         for(let i=0;i<response.data.header.length;i++){
           if(response.data.header[i].relation_table !== null){
@@ -127,14 +133,7 @@ export default {
                 key: 'show',
                 label: ''
         })
-        self.fields.push({
-                key: 'edit',
-                label: ''
-        })
-        self.fields.push({
-                key: 'delete',
-                label: ''
-        })
+         
         self.maxPages = response.data.pagination
 
 

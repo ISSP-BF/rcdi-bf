@@ -5,7 +5,7 @@
       <CCard>
         <CCardBody>
             <h3>
-              Edit {{ form.name }}
+              Modifier {{ form.name }}
             </h3>
             <CAlert
               :show.sync="dismissCountDown"
@@ -26,8 +26,8 @@
             >
             </UpdateResourceField>
 
-            <CButton class="mt-2" color="primary" @click="updateFirstStep()">Edit</CButton>
-            <CButton class="mt-2" color="primary" @click="goBack">Back</CButton>            
+            <CButton class="mt-2" color="primary" @click="updateFirstStep()">Modifier</CButton>&nbsp;
+            <CButton class="mt-2" color="secondary" @click="goBack">Retour</CButton>            
 
         </CCardBody>
       </CCard>
@@ -83,24 +83,27 @@ export default {
       let formData = new FormData();
       for(let i=0; i<this.receiveFormFields.length; i++){
         formData.append(this.receiveFormFields[i].name, this.receiveFormFields[i].data)
-      }
+      } 
       formData.append('_method', 'PUT');
       return formData
     },
     update(files, event){
       let self = this;
       let postData = self.preparePostDataForStore();
+      console.log(postData)
       axios.post(   this.$apiAdress + '/api/resource/' + self.$route.params.bread + '/resource/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
         postData,
         { headers: {
             'Content-Type': 'multipart/form-data'
         }}
       ).then(function(){
+        self.$toasted.show(self.form.name+ " a été mises à jour",{type:"success"});
         self.$router.go(-1)
         self.message = 'Successfully edited ' + self.form.name
         self.showAlert();
       })
       .catch(function(error){
+        self.$toasted.show("Impossible de mettre à jour "+self.form.name,{type:"error"});
         console.log(error)
         self.$router.push({ path: '/login' })
       });

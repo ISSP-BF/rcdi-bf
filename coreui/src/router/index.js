@@ -109,6 +109,47 @@ const EditNote = () =>
 const CreateNote = () =>
     import ('@/views/notes/CreateNote')
 
+
+//Regions
+const Regions = () =>
+    import ('@/views/regions/Regions')
+const Region = () =>
+    import ('@/views/regions/Region')
+const EditRegion = () =>
+    import ('@/views/regions/EditRegion')
+const CreateRegion = () =>
+    import ('@/views/regions/CreateRegion')
+
+//Provinces
+const Provinces = () =>
+    import ('@/views/provinces/Provinces')
+const Province = () =>
+    import ('@/views/provinces/Province')
+const EditProvince = () =>
+    import ('@/views/provinces/EditProvince')
+const CreateProvince = () =>
+    import ('@/views/provinces/CreateProvince')
+
+//Communes
+const Communes = () =>
+    import ('@/views/communes/Communes')
+const Commune = () =>
+    import ('@/views/communes/Commune')
+const EditCommune = () =>
+    import ('@/views/communes/EditCommune')
+const CreateCommune = () =>
+    import ('@/views/communes/CreateCommune')
+
+//Professions
+const Professions = () =>
+    import ('@/views/professions/Professions')
+const Profession = () =>
+    import ('@/views/professions/Profession')
+const EditProfession = () =>
+    import ('@/views/professions/EditProfession')
+const CreateProfession = () =>
+    import ('@/views/professions/CreateProfession')
+
 //Roles
 const Roles = () =>
     import ('@/views/roles/Roles')
@@ -441,6 +482,178 @@ function configRoutes() {
                             meta: { label: 'Edit Note' },
                             name: 'Edit Note',
                             component: EditNote,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+                {
+                    path: 'regions',
+                    meta: { label: 'Regions' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Regions,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Region' },
+                            name: 'Create Region',
+                            component: CreateRegion,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Region Details' },
+                            name: 'Region',
+                            component: Region,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Region' },
+                            name: 'Edit Region',
+                            component: EditRegion,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'provinces',
+                    meta: { label: 'Provinces' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Provinces,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Province' },
+                            name: 'Create Province',
+                            component: CreateProvince,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Province Details' },
+                            name: 'Province',
+                            component: Province,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Province' },
+                            name: 'Edit Province',
+                            component: EditProvince,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'communes',
+                    meta: { label: 'Communes' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Communes,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Commune' },
+                            name: 'Create Commune',
+                            component: CreateCommune,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Commune Details' },
+                            name: 'Commune',
+                            component: Commune,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Commune' },
+                            name: 'Edit Commune',
+                            component: EditCommune,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+
+                {
+                    path: 'professions',
+                    meta: { label: 'Professions' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Professions,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Profession' },
+                            name: 'Create Profession',
+                            component: CreateProfession,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Profession Details' },
+                            name: 'Profession',
+                            component: Profession,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Profession' },
+                            name: 'Edit Profession',
+                            component: EditProfession,
                             meta: {
                                 requiresUser: true
                             }

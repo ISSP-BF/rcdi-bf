@@ -1,12 +1,12 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol col="6" xl="6">
       <transition name="slide">
       <CCard>
          <CCardHeader>
-            Notes
+            Regions
             <div class="card-header-actions">
-             <CButton color="primary" @click="createNote()">Ajouter</CButton>
+             <CButton color="primary" @click="createRegion()">Ajouter</CButton>
             </div>
         </CCardHeader>
         <CCardBody>
@@ -24,44 +24,25 @@
               :items-per-page="10"
               pagination
             >
-              <template #author="{item}">
+             <template #code="{item}">
                 <td>
-                  <strong>{{item.author}}</strong>
-                </td>
-              </template>
-              <template #title="{item}">
-                <td>
-                  <strong>{{item.title}}</strong>
-                </td>
-              </template>
-              <template #content="{item}">
-                <td>
-                  {{item.content}}
+                  {{item.code}}
                 </td>  
               </template>
-              <template #applies_to_date="{item}">
+              <template #region="{item}">
                 <td>
-                  {{item.applies_to_date}}
+                  <strong>{{item.region}}</strong>
                 </td>
               </template>
-              <template #status="{item}">
-                <td>
-                  <CBadge :color="item.status_class">{{item.status}}</CBadge>
-                </td>
-              </template>
-              <template #note_type="{item}">
-                <td>
-                  <strong>{{item.note_type}}</strong>
-                </td>
-              </template>
+              
               <template #actions="{item}">
                 <td>
                   <div class="card-header-actions" style="display:flex">
-                  <CButton color="secondary"  size="sm" @click="showNote( item.id )">Détail</CButton>
+                  <CButton color="secondary"  size="sm" @click="showRegion( item.id )">Détail</CButton>
                   &nbsp;
-                  <CButton  size="sm" color="primary" @click="editNote( item.id )"><CIcon name="cil-pencil"/></CButton>
+                  <CButton  size="sm" color="primary" @click="editRegion( item.id )"><CIcon name="cil-pencil"/></CButton>
                   &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteNote( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteRegion( item.id )"><CIcon name="cil-x-circle"/></CButton>
                   </div>
                 </td>
               </template>
@@ -77,7 +58,7 @@
 import axios from 'axios'
 
 export default {
-  name: 'Notes',
+  name: 'Regions',
   data: () => {
     return {
       items: [],
@@ -88,13 +69,13 @@ export default {
         {key: 'content'},
         {key: 'applies_to_date'},
         {key: 'status'},
-        {key: 'note_type'},
+        {key: 'region_type'},
         {key: 'show'},
         {key: 'edit'},
         {key: 'delete'}
       ],
       */
-      fields: ['author', 'title', 'content', 'applies_to_date', 'status', 'note_type', 'actions'],
+      fields: ['code', 'region','actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,
@@ -112,37 +93,37 @@ export default {
     getRowCount (items) {
       return items.length
     },
-    noteLink (id) {
-      return `notes/${id.toString()}`
+    regionLink (id) {
+      return `regions/${id.toString()}`
     },
     editLink (id) {
-      return `notes/${id.toString()}/edit`
+      return `regions/${id.toString()}/edit`
     },
-    showNote ( id ) {
-      const noteLink = this.noteLink( id );
-      this.$router.push({path: noteLink});
+    showRegion ( id ) {
+      const regionLink = this.regionLink( id );
+      this.$router.push({path: regionLink});
     },
-    editNote ( id ) {
+    editRegion ( id ) {
       const editLink = this.editLink( id );
       this.$router.push({path: editLink});
     },
-    deleteNote ( id ) {
+    deleteRegion ( id ) {
       let self = this;
-      let noteId = id;
-      axios.post(  this.$apiAdress + '/api/notes/' + id + '?token=' + localStorage.getItem("api_token"), {
+      let regionId = id;
+      axios.post(  this.$apiAdress + '/api/regions/' + id + '?token=' + localStorage.getItem("api_token"), {
         _method: 'DELETE'
       })
       .then(function (response) {
-          self.message = 'Successfully deleted note.';
+          self.message = 'Successfully deleted region.';
           self.showAlert();
-          self.getNotes();
+          self.getRegions();
       }).catch(function (error) {
         console.log(error);
         self.$router.push({ path: '/login' });
       });
     },
-    createNote () {
-      this.$router.push({path: 'notes/create'});
+    createRegion () {
+      this.$router.push({path: 'regions/create'});
     },
     countDownChanged (dismissCountDown) {
       this.dismissCountDown = dismissCountDown
@@ -150,9 +131,9 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-    getNotes (){
+    getRegions (){
       let self = this;
-      axios.get(  this.$apiAdress + '/api/notes?token=' + localStorage.getItem("api_token") )
+      axios.get(  this.$apiAdress + '/api/regions?token=' + localStorage.getItem("api_token") )
       .then(function (response) {
         self.items = response.data;
       }).catch(function (error) {
@@ -162,7 +143,7 @@ export default {
     }
   },
   mounted: function(){
-    this.getNotes();
+    this.getRegions();
   }
 }
 </script>

@@ -4,7 +4,7 @@
       <CCard no-header>
         <CCardBody>
           <h3>
-            Ajouter Note
+            Ajouter Commune
           </h3>
           <CAlert
             :show.sync="dismissCountDown"
@@ -13,22 +13,18 @@
           >
             ({{dismissCountDown}}) {{ message }}
           </CAlert>
-
-            <CInput label="Title" type="text" placeholder="Title" v-model="note.title"></CInput>
-
-            <CInput textarea="true" label="Content" :rows="9" placeholder="Content.." v-model="note.content"></CInput>
-
-            <CInput label="Applies to date" type="date" v-model="note.applies_to_date"></CInput>
+            <CInput label="Code" type="text" placeholder="Code" v-model="commune.code"></CInput>
 
             <CSelect
-              label="Status" 
-              :value.sync="note.status_id"
+              label="Province" 
+              :value.sync="commune.province_id"
               :plain="true"
-              :options="statuses"
+              :options="communes"
+               v-model="commune.province_id"
             >
             </CSelect>
-            <CInput label="Note type" type="text" v-model="note.note_type"></CInput>
-
+            <CInput label="Commune" type="text" placeholder="commune" v-model="commune.commune"></CInput> 
+ 
           <CButton color="primary" @click="store()">Ajouter</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
         </CCardBody>
@@ -40,23 +36,21 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'EditNote',
+  name: 'EditCommune',
   props: {
     caption: {
       type: String,
-      default: 'Note id'
+      default: 'Commune id'
     },
   },
   data: () => {
     return {
-        note: {
-          title: '',
-          content: '',
-          applies_to_date: '',
-          status_id: null,
-          note_type: '',
+        commune: {
+          code: '',
+          commune: '',
+          province_id: '', 
         },
-        statuses: [],
+        communes: [],
         message: '',
         dismissSecs: 7,
         dismissCountDown: 0,
@@ -70,18 +64,17 @@ export default {
     },
     store() {
         let self = this;
-        axios.post(  this.$apiAdress + '/api/notes?token=' + localStorage.getItem("api_token"),
-          self.note
+        console.log(self.commune)
+        axios.post(  this.$apiAdress + '/api/communes?token=' + localStorage.getItem("api_token"),
+          self.commune
         )
         .then(function (response) {
-            self.note = {
-              title: '',
-              content: '',
-              applies_to_date: '',
-              status_id: null,
-              note_type: '',
+            self.commune = {
+              code: '',
+              commune: '',
+              province_id: null, 
             };
-            self.message = 'Successfully created note.';
+            self.message = 'Successfully created commune.';
             self.showAlert();
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
@@ -107,9 +100,9 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/notes/create?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/communes/create?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
-        self.statuses = response.data;
+        self.communes = response.data;
     }).catch(function (error) {
         console.log(error);
         self.$router.push({ path: 'login' });

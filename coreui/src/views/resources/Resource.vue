@@ -3,9 +3,9 @@
     <CCol col="12" xl="12">
       <transition name="slide">
         <CCard>
+          <CCardHeader><h4>Détail {{ form.name }}</h4> </CCardHeader>
           <CCardBody>
-            <h4>Show {{ form.name }}</h4>
-            <CButton color="primary" @click="goBack">Back</CButton>
+            
             <div 
               v-for="column in columns"
               v-bind:key="column.id"
@@ -20,8 +20,11 @@
                 <img :src="column.value" class="img-mini">
               </div>
             </div>
-            <CButton color="primary" @click="goBack">Back</CButton>           
+                      
           </CCardBody>  
+          <CCardFooter><CButton color="secondary" @click="goBack">Retour</CButton> 
+          
+          </CCardFooter>
         </CCard>
       </transition>
     </CCol>

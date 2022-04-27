@@ -4,7 +4,7 @@
       <CCard no-header>
         <CCardBody>
           <h3>
-            Ajouter Note
+            Ajouter Province
           </h3>
           <CAlert
             :show.sync="dismissCountDown"
@@ -13,22 +13,21 @@
           >
             ({{dismissCountDown}}) {{ message }}
           </CAlert>
-
-            <CInput label="Title" type="text" placeholder="Title" v-model="note.title"></CInput>
-
-            <CInput textarea="true" label="Content" :rows="9" placeholder="Content.." v-model="note.content"></CInput>
-
-            <CInput label="Applies to date" type="date" v-model="note.applies_to_date"></CInput>
+            <CInput label="Code" type="text" placeholder="Code" v-model="province.code"></CInput>
 
             <CSelect
-              label="Status" 
-              :value.sync="note.status_id"
+              label="Région" 
+              :value.sync="province.region_id"
               :plain="true"
-              :options="statuses"
+              :options="regions"
+               v-model="province.region_id"
             >
             </CSelect>
-            <CInput label="Note type" type="text" v-model="note.note_type"></CInput>
-
+            <CInput label="Province" type="text" placeholder="province" v-model="province.province"></CInput>
+            <CInput label="Chef lieu" type="text" placeholder="Chef lieu" v-model="province.cheflieu"/>
+            <CInput label="Longitude" type="text" placeholder="Longitude" v-model="province.lon"/>
+            <CInput label="Latitude" type="text" placeholder="Latitude" v-model="province.lat"/>
+ 
           <CButton color="primary" @click="store()">Ajouter</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
         </CCardBody>
@@ -40,23 +39,24 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'EditNote',
+  name: 'EditProvince',
   props: {
     caption: {
       type: String,
-      default: 'Note id'
+      default: 'Province id'
     },
   },
   data: () => {
     return {
-        note: {
-          title: '',
-          content: '',
-          applies_to_date: '',
-          status_id: null,
-          note_type: '',
+        province: {
+          code: '',
+          province: '',
+          region_id: '',
+          cheflieu: '',
+          lon: '',
+          lat: '',
         },
-        statuses: [],
+        regions: [],
         message: '',
         dismissSecs: 7,
         dismissCountDown: 0,
@@ -70,18 +70,20 @@ export default {
     },
     store() {
         let self = this;
-        axios.post(  this.$apiAdress + '/api/notes?token=' + localStorage.getItem("api_token"),
-          self.note
+        console.log(self.province)
+        axios.post(  this.$apiAdress + '/api/provinces?token=' + localStorage.getItem("api_token"),
+          self.province
         )
         .then(function (response) {
-            self.note = {
-              title: '',
-              content: '',
-              applies_to_date: '',
-              status_id: null,
-              note_type: '',
+            self.province = {
+              code: '',
+              province: '',
+              region_id: null,
+              lon: '',
+              lat: '',
+              cheflieu: '',
             };
-            self.message = 'Successfully created note.';
+            self.message = 'Successfully created province.';
             self.showAlert();
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
@@ -107,9 +109,9 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/notes/create?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/provinces/create?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
-        self.statuses = response.data;
+        self.regions = response.data;
     }).catch(function (error) {
         console.log(error);
         self.$router.push({ path: 'login' });

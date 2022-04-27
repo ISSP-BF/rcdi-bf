@@ -4,7 +4,7 @@
       <CCard>
         <CCardBody>
           <h3>
-            Modifier Note id:  {{ $route.params.id }}
+            Modifier Region
           </h3>
           <CAlert
             :show.sync="dismissCountDown"
@@ -13,22 +13,9 @@
           >
             ({{dismissCountDown}}) {{ message }}
           </CAlert>
-            <CInput label="Title" type="text" placeholder="Title" v-model="note.title"/>
-            <CInput
-              label="Content"
-              placeholder="Content.."
-              
-              textarea="true"
-              rows="9"
-              v-model="note.content"
-            />
-            <CInput label="Applies to date" type="date" v-model="note.applies_to_date"/>
-            <CSelect 
-              :value.sync="note.status_id"
-              :options="statuses"
-              label="Status"
-            />
-            <CInput label="Note type" type="text" v-model="note.note_type"/>
+            <CInput label="Code" type="text" placeholder="Code" v-model="region.code"/>
+            <CInput label="Region" type="text" placeholder="Region" v-model="region.region"/>
+             
           <CButton color="primary" @click="update()">Modifier</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
         </CCardBody>
@@ -49,12 +36,10 @@ export default {
   },
   data: () => {
     return {
-        note: {
-          title: '',
-          content: '',
-          applies_to_date: '',
-          status_id: null,
-          note_type: '',
+        region: {
+          code: '',
+          region: '',
+          
         },
         statuses: [],
         message: '',
@@ -69,17 +54,15 @@ export default {
     },
     update() {
         let self = this;
-        axios.post(  this.$apiAdress + '/api/notes/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
+        axios.post(  this.$apiAdress + '/api/regions/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
         {
             _method: 'PUT',
-            title:            self.note.title,
-            content:          self.note.content,
-            applies_to_date:  self.note.applies_to_date,
-            status_id:        self.note.status_id,
-            note_type:        self.note.note_type
+            code:            self.region.code,
+            region:          self.region.region,
+          
         })
         .then(function (response) {
-            self.message = 'Successfully updated note.';
+            self.message = 'Successfully updated region.';
             self.showAlert();
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
@@ -102,13 +85,12 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/notes/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/regions/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
-        self.note = response.data.note;
-        self.statuses = response.data.statuses;
+        self.region = response.data.region; 
     }).catch(function (error) {
         console.log(error);
-        self.$router.push({ path: '/login' });
+        // self.$router.push({ path: '/login' });
     });
   }
 }

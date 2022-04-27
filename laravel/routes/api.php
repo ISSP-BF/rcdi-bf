@@ -22,6 +22,10 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('register', 'AuthController@register'); 
 
     Route::resource('notes', 'NotesController');
+    Route::resource('regions', 'RegionsController');
+    Route::resource('provinces', 'ProvincesController');
+    Route::resource('communes', 'CommunesController');
+    Route::resource('professions', 'ProfessionsController');
 
     Route::resource('resource/{table}/resource', 'ResourceController');
     
