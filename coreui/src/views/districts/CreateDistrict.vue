@@ -4,7 +4,7 @@
       <CCard no-header>
         <CCardBody>
           <h3>
-            Ajouter Province
+            Ajouter District
           </h3>
           <CAlert
             :show.sync="dismissCountDown"
@@ -13,20 +13,31 @@
           >
             ({{dismissCountDown}}) {{ message }}
           </CAlert>
-            <CInput label="Code" type="text" placeholder="Code" v-model="province.code"></CInput>
 
+            <CInput label="Code" type="text" placeholder="Code" v-model="district.code"></CInput>
+            
             <CSelect
-              label="Région" 
-              :value.sync="province.region_id"
+              label="Region" 
+              :value.sync="district.region_id"
               :plain="true"
               :options="regions"
             >
             </CSelect>
-            <CInput label="Province" type="text" placeholder="province" v-model="province.province"></CInput>
-            <CInput label="Chef lieu" type="text" placeholder="Chef lieu" v-model="province.cheflieu"/>
-            <CInput label="Longitude" type="text" placeholder="Longitude" v-model="province.lon"/>
-            <CInput label="Latitude" type="text" placeholder="Latitude" v-model="province.lat"/>
- 
+            
+            <CSelect
+              label="Province" 
+              :value.sync="district.province_id"
+              :plain="true"
+              :options="provinces"
+            >
+            </CSelect>
+
+            <CInput label="Nom District" type="text" placeholder="Nom District" v-model="district.nom_district"></CInput>
+            <CInput label="Nom Majore" type="text" placeholder="Nom Majore" v-model="district.nom_majore"></CInput>
+            <CInput label="Longitude" type="text" placeholder="Longitude" v-model="district.lon"></CInput>
+            <CInput label="Latitude" type="text" placeholder="Latitude" v-model="district.lat"></CInput>
+            <CInput label="Superficie" type="text" placeholder="Superficie" v-model="district.superficie"></CInput>
+
           <CButton color="primary" @click="store()">Ajouter</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
         </CCardBody>
@@ -38,24 +49,27 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'EditProvince',
+  name: 'EditDistrict',
   props: {
     caption: {
       type: String,
-      default: 'Province id'
+      default: 'District id'
     },
   },
   data: () => {
     return {
-        province: {
+        district: {
           code: '',
-          province: '',
-          region_id: '',
-          cheflieu: '',
+          nom_district: '',
+          nom_majore: '',
+          region_id: null,
+          province_id: null,
           lon: '',
           lat: '',
+          superficie: '',
         },
         regions: [],
+        provinces: [],
         message: '',
         dismissSecs: 7,
         dismissCountDown: 0,
@@ -69,20 +83,22 @@ export default {
     },
     store() {
         let self = this;
-        console.log(self.province)
-        axios.post(  this.$apiAdress + '/api/provinces?token=' + localStorage.getItem("api_token"),
-          self.province
+        console.log(self.district)
+        axios.post(  this.$apiAdress + '/api/districts?token=' + localStorage.getItem("api_token"),
+          self.district
         )
         .then(function (response) {
-            self.province = {
+            self.district = {
               code: '',
-              province: '',
+              nom_district: '',
+              nom_majore: '',
               region_id: null,
+              province_id: null,
               lon: '',
               lat: '',
-              cheflieu: '',
+              superficie: '',
             };
-            self.message = 'Successfully created province.';
+            self.message = 'Successfully created district.';
             self.showAlert();
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
@@ -108,11 +124,10 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/provinces/create?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/districts/create?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
-        self.regions = response.data;
-        // Definir la valeur par défaut
-        self.province.region_id = self.regions.length>0?self.regions[0].value:null;
+        self.regions = response.data.regions;
+        self.provinces = response.data.provinces;
     }).catch(function (error) {
         console.log(error);
         self.$router.push({ path: 'login' });

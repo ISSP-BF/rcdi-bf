@@ -1,0 +1,231 @@
+<template>
+  <CRow>
+    <CCol col="12" xl="12">
+      <transition name="slide">
+      <CCard>
+         <CCardHeader>
+            Acte Naissances
+            <div class="card-header-actions">
+             <CButton color="primary" @click="createActeNaissance()">Ajouter</CButton>
+            </div>
+        </CCardHeader>
+        <CCardBody>
+            <CAlert
+              :show.sync="dismissCountDown"
+              color="primary"
+              fade
+            >
+              ({{dismissCountDown}}) {{ message }}
+            </CAlert>
+            <CDataTable
+              hover
+              :items="items"
+              :fields="fields"
+              :items-per-page="10"
+              pagination
+            >
+              <template #numero_acte="{item}">
+                <td>
+                  <strong>{{item.n_acte}}</strong>
+                </td>
+              </template>
+              <template #region="{item}">
+                <td>
+                  <label>{{item.region}}</label>
+                </td>  
+              </template>
+              <template #province="{item}">
+                <td>
+                  {{item.province}}
+                </td>  
+              </template>
+              <template #commune="{item}">
+                <td>
+                  {{item.commune}}
+                </td>  
+              </template>
+              <template #date_declaration="{item}">
+                <td>
+                  {{item.date_declaration|formatDateShort}}
+                </td>  
+              </template>
+
+              <template #nom_prenom="{item}">
+                <td>
+                  <strong>{{item.nom}} {{item.prenom}}</strong>
+                </td>
+              </template>
+              <template #sexe="{item}">
+                <td>
+                  <strong>{{item.sexe=='M'?'Homme':'Femme'}}</strong>
+                </td>
+              </template>
+              
+              <template #date_naissance="{item}">
+                <td>
+                  <strong>{{item.date_naissance|formatDateShort}}</strong>
+                </td>
+              </template>
+              
+              <template #lieu_naissance_commune="{item}">
+                <td>
+                  {{item.lieu_naissance_commune}}
+                </td>
+              </template>
+
+              <template #centre_sante_naissance="{item}">
+                <td>
+                  {{item.centre_sante_naissance}}
+                </td>
+              </template>
+              
+              <template #date_etablissement="{item}">
+                <td>
+                  {{item.date_etablissement|formatDateShort}}
+                </td>
+              </template>
+              
+              <template #date_autorisation="{item}">
+                <td>
+                  {{item.date_autorisation|formatDateShort}}
+                </td>
+              </template>
+             
+             
+              
+              
+          <template #actions="{item}">
+                <td>
+                  <div class="card-header-actions" style="display:flex">
+                  <CButton color="secondary"  size="sm" @click="showActeNaissance( item.id )">Détail</CButton>
+                  &nbsp;
+                  <CButton  size="sm" color="primary" @click="editActeNaissance( item.id )"><CIcon name="cil-pencil"/></CButton>
+                  &nbsp;
+                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteActeNaissance( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                  </div>
+                </td>
+              </template>
+            </CDataTable>
+        </CCardBody>  
+      </CCard>
+      </transition>
+    </CCol>
+  </CRow>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  name: 'ActeNaissances',
+  data: () => {
+    return {
+      items: [],
+      /*
+      fields: [
+        {key: 'author'},
+        {key: 'title'},
+        {key: 'content'},
+        {key: 'applies_to_date'},
+        {key: 'status'},
+        {key: 'acteNaissance_type'},
+        {key: 'show'},
+        {key: 'edit'},
+        {key: 'delete'}
+        
+          region_id: null,
+          province_id: null,
+          commune_id: null,
+          n_acte: '',
+          date_declaration: '',
+          nom: '',
+          prenom: '',
+          date_naissance: '',
+          lieu_naissance_commune: '',
+          centre_sante_naissance: '',
+          date_etablissement: '',
+          sexe: '',
+      ],
+      */
+      fields: ['numero_acte', 'region', 'province', 'commune','date_declaration',
+       'nom_prenom','sexe','date_naissance',
+       'lieu_naissance_commune','centre_sante_naissance',
+       'date_etablissement', 'actions'],
+
+      currentPage: 1,
+      perPage: 5,
+      totalRows: 0,
+      you: null,
+      message: '',
+      showMessage: false,
+      dismissSecs: 7,
+      dismissCountDown: 0,
+      showDismissibleAlert: false
+    }
+  },
+  computed: {
+  },
+  methods: {
+    getRowCount (items) {
+      return items.length
+    },
+    acteNaissanceLink (id) {
+      return `acte_naissances/${id.toString()}`
+    },
+    editLink (id) {
+      return `acte_naissances/${id.toString()}/edit`
+    },
+    showActeNaissance ( id ) {
+      const acteNaissanceLink = this.acteNaissanceLink( id );
+      this.$router.push({path: acteNaissanceLink});
+    },
+    editActeNaissance ( id ) {
+      const editLink = this.editLink( id );
+      this.$router.push({path: editLink});
+    },
+    deleteActeNaissance ( id ) {
+      let self = this;
+      let acteNaissanceId = id;
+      axios.post(  this.$apiAdress + '/api/acte_naissances/' + id + '?token=' + localStorage.getItem("api_token"), {
+        _method: 'DELETE'
+      })
+      .then(function (response) {
+          self.message = 'Successfully deleted acteNaissance.';
+          self.showAlert();
+          self.getActeNaissances();
+      }).catch(function (error) {
+        console.log(error);
+        self.$router.push({ path: '/login' });
+      });
+    },
+    createActeNaissance () {
+      this.$router.push({path: 'acte_naissances/create'});
+    },
+    countDownChanged (dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
+    showAlert () {
+      this.dismissCountDown = this.dismissSecs
+    },
+    getActeNaissances (){
+      let self = this;
+      axios.get(  this.$apiAdress + '/api/acte_naissances?token=' + localStorage.getItem("api_token") )
+      .then(function (response) {
+        self.items = response.data;
+      }).catch(function (error) {
+        console.log(error);
+        // self.$router.push({ path: '/login' });
+      });
+    }
+  },
+  mounted: function(){
+    this.getActeNaissances();
+  }
+}
+</script>
+
+<style scoped>
+.card-body >>> table > tbody > tr > td {
+  cursor: pointer;
+}
+</style>

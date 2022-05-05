@@ -149,6 +149,45 @@ const EditProfession = () =>
     import ('@/views/professions/EditProfession')
 const CreateProfession = () =>
     import ('@/views/professions/CreateProfession')
+    //Districts
+const Districts = () =>
+    import ('@/views/districts/Districts')
+const District = () =>
+    import ('@/views/districts/District')
+const EditDistrict = () =>
+    import ('@/views/districts/EditDistrict')
+const CreateDistrict = () =>
+    import ('@/views/districts/CreateDistrict')
+    //FormationSanitaires
+const FormationSanitaires = () =>
+    import ('@/views/formation_sanitaires/FormationSanitaires')
+const FormationSanitaire = () =>
+    import ('@/views/formation_sanitaires/FormationSanitaire')
+const EditFormationSanitaire = () =>
+    import ('@/views/formation_sanitaires/EditFormationSanitaire')
+const CreateFormationSanitaire = () =>
+    import ('@/views/formation_sanitaires/CreateFormationSanitaire')
+
+
+//ActeNaissances
+const ActeNaissances = () =>
+    import ('@/views/acte_naissances/ActeNaissances')
+const ActeNaissance = () =>
+    import ('@/views/acte_naissances/ActeNaissance')
+const EditActeNaissance = () =>
+    import ('@/views/acte_naissances/EditActeNaissance')
+const CreateActeNaissance = () =>
+    import ('@/views/acte_naissances/CreateActeNaissance')
+
+//ActeDeces
+const ActeDecess = () =>
+    import ('@/views/acte_deces/ActeDecesl')
+const ActeDeces = () =>
+    import ('@/views/acte_deces/ActeDeces')
+const EditActeDeces = () =>
+    import ('@/views/acte_deces/EditActeDeces')
+const CreateActeDeces = () =>
+    import ('@/views/acte_deces/CreateActeDeces')
 
 //Roles
 const Roles = () =>
@@ -654,6 +693,178 @@ function configRoutes() {
                             meta: { label: 'Edit Profession' },
                             name: 'Edit Profession',
                             component: EditProfession,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+
+                {
+                    path: 'districts',
+                    meta: { label: 'Districts' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Districts,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create District' },
+                            name: 'Create District',
+                            component: CreateDistrict,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'District Details' },
+                            name: 'District',
+                            component: District,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit District' },
+                            name: 'Edit District',
+                            component: EditDistrict,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'formation_sanitaires',
+                    meta: { label: 'FormationSanitaires' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: FormationSanitaires,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create FormationSanitaire' },
+                            name: 'Create FormationSanitaire',
+                            component: CreateFormationSanitaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'FormationSanitaire Details' },
+                            name: 'FormationSanitaire',
+                            component: FormationSanitaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit FormationSanitaire' },
+                            name: 'Edit FormationSanitaire',
+                            component: EditFormationSanitaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'acte_naissances',
+                    meta: { label: 'ActeNaissances' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: ActeNaissances,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create ActeNaissance' },
+                            name: 'Create ActeNaissance',
+                            component: CreateActeNaissance,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'ActeNaissance Details' },
+                            name: 'ActeNaissance',
+                            component: ActeNaissance,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit ActeNaissance' },
+                            name: 'Edit ActeNaissance',
+                            component: EditActeNaissance,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+                {
+                    path: 'acte_deces',
+                    meta: { label: 'ActeDecess' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: ActeDecess,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create ActeDeces' },
+                            name: 'Create ActeDeces',
+                            component: CreateActeDeces,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'ActeDeces Details' },
+                            name: 'ActeDeces',
+                            component: ActeDeces,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit ActeDeces' },
+                            name: 'Edit ActeDeces',
+                            component: EditActeDeces,
                             meta: {
                                 requiresUser: true
                             }

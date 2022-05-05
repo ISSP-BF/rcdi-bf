@@ -26,6 +26,10 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('provinces', 'ProvincesController');
     Route::resource('communes', 'CommunesController');
     Route::resource('professions', 'ProfessionsController');
+    Route::resource('districts', 'DistrictsController');
+    Route::resource('formation_sanitaires', 'FormationSanitairesController');
+    Route::resource('acte_naissances', 'ActeNaissancesController');
+    Route::resource('acte_deces', 'ActeDecesController');
 
     Route::resource('resource/{table}/resource', 'ResourceController');
     

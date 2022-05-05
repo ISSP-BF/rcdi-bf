@@ -1,0 +1,221 @@
+<template>
+  <CRow>
+    <CCol col="12" lg="6">
+      <CCard>
+        <CCardBody>
+          <h3>
+            Modifier Acte de Décès numéro :  {{ $route.params.id }}
+          </h3>
+          <CAlert
+            :show.sync="dismissCountDown"
+            color="primary"
+            fade
+          >
+            ({{dismissCountDown}}) {{ message }}
+          </CAlert>
+            
+            <CSelect
+              label="Region" 
+              :value.sync="acteDeces.region_id"
+              :plain="true"
+              :options="regions"
+              v-model="acteDeces.region_id"
+            >
+            </CSelect>
+            
+            <CSelect
+              label="Province" 
+              :value.sync="acteDeces.province_id"
+              :plain="true"
+              :options="provinces"
+              v-model="acteDeces.province_id"
+            >
+            </CSelect>
+            
+            <CSelect
+              label="Commune" 
+              :value.sync="acteDeces.commune_id"
+              :plain="true"
+              :options="communes"
+              v-model="acteDeces.commune_id"
+            >
+            </CSelect>
+
+
+            <CInput label="Numero Acte" type="text" placeholder="Numero Acte" v-model="acteDeces.n_acte"></CInput>
+            <CInput label="Date déclaration" type="date" placeholder="Date déclaration" v-model="acteDeces.date_declaration"></CInput>
+            <CInput label="Nom" type="text" placeholder="Nom" v-model="acteDeces.nom"></CInput>
+            <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteDeces.prenom"></CInput>
+            <CInput label="Date naissance" type="date" placeholder="Date naissance" v-model="acteDeces.date_naissance"></CInput>
+            <CInput label="Date deces" type="date" placeholder="Date deces" v-model="acteDeces.date_deces"></CInput>
+            <CInput label="Age" type="text" placeholder="Age" v-model="acteDeces.age"></CInput>
+            <CInput label="Date Etablissement" type="date" placeholder="Date Etablissement" v-model="acteDeces.date_etablissement"></CInput>
+            <CInput label="Profession" type="text" placeholder="Profession" v-model="acteDeces.profession"></CInput>
+            <template>
+                <div class="form-group form-row">
+                  <CCol tag="label" sm="12" class="col-form-label">
+                    Situation Matrimonial
+                  </CCol>
+                  <CCol sm="9" :class="'form-inline'">
+
+                    <div role="group" class="custom-control custom-control-inline custom-radio">
+                      <input id="celibataire" type="radio" class="custom-control-input" v-model="acteDeces.statut_matrimonial" value="CELIBATAIRE">
+                      <label for="celibataire" class="custom-control-label"> Célibataire </label>
+                    </div>
+
+                    <div role="group" class="custom-control custom-control-inline custom-radio">
+                      <input id="marie" type="radio" class="custom-control-input" v-model="acteDeces.statut_matrimonial" value="MARIE">
+                      <label for="marie" class="custom-control-label"> Marié(e) </label>
+                    </div>
+
+                    <div role="group" class="custom-control custom-control-inline custom-radio">
+                      <input id="divorce" type="radio" class="custom-control-input" v-model="acteDeces.statut_matrimonial" value="DIVORCE">
+                      <label for="divorce" class="custom-control-label"> Divorcé(e) </label>
+                    </div>
+                    
+
+                    <div role="group" class="custom-control custom-control-inline custom-radio">
+                      <input id="veuf" type="radio" class="custom-control-input" v-model="acteDeces.statut_matrimonial" value="VEUF">
+                      <label for="veuf" class="custom-control-label"> Veuf(ve) </label>
+                    </div>
+
+                  </CCol>
+                </div>
+            </template>
+            <template>
+                <div class="form-group form-row">
+                  <CCol tag="label" sm="12" class="col-form-label">
+                    Sexe
+                  </CCol>
+                  <CCol sm="12" :class="'form-inline'">
+
+                    <div role="group" class="custom-control custom-control-inline custom-radio">
+                      <input id="homme" type="radio" class="custom-control-input" v-model="acteDeces.sexe" value="M">
+                      <label for="homme" class="custom-control-label"> Homme </label>
+                    </div>
+
+                    <div role="group" class="custom-control custom-control-inline custom-radio">
+                      <input id="femme" type="radio" class="custom-control-input" v-model="acteDeces.sexe" value="F">
+                      <label for="femme" class="custom-control-label"> Femme </label>
+                    </div>
+                  </CCol>
+                </div>
+            </template>            
+          <CButton color="primary" @click="update()">Modifier</CButton> &nbsp;
+          <CButton color="secondary" @click="goBack">Retour</CButton>
+        </CCardBody>
+      </CCard>
+    </CCol>
+  </CRow>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  name: 'EditUser',
+  props: {
+    caption: {
+      type: String,
+      default: 'User id'
+    },
+  },
+  data: () => {
+    
+    return {
+        acteDeces: {
+          region_id: null,
+          province_id: null,
+          commune_id: null,
+          n_acte: '',
+          date_declaration: '',
+          nom: '',
+          prenom: '',
+          date_deces: '',
+          date_naissance: '',
+          statut_matrimonial: '',
+          profession: '',
+          date_etablissement: '',
+          sexe: '',
+        },
+        regions: [],
+        provinces: [],
+        communes: [],
+        message: '',
+        dismissSecs: 7,
+        dismissCountDown: 0,
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
+      // this.$router.replace({path: '/users'})
+    },
+    selectRadioSelectRole(role){
+      console.log(role)
+    },
+    update() {
+        let self = this;
+        console.log(self.acteDeces)
+        
+        // axios.post(  this.$apiAdress + '/api/acteDecess/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
+        // {
+        //     _method: 'PUT',
+        //     code:              self.acteDeces.code,
+        //     nom_acteDeces:      self.acteDeces.nom_acteDeces,
+        //     nom_majore:        self.acteDeces.nom_majore,
+        //     region_id:         self.acteDeces.region_id,
+        //     province_id:       self.acteDeces.province_id,
+        //     lon:               self.acteDeces.lon,
+        //     lat:               self.acteDeces.lat,
+        //     superficie:        self.acteDeces.superficie
+        // })
+        axios.put(  this.$apiAdress + '/api/acte_deces/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
+        self.acteDeces)
+        .then(function (response) {
+            self.message = 'Successfully updated Acte Deces.';
+            self.$toasted.show("L'acte a été mises à jour avec succès",{type:"success"});
+            self.goBack();
+        }).catch(function (error) {
+            if(error.response.data.message == 'The given data was invalid.'){
+              self.message = '';
+              for (let key in error.response.data.errors) {
+                if (error.response.data.errors.hasOwnProperty(key)) {
+                  self.message += error.response.data.errors[key][0] + '  ';
+                }
+              }
+            self.$toasted.show(self.message,{type:"error"});
+               
+            }else{
+              console.log(error); 
+              // self.$router.push({ path: '/login' }); 
+            }
+        });
+    },
+    showAlert () {
+      this.dismissCountDown = this.dismissSecs
+    },
+  },
+  mounted: function(){
+    let self = this;
+    axios.get(  this.$apiAdress + '/api/acte_deces/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+        self.acteDeces = response.data.acteDeces;
+        self.regions = response.data.regions;
+        self.provinces = response.data.provinces;
+        self.communes = response.data.communes;
+    }).catch(function (error) {
+        console.log(error);
+        // self.$router.push({ path: 'login' });
+    });
+  }
+}
+
+/*
+      items: (id) => {
+        const user = usersData.find( user => user.id.toString() === id)
+        const userDetails = user ? Object.entries(user) : [['id', 'Not found']]
+        return userDetails.map(([key, value]) => {return {key: key, value: value}})
+      },
+*/
+
+</script>

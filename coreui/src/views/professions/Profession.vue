@@ -3,12 +3,9 @@
     <CCol col="12" lg="6">
       <CCard no-header>
         <CCardBody>
-          <h3>Region id:  {{ $route.params.id }}</h3>
- 
-          <h4>Code:</h4>
-          <p>{{ region.code }}</p>
-          <h4>Region:</h4> 
-          <p>{{ region.region }}</p> 
+          <h3>Profession id:  {{ $route.params.id }}</h3>
+  
+          <h4>Metier: {{ profession.metier }}</h4> 
          
           <CButton color="secondary" @click="goBack">Retour</CButton>
         </CCardBody>
@@ -29,7 +26,7 @@ export default {
   },
   data: () => {
     return {
-      region: [],
+      profession: [],
     }
   },
   methods: {
@@ -40,9 +37,9 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/regions/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/professions/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
-      self.region = response.data;
+      self.profession = response.data;
     }).catch(function (error) {
       console.log(error);
       self.$router.push({ path: '/login' });
