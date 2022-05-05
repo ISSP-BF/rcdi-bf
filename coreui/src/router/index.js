@@ -189,6 +189,16 @@ const EditActeDeces = () =>
 const CreateActeDeces = () =>
     import ('@/views/acte_deces/CreateActeDeces')
 
+//ActeMariages
+const ActeMariages = () =>
+    import ('@/views/acte_mariages/ActeMariages')
+const ActeMariage = () =>
+    import ('@/views/acte_mariages/ActeMariage')
+const EditActeMariage = () =>
+    import ('@/views/acte_mariages/EditActeMariage')
+const CreateActeMariage = () =>
+    import ('@/views/acte_mariages/CreateActeMariage')
+
 //Roles
 const Roles = () =>
     import ('@/views/roles/Roles')
@@ -865,6 +875,49 @@ function configRoutes() {
                             meta: { label: 'Edit ActeDeces' },
                             name: 'Edit ActeDeces',
                             component: EditActeDeces,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'acte_mariages',
+                    meta: { label: 'ActeMariages' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: ActeMariages,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create ActeMariage' },
+                            name: 'Create ActeMariage',
+                            component: CreateActeMariage,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'ActeMariage Details' },
+                            name: 'ActeMariage',
+                            component: ActeMariage,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit ActeMariage' },
+                            name: 'Edit ActeMariage',
+                            component: EditActeMariage,
                             meta: {
                                 requiresUser: true
                             }
