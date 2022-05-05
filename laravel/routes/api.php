@@ -30,6 +30,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('formation_sanitaires', 'FormationSanitairesController');
     Route::resource('acte_naissances', 'ActeNaissancesController');
     Route::resource('acte_deces', 'ActeDecesController');
+    Route::resource('acte_mariages', 'ActeMariagesController');
 
     Route::resource('resource/{table}/resource', 'ResourceController');
     

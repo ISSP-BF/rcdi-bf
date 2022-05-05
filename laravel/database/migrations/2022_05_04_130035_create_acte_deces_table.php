@@ -28,7 +28,7 @@ class CreateActeDecesTable extends Migration
             $table->string('sexe')->nullable();
             $table->date('date_etablissement')->nullable();
             $table->string('profession')->nullable();
-            $table->string('statut_matrimonial')->nullable();
+            $table->string('statut_matrimonial')->nullable();// ENUM : MARIE/DIVORCE/VEUF/CELIBATAIRE
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->timestamps();

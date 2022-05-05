@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\ActeDeces;
+use App\Models\ActeNaissances;
 
-class ActeDecesController extends Controller
+class ActeNaissancesController extends Controller
 {
 
     /**
@@ -67,7 +67,7 @@ class ActeDecesController extends Controller
             'lieu_naissance_commune'         => 'required'
         ]);
         $user = auth()->userOrFail();
-        $acteNaissances = new ActeDeces();
+        $acteNaissances = new ActeNaissances();
         $acteNaissances->n_acte     = $request->input('n_acte');
         $acteNaissances->province_id = $request->input('province_id');
         $acteNaissances->region_id = $request->input('region_id');
@@ -137,7 +137,7 @@ class ActeDecesController extends Controller
             'lieu_naissance_commune'         => 'required'
         ]);
         $user = auth()->userOrFail();
-        $acteNaissances = ActeDeces::find($id);
+        $acteNaissances = ActeNaissances::find($id);
         $acteNaissances->n_acte     = $request->input('n_acte');
         $acteNaissances->province_id = $request->input('province_id');
         $acteNaissances->region_id = $request->input('region_id');
@@ -163,7 +163,7 @@ class ActeDecesController extends Controller
      */
     public function destroy($id)
     {
-        $acte_naissances = ActeDeces::find($id);
+        $acte_naissances = ActeNaissances::find($id);
         if($acte_naissances){
             $acte_naissances->delete();
         }
