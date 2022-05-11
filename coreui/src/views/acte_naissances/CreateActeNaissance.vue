@@ -42,10 +42,14 @@
             </CSelect>
 
             <CInput label="Numero Acte" type="text" placeholder="Numero Acte" v-model="acteNaissance.n_acte"></CInput>
-            <CInput label="Date déclaration" type="date" placeholder="Date déclaration" v-model="acteNaissance.date_declaration"></CInput>
+            <CInput label="Date déclaration" type="date" placeholder="Date déclaration" v-model="acteNaissance.date_declaration"
+                  invalid-feedback="Veuillez saisir une année valide"
+                  :is-valid="anneeEnCourValidator"></CInput>
             <CInput label="Nom" type="text" placeholder="Nom" v-model="acteNaissance.nom"></CInput>
             <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteNaissance.prenom"></CInput>
-            <CInput label="Date naissance" type="date" placeholder="Date naissance" v-model="acteNaissance.date_naissance"></CInput>
+            <CInput label="Date naissance" type="date" placeholder="Date naissance" v-model="acteNaissance.date_naissance"
+                  invalid-feedback="Veuillez saisir une année valide"
+                  :is-valid="anneeEnCourValidator"></CInput>
             <CInput label="Lieu naissance (Commune)" type="text" placeholder="Lieu naissance (Commune)" v-model="acteNaissance.lieu_naissance_commune"></CInput>
             <CInput label="Centre sante naissance" type="text" placeholder="Centre sante naissance" v-model="acteNaissance.centre_sante_naissance"></CInput>
 
@@ -68,7 +72,9 @@
                   </CCol>
                 </div>
             </template>
-            <CInput label="Date Etablissement" type="date" placeholder="Date Etablissement" v-model="acteNaissance.date_etablissement"></CInput>
+            <CInput label="Date Etablissement" type="date" placeholder="Date Etablissement" v-model="acteNaissance.date_etablissement"
+                  invalid-feedback="Veuillez saisir une année valide"
+                  :is-valid="anneeEnCourValidator"></CInput>
             
           <CButton color="primary" @click="store()">Ajouter</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
@@ -155,6 +161,11 @@ export default {
     },
     showAlert () {
       this.dismissCountDown = this.dismissSecs
+    },
+    anneeEnCourValidator (val) {
+      // console.log(new Date(val))
+      // return val ? new Date(val)<=new Date()&&val>=new Date("December 25, 1900 23:15:00") : null
+      return val ? new Date(val)<=new Date()?null:false : null
     },
   },
   mounted: function(){

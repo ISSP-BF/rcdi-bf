@@ -31,6 +31,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('acte_naissances', 'ActeNaissancesController');
     Route::resource('acte_deces', 'ActeDecesController');
     Route::resource('acte_mariages', 'ActeMariagesController');
+    Route::resource('consultation_prenatales', 'ConsultationPrenatalesController');
 
     Route::resource('resource/{table}/resource', 'ResourceController');
     

@@ -199,6 +199,16 @@ const EditActeMariage = () =>
 const CreateActeMariage = () =>
     import ('@/views/acte_mariages/CreateActeMariage')
 
+//ConsultationPrenatales
+const ConsultationPrenatales = () =>
+    import ('@/views/consultation_prenatales/ConsultationPrenatales')
+const ConsultationPrenatale = () =>
+    import ('@/views/consultation_prenatales/ConsultationPrenatale')
+const EditConsultationPrenatale = () =>
+    import ('@/views/consultation_prenatales/EditConsultationPrenatale')
+const CreateConsultationPrenatale = () =>
+    import ('@/views/consultation_prenatales/CreateConsultationPrenatale')
+
 //Roles
 const Roles = () =>
     import ('@/views/roles/Roles')
@@ -918,6 +928,49 @@ function configRoutes() {
                             meta: { label: 'Edit ActeMariage' },
                             name: 'Edit ActeMariage',
                             component: EditActeMariage,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'consultation_prenatales',
+                    meta: { label: 'Consultation Prenatales' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: ConsultationPrenatales,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Consultation Prenatale' },
+                            name: 'Create ConsultationPrenatale',
+                            component: CreateConsultationPrenatale,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Consultation Prenatale Details' },
+                            name: 'ConsultationPrenatale',
+                            component: ConsultationPrenatale,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Consultation Prenatale' },
+                            name: 'Edit ConsultationPrenatale',
+                            component: EditConsultationPrenatale,
                             meta: {
                                 requiresUser: true
                             }

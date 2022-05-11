@@ -43,13 +43,17 @@
 
 
             <CInput label="Numero Acte" type="text" placeholder="Numero Acte" v-model="acteDeces.n_acte"></CInput>
-            <CInput label="Date déclaration" type="date" placeholder="Date déclaration" v-model="acteDeces.date_declaration"></CInput>
+            <CInput label="Date déclaration" type="date" placeholder="Date déclaration" v-model="acteDeces.date_declaration" invalid-feedback="Veuillez saisir une année valide"
+                  :is-valid="anneeEnCourValidator"></CInput>
             <CInput label="Nom" type="text" placeholder="Nom" v-model="acteDeces.nom"></CInput>
             <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteDeces.prenom"></CInput>
-            <CInput label="Date naissance" type="date" placeholder="Date naissance" v-model="acteDeces.date_naissance"></CInput>
-            <CInput label="Date deces" type="date" placeholder="Date deces" v-model="acteDeces.date_deces"></CInput>
-            <CInput label="Age" type="text" placeholder="Age" v-model="acteDeces.age"></CInput>
-            <CInput label="Date Etablissement" type="date" placeholder="Date Etablissement" v-model="acteDeces.date_etablissement"></CInput>
+            <CInput label="Date naissance" type="date" placeholder="Date naissance" v-model="acteDeces.date_naissance" invalid-feedback="Veuillez saisir une année valide"
+                  :is-valid="ageCalculeAndValidator"></CInput>
+            <CInput label="Date deces" type="date" placeholder="Date deces" v-model="acteDeces.date_deces" invalid-feedback="Veuillez saisir une année valide"
+                  :is-valid="ageCalculeAndValidator"></CInput>
+            <CInput label="Age" type="text" placeholder="Age" v-model="acteDeces.age" disabled></CInput>
+            <CInput label="Date Etablissement" type="date" placeholder="Date Etablissement" v-model="acteDeces.date_etablissement" invalid-feedback="Veuillez saisir une année valide"
+                  :is-valid="anneeEnCourValidator"></CInput>
             <CInput label="Profession" type="text" placeholder="Profession" v-model="acteDeces.profession"></CInput>
             <template>
                 <div class="form-group form-row">
@@ -193,6 +197,15 @@ export default {
     },
     showAlert () {
       this.dismissCountDown = this.dismissSecs
+    },
+    ageCalculeAndValidator (val) {
+      if(this.acteDeces.date_deces&&this.acteDeces.date_naissance)
+      {this.acteDeces.age = new Date(this.acteDeces.date_deces).getFullYear() - new Date(this.acteDeces.date_naissance).getFullYear()}
+      else {this.acteDeces.age = null}
+      return val ? new Date(val)<=new Date()?null:false : null
+    },
+    anneeEnCourValidator (val) {
+      return val ? new Date(val)<=new Date()?null:false : null
     },
   },
   mounted: function(){

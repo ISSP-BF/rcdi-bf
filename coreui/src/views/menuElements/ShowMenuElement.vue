@@ -4,7 +4,7 @@
       <CCard no-header>
         <CCardBody>
           <h3>
-            Show Menu Element
+            Visualisation Menu Element
           </h3>
           <CAlert
             :show.sync="dismissCountDown"
@@ -28,7 +28,7 @@
           <h4>Icon</h4>
           {{ menuelement.icon }}
           <br><br>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton color="secondary" @click="goBack">Back</CButton>
         </CCardBody>
       </CCard>
     </CCol>

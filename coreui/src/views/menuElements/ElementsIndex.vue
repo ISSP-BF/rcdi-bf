@@ -1,13 +1,13 @@
 <template>
   <CRow>
-    <CCol col="12" xl="12">
+    <CCol col="12" xl="6">
       <transition name="slide">
         <CCard>
           <CCardBody>
             <h4>
               Menus
             </h4>
-              <CButton color="primary" @click="addElementToMenu()" class="mb-3">Add Element to Menu</CButton>
+              <CButton color="primary" @click="addElementToMenu()" class="mb-3">Ajouter un élément au menu</CButton>
               <CDataTable
                 hover
                 :items="items"
@@ -25,29 +25,19 @@
                     <strong>{{item.name}}</strong>
                   </td>
                 </template>
-                <template #up="{item}">
+                <template #actions="{item}">
                   <td>
-                    <CButton color="primary" @click="moveUp( item.id )">Move Up</CButton>
-                  </td>
-                </template>
-                <template #down="{item}">
-                  <td>
-                    <CButton color="primary" @click="moveDown( item.id )">Move Down</CButton>
-                  </td>
-                </template>
-                <template #show="{item}">
-                  <td>
-                    <CButton color="primary" @click="showMenu( item.id )">Show</CButton>
-                  </td>
-                </template>
-                <template #edit="{item}">
-                  <td>
-                    <CButton color="primary" @click="editMenu( item.id )">Edit</CButton>
-                  </td>
-                </template>
-                <template #delete="{item}">
-                  <td>
-                    <CButton color="danger" @click="deleteMenu( item.id )">Delete</CButton>
+                    <div class="card-header-actions">
+                    <CButton size="sm" color="primary" @click="moveUp( item.id )">Haut</CButton> &nbsp;
+                  
+                    <CButton size="sm" color="primary" @click="moveDown( item.id )">Bas</CButton>&nbsp;
+                  
+                    <CButton size="sm" color="primary" @click="showMenu( item.id )">Voir</CButton>&nbsp;
+                 
+                    <CButton size="sm" color="primary" @click="editMenu( item.id )">Editer</CButton>&nbsp;
+                  
+                    <CButton size="sm" color="danger" @click="deleteMenu( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                    </div>
                   </td>
                 </template>
               </CDataTable>
@@ -66,7 +56,7 @@ export default {
   name: 'MenuIndex',
   data () {
     return {
-      fields: ['dropdown', 'name', 'up', 'down', 'show', 'edit', 'delete'],
+      fields: ['dropdown', 'name', 'actions'],
       items: [],
       buffor: [],
     }

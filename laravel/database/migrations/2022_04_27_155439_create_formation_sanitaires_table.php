@@ -17,6 +17,7 @@ class CreateFormationSanitairesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('region_id')->unsigned();
             $table->integer('province_id')->unsigned();
+            $table->integer('commune_id')->unsigned();
             $table->integer('district_id')->unsigned();
             $table->string('code');
             $table->string('nom_structure');

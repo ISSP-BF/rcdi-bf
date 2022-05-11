@@ -4,7 +4,7 @@
       <CCard no-header>
         <CCardBody>
           <h3>
-            Edit Menu Element
+            Modifier l'élément du menu
           </h3>
           <CAlert
             :show.sync="dismissCountDown"
@@ -65,8 +65,8 @@
               <br>
               <CInput type="text" placeholder="CoreUI Icon class - example: cil-bell" v-model="menuelement.icon"></CInput>
             </div>
-          <CButton color="primary" @click="save()">Save</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton color="primary" @click="save()">Modifier</CButton> &nbsp;
+          <CButton color="secondary" @click="goBack">Retour</CButton>
         </CCardBody>
       </CCard>
     </CCol>

@@ -23,16 +23,16 @@ class CreateConsultationPrenatalesTable extends Migration
             $table->integer('annee')->unsigned();
             $table->integer('mois')->unsigned();
 
-            $table->string('NbFemmeVueCPN')->nullable();
-            $table->string('NbFemmeInscriteCPN1')->nullable();
-            $table->string('NbFemmeInscriteCPN1_Trim1')->nullable();
-            $table->string('NbFemmeVueCPN4')->nullable();
-            $table->string('NbFemmeInscriteVueCPN_2Td')->nullable();
-            $table->string('NbFemmeFer_Acide_Folique')->nullable();
-            $table->string('NbFemmeFer_Acide_Folique_CPN3')->nullable();
-            $table->string('NbGrossesse_Refere')->nullable();
-            $table->string('NbFemmeVueCPN_TPI3')->nullable();
-            $table->string('NbFemmeVueCPN_TPI3_MILDA')->nullable();
+            $table->integer('NbFemmeVueCPN')->nullable();
+            $table->integer('NbFemmeInscriteCPN1')->nullable();
+            $table->integer('NbFemmeInscriteCPN1_Trim1')->nullable();
+            $table->integer('NbFemmeVueCPN4')->nullable();
+            $table->integer('NbFemmeInscriteVueCPN_2Td')->nullable();
+            $table->integer('NbFemmeFer_Acide_Folique')->nullable();
+            $table->integer('NbFemmeFer_Acide_Folique_CPN3')->nullable();
+            $table->integer('NbGrossesse_Refere')->nullable();
+            $table->integer('NbFemmeVueCPN_TPI3')->nullable();
+            $table->integer('NbFemmeVueCPN_TPI3_MILDA')->nullable();
 
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();

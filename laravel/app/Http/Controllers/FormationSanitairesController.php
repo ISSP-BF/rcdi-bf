@@ -124,7 +124,7 @@ class FormationSanitairesController extends Controller
         $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
         $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
         $districts = DB::table('districts')->select('districts.nom_district as label', 'districts.id as value')->get();
-        $communes = DB::table('communes')->select('communes.nom_district as label', 'communes.id as value')->get();
+        $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
         return response()->json( [ 'provinces' => $provinces, 'regions' => $regions, 'districts' => $districts, 'communes' => $communes,'formationSanitaire'=>$formationSanitaire ] );
     }
 

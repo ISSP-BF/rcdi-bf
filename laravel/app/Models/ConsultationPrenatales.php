@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class FormationSanitaires extends Model
+class ConsultationPrenatales extends Model
 {
 
     use HasFactory;
 
-    protected $table = 'formation_sanitaires';
+    protected $table = 'consultation_prenatales';
 
     /**
      * Get the User that owns the Districts.
@@ -30,11 +30,6 @@ class FormationSanitaires extends Model
         return $this->belongsTo('App\Models\Provinces', 'province')->withTrashed();
     }
     
-    // public function commune()
-    // {
-    //     return $this->belongsTo('App\Models\Communes', 'commune')->withTrashed();
-    // }
-    
     public function region()
     {
         return $this->belongsTo('App\Models\Regions', 'region')->withTrashed();
@@ -43,6 +38,11 @@ class FormationSanitaires extends Model
     public function district()
     {
         return $this->belongsTo('App\Models\Districts', 'nom_district')->withTrashed();
+    }
+    
+    public function commune()
+    {
+        return $this->belongsTo('App\Models\Communes', 'commune')->withTrashed();
     }
     
 }

@@ -4,7 +4,7 @@
       <CCard no-header>
         <CCardBody>
           <h3>
-            Create Menu Element
+           Création d'un nouveau élément du menu
           </h3>
           <CAlert
             :show.sync="dismissCountDown"
@@ -64,8 +64,8 @@
               <br>
               <CInput type="text" placeholder="CoreUI Icon class - example: cil-bell" v-model="menuelement.icon"></CInput>
             </div>
-          <CButton color="primary" @click="store()">Create</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton color="primary" @click="store()">Create</CButton> &nbsp;
+          <CButton color="secondary" @click="goBack">Back</CButton>
         </CCardBody>
       </CCard>
     </CCol>

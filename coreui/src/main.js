@@ -35,12 +35,12 @@ import moment from 'moment'
 
 Vue.filter('formatDateShort', function(value) {
     if (value) {
-        return moment(String(value)).format('MM/DD/YYYY')
+        return moment(String(value)).format('DD/MM/YYYY')
     }
 })
 Vue.filter('formatDate', function(value) {
     if (value) {
-        return moment(String(value)).format('MM/DD/YYYY hh:mm')
+        return moment(String(value)).format('DD/MM/YYYY hh:mm')
     }
 })
 
