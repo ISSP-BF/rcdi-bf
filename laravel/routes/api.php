@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('indicateurs/findBy', 'IndicateursController@findBy'); 
 Route::group(['middleware' => 'api'], function ($router) {
     Route::get('menu', 'MenuController@index');
 
@@ -32,6 +33,8 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('acte_deces', 'ActeDecesController');
     Route::resource('acte_mariages', 'ActeMariagesController');
     Route::resource('consultation_prenatales', 'ConsultationPrenatalesController');
+    Route::resource('indicateurs', 'IndicateursController');
+    Route::post('indicateurs/findBy', 'IndicateursController@findBy'); 
 
     Route::resource('resource/{table}/resource', 'ResourceController');
     

@@ -1,473 +1,123 @@
 <template>
   <div>
-    <WidgetsDropdown/>
-    <CCard>
-      <CCardBody>
-        <CRow>
-          <CCol sm="5">
-            <h4 id="traffic" class="card-title mb-0">Traffic</h4>
-            <div class="small text-muted">November 2017</div>
-          </CCol>
-          <CCol sm="7" class="d-none d-md-block">
-            <CButton color="primary" class="float-right">
-              <CIcon name="cil-cloud-download"/>
-            </CButton>
-            <CButtonGroup class="float-right mr-3">
-              <CButton
-                color="outline-secondary"
-                v-for="(value, key) in ['Day', 'Month', 'Year']"
-                :key="key"
-                class="mx-0"
-                :pressed="value === selected ? true : false"
-                @click="selected = value"
-              >
-                {{value}}
-              </CButton>
-            </CButtonGroup>
-          </CCol>
-        </CRow>
-        <MainChartExample style="height:300px;margin-top:40px;"/>
-      </CCardBody>
-      <CCardFooter>
-        <CRow class="text-center">
-          <CCol md sm="12" class="mb-sm-2 mb-0">
-            <div class="text-muted">Visits</div>
-            <strong>29.703 Users (40%)</strong>
-            <CProgress
-              class="progress-xs mt-2"
-              :precision="1"
-              color="success"
-              :value="40"
-            />
-          </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0 d-md-down-none">
-            <div class="text-muted">Unique</div>
-            <strong>24.093 Users (20%)</strong>
-            <CProgress
-              class="progress-xs mt-2"
-              :precision="1"
-              color="info"
-              :value="20"
-            />
-          </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0">
-            <div class="text-muted">Pageviews</div>
-            <strong>78.706 Views (60%)</strong>
-            <CProgress
-              class="progress-xs mt-2"
-              :precision="1"
-              color="warning"
-              :value="60"
-            />
-          </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0">
-            <div class="text-muted">New Users</div>
-            <strong>22.123 Users (80%)</strong>
-            <CProgress
-              class="progress-xs mt-2"
-              :precision="1"
-              color="danger"
-              :value="80"
-            />
-          </CCol>
-          <CCol md sm="12" class="mb-sm-2 mb-0 d-md-down-none">
-            <div class="text-muted">Bounce Rate</div>
-            <strong>Average Rate (40.15%)</strong>
-            <CProgress
-              class="progress-xs mt-2"
-              :precision="1"
-              :value="40"
-            />
-          </CCol>
-        </CRow>
-      </CCardFooter>
-    </CCard>
-    <WidgetsBrand/>
+    <IndicateursShow />
+
+
     <CRow>
-      <CCol md="12">
-        <CCard>
-          <CCardHeader>
-            Traffic &amp; Sales
-          </CCardHeader>
-          <CCardBody>
-            <CRow>
-              <CCol sm="12" lg="6">
-                <CRow>
-                  <CCol sm="6">
-                    <CCallout color="info">
-                      <small class="text-muted">New Clients</small><br>
-                      <strong class="h4">9,123</strong>
-                    </CCallout>
-                  </CCol>
-                  <CCol sm="6">
-                    <CCallout color="danger">
-                      <small class="text-muted">Recurring Clients</small><br>
-                      <strong class="h4">22,643</strong>
-                    </CCallout>
-                  </CCol>
-                </CRow>
-                <hr class="mt-0">
-                <div class="progress-group mb-4">
-                  <div class="progress-group-prepend">
-                    <span class="progress-group-text">
-                      Monday
-                    </span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress
-                      class="progress-xs"
-                      color="info"
-                      :value="34"
-                    />
-                    <CProgress
-                      class="progress-xs"
-                      color="danger"
-                      :value="78"
-                    />
-                  </div>
-                </div>
-                <div class="progress-group mb-4">
-                  <div class="progress-group-prepend">
-                    <span class="progress-group-text">
-                      Tuesday
-                    </span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress
-                      class="progress-xs"
-                      :value="56"
-                      color="info"
-                    />
-                    <CProgress
-                      class="progress-xs"
-                      :value="94"
-                      color="danger"
-                    />
-                  </div>
-                </div>
-                <div class="progress-group mb-4">
-                  <div class="progress-group-prepend">
-                    <span class="progress-group-text">
-                      Wednesday
-                    </span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress
-                      class="progress-xs"
-                      :value="12"
-                      color="info"
-                    />
-                    <CProgress
-                      class="progress-xs"
-                      :value="67"
-                      color="danger"
-                    />
-                  </div>
-                </div>
-                <div class="progress-group mb-4">
-                  <div class="progress-group-prepend">
-                    <span class="progress-group-text">
-                      Thursday
-                    </span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress
-                      class="progress-xs"
-                      :value="43"
-                      color="info"
-                    />
-                    <CProgress
-                      class="progress-xs"
-                      :value="91"
-                      color="danger"
-                    />
-                  </div>
-                </div>
-                <div class="progress-group mb-4">
-                  <div class="progress-group-prepend">
-                    <span class="progress-group-text">
-                      Friday
-                    </span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress
-                      class="progress-xs"
-                      :value="22"
-                      color="info"
-                    />
-                    <CProgress
-                      class="progress-xs"
-                      :value="73"
-                      color="danger"
-                    />
-                  </div>
-                </div>
-                <div class="progress-group mb-4">
-                  <div class="progress-group-prepend">
-                    <span class="progress-group-text">
-                      Saturday
-                    </span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress
-                      class="progress-xs"
-                      :value="53"
-                      color="info"
-                    />
-                    <CProgress
-                      class="progress-xs"
-                      :value="82"
-                      color="danger"
-                    />
-                  </div>
-                </div>
-                <div class="progress-group mb-4">
-                  <div class="progress-group-prepend">
-                    <span class="progress-group-text">
-                      Sunday
-                    </span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress
-                      class="progress-xs"
-                      :value="9"
-                      color="info"
-                    />
-                    <CProgress
-                      class="progress-xs"
-                      :value="69"
-                      color="danger"
-                    />
-                  </div>
-                </div>
-                <div class="legend text-center">
-                  <small>
-                    <sup><CBadge shape="pill" color="info">&nbsp;</CBadge></sup>
-                    New clients
-                    &nbsp;&nbsp;
-                    <sup><CBadge shape="pill" color="danger">&nbsp;</CBadge></sup>
-                    Recurring clients
-                  </small>
-                </div>
-              </CCol>
-              <CCol sm="12" lg="6">
-                <CRow>
-                  <CCol sm="6">
-                    <CCallout color="warning">
-                      <small class="text-muted">Pageviews</small><br>
-                      <strong class="h4">78,623</strong>
-                    </CCallout>
-                  </CCol>
-                  <CCol sm="6">
-                    <CCallout color="success">
-                      <small class="text-muted">Organic</small><br>
-                      <strong class="h4">49,123</strong>
-                    </CCallout>
-                  </CCol>
-                </CRow>
-                <hr class="mt-0">
-                <ul class="horizontal-bars type-2">
-                  <div class="progress-group">
-                    <div class="progress-group-header">
-                      <CIcon name="cil-user" class="progress-group-icon"/>
-                      <span class="title">Male</span>
-                      <span class="ml-auto font-weight-bold">43%</span>
-                    </div>
-                    <div class="progress-group-bars">
-                      <CProgress
-                        class="progress-xs"
-                        :value="43"
-                        color="warning"
-                      />
-                    </div>
-                  </div>
-                  <div class="progress-group mb-5">
-                    <div class="progress-group-header">
-                      <CIcon name="cil-user-female" class="progress-group-icon"/>
-                      <span class="title">Female</span>
-                      <span class="ml-auto font-weight-bold">37%</span>
-                    </div>
-                    <div class="progress-group-bars">
-                      <CProgress
-                        class="progress-xs"
-                        :value="37"
-                        color="warning"
-                      />
-                    </div>
-                  </div>
-                  <div class="progress-group">
-                    <div class="progress-group-header">
-                      <CIcon name="cil-globe-alt" class="progress-group-icon"/>
-                      <span class="title">Organic Search</span>
-                      <span class="ml-auto font-weight-bold">
-                        191,235 <span class="text-muted small">(56%)</span>
-                      </span>
-                    </div>
-                    <div class="progress-group-bars">
-                      <CProgress
-                        class="progress-xs"
-                        :value="56"
-                        color="success"
-                      />
-                    </div>
-                  </div>
-                  <div class="progress-group">
-                    <div class="progress-group-header">
-                      <CIcon
-                        name="cib-facebook"
-                        height="17"
-                        class="progress-group-icon"
-                      />
-                      <span class="title">Facebook</span>
-                      <span class="ml-auto font-weight-bold">
-                        51,223 <span class="text-muted small">(15%)</span>
-                      </span>
-                    </div>
-                    <div class="progress-group-bars">
-                      <CProgress
-                        class="progress-xs"
-                        :value="15"
-                        color="success"
-                      />
-                    </div>
-                  </div>
-                  <div class="progress-group">
-                    <div class="progress-group-header">
-                      <CIcon
-                        name="cib-twitter"
-                        height="17"
-                        class="progress-group-icon"
-                      />
-                      <span class="title">Twitter</span>
-                      <span class="ml-auto font-weight-bold">
-                        37,564 <span class="text-muted small">(11%)</span>
-                      </span>
-                    </div>
-                    <div class="progress-group-bars">
-                      <CProgress
-                        class="progress-xs"
-                        :value="11"
-                        color="success"
-                      />
-                    </div>
-                  </div>
-                  <div class="progress-group">
-                    <div class="progress-group-header">
-                      <CIcon
-                        name="cib-linkedin"
-                        height="17"
-                        class="progress-group-icon"
-                      />
-                      <span class="title">LinkedIn</span>
-                      <span class="ml-auto font-weight-bold">
-                        27,319 <span class="text-muted small">&nbsp;(8%)</span>
-                      </span>
-                    </div>
-                    <div class="progress-group-bars">
-                      <CProgress
-                        class="progress-xs"
-                        :value="8"
-                        color="success"
-                      />
-                    </div>
-                  </div>
-                  <div class="divider text-center">
-                    <CButton color="link" size="sm" class="text-muted">
-                      <CIcon name="cil-options"/>
-                    </CButton>
-                  </div>
-                </ul>
-              </CCol>
-            </CRow>
-            <br/>
-            <CDataTable
-              class="mb-0 table-outline"
-              hover
-              :items="tableItems"
-              :fields="tableFields"
-              head-color="light"
-              no-sorting
-            >
-              <td slot="avatar" class="text-center" slot-scope="{item}">
-                <div class="c-avatar">
-                  <img :src="item.avatar.url" class="c-avatar-img" alt="">
-                  <span
-                    class="c-avatar-status"
-                    :class="`bg-${item.avatar.status || 'secondary'}`"
-                  ></span>
-                </div>
-              </td>
-              <td slot="user" slot-scope="{item}">
-                <div>{{item.user.name}}</div>
-                <div class="small text-muted">
-                  <span>
-                    <template v-if="item.user.new">New</template>
-                    <template v-else>Recurring</template>
-                  </span> | Registered: {{item.user.registered}}
-                </div>
-              </td>
-              <td
-                slot="country"
-                slot-scope="{item}"
-                class="text-center"
-              >
-                <CIcon
-                  :name="item.country.flag"
-                  height="25"
-                />
-              </td>
-              <td slot="usage" slot-scope="{item}">
-                <div class="clearfix">
-                  <div class="float-left">
-                    <strong>{{item.usage.value}}%</strong>
-                  </div>
-                  <div class="float-right">
-                    <small class="text-muted">{{item.usage.period}}</small>
-                  </div>
-                </div>
-                <CProgress
-                  class="progress-xs"
-                  v-model="item.usage.value"
-                  :color="color(item.usage.value)"
-                />
-              </td>
-              <td
-                slot="payment"
-                slot-scope="{item}"
-                class="text-center"
-              >
-                <CIcon
-                  :name="item.payment.icon"
-                  height="25"
-                />
-              </td>
-              <td slot="activity" slot-scope="{item}">
-                <div class="small text-muted">Last login</div>
-                <strong>{{item.activity}}</strong>
-              </td>
-            </CDataTable>
-          </CCardBody>
-        </CCard>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Répartition population par sexe" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Ménages connectés SONABEL" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Répartition population par groupe d'âge" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Ménages avec accès internet" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2"
+          indicateur="Principale source d'approvisionnement en eau de boisson est le Forage" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2"
+          indicateur="Principale source d'approvisionnement en eau de boisson est la Fontaine publique" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2"
+          indicateur="Principale source d'approvisionnement en eau de boisson est le Robinet-compteur intérieur propre" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Accès à l'eau potable" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Une chasse d'eau en commun" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Une latrine" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2"
+          indicateur="Proportion de ménages dont le type d'aisance est Brousse/nature" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Cultures pluviales" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de cultures irriguées" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de cultures maraichères" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="L'élevage" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de l'apiculture" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de l'arboriculture fruitière" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de la sylviculture" />
+      </CCol>
+      <CCol sm="6" lg="4">
+        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de la pèche et l'aquaculture" />
       </CCol>
     </CRow>
+    
+
   </div>
 </template>
 
 <script>
 import MainChartExample from './charts/MainChartExample'
-import WidgetsDropdown from './widgets/WidgetsDropdown'
+import IndicateursShow from './dashboard/IndicateursShow'
+import IndicateursSecteur1 from './dashboard/IndicateursSecteur1'
 import WidgetsBrand from './widgets/WidgetsBrand'
+import { CChartPie } from '@coreui/vue-chartjs'
+import axios from 'axios'
 
 export default {
   name: 'Dashboard',
   components: {
     MainChartExample,
-    WidgetsDropdown,
-    WidgetsBrand
+    IndicateursShow,
+    IndicateursSecteur1,
+    WidgetsBrand, CChartPie
   },
-  data () {
+  computed: {
+    defaultDatasets() {
+      return [
+        {
+          backgroundColor: [
+            '#41B883',
+            '#E46651',
+            '#00D8FF',
+            '#DD1B16'
+          ],
+          data: [40, 20, 80, 10]
+        }
+      ]
+    }
+  },
+  data() {
     return {
       selected: 'Month',
+      repartitionPopulationParSexe: [
+        {
+          backgroundColor: [
+            '#41B883',
+            '#E46651',
+            '#00D8FF',
+            '#DD1B16'
+          ],
+          data: [],
+          labels: [],
+          titre: ""
+        }
+      ],
       tableItems: [
         {
           avatar: { url: 'img/avatars/1.jpg', status: 'success' },
@@ -529,7 +179,7 @@ export default {
     }
   },
   methods: {
-    color (value) {
+    color(value) {
       let $color
       if (value <= 25) {
         $color = 'info'
@@ -541,7 +191,53 @@ export default {
         $color = 'danger'
       }
       return $color
+    },
+    getRepartitionPopulationParSexe() {
+      let self = this;
+      const criteria = {
+        indicateur: "Répartition population par sexe",
+        commune_id: 2
+      };
+      axios.post(this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
+        criteria
+      )
+        .then(function (response) {
+          self.items = response.data;
+          console.log(response.data);
+          self.repartitionPopulationParSexe = [{
+            backgroundColor: [
+              '#41B883',
+              '#E46651',
+              '#00D8FF',
+              '#DD1B16'
+            ],
+            data: [],
+            labels: []
+          }]
+          for (let d of response.data) {
+            self.repartitionPopulationParSexe[0].data.push(d.indice);
+            self.repartitionPopulationParSexe[0].labels.push(d.niveau1);
+            self.repartitionPopulationParSexe[0].titre = d.indicateur;
+          }
+        }).catch(function (error) {
+          if (error.response.data.message == 'The given data was invalid.') {
+            self.message = '';
+            for (let key in error.response.data.errors) {
+              if (error.response.data.errors.hasOwnProperty(key)) {
+                self.message += error.response.data.errors[key][0] + '  ';
+              }
+            }
+            self.showAlert();
+          } else {
+            console.log(error);
+            // self.$router.push({ path: 'login' }); 
+          }
+        });
     }
+  },
+  mounted: function () {
+    let self = this;
+    self.getRepartitionPopulationParSexe();
   }
 }
 </script>
