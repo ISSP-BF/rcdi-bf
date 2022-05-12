@@ -51,7 +51,7 @@
                   :is-valid="ageCalculeAndValidator"></CInput>
             <CInput label="Date deces" type="date" placeholder="Date deces" v-model="acteDeces.date_deces" invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="ageCalculeAndValidator"></CInput>
-            <CInput label="Age" type="text" placeholder="Age" v-model="acteDeces.age" disabled></CInput>
+            <CInput label="Age" type="text" placeholder="Age" v-model="acteDeces.age"></CInput>
             <CInput label="Date Etablissement" type="date" placeholder="Date Etablissement" v-model="acteDeces.date_etablissement" invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeEnCourValidator"></CInput>
             <CInput label="Profession" type="text" placeholder="Profession" v-model="acteDeces.profession"></CInput>
