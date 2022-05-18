@@ -2,43 +2,39 @@
   <CRow>
     <CCol col="12" lg="8">
       <CCard>
-          <CCardHeader><h4>Détail de la VaccinationEnfant id:  {{ $route.params.id }}</h4> </CCardHeader>
+          <CCardHeader><h4>Détail de la Systeme Information Sanitaire id:  {{ $route.params.id }}</h4> </CCardHeader>
         <CCardBody>
           <div class="row">
             <div class="col-lg-6"><h5>Region : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.region}}</div>
+            <div class="col-lg-6">{{indicateurCarteSanitaire.region}}</div>
           </div>
           <div class="row">
             <div class="col-lg-6"><h5>Province : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.province}}</div>
+            <div class="col-lg-6">{{indicateurCarteSanitaire.province}}</div>
           </div>
           <div class="row">
             <div class="col-lg-6"><h5>Commune : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.commune}}</div>
+            <div class="col-lg-6">{{indicateurCarteSanitaire.commune}}</div>
           </div>
           <div class="row">
             <div class="col-lg-6"><h5>District : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.district}}</div>
+            <div class="col-lg-6">{{indicateurCarteSanitaire.district}}</div>
           </div>
           <div class="row">
             <div class="col-lg-6"><h5>Formation Sanitaire : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.formationSanitaire}}</div>
+            <div class="col-lg-6">{{indicateurCarteSanitaire.formationSanitaire}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-6"><h5>NbBCG : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.NbBCG}}</div>
+            <div class="col-lg-6"><h5>NbLit_SuiteCouche : </h5></div>
+            <div class="col-lg-6">{{indicateurCarteSanitaire.NbLit_SuiteCouche}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-6"><h5>NbDTCHepBHib1 : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.NbDTCHepBHib1}}</div>
+            <div class="col-lg-6"><h5>NbLit_HospiMaternite : </h5></div>
+            <div class="col-lg-6">{{indicateurCarteSanitaire.NbLit_HospiMaternite}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-6"><h5>NbDTCHepBHib : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.NbDTCHepBHib}}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>NbRR1 : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.NbRR1}}</div>
+            <div class="col-lg-6"><h5>NbLit_HospiAutreService : </h5></div>
+            <div class="col-lg-6">{{indicateurCarteSanitaire.NbLit_HospiAutreService}}</div>
           </div>
           
         </CCardBody>
@@ -48,11 +44,11 @@
           <div class="row float-right">
             
             <div>Créateur : </div>
-            <div>{{vaccinationEnfant.created_by}} <CBadge color="primary">{{vaccinationEnfant.created_at|formatDate}}</CBadge></div>
+            <div>{{indicateurCarteSanitaire.created_by}} <CBadge color="primary">{{indicateurCarteSanitaire.created_at|formatDate}}</CBadge></div>
           
             <div>Modificateur : </div>
-            <div>{{vaccinationEnfant.updated_by}} 
-            <CBadge color="danger">{{vaccinationEnfant.updated_at|formatDate}}</CBadge>
+            <div>{{indicateurCarteSanitaire.updated_by}} 
+            <CBadge color="danger">{{indicateurCarteSanitaire.updated_at|formatDate}}</CBadge>
             </div>
           </div>
           </CCardFooter>      
@@ -75,7 +71,7 @@ export default {
   },
   data: () => {
     return {
-      vaccinationEnfant: [],
+      indicateurCarteSanitaire: [],
     }
   },
   methods: {
@@ -86,9 +82,9 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/vaccination_enfants/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/indicateur_carte_sanitaires/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
-      self.vaccinationEnfant = response.data;
+      self.indicateurCarteSanitaire = response.data;
       console.log(response)
     }).catch(function (error) {
       console.log(error);

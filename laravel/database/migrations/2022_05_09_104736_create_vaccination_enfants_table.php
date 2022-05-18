@@ -41,6 +41,6 @@ class CreateVaccinationEnfantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vacination_enfants');
+        Schema::dropIfExists('vaccination_enfants');
     }
 }

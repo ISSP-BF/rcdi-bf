@@ -240,6 +240,66 @@ const EditConsultationPostnatale = () =>
 const CreateConsultationPostnatale = () =>
     import ('@/views/consultation_postnatales/CreateConsultationPostnatale')
 
+//VaccinationEnfants
+const VaccinationEnfants = () =>
+    import ('@/views/vaccination_enfants/VaccinationEnfants')
+const VaccinationEnfant = () =>
+    import ('@/views/vaccination_enfants/VaccinationEnfant')
+const EditVaccinationEnfant = () =>
+    import ('@/views/vaccination_enfants/EditVaccinationEnfant')
+const CreateVaccinationEnfant = () =>
+    import ('@/views/vaccination_enfants/CreateVaccinationEnfant')
+
+
+//PlanificationFamiliales
+const PlanificationFamiliales = () =>
+    import ('@/views/planification_familiales/PlanificationFamiliales')
+const PlanificationFamiliale = () =>
+    import ('@/views/planification_familiales/PlanificationFamiliale')
+const EditPlanificationFamiliale = () =>
+    import ('@/views/planification_familiales/EditPlanificationFamiliale')
+const CreatePlanificationFamiliale = () =>
+    import ('@/views/planification_familiales/CreatePlanificationFamiliale')
+
+//MorbilitePaludismes
+const MorbilitePaludismes = () =>
+    import ('@/views/morbilite_paludismes/MorbilitePaludismes')
+const MorbilitePaludisme = () =>
+    import ('@/views/morbilite_paludismes/MorbilitePaludisme')
+const EditMorbilitePaludisme = () =>
+    import ('@/views/morbilite_paludismes/EditMorbilitePaludisme')
+const CreateMorbilitePaludisme = () =>
+    import ('@/views/morbilite_paludismes/CreateMorbilitePaludisme')
+
+//ServiceCuratifs
+const ServiceCuratifs = () =>
+    import ('@/views/service_curatifs/ServiceCuratifs')
+const ServiceCuratif = () =>
+    import ('@/views/service_curatifs/ServiceCuratif')
+const EditServiceCuratif = () =>
+    import ('@/views/service_curatifs/EditServiceCuratif')
+const CreateServiceCuratif = () =>
+    import ('@/views/service_curatifs/CreateServiceCuratif')
+    //SystemeInformationSanitaires
+const SystemeInformationSanitaires = () =>
+    import ('@/views/systeme_information_sanitaires/SystemeInformationSanitaires')
+const SystemeInformationSanitaire = () =>
+    import ('@/views/systeme_information_sanitaires/SystemeInformationSanitaire')
+const EditSystemeInformationSanitaire = () =>
+    import ('@/views/systeme_information_sanitaires/EditSystemeInformationSanitaire')
+const CreateSystemeInformationSanitaire = () =>
+    import ('@/views/systeme_information_sanitaires/CreateSystemeInformationSanitaire')
+
+//IndicateurCarteSanitaires
+const IndicateurCarteSanitaires = () =>
+    import ('@/views/indicateur_carte_sanitaires/IndicateurCarteSanitaires')
+const IndicateurCarteSanitaire = () =>
+    import ('@/views/indicateur_carte_sanitaires/IndicateurCarteSanitaire')
+const EditIndicateurCarteSanitaire = () =>
+    import ('@/views/indicateur_carte_sanitaires/EditIndicateurCarteSanitaire')
+const CreateIndicateurCarteSanitaire = () =>
+    import ('@/views/indicateur_carte_sanitaires/CreateIndicateurCarteSanitaire')
+
 //Roles
 const Roles = () =>
     import ('@/views/roles/Roles')
@@ -1130,6 +1190,264 @@ function configRoutes() {
                             meta: { label: 'Edit ConsultationPostnatale' },
                             name: 'Edit ConsultationPostnatale',
                             component: EditConsultationPostnatale,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'vaccination_enfants',
+                    meta: { label: 'VaccinationEnfants' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: VaccinationEnfants,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create VaccinationEnfant' },
+                            name: 'Create VaccinationEnfant',
+                            component: CreateVaccinationEnfant,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'VaccinationEnfant Details' },
+                            name: 'VaccinationEnfant',
+                            component: VaccinationEnfant,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit VaccinationEnfant' },
+                            name: 'Edit VaccinationEnfant',
+                            component: EditVaccinationEnfant,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'planification_familiales',
+                    meta: { label: 'PlanificationFamiliales' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: PlanificationFamiliales,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create PlanificationFamiliale' },
+                            name: 'Create PlanificationFamiliale',
+                            component: CreatePlanificationFamiliale,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'PlanificationFamiliale Details' },
+                            name: 'PlanificationFamiliale',
+                            component: PlanificationFamiliale,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit PlanificationFamiliale' },
+                            name: 'Edit PlanificationFamiliale',
+                            component: EditPlanificationFamiliale,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'morbilite_paludismes',
+                    meta: { label: 'MorbilitePaludismes' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: MorbilitePaludismes,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create MorbilitePaludisme' },
+                            name: 'Create MorbilitePaludisme',
+                            component: CreateMorbilitePaludisme,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'MorbilitePaludisme Details' },
+                            name: 'MorbilitePaludisme',
+                            component: MorbilitePaludisme,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit MorbilitePaludisme' },
+                            name: 'Edit MorbilitePaludisme',
+                            component: EditMorbilitePaludisme,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'service_curatifs',
+                    meta: { label: 'ServiceCuratifs' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: ServiceCuratifs,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create ServiceCuratif' },
+                            name: 'Create ServiceCuratif',
+                            component: CreateServiceCuratif,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'ServiceCuratif Details' },
+                            name: 'ServiceCuratif',
+                            component: ServiceCuratif,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit ServiceCuratif' },
+                            name: 'Edit ServiceCuratif',
+                            component: EditServiceCuratif,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'systeme_information_sanitaires',
+                    meta: { label: 'SystemeInformationSanitaires' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: SystemeInformationSanitaires,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create SystemeInformationSanitaire' },
+                            name: 'Create SystemeInformationSanitaire',
+                            component: CreateSystemeInformationSanitaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'SystemeInformationSanitaire Details' },
+                            name: 'SystemeInformationSanitaire',
+                            component: SystemeInformationSanitaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit SystemeInformationSanitaire' },
+                            name: 'Edit SystemeInformationSanitaire',
+                            component: EditSystemeInformationSanitaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'indicateur_carte_sanitaires',
+                    meta: { label: 'IndicateurCarteSanitaires' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: IndicateurCarteSanitaires,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create IndicateurCarteSanitaire' },
+                            name: 'Create IndicateurCarteSanitaire',
+                            component: CreateIndicateurCarteSanitaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'IndicateurCarteSanitaire Details' },
+                            name: 'IndicateurCarteSanitaire',
+                            component: IndicateurCarteSanitaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit IndicateurCarteSanitaire' },
+                            name: 'Edit IndicateurCarteSanitaire',
+                            component: EditIndicateurCarteSanitaire,
                             meta: {
                                 requiresUser: true
                             }

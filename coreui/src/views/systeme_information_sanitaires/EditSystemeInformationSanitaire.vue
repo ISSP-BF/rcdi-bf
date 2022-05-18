@@ -5,7 +5,7 @@
          <CCardHeader>
           
           <h5>
-          Modifier la Vaccination Enfant id:  {{ $route.params.id }}
+          Modifier le système d'information sanitaire id:  {{ $route.params.id }}
           </h5>
         </CCardHeader>
         <CCardBody>
@@ -23,53 +23,53 @@
             
             <CSelect
               label="Region"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.region_id"
+              :value.sync="systemeInformationSanitaire.region_id"
               :plain="true"
               :options="regions"
-              v-model="vaccinationEnfant.region_id"
+              v-model="systemeInformationSanitaire.region_id"
             >
             </CSelect>
             
             <CSelect
               label="Province"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.province_id"
+              :value.sync="systemeInformationSanitaire.province_id"
               :plain="true"
               :options="provinces"
-              v-model="vaccinationEnfant.province_id"
+              v-model="systemeInformationSanitaire.province_id"
             >
             </CSelect>
             
             <CSelect
               label="Commune"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.commune_id"
+              :value.sync="systemeInformationSanitaire.commune_id"
               :plain="true"
               :options="communes"
-              v-model="vaccinationEnfant.commune_id"
+              v-model="systemeInformationSanitaire.commune_id"
             >
             </CSelect>
             
             <CSelect
               label="District"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.district_id"
+              :value.sync="systemeInformationSanitaire.district_id"
               :plain="true"
               :options="districts"
-              v-model="vaccinationEnfant.district_id"
+              v-model="systemeInformationSanitaire.district_id"
             >
             </CSelect>
             
             <CSelect
               label="Formation Sanitaire"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.formation_sanitaire_id"
+              :value.sync="systemeInformationSanitaire.formation_sanitaire_id"
               :plain="true"
               :options="formationSanitaires"
-              v-model="vaccinationEnfant.formation_sanitaire_id"
+              v-model="systemeInformationSanitaire.formation_sanitaire_id"
             >
             </CSelect>
 
-            <CInput label="Annee" type="number" placeholder="Annee" v-model="vaccinationEnfant.annee" class="col-lg-3"
+            <CInput label="Annee" type="number" placeholder="Annee" v-model="systemeInformationSanitaire.annee" class="col-lg-3"
                   invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeValidator"></CInput>
-            <CInput label="Mois" type="number" placeholder="Mois" v-model="vaccinationEnfant.mois" class="col-lg-3"
+            <CInput label="Mois" type="number" placeholder="Mois" v-model="systemeInformationSanitaire.mois" class="col-lg-3"
                   invalid-feedback="Veuillez saisir un mois valide"
                   :is-valid="moisValidator"
             ></CInput>
@@ -88,10 +88,9 @@
             Mesures
         </h6>
         <div class="row"> 
-            <CInput label="BCG" type="number" placeholder="NbBCG" v-model="vaccinationEnfant.NbBCG"  class="col-lg-4"></CInput>
-            <CInput label="DTCHepBHib1" type="number" placeholder="NbDTCHepBHib1" v-model="vaccinationEnfant.NbDTCHepBHib1"  class="col-lg-4"></CInput>
-            <CInput label="DTCHepBHib3" type="number" placeholder="NbDTCHepBHib" v-model="vaccinationEnfant.NbDTCHepBHib"  class="col-lg-4"></CInput>
-            <CInput label="RR1" type="number" placeholder="NbRR1" v-model="vaccinationEnfant.NbRR1"  class="col-lg-4"></CInput>
+            <CInput label="NbNouveaux_consultant" type="number" placeholder="NbNouveaux_consultant" v-model="systemeInformationSanitaire.NbNouveaux_consultant"  class="col-lg-4"></CInput>
+            <CInput label="NbEnft_PrisCharge_PCIME" type="number" placeholder="NbEnft_PrisCharge_PCIME" v-model="systemeInformationSanitaire.NbEnft_PrisCharge_PCIME"  class="col-lg-4"></CInput>
+            <CInput label="NbMaladie_MisObservation" type="number" placeholder="NbMaladie_MisObservation" v-model="systemeInformationSanitaire.NbMaladie_MisObservation"  class="col-lg-4"></CInput>
         </div>
           <CButton color="primary" @click="update()">Modifier</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
@@ -113,7 +112,7 @@ export default {
   },
   data: () => {
     return {
-        vaccinationEnfant: {
+        systemeInformationSanitaire: {
           region_id: null,
           province_id: null,
           commune_id: null,
@@ -121,10 +120,9 @@ export default {
           formation_sanitaire_id: null,
           annee: null,
           mois: null,
-          NbBCG:null,
-          NbDTCHepBHib1:null,
-          NbDTCHepBHib:null,
-          NbRR1:null,
+          NbNouveaux_consultant : null,
+          NbEnft_PrisCharge_PCIME : null,
+          NbMaladie_MisObservation : null,
         },
         regions: [],
         provinces: [],
@@ -144,12 +142,12 @@ export default {
     update() {
         let self = this;
 
-        axios.put(  this.$apiAdress + '/api/vaccination_enfants/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
-        self.vaccinationEnfant)
+        axios.put(  this.$apiAdress + '/api/systeme_information_sanitaires/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
+        self.systemeInformationSanitaire)
         .then(function (response) {
-            self.message = 'Successfully updated Formation Sanitaire.';
+            self.message = "Successfully updated Système d'information Sanitaire.";
             self.showAlert();
-            self.$toasted.show("Vaccination Enfant a été mise à jour avec succès",{type:"success"});
+            self.$toasted.show(" Système d'information Sanitaire a été mise à jour avec succès",{type:"success"});
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';
@@ -178,10 +176,10 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/vaccination_enfants/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/systeme_information_sanitaires/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
       console.log(response.data)
-        self.vaccinationEnfant = response.data.vaccinationEnfant;
+        self.systemeInformationSanitaire = response.data.systemeInformationSanitaire;
         self.regions = response.data.regions;
         self.provinces = response.data.provinces;
         self.communes = response.data.communes;

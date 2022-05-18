@@ -5,7 +5,7 @@
          <CCardHeader>
           
           <h5>
-           Ajouter une Vaccination Enfant
+           Ajouter une morbilite paludisme
           </h5>
         </CCardHeader>
         <CCardBody>
@@ -23,53 +23,53 @@
             
             <CSelect
               label="Region"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.region_id"
+              :value.sync="indicateurCarteSanitaire.region_id"
               :plain="true"
               :options="regions"
-              v-model="vaccinationEnfant.region_id"
+              v-model="indicateurCarteSanitaire.region_id"
             >
             </CSelect>
             
             <CSelect
               label="Province"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.province_id"
+              :value.sync="indicateurCarteSanitaire.province_id"
               :plain="true"
               :options="provinces"
-              v-model="vaccinationEnfant.province_id"
+              v-model="indicateurCarteSanitaire.province_id"
             >
             </CSelect>
             
             <CSelect
               label="Commune"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.commune_id"
+              :value.sync="indicateurCarteSanitaire.commune_id"
               :plain="true"
               :options="communes"
-              v-model="vaccinationEnfant.commune_id"
+              v-model="indicateurCarteSanitaire.commune_id"
             >
             </CSelect>
             
             <CSelect
               label="District"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.district_id"
+              :value.sync="indicateurCarteSanitaire.district_id"
               :plain="true"
               :options="districts"
-              v-model="vaccinationEnfant.district_id"
+              v-model="indicateurCarteSanitaire.district_id"
             >
             </CSelect>
             
             <CSelect
               label="Formation Sanitaire"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.formation_sanitaire_id"
+              :value.sync="indicateurCarteSanitaire.formation_sanitaire_id"
               :plain="true"
               :options="formationSanitaires"
-              v-model="vaccinationEnfant.formation_sanitaire_id"
+              v-model="indicateurCarteSanitaire.formation_sanitaire_id"
             >
             </CSelect>
 
-            <CInput label="Annee" type="number" placeholder="Annee" v-model="vaccinationEnfant.annee" class="col-lg-3"
+            <CInput label="Annee" type="number" placeholder="Annee" v-model="indicateurCarteSanitaire.annee" class="col-lg-3"
                   invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeValidator"></CInput>
-            <CInput label="Mois" type="number" placeholder="Mois" v-model="vaccinationEnfant.mois" class="col-lg-3"
+            <CInput label="Mois" type="number" placeholder="Mois" v-model="indicateurCarteSanitaire.mois" class="col-lg-3"
                   invalid-feedback="Veuillez saisir un mois valide"
                   :is-valid="moisValidator"
             ></CInput>
@@ -87,11 +87,10 @@
          <h6>
             Mesures
         </h6>
-        <div class="row"> 
-            <CInput label="BCG" type="number" placeholder="NbBCG" v-model="vaccinationEnfant.NbBCG"  class="col-lg-4"></CInput>
-            <CInput label="DTCHepBHib1" type="number" placeholder="NbDTCHepBHib1" v-model="vaccinationEnfant.NbDTCHepBHib1"  class="col-lg-4"></CInput>
-            <CInput label="DTCHepBHib3" type="number" placeholder="NbDTCHepBHib" v-model="vaccinationEnfant.NbDTCHepBHib"  class="col-lg-4"></CInput>
-            <CInput label="RR1" type="number" placeholder="NbRR1" v-model="vaccinationEnfant.NbRR1"  class="col-lg-4"></CInput>
+        <div class="row">
+            <CInput label="NbLit_SuiteCouche" type="number" placeholder="NbLit_SuiteCouche" v-model="indicateurCarteSanitaire.NbLit_SuiteCouche"  class="col-lg-4"></CInput>
+            <CInput label="NbLit_HospiMaternite" type="number" placeholder="NbLit_HospiMaternite" v-model="indicateurCarteSanitaire.NbLit_HospiMaternite"  class="col-lg-4"></CInput>
+            <CInput label="NbLit_HospiAutreService" type="number" placeholder="NbLit_HospiAutreService" v-model="indicateurCarteSanitaire.NbLit_HospiAutreService"  class="col-lg-4"></CInput>
         </div>
           <CButton color="primary" @click="store()">Ajouter</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
@@ -101,19 +100,20 @@
   </CRow>
 </template>
 
+
 <script>
 import axios from 'axios'
 export default {
-  name: 'EditVaccinationEnfant',
+  name: 'EditIndicateurCarteSanitaire',
   props: {
     caption: {
       type: String,
-      default: 'VaccinationEnfant id'
+      default: 'IndicateurCarteSanitaire id'
     },
   },
   data: () => {
     return {
-        vaccinationEnfant: {
+        indicateurCarteSanitaire: {
           region_id: null,
           province_id: null,
           commune_id: null,
@@ -121,11 +121,9 @@ export default {
           formation_sanitaire_id: null,
           annee: null,
           mois: null,
-
-          NbBCG:null,
-          NbDTCHepBHib1:null,
-          NbDTCHepBHib:null,
-          NbRR1:null,
+          NbLit_SuiteCouche:null,
+          NbLit_HospiMaternite:null,
+          NbLit_HospiAutreService:null,
         },
         regions: [],
         provinces: [],
@@ -144,22 +142,22 @@ export default {
     },
     store() {
         let self = this;
-        console.log(self.vaccinationEnfant)
-        axios.post(  this.$apiAdress + '/api/vaccination_enfants?token=' + localStorage.getItem("api_token"),
-          self.vaccinationEnfant
+        console.log(self.indicateurCarteSanitaire)
+        axios.post(  this.$apiAdress + '/api/indicateur_carte_sanitaires?token=' + localStorage.getItem("api_token"),
+          self.indicateurCarteSanitaire
         )
         .then(function (response) {
-            self.vaccinationEnfant = {
+            self.indicateurCarteSanitaire = {
             };
-            self.vaccinationEnfant.region_id = self.regions.length>0?self.regions[0].value:null;
-            self.vaccinationEnfant.province_id = self.provinces.length>0?self.provinces[0].value:null;
-            self.vaccinationEnfant.province_id = self.provinces.length>0?self.provinces[0].value:null;
-            self.vaccinationEnfant.commune_id = self.communes.length>0?self.communes[0].value:null;
-            self.vaccinationEnfant.district_id = self.districts.length>0?self.districts[0].value:null;
-            self.vaccinationEnfant.formation_sanitaire_id = self.formationSanitaires.length>0?self.formationSanitaires[0].value:null;
+            self.indicateurCarteSanitaire.region_id = self.regions.length>0?self.regions[0].value:null;
+            self.indicateurCarteSanitaire.province_id = self.provinces.length>0?self.provinces[0].value:null;
+            self.indicateurCarteSanitaire.province_id = self.provinces.length>0?self.provinces[0].value:null;
+            self.indicateurCarteSanitaire.commune_id = self.communes.length>0?self.communes[0].value:null;
+            self.indicateurCarteSanitaire.district_id = self.districts.length>0?self.districts[0].value:null;
+            self.indicateurCarteSanitaire.formation_sanitaire_id = self.formationSanitaires.length>0?self.formationSanitaires[0].value:null;
 
             // self.message = 'Successfully created consultation Prenatale.';
-            self.$toasted.show("Vaccination Enfant créé avec succès",{type:"success"});
+            self.$toasted.show("Système d'information sanitaire créé avec succès",{type:"success"});
             self.showAlert();
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
@@ -192,7 +190,7 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/vaccination_enfants/create?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/indicateur_carte_sanitaires/create?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
         self.regions = response.data.regions;
         self.provinces = response.data.provinces;
@@ -200,12 +198,12 @@ export default {
         self.districts = response.data.districts;
         self.formationSanitaires = response.data.formationSanitaires;
         // Définir valeur par défaut
-        self.vaccinationEnfant.region_id = self.regions.length>0?self.regions[0].value:null;
-        self.vaccinationEnfant.province_id = self.provinces.length>0?self.provinces[0].value:null;
-        self.vaccinationEnfant.province_id = self.provinces.length>0?self.provinces[0].value:null;
-        self.vaccinationEnfant.commune_id = self.communes.length>0?self.communes[0].value:null;
-        self.vaccinationEnfant.district_id = self.districts.length>0?self.districts[0].value:null;
-        self.vaccinationEnfant.formation_sanitaire_id = self.formationSanitaires.length>0?self.formationSanitaires[0].value:null;
+        self.indicateurCarteSanitaire.region_id = self.regions.length>0?self.regions[0].value:null;
+        self.indicateurCarteSanitaire.province_id = self.provinces.length>0?self.provinces[0].value:null;
+        self.indicateurCarteSanitaire.province_id = self.provinces.length>0?self.provinces[0].value:null;
+        self.indicateurCarteSanitaire.commune_id = self.communes.length>0?self.communes[0].value:null;
+        self.indicateurCarteSanitaire.district_id = self.districts.length>0?self.districts[0].value:null;
+        self.indicateurCarteSanitaire.formation_sanitaire_id = self.formationSanitaires.length>0?self.formationSanitaires[0].value:null;
 
     }).catch(function (error) {
         console.log(error);

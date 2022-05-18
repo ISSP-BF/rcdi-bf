@@ -4,9 +4,9 @@
       <transition name="slide">
       <CCard>
          <CCardHeader>
-            Vaccination Enfants
+            Service Curatifs
             <div class="card-header-actions">
-             <CButton color="primary" @click="createVaccinationEnfant()">Ajouter</CButton>
+             <CButton color="primary" @click="createServiceCuratif()">Ajouter</CButton>
             </div>
         </CCardHeader>
         <CCardBody>
@@ -61,11 +61,11 @@
           <template #actions="{item}">
                 <td>
                   <div class="card-header-actions" style="display:flex">
-                  <CButton color="secondary"  size="sm" @click="showVaccinationEnfant( item.id )">Détail</CButton>
+                  <CButton color="secondary"  size="sm" @click="showServiceCuratif( item.id )">Détail</CButton>
                   &nbsp;
-                  <CButton  size="sm" color="primary" @click="editVaccinationEnfant( item.id )"><CIcon name="cil-pencil"/></CButton>
+                  <CButton  size="sm" color="primary" @click="editServiceCuratif( item.id )"><CIcon name="cil-pencil"/></CButton>
                   &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteVaccinationEnfant( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteServiceCuratif( item.id )"><CIcon name="cil-x-circle"/></CButton>
                   </div>
                 </td>
               </template>
@@ -81,13 +81,12 @@
 import axios from 'axios'
 
 export default {
-  name: 'VaccinationEnfant',
+  name: 'ServiceCuratif',
   data: () => {
     return {
       items: [],
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
-          'NbBCG','NbDTCHepBHib1','NbDTCHepBHib','NbRR1','actions'],
-
+     'NbNouveaux_consultant','NbEnft_PrisCharge_PCIME','NbMaladie_MisObservation','actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,
@@ -105,36 +104,36 @@ export default {
     getRowCount (items) {
       return items.length
     },
-    VaccinationEnfantLink (id) {
-      return `vaccination_enfants/${id.toString()}`
+    ServiceCuratifLink (id) {
+      return `service_curatifs/${id.toString()}`
     },
     editLink (id) {
-      return `vaccination_enfants/${id.toString()}/edit`
+      return `service_curatifs/${id.toString()}/edit`
     },
-    showVaccinationEnfant ( id ) {
-      const VaccinationEnfantLink = this.VaccinationEnfantLink( id );
-      this.$router.push({path: VaccinationEnfantLink});
+    showServiceCuratif ( id ) {
+      const ServiceCuratifLink = this.ServiceCuratifLink( id );
+      this.$router.push({path: ServiceCuratifLink});
     },
-    editVaccinationEnfant ( id ) {
+    editServiceCuratif ( id ) {
       const editLink = this.editLink( id );
       this.$router.push({path: editLink});
     },
-    deleteVaccinationEnfant ( id ) {
+    deleteServiceCuratif ( id ) {
       let self = this;
-      axios.post(  this.$apiAdress + '/api/vaccination_enfants/' + id + '?token=' + localStorage.getItem("api_token"), {
+      axios.post(  this.$apiAdress + '/api/service_curatifs/' + id + '?token=' + localStorage.getItem("api_token"), {
         _method: 'DELETE'
       })
       .then(function (response) {
-          self.message = 'Successfully deleted VaccinationEnfant.';
+          self.message = 'Successfully deleted Service curatif.';
           self.showAlert();
-          self.getVaccinationEnfant();
+          self.getServiceCuratif();
       }).catch(function (error) {
         console.log(error);
         self.$router.push({ path: '/login' });
       });
     },
-    createVaccinationEnfant () {
-      this.$router.push({path: 'vaccination_enfants/create'});
+    createServiceCuratif () {
+      this.$router.push({path: 'service_curatifs/create'});
     },
     countDownChanged (dismissCountDown) {
       this.dismissCountDown = dismissCountDown
@@ -142,9 +141,9 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-    getVaccinationEnfant (){
+    getServiceCuratif (){
       let self = this;
-      axios.get(  this.$apiAdress + '/api/vaccination_enfants?token=' + localStorage.getItem("api_token") )
+      axios.get(  this.$apiAdress + '/api/service_curatifs?token=' + localStorage.getItem("api_token") )
       .then(function (response) {
         self.items = response.data;
         console.log(response)
@@ -155,7 +154,7 @@ export default {
     }
   },
   mounted: function(){
-    this.getVaccinationEnfant();
+    this.getServiceCuratif();
   }
 }
 </script>

@@ -36,7 +36,12 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('ptmes', 'PtmesController');
     Route::resource('accouchements', 'AccouchementsController');
     Route::resource('consultation_postnatales', 'ConsultationPostnatalesController');
-    Route::resource('vacination_enfants', 'VacinationEnfantsController');
+    Route::resource('vaccination_enfants', 'VaccinationEnfantsController');
+    Route::resource('planification_familiales', 'PlanificationFamilialesController');
+    Route::resource('morbilite_paludismes', 'MorbilitePaludismesController');
+    Route::resource('service_curatifs', 'ServiceCuratifsController');
+    Route::resource('systeme_information_sanitaires', 'SystemeInformationSanitairesController');
+    Route::resource('indicateur_carte_sanitaires', 'IndicateurCarteSanitairesController');
     Route::resource('indicateurs', 'IndicateursController');
     Route::post('indicateurs/findBy', 'IndicateursController@findBy'); 
 

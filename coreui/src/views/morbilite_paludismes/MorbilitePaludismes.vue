@@ -4,9 +4,9 @@
       <transition name="slide">
       <CCard>
          <CCardHeader>
-            Vaccination Enfants
+            Morbilite Paludismes
             <div class="card-header-actions">
-             <CButton color="primary" @click="createVaccinationEnfant()">Ajouter</CButton>
+             <CButton color="primary" @click="createMorbilitePaludisme()">Ajouter</CButton>
             </div>
         </CCardHeader>
         <CCardBody>
@@ -61,11 +61,11 @@
           <template #actions="{item}">
                 <td>
                   <div class="card-header-actions" style="display:flex">
-                  <CButton color="secondary"  size="sm" @click="showVaccinationEnfant( item.id )">Détail</CButton>
+                  <CButton color="secondary"  size="sm" @click="showMorbilitePaludisme( item.id )">Détail</CButton>
                   &nbsp;
-                  <CButton  size="sm" color="primary" @click="editVaccinationEnfant( item.id )"><CIcon name="cil-pencil"/></CButton>
+                  <CButton  size="sm" color="primary" @click="editMorbilitePaludisme( item.id )"><CIcon name="cil-pencil"/></CButton>
                   &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteVaccinationEnfant( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteMorbilitePaludisme( item.id )"><CIcon name="cil-x-circle"/></CButton>
                   </div>
                 </td>
               </template>
@@ -81,13 +81,12 @@
 import axios from 'axios'
 
 export default {
-  name: 'VaccinationEnfant',
+  name: 'MorbilitePaludisme',
   data: () => {
     return {
       items: [],
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
-          'NbBCG','NbDTCHepBHib1','NbDTCHepBHib','NbRR1','actions'],
-
+     'NbCas_Suspect_Palu','NbCas_PaluSimple_Confirme','NbCas_PaluSimple_Presume','NbCas_PaluGrave_Confirme','NbCas_PaluGrave_Presume','NbCas_Deces_PaluGrave','actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,
@@ -105,36 +104,36 @@ export default {
     getRowCount (items) {
       return items.length
     },
-    VaccinationEnfantLink (id) {
-      return `vaccination_enfants/${id.toString()}`
+    MorbilitePaludismeLink (id) {
+      return `morbilite_paludismes/${id.toString()}`
     },
     editLink (id) {
-      return `vaccination_enfants/${id.toString()}/edit`
+      return `morbilite_paludismes/${id.toString()}/edit`
     },
-    showVaccinationEnfant ( id ) {
-      const VaccinationEnfantLink = this.VaccinationEnfantLink( id );
-      this.$router.push({path: VaccinationEnfantLink});
+    showMorbilitePaludisme ( id ) {
+      const MorbilitePaludismeLink = this.MorbilitePaludismeLink( id );
+      this.$router.push({path: MorbilitePaludismeLink});
     },
-    editVaccinationEnfant ( id ) {
+    editMorbilitePaludisme ( id ) {
       const editLink = this.editLink( id );
       this.$router.push({path: editLink});
     },
-    deleteVaccinationEnfant ( id ) {
+    deleteMorbilitePaludisme ( id ) {
       let self = this;
-      axios.post(  this.$apiAdress + '/api/vaccination_enfants/' + id + '?token=' + localStorage.getItem("api_token"), {
+      axios.post(  this.$apiAdress + '/api/morbilite_paludismes/' + id + '?token=' + localStorage.getItem("api_token"), {
         _method: 'DELETE'
       })
       .then(function (response) {
-          self.message = 'Successfully deleted VaccinationEnfant.';
+          self.message = 'Successfully deleted Planification Familiale.';
           self.showAlert();
-          self.getVaccinationEnfant();
+          self.getMorbilitePaludisme();
       }).catch(function (error) {
         console.log(error);
         self.$router.push({ path: '/login' });
       });
     },
-    createVaccinationEnfant () {
-      this.$router.push({path: 'vaccination_enfants/create'});
+    createMorbilitePaludisme () {
+      this.$router.push({path: 'morbilite_paludismes/create'});
     },
     countDownChanged (dismissCountDown) {
       this.dismissCountDown = dismissCountDown
@@ -142,9 +141,9 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-    getVaccinationEnfant (){
+    getMorbilitePaludisme (){
       let self = this;
-      axios.get(  this.$apiAdress + '/api/vaccination_enfants?token=' + localStorage.getItem("api_token") )
+      axios.get(  this.$apiAdress + '/api/morbilite_paludismes?token=' + localStorage.getItem("api_token") )
       .then(function (response) {
         self.items = response.data;
         console.log(response)
@@ -155,7 +154,7 @@ export default {
     }
   },
   mounted: function(){
-    this.getVaccinationEnfant();
+    this.getMorbilitePaludisme();
   }
 }
 </script>

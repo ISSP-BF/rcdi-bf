@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class VaccinationEnfants extends Model
+class PlanificationFamiliales extends Model
 {
 
     use HasFactory;
 
-    protected $table = 'vaccination_enfants';
+    protected $table = 'planification_familiales';
 
     /**
      * Get the User that owns the Districts.

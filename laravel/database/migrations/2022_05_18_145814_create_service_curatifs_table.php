@@ -4,17 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMorbilitePaludismesTable extends Migration
+class CreateServiceCuratifsTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
-     * 'NbCas_Suspect_Palu','NbCas_PaluSimple_Confirme','NbCas_PaluSimple_Presume','NbCas_PaluGrave_Confirme','NbCas_PaluGrave_Presume','NbCas_Deces_PaluGrave',
+     * 
+     *'NbNouveaux_consultant','NbEnft_PrisCharge_PCIME','NbMaladie_MisObservation',
      */
     public function up()
     {
-        Schema::create('morbilite_paludismes', function (Blueprint $table) {
+        Schema::create('service_curatifs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('region_id')->unsigned();
             $table->integer('province_id')->unsigned();
@@ -24,12 +25,9 @@ class CreateMorbilitePaludismesTable extends Migration
             $table->integer('annee')->unsigned();
             $table->integer('mois')->unsigned();
 
-            $table->string('NbCas_Suspect_Palu')->nullable();
-            $table->string('NbCas_PaluSimple_Confirme')->nullable();
-            $table->string('NbCas_PaluSimple_Presume')->nullable();
-            $table->string('NbCas_PaluGrave_Confirme')->nullable();
-            $table->string('NbCas_PaluGrave_Presume')->nullable();
-            $table->string('NbCas_Deces_PaluGrave')->nullable();
+            $table->string('NbNouveaux_consultant')->nullable();
+            $table->string('NbEnft_PrisCharge_PCIME')->nullable();
+            $table->string('NbMaladie_MisObservation')->nullable();
 
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();
@@ -44,6 +42,6 @@ class CreateMorbilitePaludismesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('morbilite_paludismes');
+        Schema::dropIfExists('service_curatifs');
     }
 }

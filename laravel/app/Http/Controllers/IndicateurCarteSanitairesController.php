@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\VaccinationEnfants;
+use App\Models\IndicateurCarteSanitaires;
 
-class VaccinationEnfantsController extends Controller
+class IndicateurCarteSanitairesController extends Controller
 {
 
     /**
@@ -26,21 +26,21 @@ class VaccinationEnfantsController extends Controller
      */
     public function index()
     {
-        $vaccinationEnfants = DB::table('vaccination_enfants')
-        ->join('users', 'users.id', '=', 'vaccination_enfants.created_by')
-        ->join('regions', 'regions.id', '=', 'vaccination_enfants.region_id')
-        ->join('provinces', 'provinces.id', '=', 'vaccination_enfants.province_id')
-        ->join('communes', 'communes.id', '=', 'vaccination_enfants.commune_id')
-        ->join('districts', 'districts.id', '=', 'vaccination_enfants.district_id')
-        ->join('formation_sanitaires', 'formation_sanitaires.id', '=', 'vaccination_enfants.formation_sanitaire_id')
-        ->select('vaccination_enfants.*', 'users.name as author', 
+        $indicateurCarteSanitaire = DB::table('indicateur_carte_sanitaires')
+        ->join('users', 'users.id', '=', 'indicateur_carte_sanitaires.created_by')
+        ->join('regions', 'regions.id', '=', 'indicateur_carte_sanitaires.region_id')
+        ->join('provinces', 'provinces.id', '=', 'indicateur_carte_sanitaires.province_id')
+        ->join('communes', 'communes.id', '=', 'indicateur_carte_sanitaires.commune_id')
+        ->join('districts', 'districts.id', '=', 'indicateur_carte_sanitaires.district_id')
+        ->join('formation_sanitaires', 'formation_sanitaires.id', '=', 'indicateur_carte_sanitaires.formation_sanitaire_id')
+        ->select('indicateur_carte_sanitaires.*', 'users.name as author', 
         'districts.nom_district as district', 
         'regions.region as region', 
         'provinces.province as province',
         'communes.commune as commune',
         'formation_sanitaires.nom_structure as formation_sanitaire')
         ->get();
-        return response()->json( $vaccinationEnfants );
+        return response()->json( $indicateurCarteSanitaire );
     }
 
     /**
@@ -76,23 +76,22 @@ class VaccinationEnfantsController extends Controller
             'mois' => 'required'
         ]);
         $user = auth()->userOrFail();
-        $vaccinationEnfants = new VaccinationEnfants();
+        $indicateurCarteSanitaire = new IndicateurCarteSanitaires();
 
-        $vaccinationEnfants->region_id = $request->input('region_id');
-        $vaccinationEnfants->province_id = $request->input('province_id');
-        $vaccinationEnfants->commune_id = $request->input('commune_id');
-        $vaccinationEnfants->district_id = $request->input('district_id');
-        $vaccinationEnfants->formation_sanitaire_id = $request->input('formation_sanitaire_id');
-        $vaccinationEnfants->annee = $request->input('annee');
-        $vaccinationEnfants->mois = $request->input('mois');
-        
-        $vaccinationEnfants->NbBCG = $request->input('NbBCG');
-        $vaccinationEnfants->NbDTCHepBHib1 = $request->input('NbDTCHepBHib1');
-        $vaccinationEnfants->NbDTCHepBHib = $request->input('NbDTCHepBHib');
-        $vaccinationEnfants->NbRR1 = $request->input('NbRR1');
+        $indicateurCarteSanitaire->region_id = $request->input('region_id');
+        $indicateurCarteSanitaire->province_id = $request->input('province_id');
+        $indicateurCarteSanitaire->commune_id = $request->input('commune_id');
+        $indicateurCarteSanitaire->district_id = $request->input('district_id');
+        $indicateurCarteSanitaire->formation_sanitaire_id = $request->input('formation_sanitaire_id');
+        $indicateurCarteSanitaire->annee = $request->input('annee');
+        $indicateurCarteSanitaire->mois = $request->input('mois');
 
-        $vaccinationEnfants->created_by = $user->id;
-        $vaccinationEnfants->save();
+        $indicateurCarteSanitaire->NbLit_SuiteCouche = $request->input('NbLit_SuiteCouche');
+        $indicateurCarteSanitaire->NbLit_HospiMaternite = $request->input('NbLit_HospiMaternite');
+        $indicateurCarteSanitaire->NbLit_HospiAutreService = $request->input('NbLit_HospiAutreService');
+
+        $indicateurCarteSanitaire->created_by = $user->id;
+        $indicateurCarteSanitaire->save();
         return response()->json( ['status' => 'success'] );
     }
 
@@ -104,32 +103,32 @@ class VaccinationEnfantsController extends Controller
      */
     public function show($id)
     {
-        $district = DB::table('vaccination_enfants')
+        $district = DB::table('indicateur_carte_sanitaires')
         
         ->leftJoin('provinces', function($join){
-            $join->on('vaccination_enfants.province_id', '=', 'provinces.id');
+            $join->on('indicateur_carte_sanitaires.province_id', '=', 'provinces.id');
         })
         ->leftJoin('communes', function($join){
-            $join->on('vaccination_enfants.commune_id', '=', 'communes.id');
+            $join->on('indicateur_carte_sanitaires.commune_id', '=', 'communes.id');
         })
         ->leftJoin('regions', function($join){
-            $join->on('vaccination_enfants.region_id', '=', 'regions.id');
+            $join->on('indicateur_carte_sanitaires.region_id', '=', 'regions.id');
         })
         ->leftJoin('users', function($join){
-            $join->on('vaccination_enfants.created_by', '=', 'users.id');
+            $join->on('indicateur_carte_sanitaires.created_by', '=', 'users.id');
         })
         ->leftJoin('users as users2', function($join){
-            $join->on('vaccination_enfants.updated_by', '=', 'users2.id');
+            $join->on('indicateur_carte_sanitaires.updated_by', '=', 'users2.id');
         })
         ->leftJoin('districts', function($join){
-            $join->on('vaccination_enfants.district_id', '=', 'districts.id');
+            $join->on('indicateur_carte_sanitaires.district_id', '=', 'districts.id');
         })
         ->leftJoin('formation_sanitaires', function($join){
-            $join->on('vaccination_enfants.formation_sanitaire_id', '=', 'formation_sanitaires.id');
+            $join->on('indicateur_carte_sanitaires.formation_sanitaire_id', '=', 'formation_sanitaires.id');
         })
-        ->select('vaccination_enfants.*', 'users.name as created_by','users2.name as updated_by', 'regions.region as region', 'districts.nom_district as district',
+        ->select('indicateur_carte_sanitaires.*', 'users.name as created_by','users2.name as updated_by', 'regions.region as region', 'districts.nom_district as district',
         'provinces.province as province','communes.commune as commune','formation_sanitaires.nom_structure as formationSanitaire')
-        ->where('vaccination_enfants.id', '=', $id)
+        ->where('indicateur_carte_sanitaires.id', '=', $id)
         ->first();
         return response()->json( $district );
     }
@@ -142,14 +141,14 @@ class VaccinationEnfantsController extends Controller
      */
     public function edit($id)
     {
-        $vaccinationEnfant = DB::table('vaccination_enfants')->where('id', '=', $id)->first();
+        $indicateurCarteSanitaire = DB::table('indicateur_carte_sanitaires')->where('id', '=', $id)->first();
         $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
         $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
         $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
         $districts = DB::table('districts')->select('districts.nom_district as label', 'districts.id as value')->get();
         $formationSanitaires = DB::table('formation_sanitaires')->select('formation_sanitaires.nom_structure as label', 'formation_sanitaires.id as value')->get();
 
-        return response()->json( [ 'provinces' => $provinces, 'regions' => $regions, 'districts' => $districts, 'communes' => $communes,'vaccinationEnfant'=>$vaccinationEnfant,'formationSanitaires'=>$formationSanitaires ] );
+        return response()->json( [ 'provinces' => $provinces, 'regions' => $regions, 'districts' => $districts, 'communes' => $communes,'indicateurCarteSanitaire'=>$indicateurCarteSanitaire,'formationSanitaires'=>$formationSanitaires ] );
     }
 
     /**
@@ -170,23 +169,22 @@ class VaccinationEnfantsController extends Controller
         ]);
 
         $user = auth()->userOrFail();
-        $vaccinationEnfants = VaccinationEnfants::find($id);
+        $indicateurCarteSanitaire = IndicateurCarteSanitaires::find($id);
 
-        $vaccinationEnfants->region_id = $request->input('region_id');
-        $vaccinationEnfants->province_id = $request->input('province_id');
-        $vaccinationEnfants->commune_id = $request->input('commune_id');
-        $vaccinationEnfants->district_id = $request->input('district_id');
-        $vaccinationEnfants->formation_sanitaire_id = $request->input('formation_sanitaire_id');
-        $vaccinationEnfants->annee = $request->input('annee');
-        $vaccinationEnfants->mois = $request->input('mois');
+        $indicateurCarteSanitaire->region_id = $request->input('region_id');
+        $indicateurCarteSanitaire->province_id = $request->input('province_id');
+        $indicateurCarteSanitaire->commune_id = $request->input('commune_id');
+        $indicateurCarteSanitaire->district_id = $request->input('district_id');
+        $indicateurCarteSanitaire->formation_sanitaire_id = $request->input('formation_sanitaire_id');
+        $indicateurCarteSanitaire->annee = $request->input('annee');
+        $indicateurCarteSanitaire->mois = $request->input('mois');
+
+        $indicateurCarteSanitaire->NbLit_SuiteCouche = $request->input('NbLit_SuiteCouche');
+        $indicateurCarteSanitaire->NbLit_HospiMaternite = $request->input('NbLit_HospiMaternite');
+        $indicateurCarteSanitaire->NbLit_HospiAutreService = $request->input('NbLit_HospiAutreService');
         
-        $vaccinationEnfants->NbBCG = $request->input('NbBCG');
-        $vaccinationEnfants->NbDTCHepBHib1 = $request->input('NbDTCHepBHib1');
-        $vaccinationEnfants->NbDTCHepBHib = $request->input('NbDTCHepBHib');
-        $vaccinationEnfants->NbRR1 = $request->input('NbRR1');
-        
-        $vaccinationEnfants->updated_by = $user->id;
-        $vaccinationEnfants->save();
+        $indicateurCarteSanitaire->updated_by = $user->id;
+        $indicateurCarteSanitaire->save();
         return response()->json( ['status' => 'success'] );
     }
 
@@ -198,9 +196,9 @@ class VaccinationEnfantsController extends Controller
      */
     public function destroy($id)
     {
-        $vaccinationEnfants = VaccinationEnfants::find($id);
-        if($vaccinationEnfants){
-            $vaccinationEnfants->delete();
+        $indicateurCarteSanitaire = IndicateurCarteSanitaires::find($id);
+        if($indicateurCarteSanitaire){
+            $indicateurCarteSanitaire->delete();
         }
         return response()->json( ['status' => 'success'] );
     }

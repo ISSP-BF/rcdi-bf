@@ -2,43 +2,39 @@
   <CRow>
     <CCol col="12" lg="8">
       <CCard>
-          <CCardHeader><h4>Détail de la VaccinationEnfant id:  {{ $route.params.id }}</h4> </CCardHeader>
+          <CCardHeader><h4>Détail de la Service Curatif id:  {{ $route.params.id }}</h4> </CCardHeader>
         <CCardBody>
           <div class="row">
             <div class="col-lg-6"><h5>Region : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.region}}</div>
+            <div class="col-lg-6">{{serviceCuratif.region}}</div>
           </div>
           <div class="row">
             <div class="col-lg-6"><h5>Province : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.province}}</div>
+            <div class="col-lg-6">{{serviceCuratif.province}}</div>
           </div>
           <div class="row">
             <div class="col-lg-6"><h5>Commune : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.commune}}</div>
+            <div class="col-lg-6">{{serviceCuratif.commune}}</div>
           </div>
           <div class="row">
             <div class="col-lg-6"><h5>District : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.district}}</div>
+            <div class="col-lg-6">{{serviceCuratif.district}}</div>
           </div>
           <div class="row">
             <div class="col-lg-6"><h5>Formation Sanitaire : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.formationSanitaire}}</div>
+            <div class="col-lg-6">{{serviceCuratif.formationSanitaire}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-6"><h5>NbBCG : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.NbBCG}}</div>
+            <div class="col-lg-6"><h5>NbNouveaux_consultant : </h5></div>
+            <div class="col-lg-6">{{serviceCuratif.NbNouveaux_consultant}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-6"><h5>NbDTCHepBHib1 : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.NbDTCHepBHib1}}</div>
+            <div class="col-lg-6"><h5>NbEnft_PrisCharge_PCIME : </h5></div>
+            <div class="col-lg-6">{{serviceCuratif.NbEnft_PrisCharge_PCIME}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-6"><h5>NbDTCHepBHib : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.NbDTCHepBHib}}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>NbRR1 : </h5></div>
-            <div class="col-lg-6">{{vaccinationEnfant.NbRR1}}</div>
+            <div class="col-lg-6"><h5>NbMaladie_MisObservation : </h5></div>
+            <div class="col-lg-6">{{serviceCuratif.NbMaladie_MisObservation}}</div>
           </div>
           
         </CCardBody>
@@ -48,11 +44,11 @@
           <div class="row float-right">
             
             <div>Créateur : </div>
-            <div>{{vaccinationEnfant.created_by}} <CBadge color="primary">{{vaccinationEnfant.created_at|formatDate}}</CBadge></div>
+            <div>{{serviceCuratif.created_by}} <CBadge color="primary">{{serviceCuratif.created_at|formatDate}}</CBadge></div>
           
             <div>Modificateur : </div>
-            <div>{{vaccinationEnfant.updated_by}} 
-            <CBadge color="danger">{{vaccinationEnfant.updated_at|formatDate}}</CBadge>
+            <div>{{serviceCuratif.updated_by}} 
+            <CBadge color="danger">{{serviceCuratif.updated_at|formatDate}}</CBadge>
             </div>
           </div>
           </CCardFooter>      
@@ -75,7 +71,7 @@ export default {
   },
   data: () => {
     return {
-      vaccinationEnfant: [],
+      serviceCuratif: [],
     }
   },
   methods: {
@@ -86,9 +82,9 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/vaccination_enfants/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/service_curatifs/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
-      self.vaccinationEnfant = response.data;
+      self.serviceCuratif = response.data;
       console.log(response)
     }).catch(function (error) {
       console.log(error);

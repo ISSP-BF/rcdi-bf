@@ -5,7 +5,7 @@
          <CCardHeader>
           
           <h5>
-          Modifier la Vaccination Enfant id:  {{ $route.params.id }}
+          Modifier la planification Familiale id:  {{ $route.params.id }}
           </h5>
         </CCardHeader>
         <CCardBody>
@@ -23,53 +23,53 @@
             
             <CSelect
               label="Region"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.region_id"
+              :value.sync="planificationFamiliale.region_id"
               :plain="true"
               :options="regions"
-              v-model="vaccinationEnfant.region_id"
+              v-model="planificationFamiliale.region_id"
             >
             </CSelect>
             
             <CSelect
               label="Province"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.province_id"
+              :value.sync="planificationFamiliale.province_id"
               :plain="true"
               :options="provinces"
-              v-model="vaccinationEnfant.province_id"
+              v-model="planificationFamiliale.province_id"
             >
             </CSelect>
             
             <CSelect
               label="Commune"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.commune_id"
+              :value.sync="planificationFamiliale.commune_id"
               :plain="true"
               :options="communes"
-              v-model="vaccinationEnfant.commune_id"
+              v-model="planificationFamiliale.commune_id"
             >
             </CSelect>
             
             <CSelect
               label="District"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.district_id"
+              :value.sync="planificationFamiliale.district_id"
               :plain="true"
               :options="districts"
-              v-model="vaccinationEnfant.district_id"
+              v-model="planificationFamiliale.district_id"
             >
             </CSelect>
             
             <CSelect
               label="Formation Sanitaire"  class="col-lg-3"
-              :value.sync="vaccinationEnfant.formation_sanitaire_id"
+              :value.sync="planificationFamiliale.formation_sanitaire_id"
               :plain="true"
               :options="formationSanitaires"
-              v-model="vaccinationEnfant.formation_sanitaire_id"
+              v-model="planificationFamiliale.formation_sanitaire_id"
             >
             </CSelect>
 
-            <CInput label="Annee" type="number" placeholder="Annee" v-model="vaccinationEnfant.annee" class="col-lg-3"
+            <CInput label="Annee" type="number" placeholder="Annee" v-model="planificationFamiliale.annee" class="col-lg-3"
                   invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeValidator"></CInput>
-            <CInput label="Mois" type="number" placeholder="Mois" v-model="vaccinationEnfant.mois" class="col-lg-3"
+            <CInput label="Mois" type="number" placeholder="Mois" v-model="planificationFamiliale.mois" class="col-lg-3"
                   invalid-feedback="Veuillez saisir un mois valide"
                   :is-valid="moisValidator"
             ></CInput>
@@ -88,10 +88,19 @@
             Mesures
         </h6>
         <div class="row"> 
-            <CInput label="BCG" type="number" placeholder="NbBCG" v-model="vaccinationEnfant.NbBCG"  class="col-lg-4"></CInput>
-            <CInput label="DTCHepBHib1" type="number" placeholder="NbDTCHepBHib1" v-model="vaccinationEnfant.NbDTCHepBHib1"  class="col-lg-4"></CInput>
-            <CInput label="DTCHepBHib3" type="number" placeholder="NbDTCHepBHib" v-model="vaccinationEnfant.NbDTCHepBHib"  class="col-lg-4"></CInput>
-            <CInput label="RR1" type="number" placeholder="NbRR1" v-model="vaccinationEnfant.NbRR1"  class="col-lg-4"></CInput>
+            <CInput label="type_utilisatrices" type="number" placeholder="type_utilisatrices" v-model="planificationFamiliale.type_utilisatrices"  class="col-lg-4"></CInput>
+            <CInput label="NbPillule_COC" type="number" placeholder="NbPillule_COC" v-model="planificationFamiliale.NbPillule_COC"  class="col-lg-4"></CInput>
+            <CInput label="NbPillule_COP" type="number" placeholder="NbPillule_COP" v-model="planificationFamiliale.NbPillule_COP"  class="col-lg-4"></CInput>
+            <CInput label="NbDMPlule_IM" type="number" placeholder="NbDMPlule_IM" v-model="planificationFamiliale.NbDMPlule_IM"  class="col-lg-4"></CInput>
+            <CInput label="NbDMPA_IM" type="number" placeholder="NbDMPA_IM" v-model="planificationFamiliale.NbDMPA_IM"  class="col-lg-4"></CInput>
+            <CInput label="NbImplant_5ans" type="number" placeholder="NbImplant_5ans" v-model="planificationFamiliale.NbImplant_5ans"  class="col-lg-4"></CInput>
+            <CInput label="NbImplant_3ans" type="number" placeholder="NbImplant_3ans" v-model="planificationFamiliale.NbImplant_3ans"  class="col-lg-4"></CInput>
+            <CInput label="NbPreservatif_Masculin" type="number" placeholder="NbPreservatif_Masculin" v-model="planificationFamiliale.NbPreservatif_Masculin"  class="col-lg-4"></CInput>
+            <CInput label="NbPreservatif_Feminin" type="number" placeholder="NbPreservatif_Feminin" v-model="planificationFamiliale.NbPreservatif_Feminin"  class="col-lg-4"></CInput>
+            <CInput label="NbLigature" type="number" placeholder="NbLigature" v-model="planificationFamiliale.NbLigature"  class="col-lg-4"></CInput>
+            <CInput label="NbVasectomie" type="number" placeholder="NbVasectomie" v-model="planificationFamiliale.NbVasectomie"  class="col-lg-4"></CInput>
+            <CInput label="NbCollier_Cycle" type="number" placeholder="NbCollier_Cycle" v-model="planificationFamiliale.NbCollier_Cycle"  class="col-lg-4"></CInput>
+            <CInput label="NbMethode_maman" type="number" placeholder="NbMethode_maman" v-model="planificationFamiliale.NbMethode_maman"  class="col-lg-4"></CInput>
         </div>
           <CButton color="primary" @click="update()">Modifier</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
@@ -113,7 +122,7 @@ export default {
   },
   data: () => {
     return {
-        vaccinationEnfant: {
+        planificationFamiliale: {
           region_id: null,
           province_id: null,
           commune_id: null,
@@ -121,10 +130,22 @@ export default {
           formation_sanitaire_id: null,
           annee: null,
           mois: null,
-          NbBCG:null,
-          NbDTCHepBHib1:null,
-          NbDTCHepBHib:null,
-          NbRR1:null,
+          
+          type_utilisatrices:null,
+          NbPillule_COC:null,
+          NbPillule_COP:null,
+          NbDMPlule_IM:null,
+          NbDMPA_IM:null,
+          NbImplant_5ans:null,
+          NbImplant_3ans:null,
+          NbDIU:null,
+          NbPreservatif_Masculin:null,
+          NbPreservatif_Feminin:null,
+          NbLigature:null,
+          NbVasectomie:null,
+          NbCollier_Cycle:null,
+          NbMethode_maman:null
+          
         },
         regions: [],
         provinces: [],
@@ -145,11 +166,11 @@ export default {
         let self = this;
 
         axios.put(  this.$apiAdress + '/api/vaccination_enfants/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
-        self.vaccinationEnfant)
+        self.planificationFamiliale)
         .then(function (response) {
             self.message = 'Successfully updated Formation Sanitaire.';
             self.showAlert();
-            self.$toasted.show("Vaccination Enfant a été mise à jour avec succès",{type:"success"});
+            self.$toasted.show("planification Familiale a été mise à jour avec succès",{type:"success"});
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';
@@ -181,7 +202,7 @@ export default {
     axios.get(  this.$apiAdress + '/api/vaccination_enfants/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
       console.log(response.data)
-        self.vaccinationEnfant = response.data.vaccinationEnfant;
+        self.planificationFamiliale = response.data.planificationFamiliale;
         self.regions = response.data.regions;
         self.provinces = response.data.provinces;
         self.communes = response.data.communes;

@@ -4,9 +4,9 @@
       <transition name="slide">
       <CCard>
          <CCardHeader>
-            Vaccination Enfants
+            Systeme Information Sanitaires
             <div class="card-header-actions">
-             <CButton color="primary" @click="createVaccinationEnfant()">Ajouter</CButton>
+             <CButton color="primary" @click="createIndicateurCarteSanitaire()">Ajouter</CButton>
             </div>
         </CCardHeader>
         <CCardBody>
@@ -61,11 +61,11 @@
           <template #actions="{item}">
                 <td>
                   <div class="card-header-actions" style="display:flex">
-                  <CButton color="secondary"  size="sm" @click="showVaccinationEnfant( item.id )">Détail</CButton>
+                  <CButton color="secondary"  size="sm" @click="showIndicateurCarteSanitaire( item.id )">Détail</CButton>
                   &nbsp;
-                  <CButton  size="sm" color="primary" @click="editVaccinationEnfant( item.id )"><CIcon name="cil-pencil"/></CButton>
+                  <CButton  size="sm" color="primary" @click="editIndicateurCarteSanitaire( item.id )"><CIcon name="cil-pencil"/></CButton>
                   &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteVaccinationEnfant( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteIndicateurCarteSanitaire( item.id )"><CIcon name="cil-x-circle"/></CButton>
                   </div>
                 </td>
               </template>
@@ -81,13 +81,12 @@
 import axios from 'axios'
 
 export default {
-  name: 'VaccinationEnfant',
+  name: 'IndicateurCarteSanitaire',
   data: () => {
     return {
       items: [],
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
-          'NbBCG','NbDTCHepBHib1','NbDTCHepBHib','NbRR1','actions'],
-
+     'NbLit_SuiteCouche','NbLit_HospiMaternite','NbLit_HospiAutreService','actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,
@@ -105,36 +104,36 @@ export default {
     getRowCount (items) {
       return items.length
     },
-    VaccinationEnfantLink (id) {
-      return `vaccination_enfants/${id.toString()}`
+    IndicateurCarteSanitaireLink (id) {
+      return `indicateur_carte_sanitaires/${id.toString()}`
     },
     editLink (id) {
-      return `vaccination_enfants/${id.toString()}/edit`
+      return `indicateur_carte_sanitaires/${id.toString()}/edit`
     },
-    showVaccinationEnfant ( id ) {
-      const VaccinationEnfantLink = this.VaccinationEnfantLink( id );
-      this.$router.push({path: VaccinationEnfantLink});
+    showIndicateurCarteSanitaire ( id ) {
+      const IndicateurCarteSanitaireLink = this.IndicateurCarteSanitaireLink( id );
+      this.$router.push({path: IndicateurCarteSanitaireLink});
     },
-    editVaccinationEnfant ( id ) {
+    editIndicateurCarteSanitaire ( id ) {
       const editLink = this.editLink( id );
       this.$router.push({path: editLink});
     },
-    deleteVaccinationEnfant ( id ) {
+    deleteIndicateurCarteSanitaire ( id ) {
       let self = this;
-      axios.post(  this.$apiAdress + '/api/vaccination_enfants/' + id + '?token=' + localStorage.getItem("api_token"), {
+      axios.post(  this.$apiAdress + '/api/indicateur_carte_sanitaires/' + id + '?token=' + localStorage.getItem("api_token"), {
         _method: 'DELETE'
       })
       .then(function (response) {
-          self.message = 'Successfully deleted VaccinationEnfant.';
+          self.message = 'Successfully deleted Indicateur Carte Sanitaire.';
           self.showAlert();
-          self.getVaccinationEnfant();
+          self.getIndicateurCarteSanitaire();
       }).catch(function (error) {
         console.log(error);
         self.$router.push({ path: '/login' });
       });
     },
-    createVaccinationEnfant () {
-      this.$router.push({path: 'vaccination_enfants/create'});
+    createIndicateurCarteSanitaire () {
+      this.$router.push({path: 'indicateur_carte_sanitaires/create'});
     },
     countDownChanged (dismissCountDown) {
       this.dismissCountDown = dismissCountDown
@@ -142,9 +141,9 @@ export default {
     showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-    getVaccinationEnfant (){
+    getIndicateurCarteSanitaire (){
       let self = this;
-      axios.get(  this.$apiAdress + '/api/vaccination_enfants?token=' + localStorage.getItem("api_token") )
+      axios.get(  this.$apiAdress + '/api/indicateur_carte_sanitaires?token=' + localStorage.getItem("api_token") )
       .then(function (response) {
         self.items = response.data;
         console.log(response)
@@ -155,7 +154,7 @@ export default {
     }
   },
   mounted: function(){
-    this.getVaccinationEnfant();
+    this.getIndicateurCarteSanitaire();
   }
 }
 </script>

@@ -10,7 +10,8 @@ class CreatePlanificationFamilialesTable extends Migration
      * Run the migrations.
      *
      * @return void
-     */
+     * 'type_utilisatrices','NbPillule_COC','NbPillule_COP','NbDMPlule_IM','NbDMPA_IM','NbImplant_5ans','NbImplant_3ans','NbDIU','NbPreservatif_Masculin','NbPreservatif_Feminin','NbLigature','NbVasectomie','NbCollier_Cycle','NbMethode_maman',
+     * */
     public function up()
     {
         Schema::create('planification_familiales', function (Blueprint $table) {
