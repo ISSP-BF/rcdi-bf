@@ -85,7 +85,7 @@ export default {
             console.log(response.data)
             for (let d of response.data){
               self.tailleMoyenneMenages.label = d.indicateur;
-              self.tailleMoyenneMenages.value = d.indice;
+              self.tailleMoyenneMenages.value = d.indice + "";
             }
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
@@ -117,7 +117,7 @@ export default {
             console.log(response.data)
             for (let d of response.data){
               self.rM.label = d.indicateur;
-              self.rM.value = d.indice;
+              self.rM.value = d.indice + "";
             }
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){

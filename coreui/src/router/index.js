@@ -209,6 +209,37 @@ const EditConsultationPrenatale = () =>
 const CreateConsultationPrenatale = () =>
     import ('@/views/consultation_prenatales/CreateConsultationPrenatale')
 
+//Ptmes
+const Ptmes = () =>
+    import ('@/views/ptmes/Ptmes')
+const Ptme = () =>
+    import ('@/views/ptmes/Ptme')
+const EditPtme = () =>
+    import ('@/views/ptmes/EditPtme')
+const CreatePtme = () =>
+    import ('@/views/ptmes/CreatePtme')
+
+//Accouchements
+const Accouchements = () =>
+    import ('@/views/accouchements/Accouchements')
+const Accouchement = () =>
+    import ('@/views/accouchements/Accouchement')
+const EditAccouchement = () =>
+    import ('@/views/accouchements/EditAccouchement')
+const CreateAccouchement = () =>
+    import ('@/views/accouchements/CreateAccouchement')
+
+
+//ConsultationPostnatales
+const ConsultationPostnatales = () =>
+    import ('@/views/consultation_postnatales/ConsultationPostnatales')
+const ConsultationPostnatale = () =>
+    import ('@/views/consultation_postnatales/ConsultationPostnatale')
+const EditConsultationPostnatale = () =>
+    import ('@/views/consultation_postnatales/EditConsultationPostnatale')
+const CreateConsultationPostnatale = () =>
+    import ('@/views/consultation_postnatales/CreateConsultationPostnatale')
+
 //Roles
 const Roles = () =>
     import ('@/views/roles/Roles')
@@ -971,6 +1002,134 @@ function configRoutes() {
                             meta: { label: 'Edit Consultation Prenatale' },
                             name: 'Edit ConsultationPrenatale',
                             component: EditConsultationPrenatale,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+                {
+                    path: 'ptmes',
+                    meta: { label: 'Prévention de la transmission mere enfants' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Ptmes,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Prévention de la transmission mere enfant' },
+                            name: 'Create Ptme',
+                            component: CreatePtme,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Prévention de la transmission mere enfant Details' },
+                            name: 'Ptme',
+                            component: Ptme,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Prévention de la transmission mere enfant' },
+                            name: 'Edit Ptme',
+                            component: EditPtme,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'accouchements',
+                    meta: { label: 'Accouchements' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Accouchements,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Accouchement' },
+                            name: 'Create Accouchement',
+                            component: CreateAccouchement,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Accouchement Details' },
+                            name: 'Accouchement',
+                            component: Accouchement,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Accouchement' },
+                            name: 'Edit Accouchement',
+                            component: EditAccouchement,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'consultation_postnatales',
+                    meta: { label: 'ConsultationPostnatales' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: ConsultationPostnatales,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create ConsultationPostnatale' },
+                            name: 'Create ConsultationPostnatale',
+                            component: CreateConsultationPostnatale,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'ConsultationPostnatale Details' },
+                            name: 'ConsultationPostnatale',
+                            component: ConsultationPostnatale,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit ConsultationPostnatale' },
+                            name: 'Edit ConsultationPostnatale',
+                            component: EditConsultationPostnatale,
                             meta: {
                                 requiresUser: true
                             }

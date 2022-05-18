@@ -11,6 +11,15 @@ class CreateAccouchementsTable extends Migration
      *
      * @return void
      */
+    /*
+   'NbAccouchement_Normaux',
+   'NbAccouchement_Assiste',
+   'NbAccouchement_Cesarienne',
+   'NbAccouchement_Partogramme',
+   'NNaissance_vivante',
+   'NbMortNe_frais',
+   'NbMortNe_Macere',
+    */
     public function up()
     {
         Schema::create('accouchements', function (Blueprint $table) {

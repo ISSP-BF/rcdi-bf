@@ -11,6 +11,11 @@ class CreateConsultationPostnatalesTable extends Migration
      *
      * @return void
      */
+    /*
+    'NbFemmeVueConsultation_PostNatale',
+    'NbFemmeVueConsultation_PostNatalePrecoce',
+    'NbFemmeVueConsultation_PostNataleTardive',
+    */
     public function up()
     {
         Schema::create('consultation_postnatales', function (Blueprint $table) {

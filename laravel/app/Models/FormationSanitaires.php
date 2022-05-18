@@ -25,19 +25,19 @@ class FormationSanitaires extends Model
         return $this->belongsTo('App\Models\User', 'updated_by')->withTrashed();
     }
     
+    public function region()
+    {
+        return $this->belongsTo('App\Models\Regions', 'region')->withTrashed();
+    }
+    
     public function province()
     {
         return $this->belongsTo('App\Models\Provinces', 'province')->withTrashed();
     }
     
-    // public function commune()
-    // {
-    //     return $this->belongsTo('App\Models\Communes', 'commune')->withTrashed();
-    // }
-    
-    public function region()
+    public function commune()
     {
-        return $this->belongsTo('App\Models\Regions', 'region')->withTrashed();
+        return $this->belongsTo('App\Models\Communes', 'commune')->withTrashed();
     }
     
     public function district()
@@ -45,4 +45,8 @@ class FormationSanitaires extends Model
         return $this->belongsTo('App\Models\Districts', 'nom_district')->withTrashed();
     }
     
+    public function formationSanitaire()
+    {
+        return $this->belongsTo('App\Models\FormationSanitaires', 'nom_structure')->withTrashed();
+    }
 }

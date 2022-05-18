@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVacinationEnfantsTable extends Migration
+class CreateVaccinationEnfantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateVacinationEnfantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vacination_enfants', function (Blueprint $table) {
+        Schema::create('vaccination_enfants', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('region_id')->unsigned();
             $table->integer('province_id')->unsigned();
