@@ -300,6 +300,36 @@ const EditIndicateurCarteSanitaire = () =>
 const CreateIndicateurCarteSanitaire = () =>
     import ('@/views/indicateur_carte_sanitaires/CreateIndicateurCarteSanitaire')
 
+//PreScolaires
+const PreScolaires = () =>
+    import ('@/views/pre_scolaires/PreScolaires')
+const PreScolaire = () =>
+    import ('@/views/pre_scolaires/PreScolaire')
+const EditPreScolaire = () =>
+    import ('@/views/pre_scolaires/EditPreScolaire')
+const CreatePreScolaire = () =>
+    import ('@/views/pre_scolaires/CreatePreScolaire')
+
+//Primaires
+const Primaires = () =>
+    import ('@/views/primaires/Primaires')
+const Primaire = () =>
+    import ('@/views/primaires/Primaire')
+const EditPrimaire = () =>
+    import ('@/views/primaires/EditPrimaire')
+const CreatePrimaire = () =>
+    import ('@/views/primaires/CreatePrimaire')
+
+//PostPrimaires
+const PostPrimaires = () =>
+    import ('@/views/post_primaires/PostPrimaires')
+const PostPrimaire = () =>
+    import ('@/views/post_primaires/PostPrimaire')
+const EditPostPrimaire = () =>
+    import ('@/views/post_primaires/EditPostPrimaire')
+const CreatePostPrimaire = () =>
+    import ('@/views/post_primaires/CreatePostPrimaire')
+
 //Roles
 const Roles = () =>
     import ('@/views/roles/Roles')
@@ -1448,6 +1478,135 @@ function configRoutes() {
                             meta: { label: 'Edit IndicateurCarteSanitaire' },
                             name: 'Edit IndicateurCarteSanitaire',
                             component: EditIndicateurCarteSanitaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'pre_scolaires',
+                    meta: { label: 'PreScolaires' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: PreScolaires,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create PreScolaire' },
+                            name: 'Create PreScolaire',
+                            component: CreatePreScolaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'PreScolaire Details' },
+                            name: 'PreScolaire',
+                            component: PreScolaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit PreScolaire' },
+                            name: 'Edit PreScolaire',
+                            component: EditPreScolaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'primaires',
+                    meta: { label: 'Primaires' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Primaires,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Primaire' },
+                            name: 'Create Primaire',
+                            component: CreatePrimaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Primaire Details' },
+                            name: 'Primaire',
+                            component: Primaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Primaire' },
+                            name: 'Edit Primaire',
+                            component: EditPrimaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'post_primaires',
+                    meta: { label: 'PostPrimaires' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: PostPrimaires,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create PostPrimaire' },
+                            name: 'Create PostPrimaire',
+                            component: CreatePostPrimaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'PostPrimaire Details' },
+                            name: 'PostPrimaire',
+                            component: PostPrimaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit PostPrimaire' },
+                            name: 'Edit PostPrimaire',
+                            component: EditPostPrimaire,
                             meta: {
                                 requiresUser: true
                             }

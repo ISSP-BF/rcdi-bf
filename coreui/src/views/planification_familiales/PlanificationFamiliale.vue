@@ -129,7 +129,7 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/vaccination_enfants/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/planification_familiales/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
       self.planificationFamiliale = response.data;
       console.log(response)

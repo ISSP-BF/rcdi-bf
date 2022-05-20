@@ -165,10 +165,10 @@ export default {
     update() {
         let self = this;
 
-        axios.put(  this.$apiAdress + '/api/vaccination_enfants/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
+        axios.put(  this.$apiAdress + '/api/planification_familiales/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
         self.planificationFamiliale)
         .then(function (response) {
-            self.message = 'Successfully updated Formation Sanitaire.';
+            self.message = 'Successfully updated Planification Familiale.';
             self.showAlert();
             self.$toasted.show("planification Familiale a été mise à jour avec succès",{type:"success"});
         }).catch(function (error) {
@@ -199,7 +199,7 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/vaccination_enfants/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/planification_familiales/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
       console.log(response.data)
         self.planificationFamiliale = response.data.planificationFamiliale;

@@ -42,6 +42,10 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('service_curatifs', 'ServiceCuratifsController');
     Route::resource('systeme_information_sanitaires', 'SystemeInformationSanitairesController');
     Route::resource('indicateur_carte_sanitaires', 'IndicateurCarteSanitairesController');
+    Route::resource('pre_scolaires', 'PreScolairesController');
+    Route::resource('primaires', 'PrimairesController');
+    Route::resource('post_primaires', 'PostPrimairesController');
+
     Route::resource('indicateurs', 'IndicateursController');
     Route::post('indicateurs/findBy', 'IndicateursController@findBy'); 
 

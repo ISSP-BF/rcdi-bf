@@ -164,7 +164,7 @@ export default {
     store() {
         let self = this;
         console.log(self.planificationFamiliale)
-        axios.post(  this.$apiAdress + '/api/vaccination_enfants?token=' + localStorage.getItem("api_token"),
+        axios.post(  this.$apiAdress + '/api/planification_familiales?token=' + localStorage.getItem("api_token"),
           self.planificationFamiliale
         )
         .then(function (response) {
@@ -211,7 +211,7 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/vaccination_enfants/create?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/planification_familiales/create?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
         self.regions = response.data.regions;
         self.provinces = response.data.provinces;
