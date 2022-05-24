@@ -19,13 +19,15 @@
             </CAlert>
             <CDataTable
               hover
+              tableFilter
+              itemsPerPageSelect
+              sorter
               :items="items"
               :fields="fields"
               :items-per-page="10"
+              :striped="true"
               pagination
             >
-            
-
               <template #region="{item}">
                 <td>
                   <label class="width-max-content">{{item.region}}</label>
@@ -103,7 +105,8 @@ export default {
   data: () => {
     return {
       items: [],
-      fields: ['id','n_ordre', 'region', 'province', 'commune','trimestre','annee',
+      fields: [
+      'id','n_ordre', 'region', 'province', 'commune','trimestre','annee',
       'ceb','nom_structure','statut','type','NbTotalSalleActivite','NbGarcon_6e','NbGarconMoyenne_6e',
       'NbGarconAbandon_6e','NbGarcon_5e','NbGarconMoyenne_5e','NbGarconAbandon_5e','NbGarcon_4e','NbGarconMoyenne_4e',
       'NbGarconAbandon_4e','NbGarcon_3e','NbGarconMoyenne_3e','NbGarconAbandon_3e','NbTotalGarcon','NbTotalGarconMoyenne',
@@ -121,7 +124,14 @@ export default {
       'NbTotalEnseignantFemmeVacataire','NbEnseignantFemmeRedeployes','NbEnseignantFemmeRedeployesVacataire',
       'NbEnseignantFemmeVolontaire','ExistenceEspacesRecreatif','ExistenceDispositifHygiene','ExistenceCantine',
       'SourceDotationEtat','SourceDotationPartenaire','SourceDotationEndogene',
-      'actions'],
+      {
+        key: "actions",
+        label: "",
+        _style: "min-width:1%",
+        sorter: false,
+        filter: false,
+      }
+  ],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

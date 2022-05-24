@@ -19,13 +19,14 @@
             </CAlert>
             <CDataTable
               hover
+              tableFilter
+              itemsPerPageSelect
+              sorter
               :items="items"
               :fields="fields"
               :items-per-page="10"
               pagination
             >
-            
-
               <template #region="{item}">
                 <td>
                   <label class="width-max-content">{{item.region}}</label>
@@ -103,9 +104,16 @@ export default {
   data: () => {
     return {
       items: [],
-      fields: ['id','n_ordre', 'region', 'province', 'commune','trimestre','annee',
+      fields: [
+      'id','n_ordre', 'region', 'province', 'commune','trimestre','annee',
       'ceb','nom_structure','statut','type','NbTotalSalleActivite','NbGarcon_CP1','NbGarconMoyenne_CP1','NbGarconAbandon_CP1','NbGarcon_CP2','NbGarconMoyenne_CP2','NbGarconAbandon_CP2','NbGarcon_CE1','NbGarconMoyenne_CE1','NbGarconAbandon_CE1','NbGarcon_CE2','NbGarconMoyenne_CE2','NbGarconAbandon_CE2','NbGarcon_CM1','NbGarconMoyenne_CM1','NbGarconAbandon_CM1','NbGarcon_CM2','NbGarconMoyenne_CM2','NbGarconAbandon_CM2','NbTotalGarcon','NbTotalGarconMoyenne','NbTotalGarconAbandon','NbGarcon_PDI','NbGarconMoyenne_PDI','NbGarconAbandon_PDI','NbFille_CP1','NbFilleMoyenne_CP1','NbFilleAbandon_CP1','NbFille_CP2','NbFilleMoyenne_CP2','NbFilleAbandon_CP2','NbFille_CE1','NbFilleMoyenne_CE1','NbFilleAbandon_CE1','NbFille_CE2','NbFilleMoyenne_CE2','NbFilleAbandon_CE2','NbFille_CM1','NbFilleMoyenne_CM1','NbFilleAbandon_CM1','NbFille_CM2','NbFilleMoyenne_CM2','NbFilleAbandon_CM2','NbTotalFille','NbTotalFilleMoyenne','NbTotalFilleAbandon','NbFille_PDI','NbFilleMoyenne_PDI','NbFilleAbandon_PDI','NbTotalEnseignantHomme','NbTotalEnseignantFemme','NbEnseignantHommeRedeployes','NbEnseignantFemmeRedeployes','NbEnseignantHommeVolontaire','NbEnseignantFemmeVolontaire','ExistenceEspacesRecreatif','ExistenceDispositifHygiene','ExistenceCantine','SourceDotationEtat','SourceDotationPartenaire','SourceDotationEndogene',
-      'actions'],
+      {
+        key: "actions",
+        label: "",
+        _style: "min-width:1%",
+        sorter: false,
+        filter: false,
+      }],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

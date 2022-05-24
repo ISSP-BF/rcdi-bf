@@ -7,15 +7,38 @@
       <CCard>
         <CCardHeader>
           <h5>
-            Ajouter des données Pre Scolaire
+            Ajouter des données Pré-Scolaire
           </h5>
         </CCardHeader>
         <CCardBody>
-          <CInput label="Annee" type="number" placeholder="Annee" v-model="preScolaire.annee" class="col-lg-3"
+          
+          <div class="row ">
+          <CInput label="Année" type="number" placeholder="Ex. 2020" v-model="preScolaire.annee" class="col-lg-3"
             invalid-feedback="Veuillez saisir une année valide" :is-valid="anneeValidator"></CInput>
-          <CInput label="Trimestre" type="number" placeholder="Trimestre" v-model="preScolaire.trimestre"
-            class="col-lg-3" invalid-feedback="Veuillez saisir un trimestre valide" :is-valid="trimestreValidator">
-          </CInput>
+            <div role="group" class="col-lg-3 form-group">
+              <label class="row col custom-control-inline"> Trimestre </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="trimestre1" type="radio" class="custom-control-input"
+                    v-model="preScolaire.trimestre" :value="'1'">
+                  <label for="trimestre1" class="custom-control-label"> 1 </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="trimestre2" type="radio" class="custom-control-input"
+                    v-model="preScolaire.trimestre" :value="'2'">
+                  <label for="trimestre2" class="custom-control-label"> 2 </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="trimestre3" type="radio" class="custom-control-input"
+                    v-model="preScolaire.trimestre" :value="'3'">
+                  <label for="trimestre3" class="custom-control-label"> 3 </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="trimestre4" type="radio" class="custom-control-input"
+                    v-model="preScolaire.trimestre" :value="'4'">
+                  <label for="trimestre4" class="custom-control-label"> 4 </label>
+                </div>
+            </div>
+            </div>
         </CCardBody>
       </CCard>
     </CCol>
@@ -27,10 +50,10 @@
       <CCard> 
         <CCardBody>
           <div class="row ">
-            <CInput label="n_ordre" type="text" placeholder="n_ordre" v-model="preScolaire.n_ordre" class="col-lg-3">
+            <CInput label="Numéro Ordre" type="text" placeholder="Ex. 001xxx" v-model="preScolaire.n_ordre" class="col-lg-3">
             </CInput>
 
-            <CSelect label="Region" class="col-lg-3" :value.sync="preScolaire.region_id" :plain="true"
+            <CSelect label="Région" class="col-lg-3" :value.sync="preScolaire.region_id" :plain="true"
               :options="regions" v-model="preScolaire.region_id">
             </CSelect>
 
@@ -43,14 +66,35 @@
             </CSelect>
 
             <CInput label="ceb" type="text" placeholder="ceb" v-model="preScolaire.ceb" class="col-lg-3"></CInput>
-            <CInput label="nom_structure" type="text" placeholder="nom_structure" v-model="preScolaire.nom_structure"
+            <CInput label="Nom de la structure" type="text" placeholder="" v-model="preScolaire.nom_structure"
               class="col-lg-3"></CInput>
-            <CInput label="statut" type="text" placeholder="statut" v-model="preScolaire.statut" class="col-lg-3">
-            </CInput>
-            <CInput label="systeme" type="text" placeholder="systeme" v-model="preScolaire.systeme" class="col-lg-3">
-            </CInput>
-
-            <CInput label="NbTotalSalleActivite" type="number" placeholder="NbTotalSalleActivite"
+            <div role="group" class="col-lg-3 form-group">
+              <label class="row col custom-control-inline"> Statut </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="statutPUBLIC" type="radio" class="custom-control-input"
+                    v-model="preScolaire.statut" :value="'PUBLIC'">
+                  <label for="statutPUBLIC" class="custom-control-label"> Public </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="statutPRIVE" type="radio" class="custom-control-input"
+                    v-model="preScolaire.statut" :value="'PRIVE'">
+                  <label for="statutPRIVE" class="custom-control-label"> Privé </label>
+                </div>
+            </div>
+            <div role="group" class="col-lg-3 form-group">
+              <label class="row col custom-control-inline"> Système </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="systemeFORMEL" type="radio" class="custom-control-input"
+                    v-model="preScolaire.systeme" :value="'FORMEL'">
+                  <label for="systemeFORMEL" class="custom-control-label"> Formel </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="systemeNONFORMEL" type="radio" class="custom-control-input"
+                    v-model="preScolaire.systeme" :value="'NONFORMEL'">
+                  <label for="systemeNONFORMEL" class="custom-control-label"> Non Formel </label>
+                </div>
+            </div>
+            <CInput label="Nombre total de salles d'activités" type="number" placeholder="0xx"
               v-model="preScolaire.NbTotalSalleActivite" class="col-lg-3"></CInput>
           </div>
         </CCardBody>
