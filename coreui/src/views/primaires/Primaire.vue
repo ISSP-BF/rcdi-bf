@@ -6,44 +6,378 @@
           ><h4>Détail de la donnée Primaire id: {{ $route.params.id }}</h4>
         </CCardHeader>
         <CCardBody>
-          <div class="row">
-            <div class="col-lg-6"><h5>annee :</h5></div>
-            <div class="col-lg-6">{{ primaire.annee }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>trimestre :</h5></div>
-            <div class="col-lg-6">{{ primaire.trimestre }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>Region :</h5></div>
-            <div class="col-lg-6">{{ primaire.region }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>Province :</h5></div>
-            <div class="col-lg-6">{{ primaire.province }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>Commune :</h5></div>
-            <div class="col-lg-6">{{ primaire.commune }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>ceb :</h5></div>
-            <div class="col-lg-6">{{ primaire.ceb }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>ceb :</h5></div>
-            <div class="col-lg-6">{{ primaire.ceb }}</div>
-          </div>
-          <div v-for="item in fields" :key="item.id">
-            {{ item.text }}
-          </div>
-
+           <table class="table table-bordered col-lg-8">
+            <tr>
+              <td class="col-lg-6">Année</td>
+              <td>{{primaire.annee}}</td>
+            </tr>
+            <tr>
+              <td>Trimestre</td>
+              <td>{{primaire.trimestre}}</td>
+            </tr>
+           </table>
           
+          <h5>I. IDENTIFICATION DE LA STRUCTURE</h5>
+          <table class="table table-bordered">
+            <tr>
+              <td class="col-lg-4">N° d'ordre</td>
+              <td class="col-lg-4"></td>
+              <td>{{primaire.n_ordre}}</td>
+            </tr>
+            <tr>
+              <td>REGION</td>
+              <td></td>
+              <td>{{primaire.region}}</td>
+            </tr>
+            <tr>
+              <td>PROVINCE</td>
+              <td></td>
+              <td>{{primaire.province}}</td>
+            </tr>
+            <tr>
+              <td>COMMUNE/ARRONDISSEMENT</td>
+              <td></td>
+              <td>{{primaire.commune}}</td>
+            </tr>
+            <tr>
+              <td>CEB</td>
+              <td></td>
+              <td>{{primaire.ceb}}</td>
+            </tr>
+            <tr>
+              <td>Nom de la structure</td>
+              <td></td>
+              <td>{{primaire.nom_structure}}</td>
+            </tr>
+            <tr>
+              <td>Statut</td>
+              <td></td>
+              <td>{{primaire.statut}}</td>
+            </tr>
+            <tr>
+              <td>Type</td>
+              <td></td>
+              <td>{{primaire.type}}</td>
+            </tr>
+            <tr>
+              <td>Nombre total de salles d'activités</td>
+              <td></td>
+              <td>{{primaire.NbTotalSalleActivite}}</td>
+            </tr>
+          </table>
+          <h5>II. EFFECTIFS DES ELEVES (auditeurs)</h5>
+          <table class="table table-bordered">
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Effectifs</td>
+              <td>effectif ayant eu la moyenne</td>
+              <td>abandons</td>
+            </tr>
+            <tr>
+              <td rowspan="2" class="col-lg-4">CP1</td>
+              <td class="col-lg-4 no-margin-padding">Garcon</td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarcon_CP1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconMoyenne_CP1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconAbandon_CP1}}
+              </td>
+            </tr>
+            <tr>
+              <td class="no-margin-padding">Fille</td>
+              <td class="no-margin-padding">
+                {{primaire.NbFille_CP1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleMoyenne_CP1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleAbandon_CP1}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2" class="col-lg-4">CP2</td>
+              <td class="col-lg-4 no-margin-padding">Garcon</td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarcon_CP2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconMoyenne_CP2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconAbandon_CP2}}
+              </td>
+            </tr>
+            <tr>
+              <td class="no-margin-padding">Fille</td>
+              <td class="no-margin-padding">
+                {{primaire.NbFille_CP2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleMoyenne_CP2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleAbandon_CP2}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2" class="col-lg-4">CE1</td>
+              <td class="col-lg-4 no-margin-padding">Garcon</td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarcon_CE1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconMoyenne_CE1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconAbandon_CE1}}
+              </td>
+            </tr>
+            <tr>
+              <td class="no-margin-padding">Fille</td>
+              <td class="no-margin-padding">
+                {{primaire.NbFille_CE1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleMoyenne_CE1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleAbandon_CE1}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2" class="col-lg-4">CE2</td>
+              <td class="col-lg-4 no-margin-padding">Garcon</td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarcon_CE2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconMoyenne_CE2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconAbandon_CE2}}
+              </td>
+            </tr>
+            <tr>
+              <td class="no-margin-padding">Fille</td>
+              <td class="no-margin-padding">
+                {{primaire.NbFille_CE2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleMoyenne_CE2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleAbandon_CE2}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2" class="col-lg-4">CM1</td>
+              <td class="col-lg-4 no-margin-padding">Garcon</td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarcon_CM1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconMoyenne_CM1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconAbandon_CM1}}
+              </td>
+            </tr>
+            <tr>
+              <td class="no-margin-padding">Fille</td>
+              <td class="no-margin-padding">
+                {{primaire.NbFille_CM1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleMoyenne_CM1}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleAbandon_CM1}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2" class="col-lg-4">CM2</td>
+              <td class="col-lg-4 no-margin-padding">Garcon</td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarcon_CM2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconMoyenne_CM2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconAbandon_CM2}}
+              </td>
+            </tr>
+            <tr>
+              <td class="no-margin-padding">Fille</td>
+              <td class="no-margin-padding">
+                {{primaire.NbFille_CM2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleMoyenne_CM2}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleAbandon_CM2}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2" class="col-lg-4">Total</td>
+              <td class="col-lg-4 no-margin-padding">Garcon</td>
+              <td class="no-margin-padding">
+                {{primaire.NbTotalGarcon}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbTotalGarconMoyenne}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbTotalGarconAbandon}}
+              </td>
+            </tr>
+            <tr>
+              <td class="no-margin-padding">Fille</td>
+              <td class="no-margin-padding">
+                {{primaire.NbTotalFille}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbTotalFilleMoyenne}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbTotalFilleAbandon}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2" class="col-lg-4">Déplacés internes</td>
+              <td class="col-lg-4 no-margin-padding">Garcon</td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarcon_PDI}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconMoyenne_PDI}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbGarconAbandon_PDI}}
+              </td>
+            </tr>
+            <tr>
+              <td class="no-margin-padding">Fille</td>
+              <td class="no-margin-padding">
+                {{primaire.NbFille_PDI}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleMoyenne_PDI}}
+              </td>
+              <td class="no-margin-padding">
+                {{primaire.NbFilleAbandon_PDI}}
+              </td>
+            </tr>
+          </table>
+          <h5>III. EFFECTIFS DES ENSEIGNANTS</h5>
+
+          <table class="table table-bordered">
+            <tr>
+              <td colspan="3"></td>
+              <td>Effectifs</td>
+            </tr>
+            <tr>
+              <td rowspan="4" class="col-lg-4">
+                Effectifs des encadreurs (hors volontaires communautaires)
+              </td>
+              <td rowspan="2" class="col-lg-4">Total</td>
+              <td class="col-lg-2">Homme</td>
+              <td>
+                {{primaire.NbTotalEnseignantHomme}}
+              </td>
+            </tr>
+            <tr>
+              <td>Femme</td>
+              <td>
+                {{primaire.NbTotalEnseignantFemme}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2">
+                Dont redeployés (arrivés) suite à la fermeture de leur structure
+              </td>
+              <td>Homme</td>
+              <td>
+                {{primaire.NbEnseignantHommeRedeployes}}
+              </td>
+            </tr>
+            <tr>
+              <td>Femme</td>
+              <td>
+                {{primaire.NbEnseignantFemmeRedeployes}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2">volontaires communautaires</td>
+              <td rowspan="2"></td>
+              <td>Homme</td>
+              <td>
+                {{primaire.NbEnseignantHommeVolontaire}}
+              </td>
+            </tr>
+            <tr>
+              <td>Femme</td>
+              <td>
+                {{primaire.NbEnseignantFemmeVolontaire}}
+              </td>
+            </tr>
+          </table>
+          <h5>IV. ENVIRONNEMENT D’APPRENTISSAGE</h5>
+          
+          <table class="table table-bordered">
+            <tr>
+              <td class="col-lg-4">Existence d'espaces récréatifs</td>
+              <td class="col-lg-4"></td>
+              <td class="col-lg-4 no-margin-padding">
+                {{primaire.ExistenceEspacesRecreatif}}
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-4">Existence de dispositif d’hygiène</td>
+              <td class="col-lg-4"></td>
+              <td class="col-lg-4">
+                {{primaire.ExistenceDispositifHygiene}}
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-4">Existence cantine</td>
+              <td class="col-lg-4"></td>
+              <td class="col-lg-4">
+                {{primaire.ExistenceCantine}}
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-4">Source de la dotation</td>
+              <td class="col-lg-4">Etat</td>
+              <td class="col-lg-4">
+                {{primaire.SourceDotationEtat}}
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-4"></td>
+              <td class="col-lg-4">Partenaire</td>
+              <td class="col-lg-4">
+                {{primaire.SourceDotationPartenaire}}
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-4"></td>
+              <td class="col-lg-4">Endogène</td>
+              <td class="col-lg-4">
+                {{primaire.SourceDotationEndogene}}
+              </td>
+            </tr>
+          </table>
         </CCardBody>
 
-        <CCardFooter
-          ><CButton color="secondary" @click="goBack">Retour</CButton>
-
+        <CCardFooter>
+          <CButton color="secondary" @click="goBack">Retour</CButton>
           <div class="row float-right">
             <div>Créateur :</div>
             <div>

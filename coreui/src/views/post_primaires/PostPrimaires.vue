@@ -46,36 +46,6 @@
                 </td>
               </template>
 
-              <template #ExistenceEspacesRecreatif="{item}">
-                <td>
-                  {{item.ExistenceEspacesRecreatif?"OUI":"NON"}}
-                </td>
-              </template>
-              <template #ExistenceDispositifHygiene="{item}">
-                <td>
-                  {{item.ExistenceDispositifHygiene?"OUI":"NON"}}
-                </td>
-              </template>
-              <template #ExistenceCantine="{item}">
-                <td>
-                  {{item.ExistenceCantine?"OUI":"NON"}}
-                </td>
-              </template>
-              <template #SourceDotationEtat="{item}">
-                <td>
-                  {{item.SourceDotationEtat?"OUI":"NON"}}
-                </td>
-              </template>
-              <template #SourceDotationPartenaire="{item}">
-                <td>
-                  {{item.SourceDotationPartenaire?"OUI":"NON"}}
-                </td>
-              </template>
-              <template #SourceDotationEndogene="{item}">
-                <td>
-                  {{item.SourceDotationEndogene?"OUI":"NON"}}
-                </td>
-              </template>
               
               
           <template #actions="{item}">

@@ -9,11 +9,34 @@
           </h5>
         </CCardHeader>
         <CCardBody>
-          <CInput label="Annee" type="number" placeholder="Annee" v-model="postPrimaire.annee" class="col-lg-3"
+          
+          <div class="row ">
+          <CInput label="Année" type="number" placeholder="Ex. 2020" v-model="postPrimaire.annee" class="col-lg-3"
             invalid-feedback="Veuillez saisir une année valide" :is-valid="anneeValidator"></CInput>
-          <CInput label="Trimestre" type="number" placeholder="Trimestre" v-model="postPrimaire.trimestre"
-            class="col-lg-3" invalid-feedback="Veuillez saisir un trimestre valide" :is-valid="trimestreValidator">
-          </CInput>
+            <div role="group" class="col-lg-3 form-group">
+              <label class="row col custom-control-inline"> Trimestre </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="trimestre1" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.trimestre" :value="'1'">
+                  <label for="trimestre1" class="custom-control-label"> 1 </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="trimestre2" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.trimestre" :value="'2'">
+                  <label for="trimestre2" class="custom-control-label"> 2 </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="trimestre3" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.trimestre" :value="'3'">
+                  <label for="trimestre3" class="custom-control-label"> 3 </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="trimestre4" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.trimestre" :value="'4'">
+                  <label for="trimestre4" class="custom-control-label"> 4 </label>
+                </div>
+            </div>
+            </div>
         </CCardBody>
       </CCard>
     </CCol>
@@ -24,36 +47,68 @@
             <CTab title="I. IDENTIFICATION DE LA STRUCTURE" active>
               <CCard>
                 <CCardBody>
-                  <div class="row ">
-                    <CInput label="n_ordre" type="text" placeholder="n_ordre" v-model="postPrimaire.n_ordre"
-                      class="col-lg-3">
-                    </CInput>
+                  
+          <div class="row ">
+            <CInput label="Numéro ordre" type="text" placeholder="Ex. 00xxx" v-model="postPrimaire.n_ordre" class="col-lg-3">
+            </CInput>
 
-                    <CSelect label="Region" class="col-lg-3" :value.sync="postPrimaire.region_id" :plain="true"
-                      :options="regions" v-model="postPrimaire.region_id">
-                    </CSelect>
+            <CSelect label="Region" class="col-lg-3" :value.sync="postPrimaire.region_id" :plain="true"
+              :options="regions" v-model="postPrimaire.region_id">
+            </CSelect>
 
-                    <CSelect label="Province" class="col-lg-3" :value.sync="postPrimaire.province_id" :plain="true"
-                      :options="provinces" v-model="postPrimaire.province_id">
-                    </CSelect>
+            <CSelect label="Province" class="col-lg-3" :value.sync="postPrimaire.province_id" :plain="true"
+              :options="provinces" v-model="postPrimaire.province_id">
+            </CSelect>
 
-                    <CSelect label="Commune" class="col-lg-3" :value.sync="postPrimaire.commune_id" :plain="true"
-                      :options="communes" v-model="postPrimaire.commune_id">
-                    </CSelect>
+            <CSelect label="Commune" class="col-lg-3" :value.sync="postPrimaire.commune_id" :plain="true"
+              :options="communes" v-model="postPrimaire.commune_id">
+            </CSelect>
 
-                    <CInput label="ceb" type="text" placeholder="ceb" v-model="postPrimaire.ceb" class="col-lg-3">
-                    </CInput>
-                    <CInput label="nom_structure" type="text" placeholder="nom_structure"
-                      v-model="postPrimaire.nom_structure" class="col-lg-3"></CInput>
-                    <CInput label="statut" type="text" placeholder="statut" v-model="postPrimaire.statut"
-                      class="col-lg-3">
-                    </CInput>
-                    <CInput label="type" type="text" placeholder="type" v-model="postPrimaire.type" class="col-lg-3">
-                    </CInput>
+            <CInput label="ceb" type="text" placeholder="" v-model="postPrimaire.ceb" class="col-lg-3"></CInput>
+            <CInput label="Nom de la structure" type="text" placeholder="" v-model="postPrimaire.nom_structure"
+              class="col-lg-3"></CInput>
+           
 
-                    <CInput label="NbTotalSalleActivite" type="number" placeholder="NbTotalSalleActivite"
-                      v-model="postPrimaire.NbTotalSalleActivite" class="col-lg-3"></CInput>
-                  </div>
+            <CInput label="Nombre total de salles d'activités" type="number" placeholder="0xx"
+              v-model="postPrimaire.NbTotalSalleActivite" class="col-lg-3"></CInput>
+            <div role="group" class="col-lg-3 form-group">
+              <label class="row col custom-control-inline"> Statut </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="statutPUBLIC" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.statut" :value="'PUBLIC'">
+                  <label for="statutPUBLIC" class="custom-control-label"> Public </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="statutPRIVE" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.statut" :value="'PRIVE'">
+                  <label for="statutPRIVE" class="custom-control-label"> Privé </label>
+                </div>
+            </div>
+
+            <div role="group" class="col-lg-6 form-group">
+              <label class="row col custom-control-inline"> Système </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="typeCLASSIQUE" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.type" :value="'CLASSIQUE'">
+                  <label for="typeCLASSIQUE" class="custom-control-label"> Classique </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="typeBILINGUE" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.type" :value="'BILINGUE'">
+                  <label for="typeBILINGUE" class="custom-control-label"> Bilingue </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="typeFRANCOARABE" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.type" :value="'FRANCOARABE'">
+                  <label for="typeFRANCOARABE" class="custom-control-label"> Franco Arabe </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="typePASSERELLE" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.type" :value="'PASSERELLE'">
+                  <label for="typePASSERELLE" class="custom-control-label"> Passerelle </label>
+                </div>
+            </div>
+          </div>
                 </CCardBody>
               </CCard>
             </CTab>

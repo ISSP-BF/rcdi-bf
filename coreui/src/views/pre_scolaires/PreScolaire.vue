@@ -6,225 +6,267 @@
           ><h4>Détail de la donnée PreScolaire id: {{ $route.params.id }}</h4>
         </CCardHeader>
         <CCardBody>
-          <div class="row">
-            <div class="col-lg-6"><h5>annee :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.annee }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>trimestre :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.trimestre }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>Region :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.region }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>Province :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.province }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>Commune :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.commune }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6"><h5>ceb :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.ceb }}</div>
-          </div>
+           <table class="table table-bordered col-lg-8">
+            <tr>
+              <td class="col-lg-6">Année</td>
+              <td>{{preScolaire.annee}}</td>
+            </tr>
+            <tr>
+              <td>Trimestre</td>
+              <td>{{preScolaire.trimestre}}</td>
+            </tr>
+           </table>
+          <h5>I. IDENTIFICATION DE LA STRUCTURE</h5>
+          <table class="table table-bordered">
+            <tr>
+              <td class="col-lg-4">N° d'ordre</td>
+              <td class="col-lg-4"></td>
+              <td>{{preScolaire.n_ordre}}</td>
+            </tr>
+            <tr>
+              <td>REGION</td>
+              <td></td>
+              <td>{{preScolaire.region}}</td>
+            </tr>
+            <tr>
+              <td>PROVINCE</td>
+              <td></td>
+              <td>{{preScolaire.province}}</td>
+            </tr>
+            <tr>
+              <td>COMMUNE/ARRONDISSEMENT</td>
+              <td></td>
+              <td>{{preScolaire.commune}}</td>
+            </tr>
+            <tr>
+              <td>CEB</td>
+              <td></td>
+              <td>{{preScolaire.ceb}}</td>
+            </tr>
+            <tr>
+              <td>Nom de la structure</td>
+              <td></td>
+              <td>{{preScolaire.nom_structure}}</td>
+            </tr>
+            <tr>
+              <td>Statut</td>
+              <td></td>
+              <td>{{preScolaire.statut}}</td>
+            </tr>
+            <tr>
+              <td>Système</td>
+              <td></td>
+              <td>{{preScolaire.systeme}}</td>
+            </tr>
+            <tr>
+              <td>Nombre total de salles d'activités</td>
+              <td></td>
+              <td>{{preScolaire.NbTotalSalleActivite}}</td>
+            </tr>
+          </table>
+          <h5>II. EFFECTIFS DES ELEVES (auditeurs)</h5>
+          <table class="table table-bordered">
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Effectifs</td>
+              <td>abandons</td>
+            </tr>
+            <tr>
+              <td rowspan="2" class="col-lg-4">Petite section</td>
+              <td class="col-lg-4 no-margin-padding">Garcon</td>
+              <td class="no-margin-padding">
+                {{preScolaire.NbGarcon_PS}}
+              </td>
+              <td class="no-margin-padding">
+                {{preScolaire.NbGarconAbandon_PS}}
+              </td>
+            </tr>
+            <tr>
+              <td class="no-margin-padding">Fille</td>
+              <td class="no-margin-padding">
+                {{preScolaire.NbFille_PS}}
+              </td>
+              <td class="no-margin-padding">
+                {{preScolaire.NbFilleAbandon_PS}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2">Moyenne section</td>
+              <td>Garcon</td>
+              <td>
+                {{preScolaire.NbGarcon_MS}}
+              </td>
+              <td>
+                {{preScolaire.NbGarconAbandon_MS}}
+              </td>
+            </tr>
+            <tr>
+              <td>Fille</td>
+              <td>
+                {{preScolaire.NbFille_MS}}
+              </td>
+              <td>
+                {{preScolaire.NbFilleAbandon_MS}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2">Grande section</td>
+              <td>Garcon</td>
+              <td>
+                {{preScolaire.NbGarcon_GS}}
+              </td>
+              <td>
+                {{preScolaire.NbGarconAbandon_GS}}
+              </td>
+            </tr>
+            <tr>
+              <td>Fille</td>
+              <td>
+                {{preScolaire.NbFille_GS}}
+              </td>
+              <td>
+                {{preScolaire.NbFilleAbandon_GS}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2">Total</td>
+              <td>Garcon</td>
+              <td>
+                {{preScolaire.NbTotalGarcon}}
+              </td>
+              <td>
+                {{preScolaire.NbTotalGarconAbandon}}
+              </td>
+            </tr>
+            <tr>
+              <td>Fille</td>
+              <td>
+                {{preScolaire.NbTotalFille}}
+              </td>
+              <td>
+                {{preScolaire.NbTotalFilleAbandon}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2">Déplacés Interne</td>
+              <td>Garcon</td>
+              <td>
+                {{preScolaire.NbGarcon_PDI}}
+              </td>
+              <td>
+                {{preScolaire.NbGarconAbandon_PDI}}
+              </td>
+            </tr>
+            <tr>
+              <td>Fille</td>
+              <td>
+                {{preScolaire.NbFille_PDI}}
+              </td>
+              <td>
+                {{preScolaire.NbFilleAbandon_PDI}}
+              </td>
+            </tr>
+          </table>
+          <h5>III. EFFECTIFS DES ENSEIGNANTS</h5>
+          <table class="table table-bordered">
+            <tr>
+              <td colspan="3"></td>
+              <td>Effectifs</td>
+            </tr>
+            <tr>
+              <td rowspan="4" class="col-lg-4">
+                Effectifs des encadreurs (hors volontaires communautaires)
+              </td>
+              <td rowspan="2" class="col-lg-4">Total</td>
+              <td class="col-lg-2">Homme</td>
+              <td>
+                {{preScolaire.NbTotalEnseignantHomme}}
+              </td>
+            </tr>
+            <tr>
+              <td>Femme</td>
+              <td>
+                {{preScolaire.NbTotalEnseignantFemme}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2">
+                Dont redeployés (arrivés) suite à la fermeture de leur structure
+              </td>
+              <td>Homme</td>
+              <td>
+                {{preScolaire.NbEnseignantHommeRedeployes}}
+              </td>
+            </tr>
+            <tr>
+              <td>Femme</td>
+              <td>
+                {{preScolaire.NbEnseignantFemmeRedeployes}}
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2">volontaires communautaires</td>
+              <td rowspan="2"></td>
+              <td>Homme</td>
+              <td>
+                {{preScolaire.NbEnseignantHommeVolontaire}}
+              </td>
+            </tr>
+            <tr>
+              <td>Femme</td>
+              <td>
+                {{preScolaire.NbEnseignantFemmeVolontaire}}
+              </td>
+            </tr>
+          </table>
+          <h5>IV. ENVIRONNEMENT D’APPRENTISSAGE</h5>
           
-          <div class="row">
-            <div class="col-lg-6"><h5>nom_structure :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.nom_structure }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>statut :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.statut }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>systeme :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.systeme }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbTotalSalleActivite :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbTotalSalleActivite }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbGarcon_PS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbGarcon_PS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbGarconAbandon_PS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbGarconAbandon_PS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbGarcon_MS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbGarcon_MS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbGarconAbandon_MS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbGarconAbandon_MS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbGarcon_GS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbGarcon_GS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbGarconAbandon_GS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbGarconAbandon_GS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbTotalGarcon :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbTotalGarcon }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbTotalGarconAbandon :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbTotalGarconAbandon }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbGarcon_PDI :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbGarcon_PDI }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbGarconAbandon_PDI :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbGarconAbandon_PDI }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbFille_PS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbFille_PS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbFilleAbandon_PS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbFilleAbandon_PS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbFille_MS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbFille_MS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbFilleAbandon_MS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbFilleAbandon_MS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbFille_GS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbFille_GS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbFilleAbandon_GS :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbFilleAbandon_GS }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbTotalFille :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbTotalFille }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbTotalFilleAbandon :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbTotalFilleAbandon }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbFille_PDI :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbFille_PDI }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbFilleAbandon_PDI :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbFilleAbandon_PDI }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbTotalEnseignantHomme :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbTotalEnseignantHomme }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbTotalEnseignantFemme :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.NbTotalEnseignantFemme }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbEnseignantHommeRedeployes :</h5></div>
-            <div class="col-lg-6">
-              {{ preScolaire.NbEnseignantHommeRedeployes }}
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbEnseignantFemmeRedeployes :</h5></div>
-            <div class="col-lg-6">
-              {{ preScolaire.NbEnseignantFemmeRedeployes }}
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbEnseignantHommeVolontaire :</h5></div>
-            <div class="col-lg-6">
-              {{ preScolaire.NbEnseignantHommeVolontaire }}
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>NbEnseignantFemmeVolontaire :</h5></div>
-            <div class="col-lg-6">
-              {{ preScolaire.NbEnseignantFemmeVolontaire }}
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>ExistenceEspacesRecreatif :</h5></div>
-            <div class="col-lg-6">
-              {{ preScolaire.ExistenceEspacesRecreatif }}
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>ExistenceDispositifHygiene :</h5></div>
-            <div class="col-lg-6">
-              {{ preScolaire.ExistenceDispositifHygiene }}
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>ExistenceCantine :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.ExistenceCantine }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>SourceDotationEtat :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.SourceDotationEtat }}</div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>SourceDotationPartenaire :</h5></div>
-            <div class="col-lg-6">
-              {{ preScolaire.SourceDotationPartenaire }}
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-lg-6"><h5>SourceDotationEndogene :</h5></div>
-            <div class="col-lg-6">{{ preScolaire.SourceDotationEndogene }}</div>
-          </div>
-          
+          <table class="table table-bordered">
+            <tr>
+              <td class="col-lg-4">Existence d'espaces récréatifs</td>
+              <td class="col-lg-4"></td>
+              <td class="col-lg-4 no-margin-padding">
+                {{preScolaire.ExistenceEspacesRecreatif}}
+
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-4">Existence de dispositif d’hygiène</td>
+              <td class="col-lg-4"></td>
+              <td class="col-lg-4">
+                {{preScolaire.ExistenceDispositifHygiene}}
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-4">Existence cantine</td>
+              <td class="col-lg-4"></td>
+              <td class="col-lg-4">
+                {{preScolaire.ExistenceCantine}}
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-4">Source de la dotation</td>
+              <td class="col-lg-4">Etat</td>
+              <td class="col-lg-4">
+                {{preScolaire.SourceDotationEtat}}
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-4"></td>
+              <td class="col-lg-4">Partenaire</td>
+              <td class="col-lg-4">
+                {{preScolaire.SourceDotationPartenaire}}
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-4"></td>
+              <td class="col-lg-4">Endogène</td>
+              <td class="col-lg-4">
+                {{preScolaire.SourceDotationEndogene}}
+              </td>
+            </tr>
+          </table>          
         </CCardBody>
 
         <CCardFooter

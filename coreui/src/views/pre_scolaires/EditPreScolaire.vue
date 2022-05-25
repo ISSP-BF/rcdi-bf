@@ -381,14 +381,7 @@
       </CCard>
       
     </CCol>
-    <CCol col="12" lg="12">
-    </CCol>
-
-    <CCol col="12" lg="12">
-    </CCol>
-
-    <CCol col="12" lg="12">
-    </CCol>
+   
 
     <CCol col="12" lg="12">
       <CCard>
