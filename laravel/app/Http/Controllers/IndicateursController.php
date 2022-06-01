@@ -146,12 +146,16 @@ class IndicateursController extends Controller
         if(isset($request->indicateur)){
             $indicateurs->where('indicateurs.indicateur', 'like', '%' . $request['indicateur'] . '%');
         }
+        if(isset($request->groupe)){
+            $indicateurs->where('indicateurs.groupe', 'like', '%' . $request['groupe'] . '%');
+        }
         if(isset($request->id)&&$request->id!=null&&$request->id!=0){
             $indicateurs->where('indicateurs.id', '=', $request['id']);
         }
         $indicateurs = $indicateurs->get();
         return response()->json( $indicateurs);
     }
+
 
     /**
      * Show the form for editing the specified resource.

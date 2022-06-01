@@ -1,32 +1,40 @@
 <template>
-  <CChartBar
-    :datasets="computedDatasets"
-    :options="computedOptions"
-    :labels="labels"
-  />
+  <div>
+    <CChartHorizontalBar
+      :datasets="computedDatasets"
+      :options="computedOptions"
+      :labels="[
+        'Eating', 'Drinking', 'Sleeping', 'Designing',
+        'Coding', 'Cycling', 'Running',
+        'Coding', 'Cycling', 'Running',
+        'Coding', 'Cycling', 'Running'
+      ]"
+      style="min-height: 50vh"
+    />
+  </div>
 </template>
 
 <script>
-import { CChartBar } from '@coreui/vue-chartjs'
+import { CChartHorizontalBar } from '@coreui/vue-chartjs'
 import { getColor, deepObjectsMerge } from '@coreui/utils/src'
 
 export default {
-  name: 'CChartBarSimple',
-  components: { CChartBar },
+  name: 'CChartHorizontalBarSimple',
+  components: { CChartHorizontalBar },
   props: {
-    ...CChartBar.props,
+    ...CChartHorizontalBar.props,
     backgroundColor: {
       type: String,
       default: 'rgba(0,0,0,.2)'
+    },
+    backgroundColor2: {
+      type: String,
+      default: 'rgba(0,0,255,100)'
     },
     pointHoverBackgroundColor: String,
     dataPoints: {
       type: Array,
       default: () => [10, 22, 34, 46, 58, 70, 46, 23, 45, 78, 34, 12]
-    },
-    label: {
-      type: String,
-      default: 'Sales'
     },
     pointed: Boolean
   },
@@ -34,12 +42,15 @@ export default {
     defaultDatasets () {
       return [
         {
-          data: this.dataPoints,
+          data: [10, 22, 34, 46, 58, 70, 46, 23, 45, 78, 34, 12],
           backgroundColor: getColor(this.backgroundColor),
-          pointHoverBackgroundColor: getColor(this.pointHoverBackgroundColor),
-          label: this.label,
-          barPercentage: 0.5,
-          categoryPercentage: 1
+          label: "OUI"
+        },
+        
+        {
+          data: [10, 22, 34, 46, 58, 70, 46, 23, 45, 78, 34, 12],
+          backgroundColor: getColor(this.backgroundColor2),
+          label: "NON"
         }
       ]
     },
@@ -47,15 +58,17 @@ export default {
       return {
         maintainAspectRatio: false,
         legend: {
-          display: false
+          display: true
         },
         scales: {
           xAxes: [{
-            display: false
+            display: true,
+            stacked: true
           }],
           yAxes: [{
-            display: false
-          }]
+            display: true,
+            stacked: true
+          }],
         }
       }
     },

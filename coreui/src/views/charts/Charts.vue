@@ -50,8 +50,12 @@
         <CCardBody><CChartLineSimple pointed border-color="warning"/></CCardBody>
       </CCard>
       <CCard>
-        <CCardHeader>Simple bar chart</CCardHeader>
-        <CCardBody><CChartBarSimple background-color="danger"/></CCardBody>        
+        <CCardHeader>Simple bar charts</CCardHeader>
+        <CCardBody>
+         
+               
+                   <CChartBarSimple background-color="danger"/> 
+        </CCardBody>        
       </CCard>
     </CCardGroup>
   </div>

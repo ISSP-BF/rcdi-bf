@@ -94,7 +94,7 @@
             <CInput label="Nom" type="text" placeholder="Nom" v-model="acteMariage.nom_conjoint"></CInput>
             <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteMariage.prenom_conjoint"></CInput>
             <div class="row ">
-            <CInput class="col-lg-4" label="Date naissance" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjoint"></CInput>
+            <CInput class="col-lg-4" label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjoint"></CInput>
             <CInput class="col-lg-4" label="Age" type="text" placeholder="Age" v-model="acteMariage.age_mariage_conjoint"></CInput>
             </div>
             <template>
@@ -164,7 +164,7 @@
           <CInput label="Nom" type="text" placeholder="Nom" v-model="acteMariage.nom_conjointe"></CInput>
             <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteMariage.prenom_conjointe"></CInput>
             <div class="row">
-            <CInput class="col-lg-4" label="Date naissance" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjointe"></CInput>
+            <CInput class="col-lg-4" label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjointe"></CInput>
             <CInput class="col-lg-4" label="Age" type="text" placeholder="Age" v-model="acteMariage.age_mariage_conjointe"></CInput>
             </div>
             <template>

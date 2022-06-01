@@ -47,9 +47,9 @@
                   :is-valid="anneeEnCourValidator"></CInput>
             <CInput label="Nom" type="text" placeholder="Nom" v-model="acteDeces.nom"></CInput>
             <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteDeces.prenom"></CInput>
-            <CInput label="Date naissance" type="date" placeholder="Date naissance" v-model="acteDeces.date_naissance" invalid-feedback="Veuillez saisir une année valide"
+            <CInput label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteDeces.date_naissance" invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="ageCalculeAndValidator"></CInput>
-            <CInput label="Date deces" type="date" placeholder="Date deces" v-model="acteDeces.date_deces" invalid-feedback="Veuillez saisir une année valide"
+            <CInput label="Date deces (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date deces" v-model="acteDeces.date_deces" invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="ageCalculeAndValidator"></CInput>
             <CInput label="Age" type="text" placeholder="Age" v-model="acteDeces.age"></CInput>
             <CInput label="Date Etablissement" type="date" placeholder="Date Etablissement" v-model="acteDeces.date_etablissement" invalid-feedback="Veuillez saisir une année valide"

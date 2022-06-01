@@ -47,7 +47,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('post_primaires', 'PostPrimairesController');
 
     Route::resource('indicateurs', 'IndicateursController');
-    Route::post('indicateurs/findBy', 'IndicateursController@findBy'); 
+    Route::post('indicateurs/findBy', 'IndicateursController@findBy');
 
     Route::resource('resource/{table}/resource', 'ResourceController');
     

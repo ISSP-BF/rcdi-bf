@@ -11,59 +11,21 @@
         <IndicateursSecteur1 commune_id="2" indicateur="Ménages connectés SONABEL" />
       </CCol>
       <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Répartition population par groupe d'âge" />
+        <IndicateursTableau commune_id="2" indicateur="Quelques Statistiques de Population" />
       </CCol>
       <CCol sm="6" lg="4">
         <IndicateursSecteur1 commune_id="2" indicateur="Ménages avec accès internet" />
       </CCol>
       <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2"
-          indicateur="Principale source d'approvisionnement en eau de boisson est le Forage" />
+      
       </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2"
-          indicateur="Principale source d'approvisionnement en eau de boisson est la Fontaine publique" />
+      <CCol sm="6" lg="6">
+        <GroupeBarChart commune_id="2"
+          groupe="ASSAINISSEMENT" />
       </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2"
-          indicateur="Principale source d'approvisionnement en eau de boisson est le Robinet-compteur intérieur propre" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Accès à l'eau potable" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Une chasse d'eau en commun" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Une latrine" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2"
-          indicateur="Proportion de ménages dont le type d'aisance est Brousse/nature" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Cultures pluviales" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de cultures irriguées" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de cultures maraichères" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="L'élevage" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de l'apiculture" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de l'arboriculture fruitière" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de la sylviculture" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Pratique de la pèche et l'aquaculture" />
+      <CCol sm="6" lg="6">
+        <GroupeBarChart commune_id="2"
+          groupe="AGRICULTURE" />
       </CCol>
     </CRow>
     
@@ -75,6 +37,8 @@
 import MainChartExample from './charts/MainChartExample'
 import IndicateursShow from './dashboard/IndicateursShow'
 import IndicateursSecteur1 from './dashboard/IndicateursSecteur1'
+import IndicateursTableau from './dashboard/IndicateursTableau'
+import GroupeBarChart from './dashboard/GroupeBarChart'
 import WidgetsBrand from './widgets/WidgetsBrand'
 import { CChartPie } from '@coreui/vue-chartjs'
 import axios from 'axios'
@@ -85,6 +49,8 @@ export default {
     MainChartExample,
     IndicateursShow,
     IndicateursSecteur1,
+    IndicateursTableau,
+    GroupeBarChart,
     WidgetsBrand, CChartPie
   },
   computed: {

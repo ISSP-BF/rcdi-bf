@@ -47,7 +47,7 @@
                   :is-valid="anneeEnCourValidator"></CInput>
             <CInput label="Nom" type="text" placeholder="Nom" v-model="acteNaissance.nom"></CInput>
             <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteNaissance.prenom"></CInput>
-            <CInput label="Date naissance" type="date" placeholder="Date naissance" v-model="acteNaissance.date_naissance"
+            <CInput label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteNaissance.date_naissance"
                   invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeEnCourValidator"></CInput>
             <CInput label="Lieu naissance (Commune)" type="text" placeholder="Lieu naissance (Commune)" v-model="acteNaissance.lieu_naissance_commune"></CInput>
