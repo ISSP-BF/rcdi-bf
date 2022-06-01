@@ -91,8 +91,10 @@ export default {
               const d=self.items[i];
               const  d2=self.items[i+1];
                 self.labels.push(d.indicateur);
-                self.data1.push(d.niveau1=="OUI"?d.indice:d2.indice);
-              self.data2.push(d.niveau1=="NON"?d2.indice:d.indice);
+                if(d.niveau1=="OUI")
+                self.data1.push(d.indice);
+                else
+                self.data2.push(d2.indice);
             }
             console.log(self.data1);
 
