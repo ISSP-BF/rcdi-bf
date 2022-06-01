@@ -2,112 +2,106 @@
   <CRow>
     <CCol col="12" xl="12">
       <transition name="slide">
-      <CCard>
-         <CCardHeader>
+        <CCard>
+          <CCardHeader>
             Acte Naissances
             <div class="card-header-actions">
-             <CButton color="primary" @click="createActeNaissance()">Ajouter</CButton>
+              <CButton color="primary" @click="createActeNaissance()">Ajouter</CButton>
             </div>
-        </CCardHeader>
-        <CCardBody>
-            <CAlert
-              :show.sync="dismissCountDown"
-              color="primary"
-              fade
-            >
-              ({{dismissCountDown}}) {{ message }}
+          </CCardHeader>
+          <CCardBody>
+            <CAlert :show.sync="dismissCountDown" color="primary" fade>
+              ({{ dismissCountDown }}) {{ message }}
             </CAlert>
-            <CDataTable
-              hover
-              :items="items"
-              :fields="fields"
-              :items-per-page="10"
-              pagination
-            >
-              <template #numero_acte="{item}">
+            <CDataTable id="table" hover :items="items" :fields="fields" :items-per-page="10" pagination>
+              <template #numero_acte="{ item }">
                 <td>
-                  <strong>{{item.n_acte}}</strong>
+                  <strong>{{ item.n_acte }}</strong>
                 </td>
               </template>
-              <template #region="{item}">
+              <template #region="{ item }">
                 <td>
-                  <label>{{item.region}}</label>
-                </td>  
-              </template>
-              <template #province="{item}">
-                <td>
-                  {{item.province}}
-                </td>  
-              </template>
-              <template #commune="{item}">
-                <td>
-                  {{item.commune}}
-                </td>  
-              </template>
-              <template #date_declaration="{item}">
-                <td>
-                  {{item.date_declaration|formatDateShort}}
-                </td>  
-              </template>
-
-              <template #nom_prenom="{item}">
-                <td>
-                  <strong>{{item.nom}} {{item.prenom}}</strong>
+                  <label>{{ item.region }}</label>
                 </td>
               </template>
-              <template #sexe="{item}">
+              <template #province="{ item }">
                 <td>
-                  <strong>{{item.sexe=='M'?'Homme':'Femme'}}</strong>
+                  {{ item.province }}
                 </td>
               </template>
-              
-              <template #date_naissance="{item}">
+              <template #commune="{ item }">
                 <td>
-                  <strong>{{item.date_naissance|formatDateShort}}</strong>
+                  {{ item.commune }}
                 </td>
               </template>
-              
-              <template #lieu_naissance_commune="{item}">
+              <template #date_declaration="{ item }">
                 <td>
-                  {{item.lieu_naissance_commune}}
+                  {{ item.date_declaration | formatDateShort }}
                 </td>
               </template>
 
-              <template #centre_sante_naissance="{item}">
+              <template #nom_prenom="{ item }">
                 <td>
-                  {{item.centre_sante_naissance}}
+                  <strong>{{ item.nom }} {{ item.prenom }}</strong>
                 </td>
               </template>
-              
-              <template #date_etablissement="{item}">
+              <template #sexe="{ item }">
                 <td>
-                  {{item.date_etablissement|formatDateShort}}
+                  <strong>{{ item.sexe == 'M' ? 'Homme' : 'Femme' }}</strong>
                 </td>
               </template>
-              
-              <template #date_autorisation="{item}">
+
+              <template #date_naissance="{ item }">
                 <td>
-                  {{item.date_autorisation|formatDateShort}}
+                  <strong>{{ item.date_naissance | formatDateShort }}</strong>
                 </td>
               </template>
-             
-             
-              
-              
-          <template #actions="{item}">
+
+              <template #lieu_naissance_commune="{ item }">
+                <td>
+                  {{ item.lieu_naissance_commune }}
+                </td>
+              </template>
+
+              <template #centre_sante_naissance="{ item }">
+                <td>
+                  {{ item.centre_sante_naissance }}
+                </td>
+              </template>
+
+              <template #date_etablissement="{ item }">
+                <td>
+                  {{ item.date_etablissement | formatDateShort }}
+                </td>
+              </template>
+
+              <template #date_autorisation="{ item }">
+                <td>
+                  {{ item.date_autorisation | formatDateShort }}
+                </td>
+              </template>
+
+
+
+
+              <template #actions="{ item }">
                 <td>
                   <div class="card-header-actions" style="display:flex">
-                  <CButton color="secondary"  size="sm" @click="showActeNaissance( item.id )">Détail</CButton>
-                  &nbsp;
-                  <CButton  size="sm" color="primary" @click="editActeNaissance( item.id )"><CIcon name="cil-pencil"/></CButton>
-                  &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteActeNaissance( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                    <CButton color="secondary" size="sm" @click="showActeNaissance(item.id)">Détail</CButton>
+                    &nbsp;
+                    <CButton size="sm" color="primary" @click="editActeNaissance(item.id)">
+                      <CIcon name="cil-pencil" />
+                    </CButton>
+                    &nbsp;
+                    <CButton v-if="you != item.id" size="sm" color="danger" @click="deleteActeNaissance(item.id)">
+                      <CIcon name="cil-x-circle" />
+                    </CButton>
                   </div>
                 </td>
               </template>
             </CDataTable>
-        </CCardBody>  
-      </CCard>
+          </CCardBody>
+        </CCard>
       </transition>
     </CCol>
   </CRow>
@@ -115,42 +109,28 @@
 
 <script>
 import axios from 'axios'
+//Bootstrap and jQuery libraries
+// import 'bootstrap/dist/css/bootstrap.min.css'; //for table good looks
+import 'jquery/dist/jquery.min.js';
+//Datatable Modules
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
+import "datatables.net-buttons/js/dataTables.buttons.js"
+import "datatables.net-buttons/js/buttons.colVis.js"
+import "datatables.net-buttons/js/buttons.flash.js"
+import "datatables.net-buttons/js/buttons.html5.js"
+import "datatables.net-buttons/js/buttons.print.js"
+import $ from 'jquery';
 
 export default {
   name: 'ActeNaissances',
   data: () => {
     return {
       items: [],
-      /*
-      fields: [
-        {key: 'author'},
-        {key: 'title'},
-        {key: 'content'},
-        {key: 'applies_to_date'},
-        {key: 'status'},
-        {key: 'acteNaissance_type'},
-        {key: 'show'},
-        {key: 'edit'},
-        {key: 'delete'}
-        
-          region_id: null,
-          province_id: null,
-          commune_id: null,
-          n_acte: '',
-          date_declaration: '',
-          nom: '',
-          prenom: '',
-          date_naissance: '',
-          lieu_naissance_commune: '',
-          centre_sante_naissance: '',
-          date_etablissement: '',
-          sexe: '',
-      ],
-      */
-      fields: ['numero_acte', 'region', 'province', 'commune','date_declaration',
-       'nom_prenom','sexe','date_naissance',
-       'lieu_naissance_commune','centre_sante_naissance',
-       'date_etablissement', 'actions'],
+      fields: ['numero_acte', 'region', 'province', 'commune', 'date_declaration',
+        'nom_prenom', 'sexe', 'date_naissance',
+        'lieu_naissance_commune', 'centre_sante_naissance',
+        'date_etablissement', 'actions'],
 
       currentPage: 1,
       perPage: 5,
@@ -166,66 +146,82 @@ export default {
   computed: {
   },
   methods: {
-    getRowCount (items) {
+    getRowCount(items) {
       return items.length
     },
-    acteNaissanceLink (id) {
+    acteNaissanceLink(id) {
       return `acte_naissances/${id.toString()}`
     },
-    editLink (id) {
+    editLink(id) {
       return `acte_naissances/${id.toString()}/edit`
     },
-    showActeNaissance ( id ) {
-      const acteNaissanceLink = this.acteNaissanceLink( id );
-      this.$router.push({path: acteNaissanceLink});
+    showActeNaissance(id) {
+      const acteNaissanceLink = this.acteNaissanceLink(id);
+      this.$router.push({ path: acteNaissanceLink });
     },
-    editActeNaissance ( id ) {
-      const editLink = this.editLink( id );
-      this.$router.push({path: editLink});
+    editActeNaissance(id) {
+      const editLink = this.editLink(id);
+      this.$router.push({ path: editLink });
     },
-    deleteActeNaissance ( id ) {
+    deleteActeNaissance(id) {
       let self = this;
       let acteNaissanceId = id;
-      axios.post(  this.$apiAdress + '/api/acte_naissances/' + id + '?token=' + localStorage.getItem("api_token"), {
+      axios.post(this.$apiAdress + '/api/acte_naissances/' + id + '?token=' + localStorage.getItem("api_token"), {
         _method: 'DELETE'
       })
-      .then(function (response) {
+        .then(function (response) {
           self.message = 'Successfully deleted acteNaissance.';
           self.showAlert();
           self.getActeNaissances();
-      }).catch(function (error) {
-        console.log(error);
-        self.$router.push({ path: '/login' });
-      });
+        }).catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
     },
-    createActeNaissance () {
-      this.$router.push({path: 'acte_naissances/create'});
+    createActeNaissance() {
+      this.$router.push({ path: 'acte_naissances/create' });
     },
-    countDownChanged (dismissCountDown) {
+    countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     },
-    showAlert () {
+    showAlert() {
       this.dismissCountDown = this.dismissSecs
     },
-    getActeNaissances (){
+    getActeNaissances() {
       let self = this;
-      axios.get(  this.$apiAdress + '/api/acte_naissances?token=' + localStorage.getItem("api_token") )
-      .then(function (response) {
-        self.items = response.data;
-      }).catch(function (error) {
-        console.log(error);
-        // self.$router.push({ path: '/login' });
-      });
+
+      axios.get(this.$apiAdress + '/api/acte_naissances?token=' + localStorage.getItem("api_token"))
+        .then(function (response) {
+          self.items = response.data;
+          setTimeout(function () {
+            $('.table').DataTable(
+              {
+                pagingType: 'full_numbers',
+                pageLength: 5,
+                processing: true,
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'print'
+                ]
+              }
+            );
+          },
+            10
+          );
+        }).catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
     }
   },
-  mounted: function(){
+  mounted: function () {
     this.getActeNaissances();
   }
 }
+
 </script>
 
 <style scoped>
-.card-body >>> table > tbody > tr > td {
+.card-body>>>table>tbody>tr>td {
   cursor: pointer;
 }
 </style>

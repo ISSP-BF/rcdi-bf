@@ -27,10 +27,21 @@ class FormationSanitairesController extends Controller
     public function index()
     {
         $formation_sanitaires = DB::table('formation_sanitaires')
-        ->join('users', 'users.id', '=', 'formation_sanitaires.created_by')
-        ->join('regions', 'regions.id', '=', 'formation_sanitaires.region_id')
-        ->join('provinces', 'provinces.id', '=', 'formation_sanitaires.province_id')
-        ->join('districts', 'districts.id', '=', 'formation_sanitaires.district_id')
+        ->leftJoin('provinces', function($join){
+            $join->on('formation_sanitaires.province_id', '=', 'provinces.id');
+        })
+        ->leftJoin('regions', function($join){
+            $join->on('formation_sanitaires.region_id', '=', 'regions.id');
+        })
+        ->leftJoin('districts', function($join){
+            $join->on('formation_sanitaires.district_id', '=', 'districts.id');
+        })
+        ->leftJoin('users', function($join){
+            $join->on('formation_sanitaires.created_by', '=', 'users.id');
+        })
+        ->leftJoin('users as users2', function($join){
+            $join->on('formation_sanitaires.updated_by', '=', 'users2.id');
+        })
         ->select('formation_sanitaires.*', 'users.name as author', 'districts.nom_district as district', 'regions.region as region', 'provinces.province as province')
         ->get();
         return response()->json( $formation_sanitaires );
@@ -58,7 +69,7 @@ class FormationSanitairesController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'code'             => 'required|min:1|max:64',
+            // 'code'             => 'required|min:1|max:64',
             'nom_structure'     => 'required|min:1|max:64',
             'province_id'         => 'required',
             'district_id'         => 'required',
@@ -138,7 +149,7 @@ class FormationSanitairesController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'code'             => 'required|min:1|max:64',
+            // 'code'             => 'required|min:1|max:64',
             'nom_structure'     => 'required|min:1|max:64',
             'province_id'         => 'required',
             'district_id'         => 'required',

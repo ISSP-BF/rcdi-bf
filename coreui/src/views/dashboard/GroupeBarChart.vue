@@ -86,36 +86,34 @@ export default {
             console.log(self.items)
             
             for(let i=0;i<self.items.length;i=i+2)
-            {
-            console.log("*********");
+            { 
               const d=self.items[i];
               const  d2=self.items[i+1];
                 self.labels.push(d.indicateur);
                 if(d.niveau1=="OUI")
                 self.data1.push(d.indice);
                 else
-                self.data2.push(d2.indice);
+                self.data2.push(d.indice);
                 
                 if(d2.niveau1=="OUI")
-                self.data.push(d2.indice);
+                self.data1.push(d2.indice);
                 else
-                self.data2.push(d.indice);
-            }
-            console.log(self.data1);
+                self.data2.push(d2.indice);
+            } 
 
         }).catch(function (error) {
-            // if(error.response.data.message == 'The given data was invalid.'){
-            //   self.message = '';
-            //   for (let key in error.response.data.errors) {
-            //     if (error.response.data.errors.hasOwnProperty(key)) {
-            //       self.message += error.response.data.errors[key][0] + '  ';
-            //     }
-            //   }
-            //   self.showAlert();
-            // }else{
-            //   console.log(error.response);
-            //   self.$router.push({ path: 'login' }); 
-            // }
+            if(error.response.data.message == 'The given data was invalid.'){
+              self.message = '';
+              for (let key in error.response.data.errors) {
+                if (error.response.data.errors.hasOwnProperty(key)) {
+                  self.message += error.response.data.errors[key][0] + '  ';
+                }
+              }
+              self.showAlert();
+            }else{
+              console.log(error.response);
+              self.$router.push({ path: 'login' }); 
+            }
         });
     }
   },

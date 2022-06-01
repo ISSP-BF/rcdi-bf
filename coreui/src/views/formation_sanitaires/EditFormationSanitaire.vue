@@ -117,19 +117,6 @@ export default {
     },
     update() {
         let self = this;
-        console.log(self.formationSanitaire)
-        // axios.post(  this.$apiAdress + '/api/formationSanitaires/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
-        // {
-        //     _method: 'PUT',
-        //     code:              self.formationSanitaire.code,
-        //     nom_formationSanitaire:      self.formationSanitaire.nom_formationSanitaire,
-        //     nom_majore:        self.formationSanitaire.nom_majore,
-        //     region_id:         self.formationSanitaire.region_id,
-        //     province_id:       self.formationSanitaire.province_id,
-        //     lon:               self.formationSanitaire.lon,
-        //     lat:               self.formationSanitaire.lat,
-        //     superficie:        self.formationSanitaire.superficie
-        // })
         axios.put(  this.$apiAdress + '/api/formation_sanitaires/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
         self.formationSanitaire)
         .then(function (response) {

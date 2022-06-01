@@ -115,42 +115,24 @@
 
 <script>
 import axios from 'axios'
+//Bootstrap and jQuery libraries
+// import 'bootstrap/dist/css/bootstrap.min.css'; //for table good looks
+import 'jquery/dist/jquery.min.js';
+//Datatable Modules
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
+import "datatables.net-buttons/js/dataTables.buttons.js"
+import "datatables.net-buttons/js/buttons.colVis.js"
+import "datatables.net-buttons/js/buttons.flash.js"
+import "datatables.net-buttons/js/buttons.html5.js"
+import "datatables.net-buttons/js/buttons.print.js"
+import $ from 'jquery';
 
 export default {
   name: 'ActeMariages',
   data: () => {
     return {
       items: [],
-      /*
-      fields: [
-        {key: 'author'},
-        {key: 'title'},
-        {key: 'content'},
-        {key: 'applies_to_date'},
-        {key: 'status'},
-        {key: 'acteMariage_type'},
-        {key: 'show'},
-        {key: 'edit'},
-        {key: 'delete'}
-        
-          region_id: null,
-          province_id: null,
-          commune_id: null,
-          n_acte: '',
-          date_declaration: '',
-          nom: '',
-          prenom: '',
-          date_mariage: '',
-          lieu_mariage_commune: '',
-          centre_sante_mariage: '',
-          date_etablissement: '',
-          sexe: '',
-      ],
-      */
-      // fields: ['numero_acte', 'region', 'province', 'commune','date_declaration',
-      //  'nom_prenom','sexe','date_mariage',
-      //  'lieu_mariage_commune','centre_sante_mariage',
-      //  'date_etablissement', 'actions'],
       fields:['n_acte','region', 'province', 'commune','date_etablissement','nom_conjoint','prenom_conjoint','date_naissance_conjoint','age_mariage_conjoint','sexe_conjoint','hors_commune_conjoint','commune_naissance_conjoint','localite_naissance_conjoint','domicile_conjoint','profession_conjoint','nom_conjointe','prenom_conjointe','date_naissance_conjointe','age_mariage_conjointe','sexe_conjointe','hors_commune_conjointe','commune_naissance_conjointe','localite_naissance_conjointe','domicile_conjointe','profession_conjointe','regime_matrimonial','option_matrimonial','actions'],
 
       currentPage: 1,
@@ -213,6 +195,20 @@ export default {
       axios.get(  this.$apiAdress + '/api/acte_mariages?token=' + localStorage.getItem("api_token") )
       .then(function (response) {
         self.items = response.data;
+        setTimeout(function () {
+            $('.table').DataTable(
+              {
+                pagingType: 'full_numbers',
+                pageLength: 5,
+                processing: true,
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'print'
+                ]
+              }
+            );
+          },
+            10
+          );
       }).catch(function (error) {
         console.log(error);
         // self.$router.push({ path: '/login' });

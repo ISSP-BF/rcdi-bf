@@ -64,7 +64,7 @@ export default {
   data () {
     return {
       tailleMoyenneMenages: {label:"Taille moyenne des ménages",value:""},
-      rM: {label:"RM",value:""},
+      rM: {label:"Rapport de Masculinite",value:""},
       pt: {label:"pt",value:""},
     }
   },
@@ -74,7 +74,7 @@ export default {
       let self = this;
       const criteria =  {
             indicateur:"Taille moyenne des ménages",
-            commune_id:2
+            commune_id:2208
           };
           
       axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
@@ -105,8 +105,8 @@ export default {
     getRM(){
       let self = this;
       const criteria =  {
-            indicateur:"RM",
-            commune_id:2
+            indicateur:"Rapport de Masculinite",
+            commune_id:2208
           };
           
       axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
@@ -138,7 +138,7 @@ export default {
       let self = this;
       const criteria =  {
             indicateur:"Population totale",
-            commune_id:2
+            commune_id:2208
           };
           
       axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),

@@ -1,30 +1,35 @@
 <template>
   <div>
-    <IndicateursShow />
-
+    <CCard>
+      <CCardHeader><h4 class="card-title mb-0">DEMOGRAPHIE</h4></CCardHeader>
+    <CCardBody>
+      <IndicateursShow />
+    <CRow>
+      
+          <CCol sm="6" lg="6">
+            <IndicateursSecteur1 commune_id="2208" indicateur="Répartition population par sexe" />
+          </CCol>
+          <CCol sm="6" lg="6">
+            <IndicateursTableau commune_id="2208" indicateur="Quelques Statistiques de Population" />
+          </CCol>
+    </CRow>
+    </CCardBody>
+  </CCard>
+    
 
     <CRow>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Répartition population par sexe" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Ménages connectés SONABEL" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursTableau commune_id="2" indicateur="Quelques Statistiques de Population" />
-      </CCol>
-      <CCol sm="6" lg="4">
-        <IndicateursSecteur1 commune_id="2" indicateur="Ménages avec accès internet" />
-      </CCol>
-      <CCol sm="6" lg="4">
       
+      
+      <CCol sm="12" lg="12">
+        <GroupeBarChart commune_id="2208"
+          groupe="SERVICES" />
       </CCol>
       <CCol sm="6" lg="6">
-        <GroupeBarChart commune_id="2"
+        <GroupeBarChart commune_id="2208"
           groupe="ASSAINISSEMENT" />
       </CCol>
       <CCol sm="6" lg="6">
-        <GroupeBarChart commune_id="2"
+        <GroupeBarChart commune_id="2208"
           groupe="AGRICULTURE" />
       </CCol>
     </CRow>
@@ -162,7 +167,7 @@ export default {
       let self = this;
       const criteria = {
         indicateur: "Répartition population par sexe",
-        commune_id: 2
+        commune_id: 2208
       };
       axios.post(this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
         criteria

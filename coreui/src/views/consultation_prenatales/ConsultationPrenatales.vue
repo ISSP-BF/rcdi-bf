@@ -1,12 +1,29 @@
 <template>
   <CRow>
+    <CModal
+      title="Modal title"
+      color="success"
+      :show.sync="successModal"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </CModal>
     <CCol col="12" xl="12">
       <transition name="slide">
       <CCard>
          <CCardHeader>
             Consultation Prenatales
             <div class="card-header-actions">
-             <CButton color="primary" @click="createConsultationPrenatale()">Ajouter</CButton>
+             <CButton color="primary" @click="createConsultationPrenatale()">Ajouter</CButton>&nbsp;
+             <CButton color="warning" @click="successModal = true">Importer</CButton>&nbsp;
+             <CButton color="success">Exporter</CButton>&nbsp;
+            </div>
+            <div class="card-header-actions" style="float: left;">
+             
             </div>
         </CCardHeader>
         <CCardBody>
@@ -84,6 +101,7 @@ export default {
   name: 'ConsultationPrenatales',
   data: () => {
     return {
+      successModal: false,
       items: [],
       /*
       fields: [
