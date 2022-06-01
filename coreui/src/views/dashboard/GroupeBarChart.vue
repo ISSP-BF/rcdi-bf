@@ -95,6 +95,11 @@ export default {
                 self.data1.push(d.indice);
                 else
                 self.data2.push(d2.indice);
+                
+                if(d2.niveau1=="OUI")
+                self.data.push(d2.indice);
+                else
+                self.data2.push(d.indice);
             }
             console.log(self.data1);
 
