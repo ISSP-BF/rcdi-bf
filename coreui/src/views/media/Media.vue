@@ -255,7 +255,8 @@ export default {
         croppModal: false,
         cropper: null,
         croppUrl: '',
-        changePort: 'localhost:8080',
+        changePort: '51.178.18.128:8080',
+        // changePort: 'localhost:8080',
         // changePort: 'localhost:8000',
     }
   },
