@@ -20,6 +20,7 @@ class CreateIndicateursTable extends Migration
             $table->integer('commune_id')->unsigned()->nullable();
 
             $table->string('indicateur')->nullable();
+            $table->string('groupe')->nullable();
 
             $table->string('niveau1')->nullable();
             $table->string('niveau2')->nullable();
@@ -28,6 +29,7 @@ class CreateIndicateursTable extends Migration
             
             $table->integer('mois')->unsigned();
             $table->integer('annee')->unsigned();
+            $table->string('source')->nullable();
 
 
             $table->integer('updated_by')->unsigned()->nullable();
