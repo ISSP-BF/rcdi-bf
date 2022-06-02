@@ -24,11 +24,7 @@
               :items-per-page="10"
               pagination
             >
-              <template #code="{item}">
-                <td>
-                  {{item.code}}
-                </td>
-              </template> 
+               
               <template #Province="{item}">
                 <td>
                   <strong>{{item.province}}</strong>
@@ -67,20 +63,8 @@ export default {
   data: () => {
     return {
       items: [],
-      /*
-      fields: [
-        {key: 'author'},
-        {key: 'title'},
-        {key: 'content'},
-        {key: 'applies_to_date'},
-        {key: 'status'},
-        {key: 'Commune_type'},
-        {key: 'show'},
-        {key: 'edit'},
-        {key: 'delete'}
-      ],
-      */
-      fields: ['code','Province', 'Commune', 'actions'],
+      
+      fields: ['id','Province', 'Commune', 'actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

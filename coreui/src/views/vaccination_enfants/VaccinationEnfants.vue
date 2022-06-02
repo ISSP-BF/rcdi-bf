@@ -19,6 +19,9 @@
             </CAlert>
             <CDataTable
               hover
+              tableFilter
+              itemsPerPageSelect
+              sorter
               :items="items"
               :fields="fields"
               :items-per-page="10"

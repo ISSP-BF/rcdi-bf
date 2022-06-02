@@ -23,12 +23,7 @@
               :fields="fields"
               :items-per-page="10"
               pagination
-            >
-             <template #code="{item}">
-                <td>
-                  {{item.code}}
-                </td>  
-              </template>
+            > 
               <template #region="{item}">
                 <td>
                   <strong>{{item.region}}</strong>
@@ -75,7 +70,7 @@ export default {
         {key: 'delete'}
       ],
       */
-      fields: ['code', 'region','actions'],
+      fields: ['id', 'region','actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

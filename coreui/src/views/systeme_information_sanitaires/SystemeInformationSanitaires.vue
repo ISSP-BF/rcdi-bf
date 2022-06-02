@@ -19,6 +19,9 @@
             </CAlert>
             <CDataTable
               hover
+              tableFilter
+              itemsPerPageSelect
+              sorter
               :items="items"
               :fields="fields"
               :items-per-page="10"
@@ -86,7 +89,7 @@ export default {
     return {
       items: [],
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
-     'NbNouveaux_consultant','NbEnft_PrisCharge_PCIME','NbMaladie_MisObservation','actions'],
+     'type_rapport','rapport_attendu','rapport_recu','rapport_recu_temps','actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

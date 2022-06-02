@@ -44,24 +44,32 @@ class CreatePostPrimairesTable extends Migration
             $table->integer('NbGarcon_PDI')->unsigned()->nullable();
             $table->integer('NbGarconMoyenne_PDI')->unsigned()->nullable();
             $table->integer('NbGarconAbandon_PDI')->unsigned()->nullable();
+            
             $table->integer('NbFille_6e')->unsigned()->nullable();
             $table->integer('NbFilleMoyenne_6e')->unsigned()->nullable();
             $table->integer('NbFilleAbandon_6e')->unsigned()->nullable();
+            $table->integer('NbFilleEnceinte_6e')->unsigned()->nullable();
             $table->integer('NbFille_5e')->unsigned()->nullable();
             $table->integer('NbFilleMoyenne_5e')->unsigned()->nullable();
             $table->integer('NbFilleAbandon_5e')->unsigned()->nullable();
+            $table->integer('NbFilleEnceinte_5e')->unsigned()->nullable();
             $table->integer('NbFille_4e')->unsigned()->nullable();
             $table->integer('NbFilleMoyenne_4e')->unsigned()->nullable();
             $table->integer('NbFilleAbandon_4e')->unsigned()->nullable();
+            $table->integer('NbFilleEnceinte_4e')->unsigned()->nullable();
             $table->integer('NbFille_3e')->unsigned()->nullable();
             $table->integer('NbFilleMoyenne_3e')->unsigned()->nullable();
             $table->integer('NbFilleAbandon_3e')->unsigned()->nullable();
+            $table->integer('NbFilleEnceinte_3e')->unsigned()->nullable();
             $table->integer('NbTotalFille')->unsigned()->nullable();
             $table->integer('NbTotalFilleMoyenne')->unsigned()->nullable();
             $table->integer('NbTotalFilleAbandon')->unsigned()->nullable();
+            $table->integer('NbTotalFilleEnceinte')->unsigned()->nullable();
             $table->integer('NbFille_PDI')->unsigned()->nullable();
             $table->integer('NbFilleMoyenne_PDI')->unsigned()->nullable();
             $table->integer('NbFilleAbandon_PDI')->unsigned()->nullable();
+            $table->integer('NbFilleEnceinte_PDI')->unsigned()->nullable();
+
             $table->integer('NbHomme_Francais')->unsigned()->nullable();
             $table->integer('NbHommeVacataire_Francais')->unsigned()->nullable();
             $table->integer('NbHomme_Anglais')->unsigned()->nullable();

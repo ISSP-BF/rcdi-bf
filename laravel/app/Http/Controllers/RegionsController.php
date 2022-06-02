@@ -53,14 +53,14 @@ class RegionsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'code'             => 'required|min:1|max:64',
+            // 'code'             => 'required|min:1|max:64',
             'region'             => 'required|min:1|max:64'
         ]);
         $user = auth()->userOrFail();
         $region = new Regions();
         $region->code     = $request->input('code');
         $region->region   = $request->input('region');
-        $region->users_id = $user->id;
+        $region->created_by = $user->id;
         $region->save();
         return response()->json( ['status' => 'success'] );
     }
@@ -105,7 +105,7 @@ class RegionsController extends Controller
         //var_dump('bazinga');
         //die();
         $validatedData = $request->validate([
-            'code'             => 'required|min:1|max:64',
+            // 'code'             => 'required|min:1|max:64',
             'region'             => 'required|min:1|max:64',
         ]);
         $region = Regions::find($id);

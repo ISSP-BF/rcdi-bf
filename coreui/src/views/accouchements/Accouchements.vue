@@ -4,7 +4,7 @@
       <transition name="slide">
       <CCard>
          <CCardHeader>
-            Accouchements
+            Accouchement
             <div class="card-header-actions">
              <CButton color="primary" @click="createAccouchement()">Ajouter</CButton>
             </div>
@@ -19,6 +19,9 @@
             </CAlert>
             <CDataTable
               hover
+              tableFilter
+              itemsPerPageSelect
+              sorter
               :items="items"
               :fields="fields"
               :items-per-page="10"

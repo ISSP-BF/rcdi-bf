@@ -118,24 +118,32 @@ class PostPrimairesController extends Controller
         $postPrimaire->NbGarcon_PDI = $request->input('NbGarcon_PDI');
         $postPrimaire->NbGarconMoyenne_PDI = $request->input('NbGarconMoyenne_PDI');
         $postPrimaire->NbGarconAbandon_PDI = $request->input('NbGarconAbandon_PDI');
+
         $postPrimaire->NbFille_6e = $request->input('NbFille_6e');
         $postPrimaire->NbFilleMoyenne_6e = $request->input('NbFilleMoyenne_6e');
         $postPrimaire->NbFilleAbandon_6e = $request->input('NbFilleAbandon_6e');
+        $postPrimaire->NbFilleEnceinte_6e = $request->input('NbFilleEnceinte_6e');
         $postPrimaire->NbFille_5e = $request->input('NbFille_5e');
         $postPrimaire->NbFilleMoyenne_5e = $request->input('NbFilleMoyenne_5e');
         $postPrimaire->NbFilleAbandon_5e = $request->input('NbFilleAbandon_5e');
+        $postPrimaire->NbFilleEnceinte_5e = $request->input('NbFilleEnceinte_5e');
         $postPrimaire->NbFille_4e = $request->input('NbFille_4e');
         $postPrimaire->NbFilleMoyenne_4e = $request->input('NbFilleMoyenne_4e');
         $postPrimaire->NbFilleAbandon_4e = $request->input('NbFilleAbandon_4e');
+        $postPrimaire->NbFilleEnceinte_4e = $request->input('NbFilleEnceinte_4e');
         $postPrimaire->NbFille_3e = $request->input('NbFille_3e');
         $postPrimaire->NbFilleMoyenne_3e = $request->input('NbFilleMoyenne_3e');
         $postPrimaire->NbFilleAbandon_3e = $request->input('NbFilleAbandon_3e');
+        $postPrimaire->NbFilleEnceinte_3e = $request->input('NbFilleEnceinte_3e');
         $postPrimaire->NbTotalFille = $request->input('NbTotalFille');
         $postPrimaire->NbTotalFilleMoyenne = $request->input('NbTotalFilleMoyenne');
         $postPrimaire->NbTotalFilleAbandon = $request->input('NbTotalFilleAbandon');
+        $postPrimaire->NbTotalFilleEnceinte = $request->input('NbTotalFilleEnceinte');
         $postPrimaire->NbFille_PDI = $request->input('NbFille_PDI');
         $postPrimaire->NbFilleMoyenne_PDI = $request->input('NbFilleMoyenne_PDI');
         $postPrimaire->NbFilleAbandon_PDI = $request->input('NbFilleAbandon_PDI');
+        $postPrimaire->NbFilleEnceinte_PDI = $request->input('NbFilleEnceinte_PDI');
+
         $postPrimaire->NbHomme_Francais = $request->input('NbHomme_Francais');
         $postPrimaire->NbHommeVacataire_Francais = $request->input('NbHommeVacataire_Francais');
         $postPrimaire->NbHomme_Anglais = $request->input('NbHomme_Anglais');
@@ -287,24 +295,32 @@ class PostPrimairesController extends Controller
         $postPrimaire->NbGarcon_PDI = $request->input('NbGarcon_PDI');
         $postPrimaire->NbGarconMoyenne_PDI = $request->input('NbGarconMoyenne_PDI');
         $postPrimaire->NbGarconAbandon_PDI = $request->input('NbGarconAbandon_PDI');
+        
         $postPrimaire->NbFille_6e = $request->input('NbFille_6e');
         $postPrimaire->NbFilleMoyenne_6e = $request->input('NbFilleMoyenne_6e');
         $postPrimaire->NbFilleAbandon_6e = $request->input('NbFilleAbandon_6e');
+        $postPrimaire->NbFilleEnceinte_6e = $request->input('NbFilleEnceinte_6e');
         $postPrimaire->NbFille_5e = $request->input('NbFille_5e');
         $postPrimaire->NbFilleMoyenne_5e = $request->input('NbFilleMoyenne_5e');
         $postPrimaire->NbFilleAbandon_5e = $request->input('NbFilleAbandon_5e');
+        $postPrimaire->NbFilleEnceinte_5e = $request->input('NbFilleEnceinte_5e');
         $postPrimaire->NbFille_4e = $request->input('NbFille_4e');
         $postPrimaire->NbFilleMoyenne_4e = $request->input('NbFilleMoyenne_4e');
         $postPrimaire->NbFilleAbandon_4e = $request->input('NbFilleAbandon_4e');
+        $postPrimaire->NbFilleEnceinte_4e = $request->input('NbFilleEnceinte_4e');
         $postPrimaire->NbFille_3e = $request->input('NbFille_3e');
         $postPrimaire->NbFilleMoyenne_3e = $request->input('NbFilleMoyenne_3e');
         $postPrimaire->NbFilleAbandon_3e = $request->input('NbFilleAbandon_3e');
+        $postPrimaire->NbFilleEnceinte_3e = $request->input('NbFilleEnceinte_3e');
         $postPrimaire->NbTotalFille = $request->input('NbTotalFille');
         $postPrimaire->NbTotalFilleMoyenne = $request->input('NbTotalFilleMoyenne');
         $postPrimaire->NbTotalFilleAbandon = $request->input('NbTotalFilleAbandon');
+        $postPrimaire->NbTotalFilleEnceinte = $request->input('NbTotalFilleEnceinte');
         $postPrimaire->NbFille_PDI = $request->input('NbFille_PDI');
         $postPrimaire->NbFilleMoyenne_PDI = $request->input('NbFilleMoyenne_PDI');
         $postPrimaire->NbFilleAbandon_PDI = $request->input('NbFilleAbandon_PDI');
+        $postPrimaire->NbFilleEnceinte_PDI = $request->input('NbFilleEnceinte_PDI');
+
         $postPrimaire->NbHomme_Francais = $request->input('NbHomme_Francais');
         $postPrimaire->NbHommeVacataire_Francais = $request->input('NbHommeVacataire_Francais');
         $postPrimaire->NbHomme_Anglais = $request->input('NbHomme_Anglais');

@@ -25,16 +25,20 @@
             <div class="col-lg-6">{{systemeInformationSanitaire.formationSanitaire}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-6"><h5>NbNouveaux_consultant : </h5></div>
-            <div class="col-lg-6">{{systemeInformationSanitaire.NbNouveaux_consultant}}</div>
+            <div class="col-lg-6"><h5>Type de rapport : </h5></div>
+            <div class="col-lg-6">{{systemeInformationSanitaire.type_rapport}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-6"><h5>NbEnft_PrisCharge_PCIME : </h5></div>
-            <div class="col-lg-6">{{systemeInformationSanitaire.NbEnft_PrisCharge_PCIME}}</div>
+            <div class="col-lg-6"><h5>Rapport attendu : </h5></div>
+            <div class="col-lg-6">{{systemeInformationSanitaire.rapport_attendu}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-6"><h5>NbMaladie_MisObservation : </h5></div>
-            <div class="col-lg-6">{{systemeInformationSanitaire.NbMaladie_MisObservation}}</div>
+            <div class="col-lg-6"><h5>rapport recu : </h5></div>
+            <div class="col-lg-6">{{systemeInformationSanitaire.rapport_recu}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6"><h5>rapport reçu à temps : </h5></div>
+            <div class="col-lg-6">{{systemeInformationSanitaire.rapport_recu_temps}}</div>
           </div>
           
         </CCardBody>

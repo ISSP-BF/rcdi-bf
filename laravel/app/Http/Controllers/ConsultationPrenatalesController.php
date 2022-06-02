@@ -100,6 +100,47 @@ class ConsultationPrenatalesController extends Controller
         return response()->json( ['status' => 'success'] );
     }
 
+
+    /**
+     * storeMany a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMany(Request $request)
+    {
+        $validatedData = $request->validate([
+            'items' => 'required',
+        ]);
+        $user = auth()->userOrFail();
+
+        foreach($request->input('items')  as $item ){
+            $consultationPrenatales = new ConsultationPrenatales();
+            $consultationPrenatales->region_id = $item['region'];
+            $consultationPrenatales->province_id = $item['province'];
+            $consultationPrenatales->commune_id = $item['commune'];
+            $consultationPrenatales->district_id = $item['district'];
+            $consultationPrenatales->formation_sanitaire_id = $item['formation_sanitaire'];
+            $consultationPrenatales->annee = $item['annee'];
+            $consultationPrenatales->mois = $item['mois'];
+            $consultationPrenatales->NbFemmeVueCPN = $item['NbFemmeVueCPN'];
+            $consultationPrenatales->NbFemmeInscriteCPN1 = $item['NbFemmeInscriteCPN1'];
+            $consultationPrenatales->NbFemmeInscriteCPN1_Trim1 = $item['NbFemmeInscriteCPN1_Trim1'];
+            $consultationPrenatales->NbFemmeVueCPN4 = $item['NbFemmeVueCPN4'];
+            $consultationPrenatales->NbFemmeInscriteVueCPN_2Td = $item['NbFemmeInscriteVueCPN_2Td'];
+            $consultationPrenatales->NbFemmeFer_Acide_Folique = $item['NbFemmeFer_Acide_Folique'];
+            $consultationPrenatales->NbFemmeFer_Acide_Folique_CPN3 = $item['NbFemmeFer_Acide_Folique_CPN3'];
+            $consultationPrenatales->NbGrossesse_Refere = $item['NbGrossesse_Refere'];
+            $consultationPrenatales->NbFemmeVueCPN_TPI3 = $item['NbFemmeVueCPN_TPI3'];
+            $consultationPrenatales->NbFemmeVueCPN_TPI3_MILDA = $item['NbFemmeVueCPN_TPI3_MILDA'];
+            $consultationPrenatales->created_by = $user->id;
+            $consultationPrenatales->save();
+        }
+
+        
+        
+        return response()->json( ['status' => 'success'] );
+    }
     /**
      * Display the specified resource.
      *

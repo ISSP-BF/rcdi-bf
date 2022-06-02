@@ -87,10 +87,58 @@
          <h6>
             Mesures
         </h6>
+        
         <div class="row"> 
-            <CInput label="NbNouveaux_consultant" type="number" placeholder="NbNouveaux_consultant" v-model="systemeInformationSanitaire.NbNouveaux_consultant"  class="col-lg-4"></CInput>
-            <CInput label="NbEnft_PrisCharge_PCIME" type="number" placeholder="NbEnft_PrisCharge_PCIME" v-model="systemeInformationSanitaire.NbEnft_PrisCharge_PCIME"  class="col-lg-4"></CInput>
-            <CInput label="NbMaladie_MisObservation" type="number" placeholder="NbMaladie_MisObservation" v-model="systemeInformationSanitaire.NbMaladie_MisObservation"  class="col-lg-4"></CInput>
+            <div role="group" class="col-lg-3 form-group">
+              <label for="type_rapport" class=""> Type de rapport </label>
+              <select id="type_rapport" plain="true" class="form-control"  v-model="systemeInformationSanitaire.type_rapport">
+                <option value="CONSULTATION_PRENATALE"> CONSULTATION PRENATALE </option>
+                <option value="VACCINATION"> VACCINATION </option>
+                <option value="PLANIFICATION_FAMILIALE"> PLANIFICATION FAMILIALE </option>
+                <option value="ACCOUCHEMENT"> ACCOUCHEMENT </option>
+                <option value="CONSULTATION_ANBULATOIRE"> CONSULTATION ANBULATOIRE </option>
+                <option value="HOSPITALISATION"> HOSPITALISATION </option>
+              </select>
+            </div>
+            <div role="group" class="col-lg-3 form-group">
+              <label class="row col custom-control-inline"> Rapport attendu </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="rapport_attenduO" type="radio" class="custom-control-input"
+                    v-model="systemeInformationSanitaire.rapport_attendu" :value="1">
+                  <label for="rapport_attenduO" class="custom-control-label"> 1 </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="rapport_attenduN" type="radio" class="custom-control-input"
+                    v-model="systemeInformationSanitaire.rapport_attendu" :value="0">
+                  <label for="rapport_attenduN" class="custom-control-label"> 0 </label>
+                </div>
+            </div>
+            <div role="group" class="col-lg-3 form-group" v-if="systemeInformationSanitaire.rapport_attendu==1">
+              <label class="row col custom-control-inline"> Rapport recu </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="rapport_recuO" type="radio" class="custom-control-input"
+                    v-model="systemeInformationSanitaire.rapport_recu" :value="1">
+                  <label for="rapport_recuO" class="custom-control-label"> 1 </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="rapport_recuN" type="radio" class="custom-control-input"
+                    v-model="systemeInformationSanitaire.rapport_recu" :value="0">
+                  <label for="rapport_recuN" class="custom-control-label"> 0 </label>
+                </div>
+            </div>
+            <div role="group" class="col-lg-3 form-group" v-if="systemeInformationSanitaire.rapport_attendu==1&&systemeInformationSanitaire.rapport_recu==1">
+              <label class="row col custom-control-inline"> Rapport recu à temps </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="rapport_recu_tempsO" type="radio" class="custom-control-input"
+                    v-model="systemeInformationSanitaire.rapport_recu_temps" :value="1">
+                  <label for="rapport_recu_tempsO" class="custom-control-label"> 1 </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="rapport_recu_tempsN" type="radio" class="custom-control-input"
+                    v-model="systemeInformationSanitaire.rapport_recu_temps" :value="0">
+                  <label for="rapport_recu_tempsN" class="custom-control-label"> 0 </label>
+                </div>
+            </div>
         </div>
           <CButton color="primary" @click="update()">Modifier</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>

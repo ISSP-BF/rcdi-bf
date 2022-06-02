@@ -23,12 +23,7 @@
               :fields="fields"
               :items-per-page="10"
               pagination
-            >
-              <template #code="{item}">
-                <td>
-                  {{item.code}}
-                </td>
-              </template>
+            > 
               <template #region="{item}">
                 <td>
                   <strong>{{item.region}}</strong>
@@ -83,20 +78,8 @@ export default {
   data: () => {
     return {
       items: [],
-      /*
-      fields: [
-        {key: 'author'},
-        {key: 'title'},
-        {key: 'content'},
-        {key: 'applies_to_date'},
-        {key: 'status'},
-        {key: 'province_type'},
-        {key: 'show'},
-        {key: 'edit'},
-        {key: 'delete'}
-      ],
-      */
-      fields: ['code', 'region', 'province', 'cheflieu', 'lon', 'lat', 'actions'],
+      
+      fields: ['id', 'region', 'province', 'cheflieu', 'lon', 'lat', 'actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

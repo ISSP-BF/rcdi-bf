@@ -5,7 +5,7 @@
          <CCardHeader>
           
           <h5>
-           Modifier une donnée PostPrimaire id:  {{ $route.params.id }}
+           Modifier une donnée Post-Primaire id:  {{ $route.params.id }}
           </h5>
         </CCardHeader>
         <CCardBody>
@@ -29,11 +29,6 @@
                   <input id="trimestre3" type="radio" class="custom-control-input"
                     v-model="postPrimaire.trimestre" :value="'3'">
                   <label for="trimestre3" class="custom-control-label"> 3 </label>
-                </div>
-                <div role="group" class="custom-control custom-control-inline custom-radio">
-                  <input id="trimestre4" type="radio" class="custom-control-input"
-                    v-model="postPrimaire.trimestre" :value="'4'">
-                  <label for="trimestre4" class="custom-control-label"> 4 </label>
                 </div>
             </div>
             </div>
@@ -112,16 +107,18 @@
                 </CCardBody>
               </CCard>
             </CTab>
+            
             <CTab title="II. EFFECTIFS DES ELEVES (auditeurs)">
               <CCard>
                 <CCardBody>
-                  <table class="table table-bordered">
+                  <table class="table table-bordered table-striped">
                     <tr>
                       <td></td>
                       <td></td>
                       <td>Effectifs</td>
                       <td>effectif ayant eu la moyenne</td>
                       <td>abandons</td>
+                      <td>Nombre grossesse enregistrée</td>
                     </tr>
                     <tr>
                       <td rowspan="2" class="col-lg-4">6e</td>
@@ -146,6 +143,9 @@
                       </td>
                       <td class="no-margin-padding">
                         <CInput type="number" v-model="postPrimaire.NbFilleAbandon_6e"></CInput>
+                      </td>
+                      <td class="no-margin-padding">
+                        <CInput type="number" v-model="postPrimaire.NbFilleEnceinte_6e"></CInput>
                       </td>
                     </tr>
                     <tr>
@@ -172,6 +172,9 @@
                       <td class="no-margin-padding">
                         <CInput type="number" v-model="postPrimaire.NbFilleAbandon_5e"></CInput>
                       </td>
+                      <td class="no-margin-padding">
+                        <CInput type="number" v-model="postPrimaire.NbFilleEnceinte_5e"></CInput>
+                      </td>
                     </tr>
                     <tr>
                       <td rowspan="2" class="col-lg-4">4e</td>
@@ -196,6 +199,9 @@
                       </td>
                       <td class="no-margin-padding">
                         <CInput type="number" v-model="postPrimaire.NbFilleAbandon_4e"></CInput>
+                      </td>
+                      <td class="no-margin-padding">
+                        <CInput type="number" v-model="postPrimaire.NbFilleEnceinte_4e"></CInput>
                       </td>
                     </tr>
                     <tr>
@@ -222,6 +228,9 @@
                       <td class="no-margin-padding">
                         <CInput type="number" v-model="postPrimaire.NbFilleAbandon_3e"></CInput>
                       </td>
+                      <td class="no-margin-padding">
+                        <CInput type="number" v-model="postPrimaire.NbFilleEnceinte_3e"></CInput>
+                      </td>
                     </tr>
                     <tr>
                       <td rowspan="2" class="col-lg-4">Total</td>
@@ -247,6 +256,9 @@
                       <td class="no-margin-padding">
                         <CInput type="number" v-model="postPrimaire.NbTotalFilleAbandon"></CInput>
                       </td>
+                      <td class="no-margin-padding">
+                        <CInput type="number" v-model="postPrimaire.NbTotalFilleEnceinte"></CInput>
+                      </td>
                     </tr>
                     <tr>
                       <td rowspan="2" class="col-lg-4">Déplacés internes</td>
@@ -271,6 +283,9 @@
                       </td>
                       <td class="no-margin-padding">
                         <CInput type="number" v-model="postPrimaire.NbFilleAbandon_PDI"></CInput>
+                      </td>
+                      <td class="no-margin-padding">
+                        <CInput type="number" v-model="postPrimaire.NbFilleEnceinte_PDI"></CInput>
                       </td>
                     </tr>
                   </table>

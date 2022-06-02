@@ -88,19 +88,32 @@
             Mesures
         </h6>
         <div class="row"> 
-            <CInput label="type_utilisatrices" type="number" placeholder="type_utilisatrices" v-model="planificationFamiliale.type_utilisatrices"  class="col-lg-4"></CInput>
-            <CInput label="NbPillule_COC" type="number" placeholder="NbPillule_COC" v-model="planificationFamiliale.NbPillule_COC"  class="col-lg-4"></CInput>
-            <CInput label="NbPillule_COP" type="number" placeholder="NbPillule_COP" v-model="planificationFamiliale.NbPillule_COP"  class="col-lg-4"></CInput>
-            <CInput label="NbDMPlule_IM" type="number" placeholder="NbDMPlule_IM" v-model="planificationFamiliale.NbDMPlule_IM"  class="col-lg-4"></CInput>
-            <CInput label="NbDMPA_IM" type="number" placeholder="NbDMPA_IM" v-model="planificationFamiliale.NbDMPA_IM"  class="col-lg-4"></CInput>
-            <CInput label="NbImplant_5ans" type="number" placeholder="NbImplant_5ans" v-model="planificationFamiliale.NbImplant_5ans"  class="col-lg-4"></CInput>
-            <CInput label="NbImplant_3ans" type="number" placeholder="NbImplant_3ans" v-model="planificationFamiliale.NbImplant_3ans"  class="col-lg-4"></CInput>
-            <CInput label="NbPreservatif_Masculin" type="number" placeholder="NbPreservatif_Masculin" v-model="planificationFamiliale.NbPreservatif_Masculin"  class="col-lg-4"></CInput>
-            <CInput label="NbPreservatif_Feminin" type="number" placeholder="NbPreservatif_Feminin" v-model="planificationFamiliale.NbPreservatif_Feminin"  class="col-lg-4"></CInput>
-            <CInput label="NbLigature" type="number" placeholder="NbLigature" v-model="planificationFamiliale.NbLigature"  class="col-lg-4"></CInput>
-            <CInput label="NbVasectomie" type="number" placeholder="NbVasectomie" v-model="planificationFamiliale.NbVasectomie"  class="col-lg-4"></CInput>
-            <CInput label="NbCollier_Cycle" type="number" placeholder="NbCollier_Cycle" v-model="planificationFamiliale.NbCollier_Cycle"  class="col-lg-4"></CInput>
-            <CInput label="NbMethode_maman" type="number" placeholder="NbMethode_maman" v-model="planificationFamiliale.NbMethode_maman"  class="col-lg-4"></CInput>
+            <div role="group" class="col-lg-4 form-group">
+              <label class="row col custom-control-inline"> Type Utilisatrices </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="type_utilisatricesO" type="radio" class="custom-control-input"
+                    v-model="planificationFamiliale.type_utilisatrices" :value="'ANCIENNE'">
+                  <label for="type_utilisatricesO" class="custom-control-label"> ANCIENNE </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="type_utilisatricesN" type="radio" class="custom-control-input"
+                    v-model="planificationFamiliale.type_utilisatrices" :value="'NOUVELLE'">
+                  <label for="type_utilisatricesN" class="custom-control-label"> NOUVELLE </label>
+                </div>
+            </div>
+            <CInput label="Pilules contraceptives orales Combinées (COC)" type="number" placeholder="NbPillule_COC" v-model="planificationFamiliale.NbPillule_COC"  class="col-lg-4"></CInput>
+            <CInput label="Pilules contraceptives orales Progestatives (COP)" type="number" placeholder="NbPillule_COP" v-model="planificationFamiliale.NbPillule_COP"  class="col-lg-4"></CInput>
+            <CInput label="DMPA IM" type="number" placeholder="NbDMPlule_IM" v-model="planificationFamiliale.NbDMPlule_IM"  class="col-lg-4"></CInput>
+            <CInput label="DMPA sous-cutanés" type="number" placeholder="NbDMPA_IM" v-model="planificationFamiliale.NbDMPA_IM"  class="col-lg-4"></CInput>
+            <CInput label="Implant pour 5 ans (Jadelle)" type="number" placeholder="NbImplant_5ans" v-model="planificationFamiliale.NbImplant_5ans"  class="col-lg-4"></CInput>
+            <CInput label="Implant pour 3 ans (Implanon)" type="number" placeholder="NbImplant_3ans" v-model="planificationFamiliale.NbImplant_3ans"  class="col-lg-4"></CInput>
+            <CInput label="Dispositif Intra-utérin (DIU)" type="number" placeholder="NbDIU" v-model="planificationFamiliale.NbDIU"  class="col-lg-4"></CInput>
+            <CInput label="Préservatif masculin" type="number" placeholder="NbPreservatif_Masculin" v-model="planificationFamiliale.NbPreservatif_Masculin"  class="col-lg-4"></CInput>
+            <CInput label="Préservatif féminin" type="number" placeholder="NbPreservatif_Feminin" v-model="planificationFamiliale.NbPreservatif_Feminin"  class="col-lg-4"></CInput>
+            <CInput label="Stérilisation féminine (Ligature)" type="number" placeholder="NbLigature" v-model="planificationFamiliale.NbLigature"  class="col-lg-4"></CInput>
+            <CInput label="Stérilisation masculine (Vasectomie)" type="number" placeholder="NbVasectomie" v-model="planificationFamiliale.NbVasectomie"  class="col-lg-4"></CInput>
+            <CInput label="Collier du Cycle" type="number" placeholder="NbCollier_Cycle" v-model="planificationFamiliale.NbCollier_Cycle"  class="col-lg-4"></CInput>
+            <CInput label="Méthode MAMA" type="number" placeholder="NbMethode_maman" v-model="planificationFamiliale.NbMethode_maman"  class="col-lg-4"></CInput>
         </div>
           <CButton color="primary" @click="update()">Modifier</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>

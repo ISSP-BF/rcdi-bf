@@ -33,6 +33,8 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('acte_deces', 'ActeDecesController');
     Route::resource('acte_mariages', 'ActeMariagesController');
     Route::resource('consultation_prenatales', 'ConsultationPrenatalesController');
+    Route::post('consultation_prenatales/storeMany', 'ConsultationPrenatalesController@storeMany');
+
     Route::resource('ptmes', 'PtmesController');
     Route::resource('accouchements', 'AccouchementsController');
     Route::resource('consultation_postnatales', 'ConsultationPostnatalesController');
