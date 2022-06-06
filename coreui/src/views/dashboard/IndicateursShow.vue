@@ -61,11 +61,12 @@ import axios from 'axios'
 export default {
   name: 'IndicateursShow',
   components: { CChartLineSimple, CChartBarSimple },
+  props: ['commune_id'],
   data () {
     return {
-      tailleMoyenneMenages: {label:"Taille moyenne des ménages",value:""},
-      rM: {label:"Rapport de Masculinite",value:""},
-      pt: {label:"pt",value:""},
+      tailleMoyenneMenages: {label:"Taille moyenne des ménages",value:"Données non disponible"},
+      rM: {label:"Rapport de Masculinite",value:"Données non disponible"},
+      pt: {label:"pt",value:"Données non disponible"},
     }
   },
   
@@ -74,7 +75,7 @@ export default {
       let self = this;
       const criteria =  {
             indicateur:"Taille moyenne des ménages",
-            commune_id:2208
+            commune_id:this.commune_id
           };
           
       axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
@@ -82,7 +83,8 @@ export default {
         )
         .then(function (response) {
             self.items = response.data;
-            console.log(response.data)
+            self.tailleMoyenneMenages.label = criteria.indicateur;
+              self.tailleMoyenneMenages.value = "Données non disponible";
             for (let d of response.data){
               self.tailleMoyenneMenages.label = d.indicateur;
               self.tailleMoyenneMenages.value = d.indice + "";
@@ -106,7 +108,7 @@ export default {
       let self = this;
       const criteria =  {
             indicateur:"Rapport de Masculinite",
-            commune_id:2208
+            commune_id:this.commune_id
           };
           
       axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
@@ -114,7 +116,8 @@ export default {
         )
         .then(function (response) {
             self.items = response.data;
-            console.log(response.data)
+            self.rM.label = criteria.indicateur;
+              self.rM.value = "Données non disponible";
             for (let d of response.data){
               self.rM.label = d.indicateur;
               self.rM.value = d.indice + "";
@@ -138,7 +141,7 @@ export default {
       let self = this;
       const criteria =  {
             indicateur:"Population totale",
-            commune_id:2208
+            commune_id:this.commune_id
           };
           
       axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
@@ -146,10 +149,11 @@ export default {
         )
         .then(function (response) {
             self.items = response.data;
-            console.log(response.data)
+            self.pt.label = criteria.indicateur;
+              self.pt.value = "Données non disponible";
             for (let d of response.data){
               self.pt.label = d.indicateur;
-              self.pt.value = d.indice;
+              self.pt.value = d.indice+"";
             }
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){

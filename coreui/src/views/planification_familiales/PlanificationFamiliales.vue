@@ -6,7 +6,9 @@
          <CCardHeader>
             Planification Familiale
             <div class="card-header-actions">
-             <CButton color="primary" @click="createPlanificationFamiliale()">Ajouter</CButton>
+             <CButton color="primary" @click="createPlanificationFamiliale()">Ajouter</CButton>&nbsp;
+             <ImportButton title="Importation données Planification Familiale" :fields="fieldsI" apiUrl="planification_familiales"/>&nbsp;
+             <ExportButton :items="items" title="PlanificationFamiliale" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -82,14 +84,21 @@
 
 <script>
 import axios from 'axios'
+import ExportButton from '../buttons/ExportButton.vue'
+import ImportButton from '../buttons/ImportButton.vue'
 
 export default {
   name: 'PlanificationFamiliale',
+  components: { 
+    ExportButton,ImportButton,
+  },
   data: () => {
     return {
       items: [],
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
            'type_utilisatrices','NbPillule_COC','NbPillule_COP','NbDMPlule_IM','NbDMPA_IM','NbImplant_5ans','NbImplant_3ans','NbDIU','NbPreservatif_Masculin','NbPreservatif_Feminin','NbLigature','NbVasectomie','NbCollier_Cycle','NbMethode_maman','actions'],
+      fieldsI: ['region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
+           'type_utilisatrices','NbPillule_COC','NbPillule_COP','NbDMPlule_IM','NbDMPA_IM','NbImplant_5ans','NbImplant_3ans','NbDIU','NbPreservatif_Masculin','NbPreservatif_Feminin','NbLigature','NbVasectomie','NbCollier_Cycle','NbMethode_maman'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

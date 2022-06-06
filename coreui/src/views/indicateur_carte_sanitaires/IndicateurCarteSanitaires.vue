@@ -6,7 +6,9 @@
          <CCardHeader>
             Systeme Information Sanitaires
             <div class="card-header-actions">
-             <CButton color="primary" @click="createIndicateurCarteSanitaire()">Ajouter</CButton>
+             <CButton color="primary" @click="createIndicateurCarteSanitaire()">Ajouter</CButton>&nbsp;
+             <ImportButton title="Importation données Systeme Information Sanitaires" :fields="fieldsI" apiUrl="indicateur_carte_sanitaires"/>&nbsp;
+             <ExportButton :items="items" title="IndicateurCarteSanitaire" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -79,14 +81,21 @@
 
 <script>
 import axios from 'axios'
+import ExportButton from '../buttons/ExportButton.vue'
+import ImportButton from '../buttons/ImportButton.vue'
 
 export default {
   name: 'IndicateurCarteSanitaire',
+  components: { 
+    ExportButton,ImportButton
+  },
   data: () => {
     return {
       items: [],
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
      'NbLit_SuiteCouche','NbLit_HospiMaternite','NbLit_HospiAutreService','actions'],
+      fieldsI: ['region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
+     'NbLit_SuiteCouche','NbLit_HospiMaternite','NbLit_HospiAutreService'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

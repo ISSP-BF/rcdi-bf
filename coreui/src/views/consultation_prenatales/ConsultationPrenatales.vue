@@ -1,14 +1,5 @@
 <template>
   <CRow>
-    <CModal
-      title="Importation données consultation prénatale"
-      color="success"
-      size="lg"
-      :show.sync="successModal"
-    >
-    <CModalBody>
-      <Importantion/></CModalBody>
-    </CModal>
     <CCol col="12" xl="12">
       <transition name="slide">
       <CCard>
@@ -16,11 +7,8 @@
             Consultation Prenatales
             <div class="card-header-actions">
              <CButton color="primary" @click="createConsultationPrenatale()">Ajouter</CButton>&nbsp;
-             <CButton color="warning" @click="successModal = true">Importer</CButton>&nbsp;
-             <CButton color="success" @click="exporter()">Exporter</CButton>&nbsp;
-            </div>
-            <div class="card-header-actions" style="float: left;">
-             
+             <ImportButton title="Importation données consultation prénatale" :fields="fieldsI" apiUrl="consultation_prenatales"/>&nbsp;
+             <ExportButton :items="items" title="ConsultationPrenatale" :fields="fieldsI"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -96,24 +84,26 @@
 
 <script>
 import axios from 'axios'
-import Importantion from '../consultation_prenatales/Importantion'
-
-
+import ExportButton from '../buttons/ExportButton.vue'
+import ImportButton from '../buttons/ImportButton.vue'
 
 export default {
   name: 'ConsultationPrenatales',
   components: {
-    Importantion, 
+    ExportButton,ImportButton
   },
   data: () => {
     return {
       successModal: false,
       items: [],
-      fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire',
+      fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','annee','mois',
                 'NbFemmeVueCPN','NbFemmeInscriteCPN1','NbFemmeInscriteCPN1_Trim1','NbFemmeVueCPN4',
                 'NbFemmeInscriteVueCPN_2Td','NbFemmeFer_Acide_Folique','NbFemmeFer_Acide_Folique_CPN3',
                 'NbGrossesse_Refere','NbFemmeVueCPN_TPI3','NbFemmeVueCPN_TPI3_MILDA','actions'],
-
+      fieldsI: ['region', 'province', 'commune', 'district','formation_sanitaire','annee','mois',
+                'NbFemmeVueCPN','NbFemmeInscriteCPN1','NbFemmeInscriteCPN1_Trim1','NbFemmeVueCPN4',
+                'NbFemmeInscriteVueCPN_2Td','NbFemmeFer_Acide_Folique','NbFemmeFer_Acide_Folique_CPN3',
+                'NbGrossesse_Refere','NbFemmeVueCPN_TPI3','NbFemmeVueCPN_TPI3_MILDA'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,
@@ -136,12 +126,6 @@ export default {
     },
     editLink (id) {
       return `consultation_prenatales/${id.toString()}/edit`
-    },
-    exporter(){
-      let data = JSON.stringify(this.items); 
-      fs.writeFileSync("data.json", data);
-      var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
-      FileSaver.saveAs(blob, "hello world.txt");
     },
     showConsultationPrenatale ( id ) {
       const consultationPrenataleLink = this.consultationPrenataleLink( id );

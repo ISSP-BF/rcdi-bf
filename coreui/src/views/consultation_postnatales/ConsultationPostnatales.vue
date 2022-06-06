@@ -4,9 +4,11 @@
       <transition name="slide">
       <CCard>
          <CCardHeader>
-            ConsultationPostnatales
+            Consultation Postnatales
             <div class="card-header-actions">
-             <CButton color="primary" @click="createConsultationPostnatale()">Ajouter</CButton>
+             <CButton color="primary" @click="createConsultationPostnatale()">Ajouter</CButton>&nbsp;
+             <ImportButton title="Importation données Consultation Postnatales" :fields="fieldsI" apiUrl="consultation_postnatales"/>&nbsp;
+             <ExportButton :items="items" title="ConsultationPostnatale" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -82,19 +84,23 @@
 
 <script>
 import axios from 'axios'
+import ExportButton from '../buttons/ExportButton.vue'
+import ImportButton from '../buttons/ImportButton.vue'
 
 export default {
   name: 'ConsultationPostnatale',
+  components: { 
+    ExportButton,ImportButton
+  },
   data: () => {
     return {
       items: [],
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
-  
-'NbFemmeVueConsultation_PostNatale',
-    'NbFemmeVueConsultation_PostNatalePrecoce',
-    'NbFemmeVueConsultation_PostNataleTardive',
-                'actions'],
-
+        'NbFemmeVueConsultation_PostNatale','NbFemmeVueConsultation_PostNatalePrecoce',
+        'NbFemmeVueConsultation_PostNataleTardive','actions'],
+      fieldsI: ['region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
+        'NbFemmeVueConsultation_PostNatale','NbFemmeVueConsultation_PostNatalePrecoce',
+        'NbFemmeVueConsultation_PostNataleTardive'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

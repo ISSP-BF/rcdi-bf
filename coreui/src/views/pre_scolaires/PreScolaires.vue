@@ -6,7 +6,8 @@
          <CCardHeader>
             Pre-Scolaire
             <div class="card-header-actions">
-             <CButton color="primary" @click="createPreScolaire()">Ajouter</CButton>
+             <CButton color="primary" @click="createPreScolaire()">Ajouter</CButton>&nbsp;
+              <ExportButton :items="items" title="Pre-Scolaire" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -98,9 +99,13 @@
 
 <script>
 import axios from 'axios'
+import ExportButton from '../buttons/ExportButton.vue'
 
 export default {
   name: 'PreScolaire',
+  components: { 
+    ExportButton
+  },
   data: () => {
     return {
       items: [],

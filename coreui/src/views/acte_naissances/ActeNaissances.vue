@@ -6,7 +6,8 @@
           <CCardHeader>
             Acte Naissances
             <div class="card-header-actions">
-              <CButton color="primary" @click="createActeNaissance()">Ajouter</CButton>
+              <CButton color="primary" @click="createActeNaissance()">Ajouter</CButton>&nbsp;
+              <ExportButton :items="items" title="Acte Naissances" :fields="fields"/>&nbsp;
             </div>
           </CCardHeader>
           <CCardBody>
@@ -109,21 +110,13 @@
 
 <script>
 import axios from 'axios'
-//Bootstrap and jQuery libraries
-// import 'bootstrap/dist/css/bootstrap.min.css'; //for table good looks
-import 'jquery/dist/jquery.min.js';
-//Datatable Modules
-import "datatables.net-dt/js/dataTables.dataTables"
-import "datatables.net-dt/css/jquery.dataTables.min.css"
-import "datatables.net-buttons/js/dataTables.buttons.js"
-import "datatables.net-buttons/js/buttons.colVis.js"
-import "datatables.net-buttons/js/buttons.flash.js"
-import "datatables.net-buttons/js/buttons.html5.js"
-import "datatables.net-buttons/js/buttons.print.js"
-import $ from 'jquery';
+import ExportButton from '../buttons/ExportButton.vue'
 
 export default {
   name: 'ActeNaissances',
+  components: { 
+    ExportButton
+  },
   data: () => {
     return {
       items: [],
@@ -193,20 +186,6 @@ export default {
       axios.get(this.$apiAdress + '/api/acte_naissances?token=' + localStorage.getItem("api_token"))
         .then(function (response) {
           self.items = response.data;
-          setTimeout(function () {
-            $('.table').DataTable(
-              {
-                pagingType: 'full_numbers',
-                pageLength: 5,
-                processing: true,
-                dom: 'Bfrtip',
-                buttons: ['copy', 'csv', 'print'
-                ]
-              }
-            );
-          },
-            10
-          );
         }).catch(function (error) {
           console.log(error);
           self.$router.push({ path: '/login' });

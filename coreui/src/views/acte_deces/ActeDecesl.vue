@@ -6,7 +6,8 @@
          <CCardHeader>
             Acte de Décès
             <div class="card-header-actions">
-             <CButton color="primary" @click="createActeDeces()">Ajouter</CButton>
+             <CButton color="primary" @click="createActeDeces()">Ajouter</CButton>&nbsp;
+              <ExportButton :items="items" title="Acte de Décès" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -110,25 +111,16 @@
 
 <script>
 import axios from 'axios'
+import ExportButton from '../buttons/ExportButton.vue'
 
 export default {
   name: 'ActeDecess',
+  components: { 
+    ExportButton
+  },
   data: () => {
     return {
       items: [],
-      /*
-      n_acte
-            date_declaration
-            nom
-            prenom
-            date_naissance
-            date_deces
-            age
-            sexe
-            date_etablissement
-            profession
-            statut_matrimonial
-      */
       fields: ['numero_acte', 'region', 'province', 'commune','date_declaration',
        'nom_prenom','sexe','date_deces','age',
        'date_etablissement','profession','statut_matrimonial', 'actions'],

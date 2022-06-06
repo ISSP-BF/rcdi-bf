@@ -6,7 +6,8 @@
          <CCardHeader>
             Acte Mariages
             <div class="card-header-actions">
-             <CButton color="primary" @click="createActeMariage()">Ajouter</CButton>
+             <CButton color="primary" @click="createActeMariage()">Ajouter</CButton>&nbsp;
+              <ExportButton :items="items" title="Acte Mariages" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -90,10 +91,6 @@
                   {{item.date_autorisation|formatDateShort}}
                 </td>
               </template>
-             
-             
-              
-              
           <template #actions="{item}">
                 <td>
                   <div class="card-header-actions" style="display:flex">
@@ -115,21 +112,13 @@
 
 <script>
 import axios from 'axios'
-//Bootstrap and jQuery libraries
-// import 'bootstrap/dist/css/bootstrap.min.css'; //for table good looks
-import 'jquery/dist/jquery.min.js';
-//Datatable Modules
-import "datatables.net-dt/js/dataTables.dataTables"
-import "datatables.net-dt/css/jquery.dataTables.min.css"
-import "datatables.net-buttons/js/dataTables.buttons.js"
-import "datatables.net-buttons/js/buttons.colVis.js"
-import "datatables.net-buttons/js/buttons.flash.js"
-import "datatables.net-buttons/js/buttons.html5.js"
-import "datatables.net-buttons/js/buttons.print.js"
-import $ from 'jquery';
+import ExportButton from '../buttons/ExportButton.vue'
 
 export default {
   name: 'ActeMariages',
+  components: { 
+    ExportButton
+  },
   data: () => {
     return {
       items: [],

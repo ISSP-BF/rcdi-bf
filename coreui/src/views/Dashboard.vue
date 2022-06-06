@@ -1,40 +1,45 @@
 <template>
-  <div>
+  <div v-if="!refreshing">
+    <CCard>
+    <CCardBody>
+          <div class="row">
+            <CSelect label="Commune" class="col-lg-3" :value.sync="commune_id" :plain="true"
+              :options="communes" v-model="commune_id">
+            </CSelect>
+          <CInput label="Année" type="number" placeholder="Ex. 2020" v-model="annee" class="col-lg-3"
+            invalid-feedback="Veuillez saisir une année valide" :is-valid="anneeValidator"></CInput>
+            <CButton color="primary" @click="refresh()">Actualiser</CButton> &nbsp;
+          </div>
+    </CCardBody>
+  </CCard>
     <CCard>
       <CCardHeader><h4 class="card-title mb-0">DEMOGRAPHIE</h4></CCardHeader>
     <CCardBody>
-      <IndicateursShow />
+      <IndicateursShow :commune_id="commune_id"/>
     <CRow>
-      
           <CCol sm="6" lg="6">
-            <IndicateursSecteur1 commune_id="2208" indicateur="Répartition population par sexe" />
+            <IndicateursSecteur1 :commune_id="commune_id" indicateur="Répartition population par sexe" />
           </CCol>
           <CCol sm="6" lg="6">
-            <IndicateursTableau commune_id="2208" indicateur="Quelques Statistiques de Population" />
+            <IndicateursTableau :commune_id="commune_id" indicateur="Quelques Statistiques de Population" />
           </CCol>
     </CRow>
     </CCardBody>
   </CCard>
-    
-
     <CRow>
-      
-      
       <CCol sm="12" lg="12">
-        <GroupeBarChart commune_id="2208"
+        <GroupeBarChart :commune_id="commune_id"
           groupe="SERVICES" />
       </CCol>
       <CCol sm="6" lg="6">
-        <GroupeBarChart commune_id="2208"
+        <GroupeBarChart :commune_id="commune_id"
           groupe="ASSAINISSEMENT" />
       </CCol>
       <CCol sm="6" lg="6">
-        <GroupeBarChart commune_id="2208"
+        <GroupeBarChart :commune_id="commune_id"
           groupe="AGRICULTURE" />
       </CCol>
     </CRow>
-    
-
   </div>
 </template>
 
@@ -89,64 +94,10 @@ export default {
           titre: ""
         }
       ],
-      tableItems: [
-        {
-          avatar: { url: 'img/avatars/1.jpg', status: 'success' },
-          user: { name: 'Yiorgos Avraamu', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'USA', flag: 'cif-us' },
-          usage: { value: 50, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Mastercard', icon: 'cib-cc-mastercard' },
-          activity: '10 sec ago'
-        },
-        {
-          avatar: { url: 'img/avatars/2.jpg', status: 'danger' },
-          user: { name: 'Avram Tarasios', new: false, registered: 'Jan 1, 2015' },
-          country: { name: 'Brazil', flag: 'cif-br' },
-          usage: { value: 22, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Visa', icon: 'cib-cc-visa' },
-          activity: '5 minutes ago'
-        },
-        {
-          avatar: { url: 'img/avatars/3.jpg', status: 'warning' },
-          user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'India', flag: 'cif-in' },
-          usage: { value: 74, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Stripe', icon: 'cib-stripe' },
-          activity: '1 hour ago'
-        },
-        {
-          avatar: { url: 'img/avatars/4.jpg', status: '' },
-          user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'France', flag: 'cif-fr' },
-          usage: { value: 98, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'PayPal', icon: 'cib-paypal' },
-          activity: 'Last month'
-        },
-        {
-          avatar: { url: 'img/avatars/5.jpg', status: 'success' },
-          user: { name: 'Agapetus Tadeáš', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'Spain', flag: 'cif-es' },
-          usage: { value: 22, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Google Wallet', icon: 'cib-google-pay' },
-          activity: 'Last week'
-        },
-        {
-          avatar: { url: 'img/avatars/6.jpg', status: 'danger' },
-          user: { name: 'Friderik Dávid', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'Poland', flag: 'cif-pl' },
-          usage: { value: 43, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Amex', icon: 'cib-cc-amex' },
-          activity: 'Last week'
-        }
-      ],
-      tableFields: [
-        { key: 'avatar', label: '', _classes: 'text-center' },
-        { key: 'user' },
-        { key: 'country', _classes: 'text-center' },
-        { key: 'usage' },
-        { key: 'payment', label: 'Payment method', _classes: 'text-center' },
-        { key: 'activity' },
-      ]
+      commune_id:null,
+      annee:null,
+      communes:[],
+      refreshing:false
     }
   },
   methods: {
@@ -167,7 +118,7 @@ export default {
       let self = this;
       const criteria = {
         indicateur: "Répartition population par sexe",
-        commune_id: 2208
+        commune_id: this.commune_id
       };
       axios.post(this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
         criteria
@@ -204,11 +155,32 @@ export default {
             // self.$router.push({ path: 'login' }); 
           }
         });
+    },
+    anneeValidator(val) {
+      return val ? (val <= 2022 && val >= 1900 ? null : false) : null;
+    },
+    refresh(){
+      this.refreshing = true;
+      setTimeout(() => {
+        this.refreshing = false;
+      }, 200);
+    },
+    getCommunes (){
+      let self = this;
+      axios.get(  this.$apiAdress + '/api/communes_list?token=' + localStorage.getItem("api_token") )
+      .then(function (response) {
+        self.communes = response.data;
+        self.commune_id = self.communes[0].value;
+      }).catch(function (error) {
+        console.log(error);
+        self.$router.push({ path: '/login' });
+      });
     }
   },
   mounted: function () {
     let self = this;
     self.getRepartitionPopulationParSexe();
+    this.getCommunes();
   }
 }
 </script>

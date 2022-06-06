@@ -6,7 +6,9 @@
          <CCardHeader>
             Accouchement
             <div class="card-header-actions">
-             <CButton color="primary" @click="createAccouchement()">Ajouter</CButton>
+             <CButton color="primary" @click="createAccouchement()">Ajouter</CButton>&nbsp;
+             <ImportButton title="Importation données de l'Accouchement" :fields="fieldsI" apiUrl="accouchements"/>&nbsp;
+             <ExportButton :items="items" title="Accouchement" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -82,22 +84,24 @@
 
 <script>
 import axios from 'axios'
+import ExportButton from '../buttons/ExportButton.vue'
+import ImportButton from '../buttons/ImportButton.vue'
+
 
 export default {
   name: 'Accouchement',
+  components: { 
+    ExportButton,ImportButton
+  },
   data: () => {
     return {
       items: [],
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
-   'NbAccouchement_Normaux',
-   'NbAccouchement_Assiste',
-   'NbAccouchement_Cesarienne',
-   'NbAccouchement_Partogramme',
-   'NNaissance_vivante',
-   'NbMortNe_frais',
-   'NbMortNe_Macere',
-                'actions'],
-
+      'NbAccouchement_Normaux','NbAccouchement_Assiste','NbAccouchement_Cesarienne','NbAccouchement_Partogramme',
+      'NNaissance_vivante','NbMortNe_frais','NbMortNe_Macere','actions'],
+      fieldsI: ['region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
+      'NbAccouchement_Normaux','NbAccouchement_Assiste','NbAccouchement_Cesarienne','NbAccouchement_Partogramme',
+      'NNaissance_vivante','NbMortNe_frais','NbMortNe_Macere'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

@@ -6,7 +6,9 @@
          <CCardHeader>
             Morbilite Paludismes
             <div class="card-header-actions">
-             <CButton color="primary" @click="createMorbilitePaludisme()">Ajouter</CButton>
+             <CButton color="primary" @click="createMorbilitePaludisme()">Ajouter</CButton>&nbsp;
+             <ImportButton title="Importation données Morbilite Paludismes" :fields="fieldsI" apiUrl="morbilite_paludismes"/>&nbsp;
+             <ExportButton :items="items" title="MorbilitePaludisme" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -82,14 +84,21 @@
 
 <script>
 import axios from 'axios'
+import ExportButton from '../buttons/ExportButton.vue'
+import ImportButton from '../buttons/ImportButton.vue'
 
 export default {
   name: 'MorbilitePaludisme',
+  components: { 
+    ExportButton,ImportButton,
+  },
   data: () => {
     return {
       items: [],
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
      'NbCas_Suspect_Palu','NbCas_PaluSimple_Confirme','NbCas_PaluSimple_Presume','NbCas_PaluGrave_Confirme','NbCas_PaluGrave_Presume','NbCas_Deces_PaluGrave','actions'],
+      fieldsI: ['region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
+     'NbCas_Suspect_Palu','NbCas_PaluSimple_Confirme','NbCas_PaluSimple_Presume','NbCas_PaluGrave_Confirme','NbCas_PaluGrave_Presume','NbCas_Deces_PaluGrave'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

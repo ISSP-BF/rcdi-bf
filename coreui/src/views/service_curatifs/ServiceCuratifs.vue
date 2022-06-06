@@ -6,7 +6,9 @@
          <CCardHeader>
             Service Curatifs
             <div class="card-header-actions">
-             <CButton color="primary" @click="createServiceCuratif()">Ajouter</CButton>
+             <CButton color="primary" @click="createServiceCuratif()">Ajouter</CButton>&nbsp;
+             <ImportButton title="Importation données Service Curatifs" :fields="fieldsI" apiUrl="service_curatifs"/>&nbsp;
+             <ExportButton :items="items" title="ServiceCuratif" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -82,9 +84,14 @@
 
 <script>
 import axios from 'axios'
+import ExportButton from '../buttons/ExportButton.vue'
+import ImportButton from '../buttons/ImportButton.vue'
 
 export default {
   name: 'ServiceCuratif',
+  components: { 
+    ExportButton,ImportButton,
+  },
   data: () => {
     return {
       items: [],

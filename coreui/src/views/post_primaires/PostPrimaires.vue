@@ -6,7 +6,8 @@
          <CCardHeader>
             Post-Primaire
             <div class="card-header-actions">
-             <CButton color="primary" @click="createPostPrimaire()">Ajouter</CButton>
+             <CButton color="primary" @click="createPostPrimaire()">Ajouter</CButton>&nbsp;
+              <ExportButton :items="items" title="Post-Primaire" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -69,9 +70,13 @@
 
 <script>
 import axios from 'axios'
+import ExportButton from '../buttons/ExportButton.vue'
 
 export default {
   name: 'PostPrimaire',
+  components: { 
+    ExportButton
+  },
   data: () => {
     return {
       items: [],

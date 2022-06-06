@@ -23,53 +23,53 @@
             
             <CSelect
               label="Region"  class="col-lg-3"
-              :value.sync="Accouchement.region_id"
+              :value.sync="accouchement.region_id"
               :plain="true"
               :options="regions"
-              v-model="Accouchement.region_id"
+              v-model="accouchement.region_id"
             >
             </CSelect>
             
             <CSelect
               label="Province"  class="col-lg-3"
-              :value.sync="Accouchement.province_id"
+              :value.sync="accouchement.province_id"
               :plain="true"
               :options="provinces"
-              v-model="Accouchement.province_id"
+              v-model="accouchement.province_id"
             >
             </CSelect>
             
             <CSelect
               label="Commune"  class="col-lg-3"
-              :value.sync="Accouchement.commune_id"
+              :value.sync="accouchement.commune_id"
               :plain="true"
               :options="communes"
-              v-model="Accouchement.commune_id"
+              v-model="accouchement.commune_id"
             >
             </CSelect>
             
             <CSelect
               label="District"  class="col-lg-3"
-              :value.sync="Accouchement.district_id"
+              :value.sync="accouchement.district_id"
               :plain="true"
               :options="districts"
-              v-model="Accouchement.district_id"
+              v-model="accouchement.district_id"
             >
             </CSelect>
             
             <CSelect
               label="Formation Sanitaire"  class="col-lg-3"
-              :value.sync="Accouchement.formation_sanitaire_id"
+              :value.sync="accouchement.formation_sanitaire_id"
               :plain="true"
               :options="formationSanitaires"
-              v-model="Accouchement.formation_sanitaire_id"
+              v-model="accouchement.formation_sanitaire_id"
             >
             </CSelect>
 
-            <CInput label="Annee" type="number" placeholder="Annee" v-model="Accouchement.annee" class="col-lg-3"
+            <CInput label="Annee" type="number" placeholder="Annee" v-model="accouchement.annee" class="col-lg-3"
                   invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeValidator"></CInput>
-            <CInput label="Mois" type="number" placeholder="Mois" v-model="Accouchement.mois" class="col-lg-3"
+            <CInput label="Mois" type="number" placeholder="Mois" v-model="accouchement.mois" class="col-lg-3"
                   invalid-feedback="Veuillez saisir un mois valide"
                   :is-valid="moisValidator"
             ></CInput>
@@ -88,13 +88,13 @@
             Mesures
         </h6>
             <div class="row"> 
-            <CInput label="Nombre d’accouchements normaux dans la formation sanitaire" type="number" placeholder="NbAccouchement_Normaux" v-model="Accouchement.NbAccouchement_Normaux"  class="col-lg-4"></CInput>
-            <CInput label="Nombre d’accouchements assistés à l’aide d’instruments et/ou de produits" type="number" placeholder="NbAccouchement_Assiste" v-model="Accouchement.NbAccouchement_Assiste"  class="col-lg-4"></CInput>
-            <CInput label="Nombre d’accouchements par césarienne" type="number" placeholder="NbAccouchement_Cesarienne" v-model="Accouchement.NbAccouchement_Cesarienne"  class="col-lg-4"></CInput>
-            <CInput label="Nombre d’accouchements avec partogramme" type="number" placeholder="NbAccouchement_Partogramme" v-model="Accouchement.NbAccouchement_Partogramme"  class="col-lg-4"></CInput>
-            <CInput label="Nombre de naissances vivantes" type="number" placeholder="NNaissance_vivante" v-model="Accouchement.NNaissance_vivante"  class="col-lg-4"></CInput>
-            <CInput label="Nombre de mort-nés frais" type="number" placeholder="NbMortNe_frais" v-model="Accouchement.NbMortNe_frais"  class="col-lg-4"></CInput>
-            <CInput label="Nombre de mort-nés macérés" type="number" placeholder="NbMortNe_Macere" v-model="Accouchement.NbMortNe_Macere"  class="col-lg-4"></CInput>
+            <CInput label="Nombre d’accouchements normaux dans la formation sanitaire" type="number" placeholder="NbAccouchement_Normaux" v-model="accouchement.NbAccouchement_Normaux"  class="col-lg-4"></CInput>
+            <CInput label="Nombre d’accouchements assistés à l’aide d’instruments et/ou de produits" type="number" placeholder="NbAccouchement_Assiste" v-model="accouchement.NbAccouchement_Assiste"  class="col-lg-4"></CInput>
+            <CInput label="Nombre d’accouchements par césarienne" type="number" placeholder="NbAccouchement_Cesarienne" v-model="accouchement.NbAccouchement_Cesarienne"  class="col-lg-4"></CInput>
+            <CInput label="Nombre d’accouchements avec partogramme" type="number" placeholder="NbAccouchement_Partogramme" v-model="accouchement.NbAccouchement_Partogramme"  class="col-lg-4"></CInput>
+            <CInput label="Nombre de naissances vivantes" type="number" placeholder="NNaissance_vivante" v-model="accouchement.NNaissance_vivante"  class="col-lg-4"></CInput>
+            <CInput label="Nombre de mort-nés frais" type="number" placeholder="NbMortNe_frais" v-model="accouchement.NbMortNe_frais"  class="col-lg-4"></CInput>
+            <CInput label="Nombre de mort-nés macérés" type="number" placeholder="NbMortNe_Macere" v-model="accouchement.NbMortNe_Macere"  class="col-lg-4"></CInput>
             </div>
           <CButton color="primary" @click="update()">Modifier</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
@@ -116,7 +116,7 @@ export default {
   },
   data: () => {
     return {
-        Accouchement: {
+        accouchement: {
           region_id: null,
           province_id: null,
           commune_id: null,
@@ -151,7 +151,7 @@ export default {
         let self = this;
 
         axios.put(  this.$apiAdress + '/api/accouchements/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
-        self.Accouchement)
+        self.accouchement)
         .then(function (response) {
             self.message = 'Successfully updated Formation Sanitaire.';
             self.showAlert();
@@ -187,7 +187,7 @@ export default {
     axios.get(  this.$apiAdress + '/api/accouchements/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
       console.log(response.data)
-        self.Accouchement = response.data.Accouchement;
+        self.accouchement = response.data.accouchement;
         self.regions = response.data.regions;
         self.provinces = response.data.provinces;
         self.communes = response.data.communes;

@@ -6,7 +6,9 @@
          <CCardHeader>
             Prévention de la transmission mere enfants
             <div class="card-header-actions">
-             <CButton color="primary" @click="createPTME()">Ajouter</CButton>
+             <CButton color="primary" @click="createPTME()">Ajouter</CButton>&nbsp;
+             <ImportButton title="Importation données de Prévention de la transmission mere enfants" :fields="fieldsI" apiUrl="ptmes"/>&nbsp;
+             <ExportButton :items="items" title="PTME" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -82,9 +84,14 @@
 
 <script>
 import axios from 'axios'
+import ExportButton from '../buttons/ExportButton.vue'
+import ImportButton from '../buttons/ImportButton.vue'
 
 export default {
-  name: 'PTMEs',
+  name: 'PTMES',
+  components: { 
+    ExportButton,ImportButton
+  },
   data: () => {
     return {
       items: [],
@@ -94,6 +101,8 @@ export default {
       */
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
                 'NbFemmeEnceinte_VIHPositif_CPN1','NbFemmeVueCPN_TestVIH','NbFemmeVueCPN_TestVIH_Positif','actions'],
+      fieldsI: ['region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
+                'NbFemmeEnceinte_VIHPositif_CPN1','NbFemmeVueCPN_TestVIH','NbFemmeVueCPN_TestVIH_Positif'],
 
       currentPage: 1,
       perPage: 5,

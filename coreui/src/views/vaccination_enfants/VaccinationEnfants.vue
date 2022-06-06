@@ -6,7 +6,9 @@
          <CCardHeader>
             Vaccination Enfants
             <div class="card-header-actions">
-             <CButton color="primary" @click="createVaccinationEnfant()">Ajouter</CButton>
+             <CButton color="primary" @click="createVaccinationEnfant()">Ajouter</CButton>&nbsp;
+             <ImportButton title="Importation données Vaccination Enfants" :fields="fieldsI" apiUrl="vaccination_enfants"/>&nbsp;
+             <ExportButton :items="items" title="VaccinationEnfant" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -82,15 +84,21 @@
 
 <script>
 import axios from 'axios'
+import ExportButton from '../buttons/ExportButton.vue'
+import ImportButton from '../buttons/ImportButton.vue'
 
 export default {
   name: 'VaccinationEnfant',
+  components: { 
+    ExportButton,ImportButton
+  },
   data: () => {
     return {
       items: [],
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
           'NbBCG','NbDTCHepBHib1','NbDTCHepBHib','NbRR1','actions'],
-
+      fieldsI: ['region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
+          'NbBCG','NbDTCHepBHib1','NbDTCHepBHib','NbRR1'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,
