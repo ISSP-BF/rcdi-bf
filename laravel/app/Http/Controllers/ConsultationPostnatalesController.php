@@ -27,12 +27,25 @@ class ConsultationPostnatalesController extends Controller
     public function index()
     {
         $consultationPostnatales = DB::table('consultation_postnatales')
-        ->join('users', 'users.id', '=', 'consultation_postnatales.created_by')
-        ->join('regions', 'regions.id', '=', 'consultation_postnatales.region_id')
-        ->join('provinces', 'provinces.id', '=', 'consultation_postnatales.province_id')
-        ->join('communes', 'communes.id', '=', 'consultation_postnatales.commune_id')
-        ->join('districts', 'districts.id', '=', 'consultation_postnatales.district_id')
-        ->join('formation_sanitaires', 'formation_sanitaires.id', '=', 'consultation_postnatales.formation_sanitaire_id')
+        
+        ->leftJoin('provinces', function($join){
+            $join->on('consultation_postnatales.province_id', '=', 'provinces.id');
+        })
+        ->leftJoin('communes', function($join){
+            $join->on('consultation_postnatales.commune_id', '=', 'communes.id');
+        })
+        ->leftJoin('regions', function($join){
+            $join->on('consultation_postnatales.region_id', '=', 'regions.id');
+        })
+        ->leftJoin('users', function($join){
+            $join->on('consultation_postnatales.created_by', '=', 'users.id');
+        })
+        ->leftJoin('districts', function($join){
+            $join->on('consultation_postnatales.district_id', '=', 'districts.id');
+        })
+        ->leftJoin('formation_sanitaires', function($join){
+            $join->on('consultation_postnatales.formation_sanitaire_id', '=', 'formation_sanitaires.id');
+        })
         ->select('consultation_postnatales.*', 'users.name as author', 
         'districts.nom_district as district', 
         'regions.region as region', 

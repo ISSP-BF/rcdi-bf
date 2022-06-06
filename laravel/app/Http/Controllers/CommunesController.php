@@ -45,6 +45,13 @@ class CommunesController extends Controller
         return response()->json( $provinces );
     }
 
+    public function list()
+    {
+        $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
+        return response()->json( $communes );
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *

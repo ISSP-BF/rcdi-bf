@@ -26,6 +26,8 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('regions', 'RegionsController');
     Route::resource('provinces', 'ProvincesController');
     Route::resource('communes', 'CommunesController');
+    Route::get('communes_list/', 'CommunesController@list');
+
     Route::resource('professions', 'ProfessionsController');
     Route::resource('districts', 'DistrictsController');
     Route::resource('formation_sanitaires', 'FormationSanitairesController');

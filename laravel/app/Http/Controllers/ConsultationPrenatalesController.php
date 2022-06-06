@@ -27,12 +27,25 @@ class ConsultationPrenatalesController extends Controller
     public function index()
     {
         $consultation_prenatales = DB::table('consultation_prenatales')
-        ->join('users', 'users.id', '=', 'consultation_prenatales.created_by')
-        ->join('regions', 'regions.id', '=', 'consultation_prenatales.region_id')
-        ->join('provinces', 'provinces.id', '=', 'consultation_prenatales.province_id')
-        ->join('communes', 'communes.id', '=', 'consultation_prenatales.commune_id')
-        ->join('districts', 'districts.id', '=', 'consultation_prenatales.district_id')
-        ->join('formation_sanitaires', 'formation_sanitaires.id', '=', 'consultation_prenatales.formation_sanitaire_id')
+        
+        ->leftJoin('provinces', function($join){
+            $join->on('consultation_prenatales.province_id', '=', 'provinces.id');
+        })
+        ->leftJoin('communes', function($join){
+            $join->on('consultation_prenatales.commune_id', '=', 'communes.id');
+        })
+        ->leftJoin('regions', function($join){
+            $join->on('consultation_prenatales.region_id', '=', 'regions.id');
+        })
+        ->leftJoin('users', function($join){
+            $join->on('consultation_prenatales.created_by', '=', 'users.id');
+        })
+        ->leftJoin('districts', function($join){
+            $join->on('consultation_prenatales.district_id', '=', 'districts.id');
+        })
+        ->leftJoin('formation_sanitaires', function($join){
+            $join->on('consultation_prenatales.formation_sanitaire_id', '=', 'formation_sanitaires.id');
+        })
         ->select('consultation_prenatales.*', 'users.name as author', 
         'districts.nom_district as district', 
         'regions.region as region', 
@@ -150,13 +163,27 @@ class ConsultationPrenatalesController extends Controller
     public function show($id)
     {
         $district = DB::table('consultation_prenatales')
-        ->join('users', 'users.id', '=', 'consultation_prenatales.created_by')
-        ->join('users as users2', 'users.id', '=', 'consultation_prenatales.updated_by')
-        ->join('regions', 'regions.id', '=', 'consultation_prenatales.region_id')
-        ->join('provinces', 'provinces.id', '=', 'consultation_prenatales.province_id')
-        ->join('communes', 'communes.id', '=', 'consultation_prenatales.commune_id')
-        ->join('districts', 'districts.id', '=', 'consultation_prenatales.district_id')
-        ->join('formation_sanitaires', 'formation_sanitaires.id', '=', 'consultation_prenatales.formation_sanitaire_id')
+        ->leftJoin('provinces', function($join){
+            $join->on('consultation_prenatales.province_id', '=', 'provinces.id');
+        })
+        ->leftJoin('communes', function($join){
+            $join->on('consultation_prenatales.commune_id', '=', 'communes.id');
+        })
+        ->leftJoin('regions', function($join){
+            $join->on('consultation_prenatales.region_id', '=', 'regions.id');
+        })
+        ->leftJoin('users', function($join){
+            $join->on('consultation_prenatales.created_by', '=', 'users.id');
+        })
+        ->leftJoin('users as users2', function($join){
+            $join->on('consultation_prenatales.updated_by', '=', 'users2.id');
+        })
+        ->leftJoin('districts', function($join){
+            $join->on('consultation_prenatales.district_id', '=', 'districts.id');
+        })
+        ->leftJoin('formation_sanitaires', function($join){
+            $join->on('consultation_prenatales.formation_sanitaire_id', '=', 'formation_sanitaires.id');
+        })
         ->select('consultation_prenatales.*', 'users.name as created_by','users2.name as updated_by', 'regions.region as region', 'districts.nom_district as district',
         'provinces.province as province','communes.commune as commune','formation_sanitaires.nom_structure as formationSanitaire')
         ->where('consultation_prenatales.id', '=', $id)

@@ -27,12 +27,25 @@ class AccouchementsController extends Controller
     public function index()
     {
         $accouchements = DB::table('accouchements')
-        ->join('users', 'users.id', '=', 'accouchements.created_by')
-        ->join('regions', 'regions.id', '=', 'accouchements.region_id')
-        ->join('provinces', 'provinces.id', '=', 'accouchements.province_id')
-        ->join('communes', 'communes.id', '=', 'accouchements.commune_id')
-        ->join('districts', 'districts.id', '=', 'accouchements.district_id')
-        ->join('formation_sanitaires', 'formation_sanitaires.id', '=', 'accouchements.formation_sanitaire_id')
+        
+        ->leftJoin('provinces', function($join){
+            $join->on('accouchements.province_id', '=', 'provinces.id');
+        })
+        ->leftJoin('communes', function($join){
+            $join->on('accouchements.commune_id', '=', 'communes.id');
+        })
+        ->leftJoin('regions', function($join){
+            $join->on('accouchements.region_id', '=', 'regions.id');
+        })
+        ->leftJoin('users', function($join){
+            $join->on('accouchements.created_by', '=', 'users.id');
+        })
+        ->leftJoin('districts', function($join){
+            $join->on('accouchements.district_id', '=', 'districts.id');
+        })
+        ->leftJoin('formation_sanitaires', function($join){
+            $join->on('accouchements.formation_sanitaire_id', '=', 'formation_sanitaires.id');
+        })
         ->select('accouchements.*', 'users.name as author', 
         'districts.nom_district as district', 
         'regions.region as region', 
