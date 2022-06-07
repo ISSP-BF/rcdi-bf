@@ -161,9 +161,11 @@ export default {
     },
     refresh(){
       this.refreshing = true;
+      this.$isLoading(true)
       setTimeout(() => {
         this.refreshing = false;
-      }, 200);
+        this.$isLoading(false)
+      }, 10);
     },
     getCommunes (){
       let self = this;

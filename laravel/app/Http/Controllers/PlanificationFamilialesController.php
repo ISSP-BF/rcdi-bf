@@ -106,6 +106,52 @@ class PlanificationFamilialesController extends Controller
         return response()->json( ['status' => 'success'] );
     }
 
+
+    /**
+     * storeMany a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMany(Request $request)
+    {
+        $validatedData = $request->validate([
+            'items' => 'required',
+        ]);
+        $user = auth()->userOrFail();
+
+        foreach($request->input('items')  as $item ){
+            $planificationFamiliales = new PlanificationFamiliales();
+    
+            $planificationFamiliales->region_id = $item['region'];
+            $planificationFamiliales->province_id = $item['province'];
+            $planificationFamiliales->commune_id = $item['commune'];
+            $planificationFamiliales->district_id = $item['district'];
+            $planificationFamiliales->formation_sanitaire_id = $item['formation_sanitaire'];
+            $planificationFamiliales->annee = $item['annee'];
+            $planificationFamiliales->mois = $item['mois'];
+    
+            $planificationFamiliales->type_utilisatrices = $item['type_utilisatrices'];
+            $planificationFamiliales->NbPillule_COC = $item['NbPillule_COC'];
+            $planificationFamiliales->NbPillule_COP = $item['NbPillule_COP'];
+            $planificationFamiliales->NbDMPlule_IM = $item['NbDMPlule_IM'];
+            $planificationFamiliales->NbDMPA_IM = $item['NbDMPA_IM'];
+            $planificationFamiliales->NbImplant_5ans = $item['NbImplant_5ans'];
+            $planificationFamiliales->NbImplant_3ans = $item['NbImplant_3ans'];
+            $planificationFamiliales->NbDIU = $item['NbDIU'];
+            $planificationFamiliales->NbPreservatif_Masculin = $item['NbPreservatif_Masculin'];
+            $planificationFamiliales->NbPreservatif_Feminin = $item['NbPreservatif_Feminin'];
+            $planificationFamiliales->NbLigature = $item['NbLigature'];
+            $planificationFamiliales->NbVasectomie = $item['NbVasectomie'];
+            $planificationFamiliales->NbCollier_Cycle = $item['NbCollier_Cycle'];
+            $planificationFamiliales->NbMethode_maman = $item['NbMethode_maman'];
+    
+            $planificationFamiliales->created_by = $user->id;
+            $planificationFamiliales->save();
+        }
+        return response()->json( ['status' => 'success'] );
+    }
+
     /**
      * Display the specified resource.
      *

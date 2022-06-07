@@ -1,15 +1,15 @@
 <template>
-  <div class="d-flex align-items-center min-vh-100">
+  <div class="">
     <CContainer fluid>
-      <CRow class="justify-content-center">
-        <CCol md="6">
+      <CRow class="d-flex align-items-center min-vh-100">
+        <CCol md="4" class="align-items-center">
           <CCard class="mx-4 mb-0">
             <CCardBody class="p-4">
               <CForm @submit.prevent="register" method="POST">
-                <h1>Register</h1>
-                <p class="text-muted">Create your account</p>
+                <h1>Création de compte</h1>
+                <p class="text-muted">Veuillez créer votre compte</p>
                 <CInput
-                  placeholder="Username"
+                  placeholder="identifiant"
                   prependHtml="<i class='cui-user'></i>"
                   autocomplete="username"
                   v-model="name"
@@ -17,13 +17,13 @@
                   <template #prepend-content><CIcon name="cil-user"/></template>
                 </CInput>
                 <CInput
-                  placeholder="Email"
+                  placeholder="E-mail"
                   prepend="@"
                   autocomplete="email"
                   v-model="email"
                 />
                 <CInput
-                  placeholder="Password"
+                  placeholder="Mot de passe"
                   type="password"
                   prependHtml="<i class='cui-lock-locked'></i>"
                   autocomplete="new-password"
@@ -32,7 +32,7 @@
                   <template #prepend-content><CIcon name="cil-lock-locked"/></template>
                 </CInput>
                 <CInput
-                  placeholder="Repeat password"
+                  placeholder="Confirmer mot de passe"
                   type="password"
                   prependHtml="<i class='cui-lock-locked'></i>"
                   autocomplete="new-password"
@@ -41,7 +41,7 @@
                 >
                   <template #prepend-content><CIcon name="cil-lock-locked"/></template>
                 </CInput>
-                <CButton type="submit" color="success" block>Create Account</CButton>
+                <CButton type="submit" color="success" block>Créer compte</CButton>
               </CForm>
             </CCardBody>
             <CCardFooter class="p-4">
@@ -58,7 +58,32 @@
                 </CCol>
               </CRow>
             </CCardFooter>
+            <CCardFooter class="p-1">
+                  <CButton block color="link" class="px-0" @click="goLogin()">J'ai déjà un compte</CButton>
+            </CCardFooter>
           </CCard>
+        </CCol>
+        <CCol md="8">
+          <CCarousel
+            animate
+            arrows
+            indicators
+            height="100vh"
+          >
+            <CCarouselItem
+              captionHeader="First Slide"
+              image="img/presentation/ob_0baedb_industrie-stats.jpg"
+              captionText="Nulla vitae elit libero, a pharetra augue mollis interdum."
+            />
+            <CCarouselItem
+              captionHeader="Blank page"
+              :image="{ placeholderColor: 'grey' }"
+              captionText="Nulla vitae elit libero, a pharetra augue mollis interdum."
+            />
+            <CCarouselItem
+              image="img/presentation/statistique-google-haas-avocats.jpg"
+            />
+          </CCarousel>
         </CCol>
       </CRow>
     </CContainer>
@@ -77,6 +102,9 @@
         }
       },    
       methods: {
+        goLogin(){
+          this.$router.push({ path: 'login' });
+        },
         register() {
           var self = this;
           axios.post(  this.$apiAdress + '/api/register', {

@@ -36,16 +36,24 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('acte_mariages', 'ActeMariagesController');
     Route::resource('consultation_prenatales', 'ConsultationPrenatalesController');
     Route::post('consultation_prenatales/storeMany', 'ConsultationPrenatalesController@storeMany');
-
     Route::resource('ptmes', 'PtmesController');
+    Route::post('ptmes/storeMany', 'PtmesController@storeMany');
     Route::resource('accouchements', 'AccouchementsController');
+    Route::post('accouchements/storeMany', 'AccouchementsController@storeMany');
     Route::resource('consultation_postnatales', 'ConsultationPostnatalesController');
+    Route::post('consultation_postnatales/storeMany', 'ConsultationPostnatalesController@storeMany');
     Route::resource('vaccination_enfants', 'VaccinationEnfantsController');
+    Route::post('vaccination_enfants/storeMany', 'VaccinationEnfantsController@storeMany');
     Route::resource('planification_familiales', 'PlanificationFamilialesController');
+    Route::post('planification_familiales/storeMany', 'PlanificationFamilialesController@storeMany');
     Route::resource('morbilite_paludismes', 'MorbilitePaludismesController');
+    Route::post('morbilite_paludismes/storeMany', 'MorbilitePaludismesController@storeMany');
     Route::resource('service_curatifs', 'ServiceCuratifsController');
+    Route::post('service_curatifs/storeMany', 'ServiceCuratifsController@storeMany');
     Route::resource('systeme_information_sanitaires', 'SystemeInformationSanitairesController');
+    Route::post('systeme_information_sanitaires/storeMany', 'SystemeInformationSanitairesController@storeMany');
     Route::resource('indicateur_carte_sanitaires', 'IndicateurCarteSanitairesController');
+    Route::post('indicateur_carte_sanitaires/storeMany', 'IndicateurCarteSanitairesController@storeMany');
     Route::resource('pre_scolaires', 'PreScolairesController');
     Route::resource('primaires', 'PrimairesController');
     Route::resource('post_primaires', 'PostPrimairesController');

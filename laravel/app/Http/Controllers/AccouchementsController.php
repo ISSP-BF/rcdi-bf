@@ -110,6 +110,45 @@ class AccouchementsController extends Controller
         return response()->json( ['status' => 'success'] );
     }
 
+
+    /**
+     * storeMany a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMany(Request $request)
+    {
+        $validatedData = $request->validate([
+            'items' => 'required',
+        ]);
+        $user = auth()->userOrFail();
+
+        foreach($request->input('items')  as $item ){
+            $accouchements = new Accouchements();
+
+            $accouchements->region_id = $item['region'];
+            $accouchements->province_id = $item['province'];
+            $accouchements->commune_id = $item['commune'];
+            $accouchements->district_id = $item['district'];
+            $accouchements->formation_sanitaire_id = $item['formation_sanitaire'];
+            $accouchements->annee = $item['annee'];
+            $accouchements->mois = $item['mois'];
+
+            $accouchements->NbAccouchement_Normaux = $item['NbAccouchement_Normaux'];
+            $accouchements->NbAccouchement_Assiste = $item['NbAccouchement_Assiste'];
+            $accouchements->NbAccouchement_Cesarienne = $item['NbAccouchement_Cesarienne'];
+            $accouchements->NbAccouchement_Partogramme = $item['NbAccouchement_Partogramme'];
+            $accouchements->NNaissance_vivante = $item['NNaissance_vivante'];
+            $accouchements->NbMortNe_frais = $item['NbMortNe_frais'];
+            $accouchements->NbMortNe_Macere = $item['NbMortNe_Macere'];
+
+            $accouchements->created_by = $user->id;
+            $accouchements->save();
+        }
+        return response()->json( ['status' => 'success'] );
+    }
+
     /**
      * Display the specified resource.
      *

@@ -96,6 +96,40 @@ class ServiceCuratifsController extends Controller
     }
 
     /**
+     * storeMany a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMany(Request $request)
+    {
+        $validatedData = $request->validate([
+            'items' => 'required',
+        ]);
+        $user = auth()->userOrFail();
+
+        foreach($request->input('items')  as $item ){
+            $serviceCuratifs = new ServiceCuratifs();
+    
+            $serviceCuratifs->region_id = $item['region'];
+            $serviceCuratifs->province_id = $item['province'];
+            $serviceCuratifs->commune_id = $item['commune'];
+            $serviceCuratifs->district_id = $item['district'];
+            $serviceCuratifs->formation_sanitaire_id = $item['formation_sanitaire'];
+            $serviceCuratifs->annee = $item['annee'];
+            $serviceCuratifs->mois = $item['mois'];
+    
+            $serviceCuratifs->NbNouveaux_consultant = $item['NbNouveaux_consultant'];
+            $serviceCuratifs->NbEnft_PrisCharge_PCIME = $item['NbEnft_PrisCharge_PCIME'];
+            $serviceCuratifs->NbMaladie_MisObservation = $item['NbMaladie_MisObservation'];
+    
+            $serviceCuratifs->created_by = $user->id;
+            $serviceCuratifs->save();
+        }
+        return response()->json( ['status' => 'success'] );
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

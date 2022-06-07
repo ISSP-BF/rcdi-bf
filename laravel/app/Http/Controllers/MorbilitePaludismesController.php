@@ -98,6 +98,44 @@ class MorbilitePaludismesController extends Controller
         return response()->json( ['status' => 'success'] );
     }
 
+
+    /**
+     * storeMany a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMany(Request $request)
+    {
+        $validatedData = $request->validate([
+            'items' => 'required',
+        ]);
+        $user = auth()->userOrFail();
+
+        foreach($request->input('items')  as $item ){
+            $morbilitePaludismes = new MorbilitePaludismes();
+    
+            $morbilitePaludismes->region_id = $item['region'];
+            $morbilitePaludismes->province_id = $item['province'];
+            $morbilitePaludismes->commune_id = $item['commune'];
+            $morbilitePaludismes->district_id = $item['district'];
+            $morbilitePaludismes->formation_sanitaire_id = $item['formation_sanitaire'];
+            $morbilitePaludismes->annee = $item['annee'];
+            $morbilitePaludismes->mois = $item['mois'];
+    
+            $morbilitePaludismes->NbCas_Suspect_Palu = $item['NbCas_Suspect_Palu'];
+            $morbilitePaludismes->NbCas_PaluSimple_Confirme = $item['NbCas_PaluSimple_Confirme'];
+            $morbilitePaludismes->NbCas_PaluSimple_Presume = $item['NbCas_PaluSimple_Presume'];
+            $morbilitePaludismes->NbCas_PaluGrave_Confirme = $item['NbCas_PaluGrave_Confirme'];
+            $morbilitePaludismes->NbCas_PaluGrave_Presume = $item['NbCas_PaluGrave_Presume'];
+            $morbilitePaludismes->NbCas_Deces_PaluGrave = $item['NbCas_Deces_PaluGrave'];
+    
+            $morbilitePaludismes->created_by = $user->id;
+            $morbilitePaludismes->save();
+        }
+        return response()->json( ['status' => 'success'] );
+    }
+
     /**
      * Display the specified resource.
      *

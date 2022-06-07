@@ -95,6 +95,41 @@ class IndicateurCarteSanitairesController extends Controller
         return response()->json( ['status' => 'success'] );
     }
 
+
+    /**
+     * storeMany a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMany(Request $request)
+    {
+        $validatedData = $request->validate([
+            'items' => 'required',
+        ]);
+        $user = auth()->userOrFail();
+
+        foreach($request->input('items')  as $item ){
+            $indicateurCarteSanitaire = new IndicateurCarteSanitaires();
+
+            $indicateurCarteSanitaire->region_id = $item['region'];
+            $indicateurCarteSanitaire->province_id = $item['province'];
+            $indicateurCarteSanitaire->commune_id = $item['commune'];
+            $indicateurCarteSanitaire->district_id = $item['district'];
+            $indicateurCarteSanitaire->formation_sanitaire_id = $item['formation_sanitaire'];
+            $indicateurCarteSanitaire->annee = $item['annee'];
+            $indicateurCarteSanitaire->mois = $item['mois'];
+    
+            $indicateurCarteSanitaire->NbLit_SuiteCouche = $item['NbLit_SuiteCouche'];
+            $indicateurCarteSanitaire->NbLit_HospiMaternite = $item['NbLit_HospiMaternite'];
+            $indicateurCarteSanitaire->NbLit_HospiAutreService = $item['NbLit_HospiAutreService'];
+    
+            $indicateurCarteSanitaire->created_by = $user->id;
+            $indicateurCarteSanitaire->save();
+        }
+        return response()->json( ['status' => 'success'] );
+    }
+
     /**
      * Display the specified resource.
      *

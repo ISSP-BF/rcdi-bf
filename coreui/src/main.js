@@ -14,6 +14,7 @@ import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import loading from 'vuejs-loading-screen'
 
 import Toasted from 'vue-toasted'
 Vue.use(Toasted, {
@@ -29,11 +30,17 @@ library.add(faUserSecret)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.prototype.$apiAdress = 'http://127.0.0.1:8000'
-Vue.prototype.$apiAdress = 'http://51.178.18.128:8000'
+    // Vue.prototype.$apiAdress = 'http://51.178.18.128:8000'
     // Vue.prototype.$apiAdress = 'http://172.16.0.165:8000'
 Vue.config.performance = true
 Vue.use(CoreuiVue)
 
+Vue.use(loading, {
+    bg: '#ebedef',
+    icon: 'refresh',
+    size: 3,
+    icon_color: 'white',
+})
 
 import moment from 'moment'
 

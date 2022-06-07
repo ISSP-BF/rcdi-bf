@@ -107,6 +107,41 @@ class ConsultationPostnatalesController extends Controller
         return response()->json( ['status' => 'success'] );
     }
 
+
+    /**
+     * storeMany a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMany(Request $request)
+    {
+        $validatedData = $request->validate([
+            'items' => 'required',
+        ]);
+        $user = auth()->userOrFail();
+
+        foreach($request->input('items')  as $item ){
+            $consultationPostnatales = new ConsultationPostnatales();
+
+            $consultationPostnatales->region_id = $item['region'];
+            $consultationPostnatales->province_id = $item['province'];
+            $consultationPostnatales->commune_id = $item['commune'];
+            $consultationPostnatales->district_id = $item['district'];
+            $consultationPostnatales->formation_sanitaire_id = $item['formation_sanitaire'];
+            $consultationPostnatales->annee = $item['annee'];
+            $consultationPostnatales->mois = $item['mois'];
+
+            $consultationPostnatales->NbFemmeVueConsultation_PostNatale  = $item['NbFemmeVueConsultation_PostNatale'];
+            $consultationPostnatales->NbFemmeVueConsultation_PostNatalePrecoce = $item['NbFemmeVueConsultation_PostNatalePrecoce'];
+            $consultationPostnatales->NbFemmeVueConsultation_PostNataleTardive = $item['NbFemmeVueConsultation_PostNataleTardive'];
+
+            $consultationPostnatales->created_by = $user->id;
+            $consultationPostnatales->save();
+        }
+        return response()->json( ['status' => 'success'] );
+    }
+
     /**
      * Display the specified resource.
      *

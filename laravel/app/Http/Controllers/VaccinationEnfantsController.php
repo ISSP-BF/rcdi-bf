@@ -97,6 +97,41 @@ class VaccinationEnfantsController extends Controller
     }
 
     /**
+     * storeMany a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMany(Request $request)
+    {
+        $validatedData = $request->validate([
+            'items' => 'required',
+        ]);
+        $user = auth()->userOrFail();
+
+        foreach($request->input('items')  as $item ){
+            $vaccinationEnfants = new VaccinationEnfants();
+    
+            $vaccinationEnfants->region_id = $item['region'];
+            $vaccinationEnfants->province_id = $item['province'];
+            $vaccinationEnfants->commune_id = $item['commune'];
+            $vaccinationEnfants->district_id = $item['district'];
+            $vaccinationEnfants->formation_sanitaire_id = $item['formation_sanitaire'];
+            $vaccinationEnfants->annee = $item['annee'];
+            $vaccinationEnfants->mois = $item['mois'];
+            
+            $vaccinationEnfants->NbBCG = $item['NbBCG'];
+            $vaccinationEnfants->NbDTCHepBHib1 = $item['NbDTCHepBHib1'];
+            $vaccinationEnfants->NbDTCHepBHib = $item['NbDTCHepBHib'];
+            $vaccinationEnfants->NbRR1 = $item['NbRR1'];
+    
+            $vaccinationEnfants->created_by = $user->id;
+            $vaccinationEnfants->save();
+        }
+        return response()->json( ['status' => 'success'] );
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

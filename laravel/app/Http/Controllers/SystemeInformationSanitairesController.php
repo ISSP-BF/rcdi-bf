@@ -97,6 +97,41 @@ class SystemeInformationSanitairesController extends Controller
     }
 
     /**
+     * storeMany a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMany(Request $request)
+    {
+        $validatedData = $request->validate([
+            'items' => 'required',
+        ]);
+        $user = auth()->userOrFail();
+
+        foreach($request->input('items')  as $item ){
+            $systemeInformationSanitaire = new SystemeInformationSanitaires();
+
+            $systemeInformationSanitaire->region_id = $item['region'];
+            $systemeInformationSanitaire->province_id = $item['province'];
+            $systemeInformationSanitaire->commune_id = $item['commune'];
+            $systemeInformationSanitaire->district_id = $item['district'];
+            $systemeInformationSanitaire->formation_sanitaire_id = $item['formation_sanitaire'];
+            $systemeInformationSanitaire->annee = $item['annee'];
+            $systemeInformationSanitaire->mois = $item['mois'];
+
+            $systemeInformationSanitaire->type_rapport = $item['type_rapport'];
+            $systemeInformationSanitaire->rapport_attendu = $item['rapport_attendu'];
+            $systemeInformationSanitaire->rapport_recu = $item['rapport_recu'];
+            $systemeInformationSanitaire->rapport_recu_temps = $item['rapport_recu_temps'];
+
+            $systemeInformationSanitaire->created_by = $user->id;
+            $systemeInformationSanitaire->save();
+        }
+        return response()->json( ['status' => 'success'] );
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

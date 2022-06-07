@@ -149,9 +149,6 @@ class ConsultationPrenatalesController extends Controller
             $consultationPrenatales->created_by = $user->id;
             $consultationPrenatales->save();
         }
-
-        
-        
         return response()->json( ['status' => 'success'] );
     }
     /**
