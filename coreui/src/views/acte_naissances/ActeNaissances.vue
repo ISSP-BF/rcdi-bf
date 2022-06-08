@@ -6,7 +6,7 @@
           <CCardHeader>
             Acte Naissances
             <div class="card-header-actions">
-              <CButton color="primary" @click="createActeNaissance()">Ajouter</CButton>&nbsp;
+              <AddButton @ajouter="createActeNaissance()"/>&nbsp;
               <ExportButton :items="items" title="Acte Naissances" :fields="fields"/>&nbsp;
             </div>
           </CCardHeader>
@@ -111,11 +111,12 @@
 <script>
 import axios from 'axios'
 import ExportButton from '../buttons/ExportButton.vue'
+import AddButton from '../buttons/AddButton.vue'
 
 export default {
   name: 'ActeNaissances',
   components: { 
-    ExportButton
+    ExportButton,AddButton
   },
   data: () => {
     return {

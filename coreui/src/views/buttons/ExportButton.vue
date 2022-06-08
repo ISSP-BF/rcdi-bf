@@ -1,5 +1,5 @@
 <template>
-  <CButton color="success" @click="exporter()" :disabled="successModal">Exporter</CButton>
+  <CButton color="success" @click="exporter()" :disabled="successModal" v-if="show">Exporter</CButton>
 </template>
 
 <script>
@@ -11,6 +11,7 @@ export default {
   props: ['items','fields','title'],
   data: () => {
     return {
+      show:false,
       successModal: false,
     }
   },
@@ -34,6 +35,13 @@ export default {
             return Object.values(it).toString()
         }).join('\n')
     }
+  },
+  mounted: function(){
+    let roles = localStorage.getItem("roles");
+    if (roles != null) {
+        roles = roles.split(',')
+    }
+    if (roles != null && roles.indexOf('exporter') >= 0){this.show = true;}
   }
 }
 </script>

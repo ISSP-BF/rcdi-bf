@@ -60,9 +60,9 @@
             <td>
               <CButton color="warning"  size="sm" @click="showUser( item.id )">Détail</CButton>
               &nbsp;
-               <CButton  size="sm" color="primary" @click="editUser( item.id )"><CIcon name="cil-pencil"/></CButton>
+              <CButton  size="sm" color="primary" @click="editUser( item.id )"><CIcon name="cil-pencil"/></CButton>
                &nbsp;
-                  <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteUser( item.id )"><CIcon name="cil-x-circle"/></CButton>
+              <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteUser( item.id )"><CIcon name="cil-x-circle"/></CButton>
             </td>
           </template>
          

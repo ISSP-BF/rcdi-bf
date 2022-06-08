@@ -38,7 +38,7 @@
       </template>
     </CModal>
     
-    <CButton color="warning" @click="successModal = true">Importer</CButton>&nbsp;
+    <CButton color="warning" @click="successModal = true" v-if="show">Importer</CButton>&nbsp;
 </div>
 </template>
 
@@ -57,6 +57,7 @@ export default {
   data: () => {
     return {
       successModal: false,
+      show:false,
       items:[],
       fields2:[],
         columns: [
@@ -156,7 +157,12 @@ export default {
       this.fields2.push(item);
       this.help = this.help +" "+ item+","
     }
-    this.fields2.push("actions")
+    this.fields2.push("actions");
+    let roles = localStorage.getItem("roles");
+    if (roles != null) {
+        roles = roles.split(',')
+    }
+    if (roles != null && roles.indexOf('importer') >= 0){this.show = true;}
   }
 }
 </script>
