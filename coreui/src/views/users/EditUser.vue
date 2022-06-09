@@ -91,8 +91,7 @@ export default {
     },
     goBack() {
       this.$router.go(-1)
-      // this.$router.replace({path: '/users'})
-    },
+          },
     selectRadioSelectRole(role){
       let temp = this.resultroles.indexOf(role); 
       if (temp > -1) {

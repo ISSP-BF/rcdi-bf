@@ -6,7 +6,7 @@
          <CCardHeader>
             Pre-Scolaire
             <div class="card-header-actions">
-             <CButton color="primary" @click="createPreScolaire()">Ajouter</CButton>&nbsp;
+             <AddButton @ajouter="createPreScolaire()"/>&nbsp;
               <ExportButton :items="items" title="Pre-Scolaire" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
@@ -83,9 +83,9 @@
                   <div class="card-header-actions" style="display:flex">
                   <CButton color="secondary"  size="sm" @click="showPreScolaire( item.id )">Détail</CButton>
                   &nbsp;
-                  <CButton  size="sm" color="primary" @click="editPreScolaire( item.id )"><CIcon name="cil-pencil"/></CButton>
+                  <EditButton  @modifier="editPreScolaire( item.id )"/>
                   &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deletePreScolaire( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <DeleteButton @supprimer="deletePreScolaire( item.id )"/>
                   </div>
                 </td>
               </template>
@@ -100,11 +100,14 @@
 <script>
 import axios from 'axios'
 import ExportButton from '../buttons/ExportButton.vue'
+import AddButton from '../buttons/AddButton.vue'
+import EditButton from '../buttons/EditButton.vue'
+import DeleteButton from '../buttons/DeleteButton.vue'
 
 export default {
   name: 'PreScolaire',
   components: { 
-    ExportButton
+    ExportButton,AddButton,EditButton,DeleteButton
   },
   data: () => {
     return {

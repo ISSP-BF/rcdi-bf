@@ -6,7 +6,7 @@
          <CCardHeader>
             Consultation Prenatales
             <div class="card-header-actions">
-             <CButton color="primary" @click="createConsultationPrenatale()">Ajouter</CButton>&nbsp;
+             <AddButton @ajouter="createConsultationPrenatale()"/>&nbsp;
              <ImportButton title="Importation données consultation prénatale" :fields="fieldsI" apiUrl="consultation_prenatales"/>&nbsp;
              <ExportButton :items="items" title="ConsultationPrenatale" :fields="fieldsI"/>&nbsp;
             </div>
@@ -68,9 +68,9 @@
                   <div class="card-header-actions" style="display:flex">
                   <CButton color="secondary"  size="sm" @click="showConsultationPrenatale( item.id )">Détail</CButton>
                   &nbsp;
-                  <CButton  size="sm" color="primary" @click="editConsultationPrenatale( item.id )"><CIcon name="cil-pencil"/></CButton>
+                  <EditButton  @modifier="editConsultationPrenatale( item.id )"/>
                   &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteConsultationPrenatale( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <DeleteButton @supprimer="deleteConsultationPrenatale( item.id )"/>
                   </div>
                 </td>
               </template>
@@ -85,12 +85,15 @@
 <script>
 import axios from 'axios'
 import ExportButton from '../buttons/ExportButton.vue'
+import AddButton from '../buttons/AddButton.vue'
+import EditButton from '../buttons/EditButton.vue'
+import DeleteButton from '../buttons/DeleteButton.vue'
 import ImportButton from '../buttons/ImportButton.vue'
 
 export default {
   name: 'ConsultationPrenatales',
-  components: {
-    ExportButton,ImportButton
+  components: { 
+    ExportButton,AddButton,EditButton,DeleteButton,ImportButton
   },
   data: () => {
     return {

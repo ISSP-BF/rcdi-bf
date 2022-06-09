@@ -45,7 +45,7 @@
                 <td>
                   <div class="card-header-actions" style="display:flex">
                    &nbsp;
-                      <CButton size="sm" color="danger" @click="deleteConsultation( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <CButton size="sm" color="danger" @click="deleteConsultation( item.id )"/>
                   </div>
                 </td>
               </template>
@@ -54,7 +54,7 @@
       </transition>
     </CCol>
     <CCol col="12" xl="12">
-      <CButton size="sm" color="success" @click="storeMany()"><CIcon name="cil-x-circle"/></CButton>
+      <CButton size="sm" color="success" @click="storeMany()"/>
     </CCol>
   </CRow>
 </template>

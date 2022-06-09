@@ -113,8 +113,7 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1)
-      // this.$router.replace({path: '/users'})
-    },
+          },
     update() {
         let self = this;
         axios.put(  this.$apiAdress + '/api/formation_sanitaires/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),

@@ -790,8 +790,7 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1)
-      // this.$router.replace({path: '/users'})
-    },
+          },
     update() {
         let self = this;
         console.log(self.postPrimaire);
@@ -800,7 +799,7 @@ export default {
         .then(function (response) {
             self.message = 'Successfully updated Formation Sanitaire.';
             self.showAlert();
-            self.$toasted.show("planification Familiale a été mise à jour avec succès",{type:"success"});
+            self.$toasted.show("Une donnée éducative post primaire a été mise à jour avec succès",{type:"success"});
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';

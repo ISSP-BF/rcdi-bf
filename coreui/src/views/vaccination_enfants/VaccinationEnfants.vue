@@ -6,7 +6,7 @@
          <CCardHeader>
             Vaccination Enfants
             <div class="card-header-actions">
-             <CButton color="primary" @click="createVaccinationEnfant()">Ajouter</CButton>&nbsp;
+             <AddButton @ajouter="createVaccinationEnfant()"/>&nbsp;
              <ImportButton title="Importation données Vaccination Enfants" :fields="fieldsI" apiUrl="vaccination_enfants"/>&nbsp;
              <ExportButton :items="items" title="VaccinationEnfant" :fields="fields"/>&nbsp;
             </div>
@@ -68,9 +68,9 @@
                   <div class="card-header-actions" style="display:flex">
                   <CButton color="secondary"  size="sm" @click="showVaccinationEnfant( item.id )">Détail</CButton>
                   &nbsp;
-                  <CButton  size="sm" color="primary" @click="editVaccinationEnfant( item.id )"><CIcon name="cil-pencil"/></CButton>
+                  <EditButton  @modifier="editVaccinationEnfant( item.id )"/>
                   &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteVaccinationEnfant( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <DeleteButton @supprimer="deleteVaccinationEnfant( item.id )"/>
                   </div>
                 </td>
               </template>
@@ -85,12 +85,15 @@
 <script>
 import axios from 'axios'
 import ExportButton from '../buttons/ExportButton.vue'
+import AddButton from '../buttons/AddButton.vue'
+import EditButton from '../buttons/EditButton.vue'
+import DeleteButton from '../buttons/DeleteButton.vue'
 import ImportButton from '../buttons/ImportButton.vue'
 
 export default {
   name: 'VaccinationEnfant',
   components: { 
-    ExportButton,ImportButton
+    ExportButton,AddButton,EditButton,DeleteButton,ImportButton
   },
   data: () => {
     return {

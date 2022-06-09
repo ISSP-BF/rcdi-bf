@@ -26,11 +26,6 @@
                     v-model="primaire.trimestre" :value="'3'">
                   <label for="trimestre3" class="custom-control-label"> 3 </label>
                 </div>
-                <div role="group" class="custom-control custom-control-inline custom-radio">
-                  <input id="trimestre4" type="radio" class="custom-control-input"
-                    v-model="primaire.trimestre" :value="'4'">
-                  <label for="trimestre4" class="custom-control-label"> 4 </label>
-                </div>
             </div>
             </div>
         </CCardBody>
@@ -620,8 +615,7 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1)
-      // this.$router.replace({path: '/users'})
-    },
+          },
     update() {
         let self = this;
         console.log(self.primaire);
@@ -630,7 +624,7 @@ export default {
         .then(function (response) {
             self.message = 'Successfully updated Formation Sanitaire.';
             self.showAlert();
-            self.$toasted.show("planification Familiale a été mise à jour avec succès",{type:"success"});
+            self.$toasted.show("Une donnée éducative primaire a été mise à jour avec succès",{type:"success"});
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';

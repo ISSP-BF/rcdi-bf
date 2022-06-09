@@ -23,7 +23,7 @@
                 <td>
                   <div class="card-header-actions" style="display:flex">
                    &nbsp;
-                      <CButton size="sm" color="danger" @click="deleteData( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <CButton size="sm" color="danger" @click="deleteData( item.id )"/>
                   </div>
                 </td>
               </template>

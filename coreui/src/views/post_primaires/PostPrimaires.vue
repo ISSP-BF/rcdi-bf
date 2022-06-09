@@ -6,7 +6,7 @@
          <CCardHeader>
             Post-Primaire
             <div class="card-header-actions">
-             <CButton color="primary" @click="createPostPrimaire()">Ajouter</CButton>&nbsp;
+             <AddButton @ajouter="createPostPrimaire()"/>&nbsp;
               <ExportButton :items="items" title="Post-Primaire" :fields="fields"/>&nbsp;
             </div>
         </CCardHeader>
@@ -54,9 +54,9 @@
                   <div class="card-header-actions" style="display:flex">
                   <CButton color="secondary"  size="sm" @click="showPostPrimaire( item.id )">Détail</CButton>
                   &nbsp;
-                  <CButton  size="sm" color="primary" @click="editPostPrimaire( item.id )"><CIcon name="cil-pencil"/></CButton>
+                  <EditButton  @modifier="editPostPrimaire( item.id )"/>
                   &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deletePostPrimaire( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <DeleteButton @supprimer="deletePostPrimaire( item.id )"/>
                   </div>
                 </td>
               </template>
@@ -71,11 +71,14 @@
 <script>
 import axios from 'axios'
 import ExportButton from '../buttons/ExportButton.vue'
+import AddButton from '../buttons/AddButton.vue'
+import EditButton from '../buttons/EditButton.vue'
+import DeleteButton from '../buttons/DeleteButton.vue'
 
 export default {
   name: 'PostPrimaire',
   components: { 
-    ExportButton
+    ExportButton,AddButton,EditButton,DeleteButton
   },
   data: () => {
     return {

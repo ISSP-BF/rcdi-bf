@@ -6,7 +6,7 @@
          <CCardHeader>
             Prévention de la transmission mere enfants
             <div class="card-header-actions">
-             <CButton color="primary" @click="createPTME()">Ajouter</CButton>&nbsp;
+             <AddButton @ajouter="createPTME()"/>&nbsp;
              <ImportButton title="Importation données de Prévention de la transmission mere enfants" :fields="fieldsI" apiUrl="ptmes"/>&nbsp;
              <ExportButton :items="items" title="PTME" :fields="fields"/>&nbsp;
             </div>
@@ -68,9 +68,9 @@
                   <div class="card-header-actions" style="display:flex">
                   <CButton color="secondary"  size="sm" @click="showPTME( item.id )">Détail</CButton>
                   &nbsp;
-                  <CButton  size="sm" color="primary" @click="editPTME( item.id )"><CIcon name="cil-pencil"/></CButton>
+                  <EditButton  @modifier="editPTME( item.id )"/>
                   &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deletePTME( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <DeleteButton @supprimer="deletePTME( item.id )"/>
                   </div>
                 </td>
               </template>
@@ -85,12 +85,15 @@
 <script>
 import axios from 'axios'
 import ExportButton from '../buttons/ExportButton.vue'
+import AddButton from '../buttons/AddButton.vue'
+import EditButton from '../buttons/EditButton.vue'
+import DeleteButton from '../buttons/DeleteButton.vue'
 import ImportButton from '../buttons/ImportButton.vue'
 
 export default {
   name: 'PTMES',
   components: { 
-    ExportButton,ImportButton
+    ExportButton,AddButton,EditButton,DeleteButton,ImportButton
   },
   data: () => {
     return {

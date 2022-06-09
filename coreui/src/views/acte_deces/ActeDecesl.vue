@@ -95,9 +95,9 @@
                   <div class="card-header-actions" style="display:flex">
                   <CButton color="secondary"  size="sm" @click="showActeDeces( item.id )">Détail</CButton>
                   &nbsp;
-                  <CButton  size="sm" color="primary" @click="editActeDeces( item.id )"><CIcon name="cil-pencil"/></CButton>
+                  <EditButton  @modifier="editActeDeces( item.id )"/>
                   &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger" @click="deleteActeDeces( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                      <DeleteButton @supprimer="deleteActeDeces( item.id )"/>
                   </div>
                 </td>
               </template>
@@ -113,11 +113,13 @@
 import axios from 'axios'
 import ExportButton from '../buttons/ExportButton.vue'
 import AddButton from '../buttons/AddButton.vue'
+import EditButton from '../buttons/EditButton.vue'
+import DeleteButton from '../buttons/DeleteButton.vue'
 
 export default {
   name: 'ActeDecess',
   components: { 
-    ExportButton,AddButton
+    ExportButton,AddButton,EditButton,DeleteButton
   },
   data: () => {
     return {

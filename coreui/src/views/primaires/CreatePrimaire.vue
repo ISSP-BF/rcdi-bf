@@ -31,11 +31,6 @@
                     v-model="primaire.trimestre" :value="'3'">
                   <label for="trimestre3" class="custom-control-label"> 3 </label>
                 </div>
-                <div role="group" class="custom-control custom-control-inline custom-radio">
-                  <input id="trimestre4" type="radio" class="custom-control-input"
-                    v-model="primaire.trimestre" :value="'4'">
-                  <label for="trimestre4" class="custom-control-label"> 4 </label>
-                </div>
             </div>
             </div>
 
@@ -645,7 +640,7 @@ export default {
           self.primaire.commune_id =
             self.communes.length > 0 ? self.communes[0].value : null;
 
-          self.$toasted.show("pre scolaires créé avec succès", {
+          self.$toasted.show("Une donnée educative primaire a été ajoutée avec succès", {
             type: "success",
           });
           self.showAlert();

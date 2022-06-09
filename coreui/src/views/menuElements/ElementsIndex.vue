@@ -36,7 +36,7 @@
                  
                     <CButton size="sm" color="primary" @click="editMenu( item.id )">Editer</CButton>&nbsp;
                   
-                    <CButton size="sm" color="danger" @click="deleteMenu( item.id )"><CIcon name="cil-x-circle"/></CButton>
+                    <CButton size="sm" color="danger" @click="deleteMenu( item.id )"/>
                     </div>
                   </td>
                 </template>

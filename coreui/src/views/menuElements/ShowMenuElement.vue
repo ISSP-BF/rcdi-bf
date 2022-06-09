@@ -53,8 +53,7 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1)
-      // this.$router.replace({path: '/users'})
-    },
+          },
     getData() {
       let self = this;
       axios.get(  this.$apiAdress + '/api/menu/element/show?token=' + localStorage.getItem("api_token") + '&id=' + self.$route.params.id )

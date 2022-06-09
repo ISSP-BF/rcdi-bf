@@ -65,14 +65,10 @@
             <div class="col-lg-6">{{consultationPrenatale.NbFemmeVueCPN_TPI3_MILDA}}</div>
           </div>
         </CCardBody>
-
           <CCardFooter><CButton color="secondary" @click="goBack">Retour</CButton> 
-          
           <div class="row float-right">
-            
             <div>Créateur : </div>
             <div>{{consultationPrenatale.created_by}} <CBadge color="primary">{{consultationPrenatale.created_at|formatDate}}</CBadge></div>
-          
             <div>Modificateur : </div>
             <div>{{consultationPrenatale.updated_by}} 
             <CBadge color="danger">{{consultationPrenatale.updated_at|formatDate}}</CBadge>
@@ -80,8 +76,6 @@
           </div>
           </CCardFooter>      
       </CCard>
-
-
     </CCol>
   </CRow>
 </template>
@@ -89,11 +83,11 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'User',
+  name: 'Consulatation Prenatale',
   props: {
     caption: {
       type: String,
-      default: 'User id'
+      default: 'Consulatation Prenatale id'
     },
   },
   data: () => {
@@ -104,8 +98,7 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1)
-      // this.$router.replace({path: '/users'})
-    }
+          }
   },
   mounted: function(){
     let self = this;

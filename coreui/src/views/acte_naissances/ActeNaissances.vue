@@ -81,10 +81,6 @@
                   {{ item.date_autorisation | formatDateShort }}
                 </td>
               </template>
-
-
-
-
               <template #actions="{ item }">
                 <td>
                   <div class="card-header-actions" style="display:flex">
@@ -114,7 +110,7 @@ import DeleteButton from '../buttons/DeleteButton.vue'
 export default {
   name: 'ActeNaissances',
   components: { 
-    ExportButton,AddButton,EditButton,DeleteButton
+    ExportButton,AddButton,EditButton,DeleteButton,
   },
   data: () => {
     return {

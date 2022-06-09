@@ -48,8 +48,7 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1)
-      // this.$router.replace({path: '/users'})
-    },
+          },
     store() {
         let self = this;
         axios.post(  this.$apiAdress + '/api/mail?token=' + localStorage.getItem("api_token"),

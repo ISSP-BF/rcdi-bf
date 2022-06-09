@@ -809,7 +809,7 @@ export default {
           self.postPrimaire.commune_id =
             self.communes.length > 0 ? self.communes[0].value : null;
 
-          self.$toasted.show("pre scolaires créé avec succès", {
+          self.$toasted.show("Une donnée éducative post primaire a été ajoutée avec succès", {
             type: "success",
           });
           self.showAlert();
