@@ -96,6 +96,8 @@ const User = () =>
     import ('@/views/users/User')
 const EditUser = () =>
     import ('@/views/users/EditUser')
+const ProfilUser = () =>
+    import ('@/views/users/ProfilUser')
 const CreateUser = () =>
     import ('@/views/users/CreateUser')
 
@@ -602,6 +604,15 @@ function configRoutes() {
                             meta: { label: 'Create User' },
                             name: 'Create User',
                             component: CreateUser,
+                            meta: {
+                                requiresAdmin: true
+                            }
+                        },
+                        {
+                            path: 'profil',
+                            meta: { label: 'Profil User' },
+                            name: 'Profil User',
+                            component: ProfilUser,
                             meta: {
                                 requiresAdmin: true
                             }

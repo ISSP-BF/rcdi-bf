@@ -144,4 +144,57 @@ class UsersController extends Controller
         }
         return response()->json( ['status' => 'success'] );
     }
+
+    
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function profil()
+    {
+        $user = auth()->user();
+        return response()->json($user);
+        // echo "DAP";
+    }
+
+    
+    protected function updateProfil(Request $request)
+    {
+        
+        $validate = Validator::make($request->all(), [
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'string', 'min:4', 'confirmed'],
+        'oldpassword' => ['required', 'string', 'min:4'],
+        ]);
+              
+        if ($validate->fails()){
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validate->errors()
+            ], 422);
+        }
+        $user = auth()->user();
+        if($request->changermotpasse)
+        {
+            if(strcmp($user->password, bcrypt($request->oldpassword)) !== 0){
+                return response()->json([
+                    'status' => 'error',
+                    'errors' => 'Votre ancien mot de passe est incorrect'
+                ], 422);
+            }
+            $user->password = bcrypt($request->password);
+        }
+        
+        $user->name = $request->name;
+        $user->firstname = $request->firstname;
+        $user->fonction = $request->fonction;
+        $user->tel = $request->tel;
+        
+        $user->save();       
+        return response()->json(['status' => 'success'], 200);
+    }
+
 }

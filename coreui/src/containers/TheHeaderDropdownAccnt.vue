@@ -10,7 +10,7 @@
     <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>Settings</strong>
     </CDropdownHeader>
-    <CDropdownItem>
+    <CDropdownItem @click="profilUser()">
       <CIcon name="cil-user" /> Profile
     </CDropdownItem>
     <CDropdownDivider />
@@ -34,6 +34,9 @@ export default {
     }
   },
   methods: {
+    profilUser () {
+      this.$router.push({path: 'users/profil'});
+    },
     logout() {
       let self = this;
       axios.post(this.$apiAdress + '/api/logout?token=' + localStorage.getItem("api_token"), {})

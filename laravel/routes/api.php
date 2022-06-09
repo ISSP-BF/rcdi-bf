@@ -72,6 +72,8 @@ Route::group(['middleware' => 'api'], function ($router) {
         Route::resource('bread',  'BreadController');   //create BREAD (resource)
 
         // Route::resource('users', 'UsersController')->except( ['create', 'store'] );
+        Route::get('users/profil', 'UsersController@profil');
+        Route::put('users/updateProfil', 'UsersController@profil');
         Route::resource('users', 'UsersController');
 
         Route::prefix('menu/menu')->group(function () { 
