@@ -44,20 +44,6 @@
                 <CButton type="submit" color="success" block>Créer compte</CButton>
               </CForm>
             </CCardBody>
-            <CCardFooter class="p-4">
-              <CRow>
-                <CCol col="6">
-                  <CButton block color="facebook">
-                    Facebook
-                  </CButton>
-                </CCol>
-                <CCol col="6">
-                  <CButton block color="twitter">
-                    Twitter
-                  </CButton>
-                </CCol>
-              </CRow>
-            </CCardFooter>
             <CCardFooter class="p-1">
                   <CButton block color="link" class="px-0" @click="goLogin()">J'ai déjà un compte</CButton>
             </CCardFooter>
@@ -118,10 +104,12 @@
             self.password = '';
             self.password_confirmation = '';
             console.log(response);
+            self.$toasted.show('Votre compte a été crée',{type:"success"});
             self.$router.push({ path: '/login' });
           })
           .catch(function (error) {
             console.log(error);
+            self.$toasted.show('Veuillez verifier vos informations',{type:"error"});
           });
   
         }

@@ -71,6 +71,6 @@ class User extends Authenticatable implements JWTSubject
     protected $guard_name = 'api';
 
     protected $attributes = [ 
-        'menuroles' => 'user',
+        'menuroles' => 'guest',
     ];
 }

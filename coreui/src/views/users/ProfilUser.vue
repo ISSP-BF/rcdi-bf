@@ -30,18 +30,6 @@
         <CCardFooter v-if="user.changermotpasse">
          <CInput
 
-                  placeholder="Ancien mot de passe"
-                  type="password"
-                  prependHtml="<i class='cui-lock-locked'></i>"
-                  autocomplete="old-password"
-                  v-model="user.oldpassword"
-                  invalid-feedback="Veuillez saisir un mot de passe de plus de 4 caractère"
-                  :is-valid="validator"
-                >
-                  <template #prepend-content><CIcon name="cil-lock-locked"/></template>
-                </CInput>
-         <CInput
-
                   placeholder="Nouveau mot de passe"
                   type="password"
                   prependHtml="<i class='cui-lock-locked'></i>"

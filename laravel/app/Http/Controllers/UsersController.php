@@ -89,6 +89,7 @@ class UsersController extends Controller
         $user->status = $request->status;
         // ,'users.fonction','users.firstname','users.lieu','users.tel'
         $user->save();
+        auth()->logout();
         //$request->session()->flash('message', 'Successfully updated user');
         return response()->json( ['status' => 'success'] );
     }
@@ -165,7 +166,6 @@ class UsersController extends Controller
         
         $validate = Validator::make($request->all(), [
         'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         'password' => ['required', 'string', 'min:4', 'confirmed'],
         'oldpassword' => ['required', 'string', 'min:4'],
         ]);
@@ -177,14 +177,9 @@ class UsersController extends Controller
             ], 422);
         }
         $user = auth()->user();
+        
         if($request->changermotpasse)
         {
-            if(strcmp($user->password, bcrypt($request->oldpassword)) !== 0){
-                return response()->json([
-                    'status' => 'error',
-                    'errors' => 'Votre ancien mot de passe est incorrect'
-                ], 422);
-            }
             $user->password = bcrypt($request->password);
         }
         

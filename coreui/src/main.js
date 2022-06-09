@@ -30,7 +30,7 @@ library.add(faUserSecret)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.prototype.$apiAdress = 'http://127.0.0.1:8000'
-Vue.prototype.$apiAdress = 'http://51.178.18.128:8000'
+    // Vue.prototype.$apiAdress = 'http://51.178.18.128:8000'
     // Vue.prototype.$apiAdress = 'http://172.16.0.165:8000'
 Vue.config.performance = true
 Vue.use(CoreuiVue)
