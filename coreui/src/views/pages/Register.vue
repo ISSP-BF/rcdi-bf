@@ -1,12 +1,26 @@
-<template>
-  <div class="">
+<template> 
     <CContainer fluid>
-      <CRow class="d-flex align-items-center min-vh-100">
-        <CCol md="4" class="align-items-center">
-          <CCard class="mx-4 mb-0">
-            <CCardBody class="p-4">
+      <CRow class="d-flex min-vh-100">
+        <div class="sidebar">
+          <CCardHeader>
+            
+          <label>
+            <h4 style="text-align: center">Création de compte</h4>
+          </label>
+
+            <div class="card-header-actions" style="float: left;">
+              
+            <div class="c-avatar" style="width: 100px">
+              <img src="img/avatars/logo RCDI.jpg" class="c-avatar-img " />
+            </div>
+              
+            </div>
+          </CCardHeader>
+          <CCardBody class="align-items-center mt-5 pt-5">
+          <div class="mx-10 mb-0 col-lg-10">
+            <CCardBody class="p-4 align-items-center">
               <CForm @submit.prevent="register" method="POST">
-                <h1>Création de compte</h1>
+                <h1> </h1>
                 <p class="text-muted">Veuillez créer votre compte</p>
                 <CInput
                   placeholder="identifiant"
@@ -41,39 +55,34 @@
                 >
                   <template #prepend-content><CIcon name="cil-lock-locked"/></template>
                 </CInput>
-                <CButton type="submit" color="success" block>Créer compte</CButton>
+                <CButton type="submit" color="primary" block>Créer compte</CButton>
               </CForm>
             </CCardBody>
             <CCardFooter class="p-1">
                   <CButton block color="link" class="px-0" @click="goLogin()">J'ai déjà un compte</CButton>
             </CCardFooter>
-          </CCard>
-        </CCol>
-        <CCol md="8">
-          <CCarousel
-            animate
-            arrows
-            indicators
-            height="100vh"
-          >
-            <CCarouselItem
-              captionHeader="First Slide"
-              image="img/presentation/ob_0baedb_industrie-stats.jpg"
-              captionText="Nulla vitae elit libero, a pharetra augue mollis interdum."
-            />
-            <CCarouselItem
-              captionHeader="Blank page"
-              :image="{ placeholderColor: 'grey' }"
-              captionText="Nulla vitae elit libero, a pharetra augue mollis interdum."
-            />
-            <CCarouselItem
-              image="img/presentation/statistique-google-haas-avocats.jpg"
-            />
-          </CCarousel>
-        </CCol>
+          </div>  
+          </CCardBody>
+           
+            <div class="card-body pb-0 mb-0">
+                <p class="card-description">
+                    Pour tout problème avec votre compte, veuillez contacter notre support d'assistance pour vous aider
+                </p>
+            </div>
+             
+          </div>
+        <CCard class="main-panel">
+          <div style="background-image: url(img/presentation/ob_0baedb_industrie-stats.jpg);
+        width:100%;height: 100%;
+        background-size: 100% 100%;
+        ">
+            <label class="information">
+                Nulla vitae elit libero, a pharetra augue mollis interdum.
+            </label>
+        </div>
+        </CCard>
       </CRow>
     </CContainer>
-  </div>
 </template>
 
   <script>
@@ -117,3 +126,63 @@
     }
   
   </script>
+<style>
+@media (min-width: 991px){
+    .main-panel{
+        width: 60%!important;
+        padding: 0;
+        margin: 0;
+    }
+    .sidebar{
+        display: block!important;
+        width: 40%!important;
+        padding: 0;
+        margin: 0;
+        background-color: white;
+        text-align: -webkit-center;
+    }
+    .information{
+        margin-top: 70%; float: left;width: 80%;margin-left: 10%;
+        font-family: "Times New Roman", Times, serif;
+        font-size: xx-large;
+        color: white;
+    }
+    .sidebar-wrapper{
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    width: 100%!important;
+    }
+    .sidebar-wrapper>.card-body{
+        width: 80%!important;
+        margin-top: 7%!important;
+    }
+}
+@media (max-width: 991px){
+    .main-panel{
+        width: 0!important;
+        display: none;
+    }
+    .sidebar-wrapper{
+        text-align: -webkit-center;
+        text-align: -moz-center;
+        width: 100%!important;
+        }
+    .sidebar{
+        display: block!important;
+        -webkit-transform:none;
+        width: 100%!important;
+        padding: 0;
+        margin: 0;
+        background-color: white;
+        text-align: -webkit-center;
+    }
+    .sidebar-wrapper>.card-body{
+        width: 100%!important;
+    }
+     .information{
+        margin-top: 50%; float: left;width: 80%;margin-left: 10%;
+        font-family: "Times New Roman", Times, serif;
+        font-size: xx-large;
+        color: white;
+    }
+}</style>

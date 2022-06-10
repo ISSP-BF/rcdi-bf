@@ -128,7 +128,7 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->status = 'Active';
-        $user->save();       
+        $user->save();
         return response()->json(['status' => 'success'], 200);
     }
     /**
