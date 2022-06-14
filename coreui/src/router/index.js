@@ -614,7 +614,7 @@ function configRoutes() {
                             name: 'Profil User',
                             component: ProfilUser,
                             meta: {
-                                requiresAdmin: true
+                                requiresUser: true
                             }
                         },
                         {
