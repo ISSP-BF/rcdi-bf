@@ -166,8 +166,7 @@ class UsersController extends Controller
         
         $validate = Validator::make($request->all(), [
         'name' => ['required', 'string', 'max:255'],
-        'password' => ['required', 'string', 'min:4', 'confirmed'],
-        'oldpassword' => ['required', 'string', 'min:4'],
+        'password' => ['required', 'string', 'min:4', 'confirmed']
         ]);
               
         if ($validate->fails()){

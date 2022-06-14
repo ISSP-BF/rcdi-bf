@@ -89,8 +89,7 @@ export default {
     
     update() {
         let self = this;
-        self.user.roles = self.resultroles.toString();
-        console.log(self.user)
+        
         axios.put(this.$apiAdress + '/api/users/updateProfil?token=' + localStorage.getItem("api_token"),
         self.user)
         .then(function (response) {
