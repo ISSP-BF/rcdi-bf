@@ -32,7 +32,7 @@ class ZReceiveBKController extends Controller
             'items' => 'required',
             'nom_table' => 'required'
         ]);
-        $items = json_decode($request->input('items'));
+        $items = json_decode($request->input('items'),true);
         foreach($items  as $item ){
             DB::table($request->input('nom_table'))->where('id','=',$item['id'])->update($item);
         }
