@@ -29,11 +29,6 @@
                     v-model="preScolaire.trimestre" :value="'3'">
                   <label for="trimestre3" class="custom-control-label"> 3 </label>
                 </div>
-                <div role="group" class="custom-control custom-control-inline custom-radio">
-                  <input id="trimestre4" type="radio" class="custom-control-input"
-                    v-model="preScolaire.trimestre" :value="'4'">
-                  <label for="trimestre4" class="custom-control-label"> 4 </label>
-                </div>
             </div>
             </div>
         </CCardBody>

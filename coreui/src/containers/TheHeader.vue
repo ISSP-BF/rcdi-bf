@@ -14,7 +14,9 @@
       <CIcon name="logo" height="48" alt="Logo"/>
     </CHeaderBrand>
     <CMenu/>
-
+    <CHeaderNav class="mr-3">
+      <TheHeaderDropdownBk/>
+    </CHeaderNav>
     <CHeaderNav class="mr-4">
       <TheHeaderDropdownAccnt/>
     </CHeaderNav>
@@ -26,12 +28,13 @@
 
 <script>
 import CMenu from './Menu'
+import TheHeaderDropdownBk from './TheHeaderDropdownBk'
 import TheHeaderDropdownAccnt from './TheHeaderDropdownAccnt'
 
 export default {
   name: 'TheHeader',
   components: {
-    TheHeaderDropdownAccnt,
+    TheHeaderDropdownAccnt,TheHeaderDropdownBk,
     CMenu
   }
 }
