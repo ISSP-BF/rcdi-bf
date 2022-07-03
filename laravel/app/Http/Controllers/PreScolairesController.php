@@ -249,6 +249,7 @@ class PreScolairesController extends Controller
         $preScolaire->SourceDotationPartenaire = $request->input('SourceDotationPartenaire');
         $preScolaire->SourceDotationEndogene = $request->input('SourceDotationEndogene');
         
+        $preScolaire->updated = 1;
         $preScolaire->updated_by = $user->id;
         $preScolaire->save();
         return response()->json( ['status' => 'success'] );

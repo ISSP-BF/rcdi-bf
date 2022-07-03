@@ -153,6 +153,7 @@ class ActeDecesController extends Controller
         $acteDeces->date_etablissement = $request->input('date_etablissement');
         $acteDeces->profession = $request->input('profession');
         $acteDeces->statut_matrimonial = $request->input('statut_matrimonial');
+        $acte_deces->updated = 1;
         $acteDeces->updated_by = $user->id;
         $acteDeces->save();
         return response()->json( ['status' => 'success'] );

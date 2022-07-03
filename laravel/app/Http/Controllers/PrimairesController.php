@@ -299,6 +299,7 @@ class PrimairesController extends Controller
         $primaire->SourceDotationPartenaire = $request->input('SourceDotationPartenaire');
         $primaire->SourceDotationEndogene = $request->input('SourceDotationEndogene');
         
+        $primaire->updated = 1;
         $primaire->updated_by = $user->id;
         $primaire->save();
         return response()->json( ['status' => 'success'] );

@@ -145,7 +145,6 @@ class PlanificationFamilialesController extends Controller
             $planificationFamiliales->NbVasectomie = $item['NbVasectomie'];
             $planificationFamiliales->NbCollier_Cycle = $item['NbCollier_Cycle'];
             $planificationFamiliales->NbMethode_maman = $item['NbMethode_maman'];
-    
             $planificationFamiliales->created_by = $user->id;
             $planificationFamiliales->save();
         }
@@ -250,7 +249,7 @@ class PlanificationFamilialesController extends Controller
         $planificationFamiliales->NbVasectomie = $request->input('NbVasectomie');
         $planificationFamiliales->NbCollier_Cycle = $request->input('NbCollier_Cycle');
         $planificationFamiliales->NbMethode_maman = $request->input('NbMethode_maman');
-        
+        $planificationFamiliales->updated = 1;
         $planificationFamiliales->updated_by = $user->id;
         $planificationFamiliales->save();
         return response()->json( ['status' => 'success'] );

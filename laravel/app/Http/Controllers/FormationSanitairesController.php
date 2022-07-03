@@ -179,6 +179,7 @@ class FormationSanitairesController extends Controller
         $formationSanitaires->observations_structure = $request->input('observations_structure');
         $formationSanitaires->autre_observations = $request->input('autre_observations');
         $formationSanitaires->date_fermeture = $request->input('date_fermeture');
+        $formationSanitaires->updated = 1;
         $formationSanitaires->updated_by = $user->id;
         $formationSanitaires->save();
         return response()->json( ['status' => 'success'] );

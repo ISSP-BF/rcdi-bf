@@ -240,6 +240,7 @@ class AccouchementsController extends Controller
         $accouchements->NNaissance_vivante = $request->input('NNaissance_vivante');
         $accouchements->NbMortNe_frais = $request->input('NbMortNe_frais');
         $accouchements->NbMortNe_Macere = $request->input('NbMortNe_Macere');
+        $accouchements->updated = 1;
         
         $accouchements->updated_by = $user->id;
         $accouchements->save();

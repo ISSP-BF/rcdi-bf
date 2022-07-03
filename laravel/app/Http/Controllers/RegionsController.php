@@ -111,6 +111,7 @@ class RegionsController extends Controller
         $region = Regions::find($id);
         $region->code     = $request->input('code');
         $region->region   = $request->input('region');
+        $region->updated = 1;
         $region->save();
         return response()->json( ['status' => 'success'] );
     }

@@ -215,6 +215,7 @@ class PtmesController extends Controller
         $ptmes->NbFemmeVueCPN_TestVIH = $request->input('NbFemmeVueCPN_TestVIH');
         $ptmes->NbFemmeVueCPN_TestVIH_Positif = $request->input('NbFemmeVueCPN_TestVIH_Positif');
         
+        $ptmes->updated = 1;
         $ptmes->updated_by = $user->id;
         $ptmes->save();
         return response()->json( ['status' => 'success'] );

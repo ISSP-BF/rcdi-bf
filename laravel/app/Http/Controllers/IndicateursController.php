@@ -213,6 +213,7 @@ class IndicateursController extends Controller
         $consultationPrenatales->NbGrossesse_Refere = $request->input('NbGrossesse_Refere');
         $consultationPrenatales->NbFemmeVueCPN_TPI3 = $request->input('NbFemmeVueCPN_TPI3');
         $consultationPrenatales->NbFemmeVueCPN_TPI3_MILDA = $request->input('NbFemmeVueCPN_TPI3_MILDA');
+        $consultationPrenatales->updated = 1;
         $consultationPrenatales->updated_by = $user->id;
         $consultationPrenatales->save();
         return response()->json( ['status' => 'success'] );

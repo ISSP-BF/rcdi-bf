@@ -134,6 +134,7 @@ class DistrictsController extends Controller
         $district->lat = $request->input('lat');
         $district->superficie = $request->input('superficie');
         $district->updated_by = $user->id;
+        $district->updated = 1;
         $district->save();
         return response()->json( ['status' => 'success'] );
     }

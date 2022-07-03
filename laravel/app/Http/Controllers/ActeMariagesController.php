@@ -234,6 +234,7 @@ class ActeMariagesController extends Controller
         $acteMariages->localite_naissance_conjointe = $request->input('localite_naissance_conjointe');        
         $acteMariages->domicile_conjointe = $request->input('domicile_conjointe');        
         $acteMariages->profession_conjointe = $request->input('profession_conjointe');
+        $acteMariages->updated = 1;
         $acteMariages->updated_by = $user->id;
         $acteMariages->save();
         return response()->json( ['status' => 'success'] );

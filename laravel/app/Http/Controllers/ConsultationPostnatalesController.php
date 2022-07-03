@@ -229,7 +229,7 @@ class ConsultationPostnatalesController extends Controller
         $consultationPostnatales->NbFemmeVueConsultation_PostNatale  = $request->input('NbFemmeVueConsultation_PostNatale');
         $consultationPostnatales->NbFemmeVueConsultation_PostNatalePrecoce = $request->input('NbFemmeVueConsultation_PostNatalePrecoce');
         $consultationPostnatales->NbFemmeVueConsultation_PostNataleTardive = $request->input('NbFemmeVueConsultation_PostNataleTardive');
-       
+        $consultationPostnatales->updated = 1;
         $consultationPostnatales->updated_by = $user->id;
         $consultationPostnatales->save();
         return response()->json( ['status' => 'success'] );

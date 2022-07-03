@@ -123,6 +123,8 @@ class ProvincesController extends Controller
         $province->cheflieu   = $request->input('cheflieu');
         $province->lon   = $request->input('lon');
         $province->lat   = $request->input('lat');
+        
+        $province->updated = 1;
        
         $province->save();
         return response()->json( ['status' => 'success'] );

@@ -217,7 +217,7 @@ class IndicateurCarteSanitairesController extends Controller
         $indicateurCarteSanitaire->NbLit_SuiteCouche = $request->input('NbLit_SuiteCouche');
         $indicateurCarteSanitaire->NbLit_HospiMaternite = $request->input('NbLit_HospiMaternite');
         $indicateurCarteSanitaire->NbLit_HospiAutreService = $request->input('NbLit_HospiAutreService');
-        
+        $indicateurCarteSanitaire->updated = 1;
         $indicateurCarteSanitaire->updated_by = $user->id;
         $indicateurCarteSanitaire->save();
         return response()->json( ['status' => 'success'] );

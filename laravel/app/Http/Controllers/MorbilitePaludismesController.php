@@ -226,7 +226,7 @@ class MorbilitePaludismesController extends Controller
         $morbilitePaludismes->NbCas_PaluGrave_Confirme = $request->input('NbCas_PaluGrave_Confirme');
         $morbilitePaludismes->NbCas_PaluGrave_Presume = $request->input('NbCas_PaluGrave_Presume');
         $morbilitePaludismes->NbCas_Deces_PaluGrave = $request->input('NbCas_Deces_PaluGrave');
-        
+        $morbilitePaludismes->updated = 1;
         $morbilitePaludismes->updated_by = $user->id;
         $morbilitePaludismes->save();
         return response()->json( ['status' => 'success'] );

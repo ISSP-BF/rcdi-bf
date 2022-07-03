@@ -76,6 +76,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::put('users/updateProfil', 'UsersController@updateProfil');
     
     Route::get('/BkDataUpdated', 'UpdateBDController@index');
+    Route::get('/BkDataUpdatedNumber', 'UpdateBDController@numberOfUpdated');
     Route::group(['middleware' => 'admin'], function ($router) {
 
         Route::resource('mail',        'MailController');

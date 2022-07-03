@@ -220,6 +220,7 @@ class SystemeInformationSanitairesController extends Controller
         $systemeInformationSanitaire->rapport_recu = $request->input('rapport_recu');
         $systemeInformationSanitaire->rapport_recu_temps = $request->input('rapport_recu_temps');
         
+        $systemeInformationSanitaire->updated = 1;
         $systemeInformationSanitaire->updated_by = $user->id;
         $systemeInformationSanitaire->save();
         return response()->json( ['status' => 'success'] );

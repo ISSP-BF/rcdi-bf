@@ -220,6 +220,7 @@ class VaccinationEnfantsController extends Controller
         $vaccinationEnfants->NbDTCHepBHib = $request->input('NbDTCHepBHib');
         $vaccinationEnfants->NbRR1 = $request->input('NbRR1');
         
+        $vaccinationEnfants->updated = 1;
         $vaccinationEnfants->updated_by = $user->id;
         $vaccinationEnfants->save();
         return response()->json( ['status' => 'success'] );

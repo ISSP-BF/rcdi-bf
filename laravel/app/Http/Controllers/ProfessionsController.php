@@ -107,6 +107,8 @@ class ProfessionsController extends Controller
         ]);
         $profession = Professions::find($id);
         $profession->metier     = $request->input('metier');
+        
+        $profession->updated = 1;
         $profession->save();
         return response()->json( ['status' => 'success'] );
     }

@@ -123,7 +123,8 @@ class CommunesController extends Controller
         $commune = Communes::find($id);
         $commune->code     = $request->input('code');
         $commune->commune   = $request->input('commune');
-        $commune->province_id = $request->input('province_id');       
+        $commune->province_id = $request->input('province_id');  
+        $commune->updated = 1;     
         $commune->save();
         return response()->json( ['status' => 'success'] );
     }

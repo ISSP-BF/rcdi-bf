@@ -217,6 +217,7 @@ class ServiceCuratifsController extends Controller
         $serviceCuratifs->NbEnft_PrisCharge_PCIME = $request->input('NbEnft_PrisCharge_PCIME');
         $serviceCuratifs->NbMaladie_MisObservation = $request->input('NbMaladie_MisObservation');
         
+        $serviceCuratifs->updated = 1;
         $serviceCuratifs->updated_by = $user->id;
         $serviceCuratifs->save();
         return response()->json( ['status' => 'success'] );

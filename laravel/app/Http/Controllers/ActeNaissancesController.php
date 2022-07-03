@@ -150,6 +150,7 @@ class ActeNaissancesController extends Controller
         $acteNaissances->lieu_naissance_commune = $request->input('lieu_naissance_commune');
         $acteNaissances->centre_sante_naissance = $request->input('centre_sante_naissance');
         $acteNaissances->date_etablissement = $request->input('date_etablissement');
+        $acteNaissances->updated = 1;
         $acteNaissances->updated_by = $user->id;
         $acteNaissances->save();
         return response()->json( ['status' => 'success'] );

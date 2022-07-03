@@ -370,6 +370,7 @@ class PostPrimairesController extends Controller
         $postPrimaire->SourceDotationPartenaire = $request->input('SourceDotationPartenaire');
         $postPrimaire->SourceDotationEndogene = $request->input('SourceDotationEndogene');
         
+        $postPrimaire->updated = 1;
         $postPrimaire->updated_by = $user->id;
         $postPrimaire->save();
         return response()->json( ['status' => 'success'] );
