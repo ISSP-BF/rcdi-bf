@@ -19,6 +19,7 @@ class CreateCommunesTable extends Migration
             $table->string('province_id');
             $table->string('commune');
             $table->integer('users_id')->unsigned();
+            $table->boolean('updated')->nullable()->default(null);
             $table->timestamps();
         });
     }

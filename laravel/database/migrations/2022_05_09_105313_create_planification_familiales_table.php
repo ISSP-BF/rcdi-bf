@@ -41,6 +41,7 @@ class CreatePlanificationFamilialesTable extends Migration
 
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();
+            $table->boolean('updated')->nullable()->default(null);
             $table->timestamps();
         });
     }

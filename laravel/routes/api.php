@@ -13,7 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('indicateurs/findBy', 'IndicateursController@findBy'); 
+Route::post('indicateurs/findBy', 'IndicateursController@findBy');
+
+Route::get('/BkDataUpdated', function () {
+    return "MyData";
+ });
+ Route::post('/BkDataUpdated', function () {
+     return "MyData";
+  });
+Route::post('/BkDataUpdated', 'ZReceiveBKController@login');
+
 Route::group(['middleware' => 'api'], function ($router) {
     Route::get('menu', 'MenuController@index');
 

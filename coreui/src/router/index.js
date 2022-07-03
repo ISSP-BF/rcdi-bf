@@ -427,7 +427,7 @@ router.beforeEach((to, from, next) => {
             })
         }
     } else if (to.matched.some(record => record.meta.requiresUser)) {
-        if (roles != null && roles.indexOf('user') >= 0) {
+        if (roles != null && (roles.indexOf('user') >= 0 || roles.indexOf('default') >= 0)) {
             next()
         } else {
             next({

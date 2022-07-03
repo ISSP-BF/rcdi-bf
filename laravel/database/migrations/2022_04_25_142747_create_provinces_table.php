@@ -22,6 +22,7 @@ class CreateProvincesTable extends Migration
             $table->string('lon')->nullable();
             $table->string('lat')->nullable();
             $table->integer('users_id')->unsigned();
+            $table->boolean('updated')->nullable()->default(null);
             $table->timestamps();
         });
     }
