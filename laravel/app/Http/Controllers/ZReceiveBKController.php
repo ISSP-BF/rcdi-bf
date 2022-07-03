@@ -30,15 +30,16 @@ class ZReceiveBKController extends Controller
     {
         $validatedData = $request->validate([
             'items' => 'required',
-            'nom_table' => 'required',
-            'updateOrAdd'=>'required'
+            'nom_table' => 'required'
         ]);
         $items = json_decode($request->input('items'),true);
-        
+        // Si nous trouvons l'élément dans la base de données, nous procedons à une modification
+        // Le cas contraire, nous l'ajoutons
         foreach($items  as $item ){
-            if($input('updateOrAdd')==="update")
+            $data = DB::table($request->input('nom_table'))->where('id', '=', $item['id'])->first();
+            if($data!==null)
             DB::table($request->input('nom_table'))->where('id','=',$item['id'])->update($item);
-            if($input('updateOrAdd')==="add")
+            else
             DB::table($request->input('nom_table'))->insertGetId($item);
         }
 
