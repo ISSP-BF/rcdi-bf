@@ -34,8 +34,14 @@ class UpdateBDController extends Controller
         /**
          * Table Accouchement
          */
+        $tables = ['accouchements','acte_deces','acte_mariages','acte_naissances','communes','consultation_postnatales','consultation_prenatales','districts','formation_sanitaires','indicateur_carte_sanitaires','morbilite_paludismes','planification_familiales','post_primaires','pre_scolaires','primaires','professions','provinces','ptmes','regions','service_curatifs','systeme_information_sanitaires','vaccination_enfants'];
         // $data = $this->updateItemsOnTable('accouchements');
-        $data = $this->updateItemsOnTable('acte_deces');
+        foreach($tables  as $nom_table ){
+            $data = $this->addItemsOnTable($nom_table);
+        }
+        foreach($tables  as $nom_table ){
+            $data = $this->updateItemsOnTable($nom_table);
+        }
 
         return response()->json( $data );
     }
@@ -45,16 +51,18 @@ class UpdateBDController extends Controller
 
         $table_data = DB::table($nom_table)->where($nom_table.'.updated', '=', 1)->get();
 
-        $data = array('nom_table' => $nom_table, 'items' => json_encode($table_data));
-        return $data;
+        $data = array('nom_table' => $nom_table, 'items' => json_encode($table_data),'updateOrAdd'=>'update');
         if($this->post($data)!==FALSE){
             DB::table($nom_table)->where('updated', '=', 1)->update(array('updated' => 0));
         }
     }
 
     public function addItemsOnTable($nom_table){
-
         $table_data = DB::table($nom_table)->where($nom_table.'.updated', '=', null)->get();
+        $data = array('nom_table' => $nom_table, 'items' => json_encode($table_data),'updateOrAdd'=>'add');
+        if($this->post($data)!==FALSE){
+            DB::table($nom_table)->where('updated', '=', null)->update(array('updated' => 0));
+        }
 
     }
 
