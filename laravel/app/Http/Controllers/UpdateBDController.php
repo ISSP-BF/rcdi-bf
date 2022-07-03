@@ -46,10 +46,10 @@ class UpdateBDController extends Controller
         $table_data = DB::table($nom_table)->where($nom_table.'.updated', '=', 1)->get();
 
         $data = array('nom_table' => $nom_table, 'items' => $table_data);
-        return $data;
-        // if($this->post($data)!==FALSE){
-        //     DB::table($nom_table)->where('updated', '=', false)->update(array('updated' => true));
-        // }
+        // return $data;
+        if($this->post($data)!==FALSE){
+            DB::table($nom_table)->where('updated', '=', 1)->update(array('updated' => 0));
+        }
     }
 
     public function addItemsOnTable($nom_table){
