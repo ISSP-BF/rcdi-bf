@@ -34,7 +34,7 @@ class ZReceiveBKController extends Controller
         ]);
         
         foreach($request->input('items')  as $item ){
-            DB::table($request->input('nom_table'))->find($item->id)->update($item);
+            DB::table($request->input('nom_table'))->where('id','=',$item['id'])->update($item);
         }
         return response()->json( ['status' => 'success'] );
     }

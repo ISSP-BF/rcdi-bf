@@ -15,13 +15,13 @@ use Illuminate\Http\Request;
 
 Route::post('indicateurs/findBy', 'IndicateursController@findBy');
 
-Route::get('/BkDataUpdated', function () {
-    return "MyData";
- });
- Route::post('/BkDataUpdated', function () {
-     return "MyData";
-  });
-Route::post('/BkDataUpdated', 'ZReceiveBKController@login');
+// Route::get('/BkDataUpdated', function () {
+//     return "MyData";
+//  });
+//  Route::post('/BkDataUpdated', function () {
+//      return "MyData";
+//   });
+Route::post('/BkDataUpdated', 'ZReceiveBKController@storeMany');
 
 Route::group(['middleware' => 'api'], function ($router) {
     Route::get('menu', 'MenuController@index');
@@ -74,6 +74,8 @@ Route::group(['middleware' => 'api'], function ($router) {
     
     Route::get('users/profil', 'UsersController@profil');
     Route::put('users/updateProfil', 'UsersController@updateProfil');
+    
+    Route::get('/BkDataUpdated', 'UpdateBDController@index');
     Route::group(['middleware' => 'admin'], function ($router) {
 
         Route::resource('mail',        'MailController');

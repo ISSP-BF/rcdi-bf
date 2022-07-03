@@ -34,22 +34,22 @@ class UpdateBDController extends Controller
         /**
          * Table Accouchement
          */
-        $accouchements = DB::table('accouchements')->where('accouchements.updated', '=', true)->get();
-        $data = $this->updateItemsOnTable('accouchements');
+        // $data = $this->updateItemsOnTable('accouchements');
+        $data = $this->updateItemsOnTable('acte_deces');
 
-        return response()->json( $accouchements );
+        return response()->json( $data );
     }
 
 
     public function updateItemsOnTable($nom_table){
 
-        $table_data = DB::table($nom_table)->where($nom_table.'.updated', '=', false)->get();
+        $table_data = DB::table($nom_table)->where($nom_table.'.updated', '=', 1)->get();
 
         $data = array('nom_table' => $nom_table, 'items' => $table_data);
-
-        if($this->post($data)!==FALSE){
-            DB::table($nom_table)->where('updated', '=', false)->update(array('updated' => true));
-        }
+        return $data;
+        // if($this->post($data)!==FALSE){
+        //     DB::table($nom_table)->where('updated', '=', false)->update(array('updated' => true));
+        // }
     }
 
     public function addItemsOnTable($nom_table){
@@ -62,7 +62,7 @@ class UpdateBDController extends Controller
 
 
     public function post($data){
-        $url = 'http://51.178.18.128:8000/update';
+        $url = 'http://51.178.18.128:8000/api/BkDataUpdated';
 
         // use key 'http' even if you send the request to https://...
         $options = array(
