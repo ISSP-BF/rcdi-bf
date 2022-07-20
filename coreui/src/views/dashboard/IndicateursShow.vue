@@ -78,7 +78,7 @@ export default {
             commune_id:this.commune_id
           };
           
-      axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
+      axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
          criteria
         )
         .then(function (response) {
@@ -100,7 +100,7 @@ export default {
               self.showAlert();
             }else{
               console.log(error);
-              // self.$router.push({ path: 'login' }); 
+              self.$router.push({ path: 'login' }); 
             }
         });
     },
@@ -111,7 +111,7 @@ export default {
             commune_id:this.commune_id
           };
           
-      axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
+      axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
          criteria
         )
         .then(function (response) {
@@ -144,7 +144,7 @@ export default {
             commune_id:this.commune_id
           };
           
-      axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
+      axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
          criteria
         )
         .then(function (response) {

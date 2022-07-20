@@ -50,9 +50,16 @@
             <CInput label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteNaissance.date_naissance"
                   invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeEnCourValidator"></CInput>
-            <CInput label="Lieu naissance (Commune)" type="text" placeholder="Lieu naissance (Commune)" v-model="acteNaissance.lieu_naissance_commune"></CInput>
-            <CInput label="Centre sante naissance" type="text" placeholder="Centre sante naissance" v-model="acteNaissance.centre_sante_naissance"></CInput>
+            <CInput label="Lieu naissance" type="text" placeholder="Lieu naissance" v-model="acteNaissance.lieu_naissance_commune"></CInput>
             
+            <CSelect
+              label="Formation Sanitaire"
+              :value.sync="acteNaissance.formation_sanitaire_id"
+              :plain="true"
+              :options="formationSanitaires"
+              v-model="acteNaissance.formation_sanitaire_id"
+            >
+            </CSelect>
             <template>
                 <div class="form-group form-row">
                   <CCol tag="label" sm="12" class="col-form-label">
@@ -108,13 +115,14 @@ export default {
           prenom: '',
           date_naissance: '',
           lieu_naissance_commune: '',
-          centre_sante_naissance: '',
+          formation_sanitaire_id: null,
           date_etablissement: '',
           sexe: '',
         },
         regions: [],
         provinces: [],
         communes: [],
+        formationSanitaires:[],
         message: '',
         dismissSecs: 7,
         dismissCountDown: 0,
@@ -130,23 +138,11 @@ export default {
     update() {
         let self = this;
         console.log(self.acteNaissance)
-        
-        // axios.post(  this.$apiAdress + '/api/acteNaissances/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
-        // {
-        //     _method: 'PUT',
-        //     code:              self.acteNaissance.code,
-        //     nom_acteNaissance:      self.acteNaissance.nom_acteNaissance,
-        //     nom_majore:        self.acteNaissance.nom_majore,
-        //     region_id:         self.acteNaissance.region_id,
-        //     province_id:       self.acteNaissance.province_id,
-        //     lon:               self.acteNaissance.lon,
-        //     lat:               self.acteNaissance.lat,
-        //     superficie:        self.acteNaissance.superficie
-        // })
         axios.put(  this.$apiAdress + '/api/acte_naissances/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
         self.acteNaissance)
         .then(function (response) {
             self.message = 'Successfully updated Acte Naissance.';
+            self.$toasted.show("Acte de naissance modifié avec succès",{type:"success"});
             self.showAlert();
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
@@ -156,6 +152,7 @@ export default {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
+            self.$toasted.show(self.message,{type:"error"});
               self.showAlert();
             }else{
               console.log(error); 
@@ -181,6 +178,7 @@ export default {
         self.regions = response.data.regions;
         self.provinces = response.data.provinces;
         self.communes = response.data.communes;
+        self.formationSanitaires = response.data.formationSanitaires;
     }).catch(function (error) {
         console.log(error);
         // self.$router.push({ path: 'login' });

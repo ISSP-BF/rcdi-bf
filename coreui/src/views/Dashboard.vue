@@ -44,24 +44,19 @@
 </template>
 
 <script>
-import MainChartExample from './charts/MainChartExample'
 import IndicateursShow from './dashboard/IndicateursShow'
 import IndicateursSecteur1 from './dashboard/IndicateursSecteur1'
 import IndicateursTableau from './dashboard/IndicateursTableau'
 import GroupeBarChart from './dashboard/GroupeBarChart'
-import WidgetsBrand from './widgets/WidgetsBrand'
-import { CChartPie } from '@coreui/vue-chartjs'
 import axios from 'axios'
 
 export default {
   name: 'Dashboard',
   components: {
-    MainChartExample,
     IndicateursShow,
     IndicateursSecteur1,
     IndicateursTableau,
-    GroupeBarChart,
-    WidgetsBrand, CChartPie
+    GroupeBarChart, 
   },
   computed: {
     defaultDatasets() {
@@ -169,13 +164,13 @@ export default {
     },
     getCommunes (){
       let self = this;
-      axios.get(  this.$apiAdress + '/api/communes_list?token=' + localStorage.getItem("api_token") )
+      axios.get(  this.$apiAdress + '/api/indicateurs/getcommunesliste')
       .then(function (response) {
         self.communes = response.data;
         self.commune_id = self.communes[0].value;
       }).catch(function (error) {
         console.log(error);
-        self.$router.push({ path: '/login' });
+        // self.$router.push({ path: '/login' });
       });
     }
   },

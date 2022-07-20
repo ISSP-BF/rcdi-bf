@@ -20,6 +20,9 @@
             </CAlert>
             <CDataTable
               hover
+              tableFilter
+              itemsPerPageSelect
+              sorter
               :items="items"
               :fields="fields"
               :items-per-page="10"
@@ -69,12 +72,17 @@
               
               <template #date_deces="{item}">
                 <td>
-                  <strong>{{item.date_deces|formatDateShort}}</strong>
+                  {{item.date_deces|formatDateShort}}
+                </td>
+              </template>
+              <template #date_naissance="{item}">
+                <td>
+                  {{item.date_naissance|formatDateShort}}
                 </td>
               </template>
               <template #age="{item}">
                 <td>
-                  {{item.age}}
+                  <strong>{{item.age}}</strong>
                 </td>
               </template>
 
@@ -125,7 +133,7 @@ export default {
     return {
       items: [],
       fields: ['numero_acte', 'region', 'province', 'commune','date_declaration',
-       'nom_prenom','sexe','date_deces','age',
+       'nom_prenom','sexe','date_naissance','date_deces','age',
        'date_etablissement','profession','statut_matrimonial', 'actions'],
 
       currentPage: 1,

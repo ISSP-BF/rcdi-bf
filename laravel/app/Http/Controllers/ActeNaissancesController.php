@@ -27,12 +27,27 @@ class ActeNaissancesController extends Controller
     public function index()
     {
         $acte_naissances = DB::table('acte_naissances')
-        ->join('users', 'users.id', '=', 'acte_naissances.created_by')
-        ->join('regions', 'regions.id', '=', 'acte_naissances.region_id')
-        ->join('provinces', 'provinces.id', '=', 'acte_naissances.province_id')
-        ->join('communes', 'communes.id', '=', 'acte_naissances.commune_id')
-        ->select('acte_naissances.*', 'users.name as author', 'communes.commune as commune', 'regions.region as region', 'provinces.province as province')
-        ->get();
+        ->leftJoin('provinces', function($join){
+            $join->on('acte_naissances.province_id', '=', 'provinces.id');
+        })
+        ->leftJoin('communes', function($join){
+            $join->on('acte_naissances.commune_id', '=', 'communes.id');
+        })
+        ->leftJoin('regions', function($join){
+            $join->on('acte_naissances.region_id', '=', 'regions.id');
+        })
+        ->leftJoin('users', function($join){
+            $join->on('acte_naissances.created_by', '=', 'users.id');
+        })
+        ->leftJoin('users as users2', function($join){
+            $join->on('acte_naissances.updated_by', '=', 'users2.id');
+        })
+        ->leftJoin('formation_sanitaires', function($join){
+            $join->on('acte_naissances.formation_sanitaire_id', '=', 'formation_sanitaires.id');
+        })
+        ->select('acte_naissances.*', 'users.name as author', 'regions.region as region', 'communes.commune as commune', 'provinces.province as province',
+        'formation_sanitaires.nom_structure as formationSanitaire')->get();
+
         return response()->json( $acte_naissances );
     }
 
@@ -46,7 +61,8 @@ class ActeNaissancesController extends Controller
         $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
         $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
         $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
-        return response()->json(['regions'=>$regions,'provinces'=>$provinces,'communes'=>$communes] );
+        $formationSanitaires = DB::table('formation_sanitaires')->select('formation_sanitaires.nom_structure as label', 'formation_sanitaires.id as value')->get();
+        return response()->json(['regions'=>$regions,'provinces'=>$provinces,'communes'=>$communes, 'formationSanitaires'=>$formationSanitaires] );
     }
 
     /**
@@ -63,7 +79,6 @@ class ActeNaissancesController extends Controller
             'prenom'     => 'required|min:1|max:64',
             'sexe'         => 'required',
             'date_naissance'         => 'required',
-            'centre_sante_naissance'         => 'required',
             'lieu_naissance_commune'         => 'required'
         ]);
         $user = auth()->userOrFail();
@@ -80,6 +95,7 @@ class ActeNaissancesController extends Controller
         $acteNaissances->lieu_naissance_commune = $request->input('lieu_naissance_commune');
         $acteNaissances->centre_sante_naissance = $request->input('centre_sante_naissance');
         $acteNaissances->date_etablissement = $request->input('date_etablissement');        
+        $acteNaissances->formation_sanitaire_id = $request->input('formation_sanitaire_id');        
         $acteNaissances->created_by = $user->id;
         $acteNaissances->save();
         return response()->json( ['status' => 'success'] );
@@ -93,15 +109,30 @@ class ActeNaissancesController extends Controller
      */
     public function show($id)
     {
-        $commune = DB::table('acte_naissances')
-        ->join('users', 'users.id', '=', 'acte_naissances.created_by')
-        ->join('regions', 'regions.id', '=', 'acte_naissances.region_id')
-        ->join('provinces', 'provinces.id', '=', 'acte_naissances.province_id')
-        ->join('communes', 'communes.id', '=', 'acte_naissances.commune_id')
-        ->select('acte_naissances.*', 'users.name as author', 'regions.region as region', 'communes.commune as commune', 'provinces.province as province')
+        $acte_naissance = DB::table('acte_naissances')
+        ->leftJoin('provinces', function($join){
+            $join->on('acte_naissances.province_id', '=', 'provinces.id');
+        })
+        ->leftJoin('communes', function($join){
+            $join->on('acte_naissances.commune_id', '=', 'communes.id');
+        })
+        ->leftJoin('regions', function($join){
+            $join->on('acte_naissances.region_id', '=', 'regions.id');
+        })
+        ->leftJoin('users', function($join){
+            $join->on('acte_naissances.created_by', '=', 'users.id');
+        })
+        ->leftJoin('users as users2', function($join){
+            $join->on('acte_naissances.updated_by', '=', 'users2.id');
+        })
+        ->leftJoin('formation_sanitaires', function($join){
+            $join->on('acte_naissances.formation_sanitaire_id', '=', 'formation_sanitaires.id');
+        })
+        ->select('acte_naissances.*', 'users.name as author', 'regions.region as region', 'communes.commune as commune', 'provinces.province as province',
+        'formation_sanitaires.nom_structure as formationSanitaire')
         ->where('acte_naissances.id', '=', $id)
         ->first();
-        return response()->json( $commune );
+        return response()->json($acte_naissance);
     }
 
     /**
@@ -116,7 +147,8 @@ class ActeNaissancesController extends Controller
         $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
         $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
         $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
-        return response()->json( [ 'provinces' => $provinces, 'regions' => $regions, 'communes' => $communes, 'acteNaissance'=>$acteNaissance ] );
+        $formationSanitaires = DB::table('formation_sanitaires')->select('formation_sanitaires.nom_structure as label', 'formation_sanitaires.id as value')->get();
+        return response()->json( [ 'provinces' => $provinces, 'regions' => $regions, 'communes' => $communes, 'acteNaissance'=>$acteNaissance, 'formationSanitaires'=>$formationSanitaires ] );
     }
 
     /**
@@ -150,6 +182,7 @@ class ActeNaissancesController extends Controller
         $acteNaissances->lieu_naissance_commune = $request->input('lieu_naissance_commune');
         $acteNaissances->centre_sante_naissance = $request->input('centre_sante_naissance');
         $acteNaissances->date_etablissement = $request->input('date_etablissement');
+        $acteNaissances->formation_sanitaire_id = $request->input('formation_sanitaire_id'); 
         $acteNaissances->updated = 1;
         $acteNaissances->updated_by = $user->id;
         $acteNaissances->save();

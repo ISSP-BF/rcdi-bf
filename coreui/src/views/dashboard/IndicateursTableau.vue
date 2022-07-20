@@ -50,7 +50,7 @@ export default {
             indicateur:this.indicateur,
             commune_id:this.commune_id
           };
-      axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
+      axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
          criteria
         )
         .then(function (response) {

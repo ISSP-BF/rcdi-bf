@@ -16,7 +16,7 @@ class IndicateursController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
     }
 
     /**
@@ -43,11 +43,11 @@ class IndicateursController extends Controller
         'users.name as author', 
         'regions.region as region', 
         'provinces.province as province',
-        'communes.commune as commune')
+        'communes.commune as commune')->orderBy('id', 'DESC')
         ->get();
         return response()->json( $indicateurs );
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -58,9 +58,11 @@ class IndicateursController extends Controller
         $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
         $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
         $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
-        return response()->json( ['communes'=>$communes,'regions'=>$regions,'provinces'=>$provinces] );
+        $districts = DB::table('districts')->select('districts.nom_district as label', 'districts.id as value')->get();
+        $formationSanitaires = DB::table('formation_sanitaires')->select('formation_sanitaires.nom_structure as label', 'formation_sanitaires.id as value')->get();
+        return response()->json( ['communes'=>$communes,'regions'=>$regions,'provinces'=>$provinces,'districts'=>$districts,'formationSanitaires'=>$formationSanitaires] );
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -69,43 +71,113 @@ class IndicateursController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth:api'); 
         $validatedData = $request->validate([
             'region_id' => 'required',
             'province_id' => 'required',
             'commune_id' => 'required',
+            'indicateur' => 'required',
+            'indice' => 'required',
+            'source' => 'required',
+            'annee' => 'required',
+            'mois' => 'required'
         ]);
         $user = auth()->userOrFail();
-        $consultationPrenatales = new Indicateurs();
-
-        $consultationPrenatales = $request->all();
-        
-
-        $consultationPrenatales['created_by'] = $user->id;
-        $consultationPrenatales->save();
+        $indicateurs = new Indicateurs();
+        $indicateurs->region_id = $request->input('region_id');
+        $indicateurs->province_id = $request->input('province_id');
+        $indicateurs->commune_id = $request->input('commune_id');
+        $indicateurs->groupe = $request->input('groupe');
+        $indicateurs->indicateur = $request->input('indicateur');
+        $indicateurs->niveau1 = $request->input('niveau1');
+        $indicateurs->niveau2 = $request->input('niveau2');
+        $indicateurs->mois = $request->input('mois');
+        $indicateurs->annee = $request->input('annee');
+        $indicateurs->indice = $request->input('indice');
+        $indicateurs->source = $request->input('source');
+        $indicateurs->created_by = $user->id;
+        $indicateurs->save();
         return response()->json( ['status' => 'success'] );
     }
 
     /**
-     * Display the specified resource.
+     * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function edit($id)
     {
-        $district = DB::table('indicateurs')
-        ->join('users', 'users.id', '=', 'indicateurs.created_by')
-        ->join('users as users2', 'users.id', '=', 'indicateurs.updated_by')
-        ->join('regions', 'regions.id', '=', 'indicateurs.region_id')
-        ->join('provinces', 'provinces.id', '=', 'indicateurs.province_id')
-        ->join('communes', 'communes.id', '=', 'indicateurs.commune_id')
-        ->select('indicateurs.*', 'users.name as created_by','users2.name as updated_by', 'regions.region as region',
-        'provinces.province as province','communes.commune as commune')
-        ->where('indicateurs.id', '=', $id)
-        ->first();
-        return response()->json( $district );
+        $indicateur = DB::table('indicateurs')->where('id', '=', $id)->first();
+        $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
+        $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
+        $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
+ 
+        return response()->json( [ 'provinces' => $provinces, 'regions' => $regions,  'communes' => $communes,'indicateur'=>$indicateur] );
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $this->middleware('auth:api'); 
+        $validatedData = $request->validate([
+            'region_id' => 'required',
+            'province_id' => 'required',
+            'commune_id' => 'required',
+            'indicateur' => 'required',
+            'indice' => 'required',
+            'source' => 'required',
+            'annee' => 'required',
+            'mois' => 'required'
+        ]);
+        $user = auth()->userOrFail();
+        $indicateurs = Indicateurs::find($id);
+        $indicateurs->region_id = $request->input('region_id');
+        $indicateurs->province_id = $request->input('province_id');
+        $indicateurs->commune_id = $request->input('commune_id');
+        $indicateurs->groupe = $request->input('groupe');
+        $indicateurs->indicateur = $request->input('indicateur');
+        $indicateurs->niveau1 = $request->input('niveau1');
+        $indicateurs->niveau2 = $request->input('niveau2');
+        $indicateurs->mois = $request->input('mois');
+        $indicateurs->annee = $request->input('annee');
+        $indicateurs->indice = $request->input('indice');
+        $indicateurs->source = $request->input('source');
+        $indicateurs->updated = 1;
+        $indicateurs->updated_by = $user->id;
+        $indicateurs->save();
+        return response()->json( ['status' => 'success'] );
     }
 
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $indicateurs = Indicateurs::find($id);
+        if($indicateurs){
+            $indicateurs->delete();
+        }
+        return response()->json( ['status' => 'success'] );
+    }
+
+    /**
+     * Recupérer la liste des communes
+     */
+    public function getcommunesliste()
+    {
+        $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
+        return response()->json( $communes );
+    }
     
     /**
      * Display the specified resource.
@@ -157,80 +229,4 @@ class IndicateursController extends Controller
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $consultationPrenatale = DB::table('indicateurs')->where('id', '=', $id)->first();
-        $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
-        $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
-        $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
-        $districts = DB::table('districts')->select('districts.nom_district as label', 'districts.id as value')->get();
-        $formationSanitaires = DB::table('formation_sanitaires')->select('formation_sanitaires.nom_structure as label', 'formation_sanitaires.id as value')->get();
-
-        return response()->json( [ 'provinces' => $provinces, 'regions' => $regions, 'districts' => $districts, 'communes' => $communes,'consultationPrenatale'=>$consultationPrenatale,'formationSanitaires'=>$formationSanitaires ] );
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $validatedData = $request->validate([
-            'region_id' => 'required',
-            'province_id' => 'required',
-            'commune_id' => 'required',
-            'district_id' => 'required',
-            'formation_sanitaire_id' => 'required'
-        ]);
-
-        $user = auth()->userOrFail();
-        $consultationPrenatales = Indicateurs::find($id);
-
-        $consultationPrenatales->region_id = $request->input('region_id');
-        $consultationPrenatales->province_id = $request->input('province_id');
-        $consultationPrenatales->commune_id = $request->input('commune_id');
-        $consultationPrenatales->district_id = $request->input('district_id');
-        $consultationPrenatales->formation_sanitaire_id = $request->input('formation_sanitaire_id');
-        $consultationPrenatales->annee = $request->input('annee');
-        $consultationPrenatales->mois = $request->input('mois');
-
-        $consultationPrenatales->NbFemmeVueCPN = $request->input('NbFemmeVueCPN');
-        $consultationPrenatales->NbFemmeInscriteCPN1 = $request->input('NbFemmeInscriteCPN1');
-        $consultationPrenatales->NbFemmeInscriteCPN1_Trim1 = $request->input('NbFemmeInscriteCPN1_Trim1');
-        $consultationPrenatales->NbFemmeVueCPN4 = $request->input('NbFemmeVueCPN4');
-        $consultationPrenatales->NbFemmeInscriteVueCPN_2Td = $request->input('NbFemmeInscriteVueCPN_2Td');
-        $consultationPrenatales->NbFemmeFer_Acide_Folique = $request->input('NbFemmeFer_Acide_Folique');
-        $consultationPrenatales->NbFemmeFer_Acide_Folique_CPN3 = $request->input('NbFemmeFer_Acide_Folique_CPN3');
-        $consultationPrenatales->NbGrossesse_Refere = $request->input('NbGrossesse_Refere');
-        $consultationPrenatales->NbFemmeVueCPN_TPI3 = $request->input('NbFemmeVueCPN_TPI3');
-        $consultationPrenatales->NbFemmeVueCPN_TPI3_MILDA = $request->input('NbFemmeVueCPN_TPI3_MILDA');
-        $consultationPrenatales->updated = 1;
-        $consultationPrenatales->updated_by = $user->id;
-        $consultationPrenatales->save();
-        return response()->json( ['status' => 'success'] );
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $consultationPrenatales = Indicateurs::find($id);
-        if($consultationPrenatales){
-            $consultationPrenatales->delete();
-        }
-        return response()->json( ['status' => 'success'] );
-    }
 }

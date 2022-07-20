@@ -27,6 +27,7 @@ class CreateActeNaissancesTable extends Migration
             $table->date('date_etablissement')->nullable();
             $table->string('lieu_naissance_commune')->nullable();
             $table->string('centre_sante_naissance')->nullable();
+            $table->integer('formation_sanitaire_id')->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->boolean('updated')->nullable()->default(null);

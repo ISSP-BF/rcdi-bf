@@ -51,10 +51,24 @@
                   :is-valid="ageCalculeAndValidator"></CInput>
             <CInput label="Date deces (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date deces" v-model="acteDeces.date_deces" invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="ageCalculeAndValidator"></CInput>
-            <CInput label="Age" type="text" placeholder="Age" v-model="acteDeces.age"></CInput>
+            <template>
+                <div class="form-group form-row">
+                  <CCol tag="label" sm="12" class="col-form-label">
+                    Age : <label for="celibataire" class=""> {{acteDeces.age}} </label>
+                  </CCol>
+                </div>
+            </template>
             <CInput label="Date Etablissement" type="date" placeholder="Date Etablissement" v-model="acteDeces.date_etablissement" invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeEnCourValidator"></CInput>
             <CInput label="Profession" type="text" placeholder="Profession" v-model="acteDeces.profession"></CInput>
+            <CSelect
+              label="Profession"
+              :value.sync="acteDeces.profession_id"
+              :plain="true"
+              :options="professions"
+              v-model="acteDeces.profession_id"
+            >
+            </CSelect>
             <template>
                 <div class="form-group form-row">
                   <CCol tag="label" sm="12" class="col-form-label">
@@ -215,6 +229,7 @@ export default {
         self.regions = response.data.regions;
         self.provinces = response.data.provinces;
         self.communes = response.data.communes;
+        self.professions = response.data.professions;
     }).catch(function (error) {
         console.log(error);
         // self.$router.push({ path: 'login' });

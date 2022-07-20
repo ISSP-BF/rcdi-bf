@@ -8,18 +8,18 @@
       </CHeaderNavLink>
     </template>
     <CDropdownHeader tag="div" class="text-center" color="light">
-      <strong>Settings</strong>
+      <strong>Utilisateur</strong>
     </CDropdownHeader>
     <CDropdownItem @click="profilUser()">
-      <CIcon name="cil-user" /> Profile
+      <CIcon name="cil-user" /> Mon Profil
     </CDropdownItem>
     <CDropdownDivider />
 
     <CDropdownItem>
-      <CIcon name="cil-shield-alt" /> Lock Account
+      <CIcon name="cil-shield-alt" /> Verrouillé
     </CDropdownItem>
     <CDropdownItem @click="logout()">
-      <CIcon name="cil-lock-locked" /> Logout
+      <CIcon name="cil-lock-locked" /> Deconnexion
     </CDropdownItem>
   </CDropdown>
 </template>
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     profilUser () {
-      this.$router.push({path: 'users/profil'});
+      this.$router.push({path: '/users/profil'});
     },
     logout() {
       let self = this;

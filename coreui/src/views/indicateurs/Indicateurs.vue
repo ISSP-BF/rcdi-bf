@@ -4,10 +4,10 @@
       <transition name="slide">
         <CCard>
           <CCardHeader>
-            Acte Naissances
+            Indicateurs
             <div class="card-header-actions">
-              <AddButton @ajouter="createActeNaissance()"/>&nbsp;
-              <ExportButton :items="items" title="Acte Naissances" :fields="fields"/>&nbsp;
+              <AddButton @ajouter="createIndicateur()"/>&nbsp;
+              <ExportButton :items="items" title="Indicateurs" :fields="fields"/>&nbsp;
             </div>
           </CCardHeader>
           <CCardBody>
@@ -84,14 +84,16 @@
                   {{ item.date_autorisation | formatDateShort }}
                 </td>
               </template>
-              <template #actions="{ item }">
+              
+          <template #actions="{item}">
                 <td>
                   <div class="card-header-actions" style="display:flex">
-                    <CButton color="secondary" size="sm" @click="showActeNaissance(item.id)">Détail</CButton>
-                    &nbsp;
-                    <EditButton  @modifier="editActeNaissance(item.id)"/>
-                    &nbsp;
-                    <DeleteButton  @modifier="deleteActeNaissance(item.id)"/>
+                  <CButton color="secondary"  size="sm" @click="showIndicateur( item.id )">
+                  <CIcon name="cil-file" /></CButton>
+                  &nbsp;
+                  <EditButton  @modifier="editIndicateur( item.id )"/>
+                  &nbsp;
+                      <DeleteButton @supprimer="deleteIndicateur( item.id )"/>
                   </div>
                 </td>
               </template>
@@ -111,17 +113,17 @@ import EditButton from '../buttons/EditButton.vue'
 import DeleteButton from '../buttons/DeleteButton.vue'
 
 export default {
-  name: 'ActeNaissances',
+  name: 'Indicateurs',
   components: { 
     ExportButton,AddButton,EditButton,DeleteButton,
   },
   data: () => {
     return {
       items: [],
-      fields: ['numero_acte', 'region', 'province', 'commune', 'date_declaration',
-        'nom_prenom', 'sexe', 'date_naissance',
-        'lieu_naissance_commune', 'centre_sante_naissance',
-        'date_etablissement', 'actions'],
+      fields: ['id', 'region', 'province', 'commune', 'groupe',
+        'indicateur', 'niveau1', 'niveau2',
+        'mois', 'annee',
+        'indice','source','actions'],
 
       currentPage: 1,
       perPage: 5,
@@ -140,37 +142,37 @@ export default {
     getRowCount(items) {
       return items.length
     },
-    acteNaissanceLink(id) {
-      return `acte_naissances/${id.toString()}`
+    indicateurLink(id) {
+      return `indicateurs/${id.toString()}`
     },
     editLink(id) {
-      return `acte_naissances/${id.toString()}/edit`
+      return `indicateurs/${id.toString()}/edit`
     },
-    showActeNaissance(id) {
-      const acteNaissanceLink = this.acteNaissanceLink(id);
-      this.$router.push({ path: acteNaissanceLink });
+    showIndicateur(id) {
+      const indicateurLink = this.indicateurLink(id);
+      this.$router.push({ path: indicateurLink });
     },
-    editActeNaissance(id) {
+    editIndicateur(id) {
       const editLink = this.editLink(id);
       this.$router.push({ path: editLink });
     },
-    deleteActeNaissance(id) {
+    deleteIndicateur(id) {
       let self = this;
-      let acteNaissanceId = id;
-      axios.post(this.$apiAdress + '/api/acte_naissances/' + id + '?token=' + localStorage.getItem("api_token"), {
+      let indicateurId = id;
+      axios.post(this.$apiAdress + '/api/indicateurs/' + id + '?token=' + localStorage.getItem("api_token"), {
         _method: 'DELETE'
       })
         .then(function (response) {
-          self.message = 'Successfully deleted acteNaissance.';
-          self.showAlert();
-          self.getActeNaissances();
+          self.message = 'Successfully deleted indicateur.';
+          self.$toasted.show("L'indicateur a été supprimé avec succès",{type:"success"}); 
+          self.getndicateurs();
         }).catch(function (error) {
           console.log(error);
           self.$router.push({ path: '/login' });
         });
     },
-    createActeNaissance() {
-      this.$router.push({ path: 'acte_naissances/create' });
+    createIndicateur() {
+      this.$router.push({ path: 'indicateurs/create' });
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
@@ -178,10 +180,10 @@ export default {
     showAlert() {
       this.dismissCountDown = this.dismissSecs
     },
-    getActeNaissances() {
+    getndicateurs() {
       let self = this;
 
-      axios.get(this.$apiAdress + '/api/acte_naissances?token=' + localStorage.getItem("api_token"))
+      axios.get(this.$apiAdress + '/api/indicateurs?token=' + localStorage.getItem("api_token"))
         .then(function (response) {
           self.items = response.data;
         }).catch(function (error) {
@@ -191,7 +193,7 @@ export default {
     }
   },
   mounted: function () {
-    this.getActeNaissances();
+    this.getndicateurs();
   }
 }
 

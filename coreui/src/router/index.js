@@ -332,6 +332,16 @@ const EditPostPrimaire = () =>
 const CreatePostPrimaire = () =>
     import ('@/views/post_primaires/CreatePostPrimaire')
 
+//Indicateurs
+const Indicateurs = () =>
+    import ('@/views/indicateurs/Indicateurs')
+const Indicateur = () =>
+    import ('@/views/indicateurs/Indicateur')
+const EditIndicateur = () =>
+    import ('@/views/indicateurs/EditIndicateur')
+const CreateIndicateur = () =>
+    import ('@/views/indicateurs/CreateIndicateur')
+
 //Roles
 const Roles = () =>
     import ('@/views/roles/Roles')
@@ -1618,6 +1628,49 @@ function configRoutes() {
                             meta: { label: 'Edit PostPrimaire' },
                             name: 'Edit PostPrimaire',
                             component: EditPostPrimaire,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'indicateurs',
+                    meta: { label: 'Indicateurs' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Indicateurs,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Indicateur' },
+                            name: 'Create Indicateur',
+                            component: CreateIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Indicateur Details' },
+                            name: 'Indicateur',
+                            component: Indicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Indicateur' },
+                            name: 'Edit Indicateur',
+                            component: EditIndicateur,
                             meta: {
                                 requiresUser: true
                             }

@@ -94,8 +94,13 @@
             <CInput label="Nom" type="text" placeholder="Nom" v-model="acteMariage.nom_conjoint"></CInput>
             <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteMariage.prenom_conjoint"></CInput>
             <div class="row ">
-            <CInput class="col-lg-4" label="Date naissance" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjoint"></CInput>
-            <CInput class="col-lg-4" label="Age" type="number" placeholder="Age" v-model="acteMariage.age_conjoint"></CInput>
+              <CInput class="col-lg-8" label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjoint"
+              :is-valid="ageCalculeAndValidatorConjoint"></CInput>
+              <template>
+                  <div class="form-group form-row" style="align-items: end;"> 
+                      Age : <label for="age_mariage_conjoint" class=""> {{acteMariage.age_mariage_conjoint}} </label>
+                  </div>
+              </template>
             </div>
             <template>
                 <div class="form-group form-row">
@@ -146,8 +151,14 @@
             <CInput 
               v-if="acteMariage.hors_commune_conjoint=='OUI'" label="Localite de naissance" type="text" placeholder="Localite de naissance" v-model="acteMariage.localite_naissance_conjoint"></CInput>
             <CInput label="Domicile" type="text" placeholder="Domicile" v-model="acteMariage.domicile_conjoint"></CInput>
-            <CInput label="Profession" type="text" placeholder="Profession" v-model="acteMariage.profession_conjoint"></CInput>
-            
+            <CSelect
+              label="Profession"
+              :value.sync="acteMariage.profession_conjoint_id"
+              :plain="true"
+              :options="professions"
+              v-model="acteMariage.profession_conjoint_id"
+            >
+            </CSelect>
           
         </CCardBody>
       </CCard>
@@ -163,10 +174,17 @@
 
           <CInput label="Nom" type="text" placeholder="Nom" v-model="acteMariage.nom_conjointe"></CInput>
             <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteMariage.prenom_conjointe"></CInput>
-            <div class="row">
-            <CInput class="col-lg-4" label="Date naissance" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjointe"></CInput>
-            <CInput class="col-lg-4" label="Age" type="number" placeholder="Age" v-model="acteMariage.age_conjointe"></CInput>
+            
+              <div class="row ">
+              <CInput class="col-lg-8" label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjointe"
+              :is-valid="ageCalculeAndValidatorConjointe"></CInput>
+              <template>
+                  <div class="form-group form-row" style="align-items: end;"> 
+                      Age : <label for="age_mariage_conjointe" class=""> {{acteMariage.age_mariage_conjointe}} </label>
+                  </div>
+              </template>
             </div>
+            
             <template>
                 <div class="form-group form-row">
                   <CCol tag="label" sm="12" class="col-form-label">
@@ -216,8 +234,14 @@
             <CInput 
               v-if="acteMariage.hors_commune_conjointe=='OUI'" label="Localite de naissance" type="text" placeholder="Localite de naissance" v-model="acteMariage.localite_naissance_conjointe"></CInput>
             <CInput label="Domicile" type="text" placeholder="Domicile" v-model="acteMariage.domicile_conjointe"></CInput>
-            <CInput label="Profession" type="text" placeholder="Profession" v-model="acteMariage.profession_conjointe"></CInput>
-            
+            <CSelect
+              label="Profession"
+              :value.sync="acteMariage.profession_conjointe_id"
+              :plain="true"
+              :options="professions"
+              v-model="acteMariage.profession_conjointe_id"
+            >
+            </CSelect>
         </CCardBody>
       </CCard>
         
@@ -258,7 +282,7 @@ export default {
           commune_naissance_conjoint : '',
           localite_naissance_conjoint : '',
           domicile_conjoint : '',
-          profession_conjoint : '',
+          profession_conjoint_id : '',
           nom_conjointe : '',
           prenom_conjointe : '',
           date_naissance_conjointe : '',
@@ -268,7 +292,7 @@ export default {
           commune_naissance_conjointe : '',
           localite_naissance_conjointe : '',
           domicile_conjointe : '',
-          profession_conjointe : '',
+          profession_conjoint_id : '',
           regime_matrimonial : '',
           option_matrimonial : '',
           province_id : null,
@@ -284,6 +308,18 @@ export default {
     }
   },
   methods: {
+    ageCalculeAndValidatorConjoint (val) {
+      if(this.acteMariage.date_naissance_conjoint&&this.acteMariage.date_naissance_conjoint)
+      {this.acteMariage.age_mariage_conjoint = new Date(this.acteMariage.date_etablissement).getFullYear() - new Date(this.acteMariage.date_naissance_conjoint).getFullYear()}
+      else {this.acteMariage.age_mariage_conjoint = null}
+      return val ? new Date(val)<=new Date()?null:false : null
+    },
+    ageCalculeAndValidatorConjointe (val) {
+      if(this.acteMariage.date_naissance_conjointe&&this.acteMariage.date_naissance_conjointe)
+      {this.acteMariage.age_mariage_conjointe = new Date(this.acteMariage.date_etablissement).getFullYear() - new Date(this.acteMariage.date_naissance_conjointe).getFullYear()}
+      else {this.acteMariage.age_mariage_conjointe = null}
+      return val ? new Date(val)<=new Date()?null:false : null
+    },
     goBack() {
       this.$router.go(-1)
           },
@@ -292,25 +328,26 @@ export default {
     },
     update() {
         let self = this;
-        console.log(self.acteMariage)
         
-        // axios.post(  this.$apiAdress + '/api/acteMariages/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
-        // {
-        //     _method: 'PUT',
-        //     code:              self.acteMariage.code,
-        //     nom_acteMariage:      self.acteMariage.nom_acteMariage,
-        //     nom_majore:        self.acteMariage.nom_majore,
-        //     region_id:         self.acteMariage.region_id,
-        //     province_id:       self.acteMariage.province_id,
-        //     lon:               self.acteMariage.lon,
-        //     lat:               self.acteMariage.lat,
-        //     superficie:        self.acteMariage.superficie
-        // })
+        if(this.acteMariage.hors_commune_conjointe=='NON'){
+          this.acteMariage.localite_naissance_conjointe = "";
+        }
+        else {
+          this.acteMariage.commune_naissance_conjointe = null;
+        }
+        if(this.acteMariage.hors_commune_conjoint=='NON'){
+          this.acteMariage.localite_naissance_conjoint = "";
+        }
+        else {
+          this.acteMariage.commune_naissance_conjoint = null;
+        }
         axios.put(  this.$apiAdress + '/api/acte_mariages/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
         self.acteMariage)
         .then(function (response) {
             self.message = 'Successfully updated Acte Mariage.';
+            self.$toasted.show("L'acte a été mise à jour avec succès",{type:"success"});
             self.showAlert();
+            self.goBack();
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';
@@ -319,6 +356,7 @@ export default {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
+            self.$toasted.show(self.message,{type:"error"});
               self.showAlert();
             }else{
               console.log(error); 
@@ -339,6 +377,17 @@ export default {
         self.regions = response.data.regions;
         self.provinces = response.data.provinces;
         self.communes = response.data.communes;
+        self.professions = response.data.professions;
+        
+        if(!self.acteMariage.commune_naissance_conjoint)
+        self.acteMariage.commune_naissance_conjoint = self.communes.length>0?self.communes[0].value:null;
+        if(!self.acteMariage.commune_naissance_conjointe)
+        self.acteMariage.commune_naissance_conjointe = self.communes.length>0?self.communes[0].value:null;
+        if(!self.acteMariage.profession_conjoint)
+        self.acteMariage.profession_conjoint = self.professions.length>0?self.professions[0].value:null;
+        if(!self.acteMariage.profession_conjointe)
+        self.acteMariage.profession_conjointe = self.professions.length>0?self.professions[0].value:null;
+        
     }).catch(function (error) {
         console.log(error);
         // self.$router.push({ path: 'login' });

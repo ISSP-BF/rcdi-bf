@@ -50,9 +50,16 @@
             <CInput label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteNaissance.date_naissance"
                   invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeEnCourValidator"></CInput>
-            <CInput label="Lieu naissance (Commune)" type="text" placeholder="Lieu naissance (Commune)" v-model="acteNaissance.lieu_naissance_commune"></CInput>
-            <CInput label="Centre sante naissance" type="text" placeholder="Centre sante naissance" v-model="acteNaissance.centre_sante_naissance"></CInput>
+            <CInput label="Lieu naissance" type="text" placeholder="Lieu naissance" v-model="acteNaissance.lieu_naissance_commune"></CInput>
 
+            <CSelect
+              label="Formation Sanitaire"
+              :value.sync="acteNaissance.formation_sanitaire_id"
+              :plain="true"
+              :options="formationSanitaires"
+              v-model="acteNaissance.formation_sanitaire_id"
+            >
+            </CSelect>
             <template>
                 <div class="form-group form-row">
                   <CCol tag="label" sm="12" class="col-form-label">
@@ -110,6 +117,7 @@ export default {
           date_etablissement:  new Date().toISOString().slice(0,10),
           sexe: '',
         },
+        formationSanitaires: [],
         regions: [],
         provinces: [],
         communes: [],
@@ -139,8 +147,10 @@ export default {
               lon: '',
               lat: '',
             };
+            self.$toasted.show("Acte de naissance créé avec succès",{type:"success"});
             self.message = 'Successfully created acteNaissance.';
             self.showAlert();
+            self.goBack();
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';
@@ -149,6 +159,7 @@ export default {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
+            self.$toasted.show(self.message,{type:"error"});
               self.showAlert();
             }else{
               console.log(error);
@@ -175,10 +186,14 @@ export default {
         self.regions = response.data.regions;
         self.provinces = response.data.provinces;
         self.communes = response.data.communes;
+        self.formationSanitaires = response.data.formationSanitaires;
+        
         // Définir valeur par défaut
         self.acteNaissance.region_id = self.regions.length>0?self.regions[0].value:null;
         self.acteNaissance.province_id = self.provinces.length>0?self.provinces[0].value:null;
         self.acteNaissance.commune_id = self.communes.length>0?self.communes[0].value:null;
+        self.acteNaissance.formation_sanitaire_id = self.formationSanitaires.length>0?self.formationSanitaires[0].value:null;
+
 
     }).catch(function (error) {
         console.log(error);

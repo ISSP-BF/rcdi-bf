@@ -27,11 +27,29 @@ class ActeMariagesController extends Controller
     public function index()
     {
         $acte_mariages = DB::table('acte_mariages')
-        ->join('users', 'users.id', '=', 'acte_mariages.created_by')
-        ->join('regions', 'regions.id', '=', 'acte_mariages.region_id')
-        ->join('provinces', 'provinces.id', '=', 'acte_mariages.province_id')
-        ->join('communes', 'communes.id', '=', 'acte_mariages.commune_id')
-        ->select('acte_mariages.*', 'users.name as author', 'communes.commune as commune', 'regions.region as region', 'provinces.province as province')
+        
+        ->leftJoin('provinces', function($join){
+            $join->on('acte_mariages.province_id', '=', 'provinces.id');
+        })
+        ->leftJoin('communes', function($join){
+            $join->on('acte_mariages.commune_id', '=', 'communes.id');
+        })
+        ->leftJoin('regions', function($join){
+            $join->on('acte_mariages.region_id', '=', 'regions.id');
+        })
+        ->leftJoin('users', function($join){
+            $join->on('acte_mariages.created_by', '=', 'users.id');
+        })
+        ->leftJoin('users as users2', function($join){
+            $join->on('acte_mariages.updated_by', '=', 'users2.id');
+        })
+        ->leftJoin('professions as profession_conjoint', function($join){
+            $join->on('acte_mariages.profession_conjoint_id', '=', 'profession_conjoint.id');
+        })
+        ->leftJoin('professions as profession_conjointe', function($join){
+            $join->on('acte_mariages.profession_conjointe_id', '=', 'profession_conjointe.id');
+        })
+        ->select('acte_mariages.*','profession_conjointe.metier as profession_conjointe','profession_conjoint.metier as profession_conjoint', 'users.name as author', 'communes.commune as commune', 'regions.region as region', 'provinces.province as province')
         ->get();
         return response()->json( $acte_mariages );
     }
@@ -46,7 +64,8 @@ class ActeMariagesController extends Controller
         $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
         $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
         $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
-        return response()->json(['regions'=>$regions,'provinces'=>$provinces,'communes'=>$communes] );
+        $professions = DB::table('professions')->select('professions.metier as label', 'professions.id as value')->get();
+        return response()->json(['regions'=>$regions,'provinces'=>$provinces,'communes'=>$communes,'professions'=>$professions] );
     }
 
     /**
@@ -58,7 +77,7 @@ class ActeMariagesController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'n_acte'                        => 'required|min:1|max:64',
+            
             'date_etablissement'            => 'required',
 
             'nom_conjoint'                  => 'required|min:1|max:64',
@@ -70,7 +89,7 @@ class ActeMariagesController extends Controller
             // 'commune_naissance_conjoint'    => 'required',
             // 'localite_naissance_conjoint'   => 'required',
             'domicile_conjoint'             => 'required',
-            'profession_conjoint'           => 'required',
+            'profession_conjoint_id'           => 'required',
             // Information de la conjointe
             'nom_conjointe'                  => 'required|min:1|max:64',
             'prenom_conjointe'               => 'required|min:1|max:64',
@@ -81,7 +100,7 @@ class ActeMariagesController extends Controller
             // 'commune_naissance_conjointe'    => 'required',
             // 'localite_naissance_conjointe'   => 'required',
             'domicile_conjointe'             => 'required',
-            'profession_conjointe'           => 'required',
+            'profession_conjointe_id'           => 'required',
 
             'regime_matrimonial'             => 'required',
             'option_matrimonial'             => 'required',
@@ -109,7 +128,7 @@ class ActeMariagesController extends Controller
         $acteMariages->commune_naissance_conjoint = $request->input('commune_naissance_conjoint');
         $acteMariages->localite_naissance_conjoint = $request->input('localite_naissance_conjoint');        
         $acteMariages->domicile_conjoint = $request->input('domicile_conjoint');        
-        $acteMariages->profession_conjoint = $request->input('profession_conjoint');
+        $acteMariages->profession_conjoint_id = $request->input('profession_conjoint_id');
         // Conjointe
         $acteMariages->nom_conjointe   = $request->input('nom_conjointe');
         $acteMariages->prenom_conjointe = $request->input('prenom_conjointe');
@@ -120,7 +139,7 @@ class ActeMariagesController extends Controller
         $acteMariages->commune_naissance_conjointe = $request->input('commune_naissance_conjointe');
         $acteMariages->localite_naissance_conjointe = $request->input('localite_naissance_conjointe');        
         $acteMariages->domicile_conjointe = $request->input('domicile_conjointe');        
-        $acteMariages->profession_conjointe = $request->input('profession_conjointe');
+        $acteMariages->profession_conjointe_id = $request->input('profession_conjointe_id');
 
         $acteMariages->created_by = $user->id;
         $acteMariages->updated_by = $user->id;
@@ -137,10 +156,28 @@ class ActeMariagesController extends Controller
     public function show($id)
     {
         $commune = DB::table('acte_mariages')
-        ->join('users', 'users.id', '=', 'acte_mariages.created_by')
-        ->join('regions', 'regions.id', '=', 'acte_mariages.region_id')
-        ->join('provinces', 'provinces.id', '=', 'acte_mariages.province_id')
-        ->join('communes', 'communes.id', '=', 'acte_mariages.commune_id')
+        
+        ->leftJoin('provinces', function($join){
+            $join->on('acte_mariages.province_id', '=', 'provinces.id');
+        })
+        ->leftJoin('communes', function($join){
+            $join->on('acte_mariages.commune_id', '=', 'communes.id');
+        })
+        ->leftJoin('regions', function($join){
+            $join->on('acte_mariages.region_id', '=', 'regions.id');
+        })
+        ->leftJoin('users', function($join){
+            $join->on('acte_mariages.created_by', '=', 'users.id');
+        })
+        ->leftJoin('users as users2', function($join){
+            $join->on('acte_mariages.updated_by', '=', 'users2.id');
+        })
+        ->leftJoin('professions as profession_conjoint', function($join){
+            $join->on('acte_mariages.profession_conjoint_id', '=', 'profession_conjoint.id');
+        })
+        ->leftJoin('professions as profession_conjointe', function($join){
+            $join->on('acte_mariages.profession_conjointe_id', '=', 'profession_conjointe.id');
+        })
         ->select('acte_mariages.*', 'users.name as author', 'regions.region as region', 'communes.commune as commune', 'provinces.province as province')
         ->where('acte_mariages.id', '=', $id)
         ->first();
@@ -159,7 +196,8 @@ class ActeMariagesController extends Controller
         $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
         $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
         $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
-        return response()->json( [ 'provinces' => $provinces, 'regions' => $regions, 'communes' => $communes, 'acteMariage'=>$acteMariage ] );
+        $professions = DB::table('professions')->select('professions.metier as label', 'professions.id as value')->get();
+        return response()->json( [ 'provinces' => $provinces, 'regions' => $regions, 'communes' => $communes, 'acteMariage'=>$acteMariage,'professions'=>$professions ] );
     }
 
     /**
@@ -172,9 +210,8 @@ class ActeMariagesController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'n_acte'                        => 'required|min:1|max:64',
+            
             'date_etablissement'            => 'required',
-
             'nom_conjoint'                  => 'required|min:1|max:64',
             'prenom_conjoint'               => 'required|min:1|max:64',
             'date_naissance_conjoint'       => 'required',
@@ -184,7 +221,7 @@ class ActeMariagesController extends Controller
             // 'commune_naissance_conjoint'    => 'required',
             // 'localite_naissance_conjoint'   => 'required',
             'domicile_conjoint'             => 'required',
-            'profession_conjoint'           => 'required',
+            'profession_conjoint_id'           => 'required',
             // Information de la conjointe
             'nom_conjointe'                  => 'required|min:1|max:64',
             'prenom_conjointe'               => 'required|min:1|max:64',
@@ -195,8 +232,7 @@ class ActeMariagesController extends Controller
             // 'commune_naissance_conjointe'    => 'required',
             // 'localite_naissance_conjointe'   => 'required',
             'domicile_conjointe'             => 'required',
-            'profession_conjointe'           => 'required',
-
+            'profession_conjointe_id'           => 'required',
             'regime_matrimonial'             => 'required',
             'option_matrimonial'             => 'required',
             'province_id'                   => 'required',
@@ -222,7 +258,7 @@ class ActeMariagesController extends Controller
         $acteMariages->commune_naissance_conjoint = $request->input('commune_naissance_conjoint');
         $acteMariages->localite_naissance_conjoint = $request->input('localite_naissance_conjoint');        
         $acteMariages->domicile_conjoint = $request->input('domicile_conjoint');        
-        $acteMariages->profession_conjoint = $request->input('profession_conjoint');
+        $acteMariages->profession_conjoint_id = $request->input('profession_conjoint_id');
         // Conjointe
         $acteMariages->nom_conjointe   = $request->input('nom_conjointe');
         $acteMariages->prenom_conjointe = $request->input('prenom_conjointe');
@@ -233,7 +269,7 @@ class ActeMariagesController extends Controller
         $acteMariages->commune_naissance_conjointe = $request->input('commune_naissance_conjointe');
         $acteMariages->localite_naissance_conjointe = $request->input('localite_naissance_conjointe');        
         $acteMariages->domicile_conjointe = $request->input('domicile_conjointe');        
-        $acteMariages->profession_conjointe = $request->input('profession_conjointe');
+        $acteMariages->profession_conjointe_id = $request->input('profession_conjointe_id');
         $acteMariages->updated = 1;
         $acteMariages->updated_by = $user->id;
         $acteMariages->save();

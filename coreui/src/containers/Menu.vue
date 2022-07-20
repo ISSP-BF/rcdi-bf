@@ -26,6 +26,7 @@
             :href="'#' + d.to"
           >
             {{ d.name }}
+            {{ d.name }}
           </CDropdownItem>
         </CDropdown>
       </CHeaderNavItem>

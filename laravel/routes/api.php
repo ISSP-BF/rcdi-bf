@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::post('indicateurs/findBy', 'IndicateursController@findBy');
+Route::get('indicateurs/getcommunesliste', 'IndicateursController@getcommunesliste');
 
 // Route::get('/BkDataUpdated', function () {
 //     return "MyData";
@@ -66,9 +67,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('pre_scolaires', 'PreScolairesController');
     Route::resource('primaires', 'PrimairesController');
     Route::resource('post_primaires', 'PostPrimairesController');
-
     Route::resource('indicateurs', 'IndicateursController');
-    Route::post('indicateurs/findBy', 'IndicateursController@findBy');
 
     Route::resource('resource/{table}/resource', 'ResourceController');
     

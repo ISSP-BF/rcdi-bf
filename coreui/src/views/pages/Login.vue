@@ -10,11 +10,11 @@
           </label>
 
             <div class="card-header-actions" style="float: left;">
-              
-            <div class="c-avatar" style="width: 100px">
-              <img src="img/avatars/logo RCDI.jpg" class="c-avatar-img " />
-            </div>
-              
+              <a href="/">
+              <div class="c-avatar" style="width: 100px">
+                <img src="img/avatars/logo RCDI.jpg" class="c-avatar-img " />
+              </div>
+              </a>
             </div>
           </CCardHeader>
           <CCardBody class="align-items-center mt-5 pt-5">

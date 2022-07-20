@@ -32,7 +32,8 @@ class CreateActeMariagesTable extends Migration
             $table->string('commune_naissance_conjoint')->nullable();
             $table->string('localite_naissance_conjoint')->nullable();
             $table->string('domicile_conjoint');
-            $table->string('profession_conjoint');
+            $table->string('profession_conjoint')->nullable();
+            $table->integer('profession_conjoint_id')->nullable();
             // Les informations de la conjointe
             $table->string('nom_conjointe');
             $table->string('prenom_conjointe');
@@ -43,7 +44,8 @@ class CreateActeMariagesTable extends Migration
             $table->string('commune_naissance_conjointe')->nullable();
             $table->string('localite_naissance_conjointe')->nullable();
             $table->string('domicile_conjointe');
-            $table->string('profession_conjointe');
+            $table->string('profession_conjointe')->nullable();
+            $table->integer('profession_conjointe_id')->nullable();
 
             // Les informations communes
             $table->string('regime_matrimonial');

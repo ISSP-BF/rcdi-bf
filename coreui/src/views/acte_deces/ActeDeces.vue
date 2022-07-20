@@ -4,16 +4,19 @@
       <CCard>
           <CCardHeader><h4>Détail du Acte Deces id:  {{ $route.params.id }}</h4> </CCardHeader>
         <CCardBody>
-
-          <h4>Code: {{acteDeces.code}}</h4>
+          <h4>Numero acte: {{acteDeces.n_acte}}</h4>
           <h4>Region : {{acteDeces.region}}</h4>
           <h4>Province : {{acteDeces.province}}</h4>
-          <h4>Nom acteDeces : {{acteDeces.nom_acteDeces}}</h4>
-          <h4>Nom Majore: {{acteDeces.nom_majore}}</h4>
-          <h4>Lon: {{acteDeces.lon}}</h4>
-          <h4>Lat: {{acteDeces.lat}}</h4>
-          <h4>Superficie: {{acteDeces.superficie}}</h4>
-
+          <h4>Date declaration : {{acteDeces.date_declaration}}</h4>
+          <h4>Nom: {{acteDeces.nom}}</h4>
+          <h4>Prénom (s): {{acteDeces.prenom}}</h4>
+          <h4>Date deces: {{acteDeces.date_deces}}</h4>
+          <h4>Date naissance: {{acteDeces.date_naissance}}</h4>
+          <h4>Age: {{acteDeces.age}}</h4>
+          <h4>Sexe: {{acteDeces.date_naissance}}</h4>
+          <h4>Date etablissement: {{acteDeces.date_etablissement}}</h4>
+          <h4>Statut matrimonial: {{acteDeces.statut_matrimonial}}</h4>
+          <h4>Profession: {{acteDeces.profession}}</h4>
         </CCardBody>
 
           <CCardFooter><CButton color="secondary" @click="goBack">Retour</CButton> 
@@ -48,7 +51,7 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/acte_decess/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/acte_deces/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
       self.acteDeces = response.data;
     }).catch(function (error) {

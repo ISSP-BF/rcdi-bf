@@ -46,15 +46,27 @@
                   :is-valid="anneeEnCourValidator"></CInput>
             <CInput label="Nom" type="text" placeholder="Nom" v-model="acteDeces.nom"></CInput>
             <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteDeces.prenom"></CInput>
-            <CInput label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteDeces.date_naissance"  invalid-feedback="Veuillez saisir une année valide"
-                  :is-valid="anneeEnCourValidator"></CInput>
-                  
+            <CInput label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteDeces.date_naissance" invalid-feedback="Veuillez saisir une année valide"
+                  :is-valid="ageCalculeAndValidator"></CInput>
             <CInput label="Date deces (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date deces" v-model="acteDeces.date_deces" invalid-feedback="Veuillez saisir une année valide"
-                  :is-valid="anneeEnCourValidator"></CInput>
-            <CInput label="Age" type="number" placeholder="Age" v-model="acteDeces.age"></CInput>
+                  :is-valid="ageCalculeAndValidator"></CInput>
+            <template>
+                <div class="form-group form-row">
+                  <CCol tag="label" sm="12" class="col-form-label">
+                    Age : <label for="celibataire" class=""> {{acteDeces.age}} </label>
+                  </CCol>
+                </div>
+            </template>
             <CInput label="Date Etablissement" type="date" placeholder="Date Etablissement" v-model="acteDeces.date_etablissement" invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeEnCourValidator"></CInput>
-            <CInput label="Profession" type="text" placeholder="Profession" v-model="acteDeces.profession"></CInput>
+            <CSelect
+              label="Profession"
+              :value.sync="acteDeces.profession_id"
+              :plain="true"
+              :options="professions"
+              v-model="acteDeces.profession_id"
+            >
+            </CSelect>
             <template>
                 <div class="form-group form-row">
                   <CCol tag="label" sm="12" class="col-form-label">
@@ -196,6 +208,13 @@ export default {
        this.acteDeces.age = null;
     },
     
+    ageCalculeAndValidator (val) {
+      if(this.acteDeces.date_deces&&this.acteDeces.date_naissance)
+      {this.acteDeces.age = new Date(this.acteDeces.date_deces).getFullYear() - new Date(this.acteDeces.date_naissance).getFullYear()}
+      else {this.acteDeces.age = null}
+      return val ? new Date(val)<=new Date()?null:false : null
+    },
+    
     anneeEnCourValidator (val) {
       return val ? new Date(val)<=new Date()?null:false : null
     },
@@ -207,10 +226,12 @@ export default {
         self.regions = response.data.regions;
         self.provinces = response.data.provinces;
         self.communes = response.data.communes;
+        self.professions = response.data.professions;
         // Définir valeur par défaut
         self.acteDeces.region_id = self.regions.length>0?self.regions[0].value:null;
         self.acteDeces.province_id = self.provinces.length>0?self.provinces[0].value:null;
         self.acteDeces.commune_id = self.communes.length>0?self.communes[0].value:null;
+        self.acteDeces.profession_id = self.professions.length>0?self.professions[0].value:null;
 
     }).catch(function (error) {
         console.log(error);
