@@ -215,6 +215,9 @@ class IndicateursController extends Controller
         if(isset($request->region_id)&&$request->region_id!=null&&$request->region_id!=0){
             $indicateurs->where('indicateurs.region_id', '=', $request['region_id']);
         }
+        if(isset($request->annee)&&$request->annee!=null&&$request->annee!=0){
+            $indicateurs->where('indicateurs.annee', '=', $request['annee']);
+        }
         if(isset($request->indicateur)){
             $indicateurs->where('indicateurs.indicateur', 'like', '%' . $request['indicateur'] . '%');
         }

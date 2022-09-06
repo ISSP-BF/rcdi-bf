@@ -59,11 +59,6 @@
                 </td>  
               </template>
 
-              <template #nom_prenom="{item}">
-                <td>
-                  <strong>{{item.nom}} {{item.prenom}}</strong>
-                </td>
-              </template>
               <template #sexe="{item}">
                 <td>
                   <strong>{{item.sexe=='M'?'Homme':'Femme'}}</strong>
@@ -133,7 +128,7 @@ export default {
     return {
       items: [],
       fields: ['numero_acte', 'region', 'province', 'commune','date_declaration',
-       'nom_prenom','sexe','date_naissance','date_deces','age',
+       'sexe','date_naissance','date_deces','age',
        'date_etablissement','profession','statut_matrimonial', 'actions'],
 
       currentPage: 1,

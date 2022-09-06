@@ -8,9 +8,7 @@
           <h4>Numero acte: {{acteMariage.n_acte}}</h4>
           <h4>Region : {{acteMariage.region}}</h4>
           <h4>Province : {{acteMariage.province}}</h4>
-          <h4>date_etablissement : {{acteMariage.date_etablissement}}</h4>
-          <h4>nom_conjoint: {{acteMariage.nom_conjoint}}</h4>
-          <h4>prenom_conjoint: {{acteMariage.prenom_conjoint}}</h4>
+          <h4>date_etablissement : {{acteMariage.date_etablissement}}</h4> 
           <h4>date_naissance_conjoint: {{acteMariage.date_naissance_conjoint}}</h4>
           <h4>age_mariage_conjoint: {{acteMariage.age_mariage_conjoint}}</h4>
           <h4>sexe_conjoint: {{acteMariage.sexe_conjoint}}</h4>
@@ -18,9 +16,7 @@
           <h4>commune_naissance_conjoint: {{acteMariage.commune_naissance_conjoint}}</h4>
           <h4>localite_naissance_conjoint: {{acteMariage.localite_naissance_conjoint}}</h4>
           <h4>domicile_conjoint: {{acteMariage.domicile_conjoint}}</h4>
-          <h4>profession_conjoint: {{acteMariage.profession_conjoint}}</h4>
-          <h4>nom_conjointe: {{acteMariage.nom_conjointe}}</h4>
-          <h4>prenom_conjointe: {{acteMariage.prenom_conjointe}}</h4>
+          <h4>profession_conjoint: {{acteMariage.profession_conjoint}}</h4> 
           <h4>date_naissance_conjointe: {{acteMariage.date_naissance_conjointe}}</h4>
           <h4>age_mariage_conjointe: {{acteMariage.age_mariage_conjointe}}</h4>
           <h4>sexe_conjointe: {{acteMariage.sexe_conjointe}}</h4>

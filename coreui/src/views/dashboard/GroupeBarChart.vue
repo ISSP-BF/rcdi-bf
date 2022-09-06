@@ -21,7 +21,7 @@ import axios from 'axios'
 export default {
   name: 'GroupeBarChart',
   components: { CChartHorizontalBar },
-  props: ['commune_id','groupe'],
+  props: ['commune_id','groupe','annee'],
   data () {
     return {
       data1:[],
@@ -76,7 +76,8 @@ export default {
       let self = this;
       const criteria =  {
             groupe:this.groupe,
-            commune_id:this.commune_id
+            commune_id:this.commune_id,
+            annee:this.annee
           };
       axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
          criteria

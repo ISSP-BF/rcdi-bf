@@ -19,8 +19,8 @@ class CreateActeNaissancesTable extends Migration
             $table->integer('province_id')->unsigned();
             $table->integer('commune_id')->unsigned();
             $table->string('n_acte');
-            $table->string('nom');
-            $table->string('prenom')->nullable();
+            // $table->string('nom')->nullable();
+            // $table->string('prenom')->nullable();
             $table->date('date_naissance')->nullable();
             $table->string('sexe')->nullable();
             $table->date('date_declaration')->nullable();

@@ -24,7 +24,7 @@ import axios from 'axios'
 export default {
   name: 'IndicateursTableau',
   components: { CChartPie },
-  props: ['commune_id','indicateur'],
+  props: ['commune_id','indicateur','annee'],
   data () {
     return {
       datasets:[
@@ -48,7 +48,8 @@ export default {
       let self = this;
       const criteria =  {
             indicateur:this.indicateur,
-            commune_id:this.commune_id
+            commune_id:this.commune_id,
+            annee:this.annee
           };
       axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
          criteria

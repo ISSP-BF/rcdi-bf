@@ -9,8 +9,7 @@
           <h4>Province : {{acteNaissance.province}}</h4>
           <h4>Commune : {{acteNaissance.commune}}</h4>
           <h4>Date déclaration : {{acteNaissance.date_declaration|formatDateShort}}</h4>
-          <h4>Nom & premom: {{acteNaissance.nom}} {{acteNaissance.prenom}}</h4>
-          <h4>Sexe: {{acteNaissance.sexe}}</h4>
+           <h4>Sexe: {{acteNaissance.sexe}}</h4>
           <h4>Date naissance: {{acteNaissance.date_naissance|formatDateShort}}</h4>
           <h4>Lieu de naissance: {{acteNaissance.lieu_naissance_commune}}</h4>
           <h4>Centre sante naissance: {{acteNaissance.formationSanitaire}}</h4>

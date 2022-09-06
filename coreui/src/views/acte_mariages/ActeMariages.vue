@@ -53,12 +53,7 @@
                   {{item.date_declaration|formatDateShort}}
                 </td>  
               </template>
-
-              <template #nom_prenom="{item}">
-                <td>
-                  <strong>{{item.nom}} {{item.prenom}}</strong>
-                </td>
-              </template>
+ 
               <template #sexe="{item}">
                 <td>
                   <strong>{{item.sexe=='M'?'Homme':'Femme'}}</strong>
@@ -128,7 +123,7 @@ export default {
   data: () => {
     return {
       items: [],
-      fields:['n_acte','region', 'province', 'commune','date_etablissement','nom_conjoint','prenom_conjoint','date_naissance_conjoint','age_mariage_conjoint','sexe_conjoint','hors_commune_conjoint','commune_naissance_conjoint','localite_naissance_conjoint','domicile_conjoint','profession_conjoint','nom_conjointe','prenom_conjointe','date_naissance_conjointe','age_mariage_conjointe','sexe_conjointe','hors_commune_conjointe','commune_naissance_conjointe','localite_naissance_conjointe','domicile_conjointe','profession_conjointe','regime_matrimonial','option_matrimonial','actions'],
+      fields:['n_acte','region', 'province', 'commune','date_etablissement','date_naissance_conjoint','age_mariage_conjoint','sexe_conjoint','hors_commune_conjoint','commune_naissance_conjoint','localite_naissance_conjoint','domicile_conjoint','profession_conjoint','date_naissance_conjointe','age_mariage_conjointe','sexe_conjointe','hors_commune_conjointe','commune_naissance_conjointe','localite_naissance_conjointe','domicile_conjointe','profession_conjointe','regime_matrimonial','option_matrimonial','actions'],
 
       currentPage: 1,
       perPage: 5,

@@ -8,8 +8,6 @@
           <h4>Region : {{acteDeces.region}}</h4>
           <h4>Province : {{acteDeces.province}}</h4>
           <h4>Date declaration : {{acteDeces.date_declaration}}</h4>
-          <h4>Nom: {{acteDeces.nom}}</h4>
-          <h4>Prénom (s): {{acteDeces.prenom}}</h4>
           <h4>Date deces: {{acteDeces.date_deces}}</h4>
           <h4>Date naissance: {{acteDeces.date_naissance}}</h4>
           <h4>Age: {{acteDeces.age}}</h4>

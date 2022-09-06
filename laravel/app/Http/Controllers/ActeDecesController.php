@@ -75,8 +75,8 @@ class ActeDecesController extends Controller
     {
         $validatedData = $request->validate([
             'n_acte'             => 'required|min:1|max:64',
-            'nom'     => 'required|min:1|max:64',
-            'prenom'     => 'required|min:1|max:64',
+            // 'nom'     => 'required|min:1|max:64',
+            // 'prenom'     => 'required|min:1|max:64',
             'sexe'         => 'required',
             'date_naissance'         => 'required',
             'date_deces'         => 'required',
@@ -87,8 +87,8 @@ class ActeDecesController extends Controller
         $acteDeces->province_id = $request->input('province_id');
         $acteDeces->region_id = $request->input('region_id');
         $acteDeces->commune_id = $request->input('commune_id');
-        $acteDeces->nom   = $request->input('nom');
-        $acteDeces->prenom = $request->input('prenom');
+        // $acteDeces->nom   = $request->input('nom');
+        // $acteDeces->prenom = $request->input('prenom');
         $acteDeces->date_declaration = $request->input('date_declaration');
         $acteDeces->sexe = $request->input('sexe');
         $acteDeces->date_naissance = $request->input('date_naissance');
@@ -163,8 +163,8 @@ class ActeDecesController extends Controller
     {
         $validatedData = $request->validate([
             'n_acte'             => 'required|min:1|max:64',
-            'nom'     => 'required|min:1|max:64',
-            'prenom'     => 'required|min:1|max:64',
+            // 'nom'     => 'required|min:1|max:64',
+            // 'prenom'     => 'required|min:1|max:64',
             'sexe'         => 'required',
             'date_naissance'         => 'required',
             'date_deces'         => 'required',
@@ -175,8 +175,8 @@ class ActeDecesController extends Controller
         $acteDeces->province_id = $request->input('province_id');
         $acteDeces->region_id = $request->input('region_id');
         $acteDeces->commune_id = $request->input('commune_id');
-        $acteDeces->nom   = $request->input('nom');
-        $acteDeces->prenom = $request->input('prenom');
+        // $acteDeces->nom   = $request->input('nom');
+        // $acteDeces->prenom = $request->input('prenom');
         $acteDeces->date_declaration = $request->input('date_declaration');
         $acteDeces->sexe = $request->input('sexe');
         $acteDeces->date_naissance = $request->input('date_naissance');

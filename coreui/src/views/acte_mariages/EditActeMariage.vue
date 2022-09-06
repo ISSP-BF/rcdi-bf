@@ -91,9 +91,7 @@
         </CCardHeader>
         <CCardBody>
             <!-- Les informations du conjoints -->
-            <CInput label="Nom" type="text" placeholder="Nom" v-model="acteMariage.nom_conjoint"></CInput>
-            <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteMariage.prenom_conjoint"></CInput>
-            <div class="row ">
+             <div class="row ">
               <CInput class="col-lg-8" label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjoint"
               :is-valid="ageCalculeAndValidatorConjoint"></CInput>
               <template>
@@ -170,11 +168,7 @@
             Information de la conjointe
         </CCardHeader>
         <CCardBody>
-          <!-- Les informations de la conjointe -->
-
-          <CInput label="Nom" type="text" placeholder="Nom" v-model="acteMariage.nom_conjointe"></CInput>
-            <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteMariage.prenom_conjointe"></CInput>
-            
+          <!-- Les informations de la conjointe -->            
               <div class="row ">
               <CInput class="col-lg-8" label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjointe"
               :is-valid="ageCalculeAndValidatorConjointe"></CInput>
@@ -272,9 +266,7 @@ export default {
     return {
         acteMariage: {
           n_acte : '',
-          date_etablissement : '',
-          nom_conjoint : '',
-          prenom_conjoint : '',
+          date_etablissement : '', 
           date_naissance_conjoint : '',
           age_mariage_conjoint : '',
           sexe_conjoint : '',
@@ -282,9 +274,7 @@ export default {
           commune_naissance_conjoint : '',
           localite_naissance_conjoint : '',
           domicile_conjoint : '',
-          profession_conjoint_id : '',
-          nom_conjointe : '',
-          prenom_conjointe : '',
+          profession_conjoint_id : '', 
           date_naissance_conjointe : '',
           age_mariage_conjointe : '',
           sexe_conjointe : '',
@@ -390,17 +380,9 @@ export default {
         
     }).catch(function (error) {
         console.log(error);
-        // self.$router.push({ path: 'login' });
     });
   }
 }
-
-/*
-      items: (id) => {
-        const user = usersData.find( user => user.id.toString() === id)
-        const userDetails = user ? Object.entries(user) : [['id', 'Not found']]
-        return userDetails.map(([key, value]) => {return {key: key, value: value}})
-      },
-*/
+ 
 
 </script>

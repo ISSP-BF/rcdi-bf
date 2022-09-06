@@ -43,12 +43,7 @@
                   {{ item.date_declaration | formatDateShort }}
                 </td>
               </template>
-
-              <template #nom_prenom="{ item }">
-                <td>
-                  <strong>{{ item.nom }} {{ item.prenom }}</strong>
-                </td>
-              </template>
+ 
               <template #sexe="{ item }">
                 <td>
                   <strong>{{ item.sexe == 'M' ? 'Homme' : 'Femme' }}</strong>
@@ -119,7 +114,7 @@ export default {
     return {
       items: [],
       fields: ['numero_acte', 'region', 'province', 'commune', 'date_declaration',
-        'nom_prenom', 'sexe', 'date_naissance',
+        'sexe', 'date_naissance',
         'lieu_naissance_commune', 'centre_sante_naissance',
         'date_etablissement', 'actions'],
 

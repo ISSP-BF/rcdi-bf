@@ -45,8 +45,6 @@
             <CInput label="Date déclaration" type="date" placeholder="Date déclaration" v-model="acteNaissance.date_declaration"
                   invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeEnCourValidator"></CInput>
-            <CInput label="Nom" type="text" placeholder="Nom" v-model="acteNaissance.nom"></CInput>
-            <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteNaissance.prenom"></CInput>
             <CInput label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteNaissance.date_naissance"
                   invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeEnCourValidator"></CInput>
@@ -109,8 +107,6 @@ export default {
           commune_id: null,
           n_acte: '',
           date_declaration:  new Date().toISOString().slice(0,10),
-          nom: '',
-          prenom: '',
           date_naissance: '',
           lieu_naissance_commune: '',
           centre_sante_naissance: '',
@@ -163,7 +159,6 @@ export default {
               self.showAlert();
             }else{
               console.log(error);
-              self.$router.push({ path: 'login' }); 
             }
         });
     },
@@ -174,8 +169,6 @@ export default {
       this.dismissCountDown = this.dismissSecs
     },
     anneeEnCourValidator (val) {
-      // console.log(new Date(val))
-      // return val ? new Date(val)<=new Date()&&val>=new Date("December 25, 1900 23:15:00") : null
       return val ? new Date(val)<=new Date()?null:false : null
     },
   },

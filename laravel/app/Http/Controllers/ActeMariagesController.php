@@ -80,8 +80,8 @@ class ActeMariagesController extends Controller
             
             'date_etablissement'            => 'required',
 
-            'nom_conjoint'                  => 'required|min:1|max:64',
-            'prenom_conjoint'               => 'required|min:1|max:64',
+            // 'nom_conjoint'                  => 'required|min:1|max:64',
+            // 'prenom_conjoint'               => 'required|min:1|max:64',
             'date_naissance_conjoint'       => 'required',
             'age_mariage_conjoint'          => 'required',
             'sexe_conjoint'                 => 'required',
@@ -91,8 +91,8 @@ class ActeMariagesController extends Controller
             'domicile_conjoint'             => 'required',
             'profession_conjoint_id'           => 'required',
             // Information de la conjointe
-            'nom_conjointe'                  => 'required|min:1|max:64',
-            'prenom_conjointe'               => 'required|min:1|max:64',
+            // 'nom_conjointe'                  => 'required|min:1|max:64',
+            // 'prenom_conjointe'               => 'required|min:1|max:64',
             'date_naissance_conjointe'       => 'required',
             'age_mariage_conjointe'          => 'required',
             'sexe_conjointe'                 => 'required',
@@ -119,8 +119,8 @@ class ActeMariagesController extends Controller
         $acteMariages->option_matrimonial = $request->input('option_matrimonial');
         $acteMariages->date_etablissement = $request->input('date_etablissement');
         //  Conjoint
-        $acteMariages->nom_conjoint   = $request->input('nom_conjoint');
-        $acteMariages->prenom_conjoint = $request->input('prenom_conjoint');
+        // $acteMariages->nom_conjoint   = $request->input('nom_conjoint');
+        // $acteMariages->prenom_conjoint = $request->input('prenom_conjoint');
         $acteMariages->date_naissance_conjoint = $request->input('date_naissance_conjoint');
         $acteMariages->age_mariage_conjoint = $request->input('age_mariage_conjoint');
         $acteMariages->sexe_conjoint = $request->input('sexe_conjoint');
@@ -130,8 +130,8 @@ class ActeMariagesController extends Controller
         $acteMariages->domicile_conjoint = $request->input('domicile_conjoint');        
         $acteMariages->profession_conjoint_id = $request->input('profession_conjoint_id');
         // Conjointe
-        $acteMariages->nom_conjointe   = $request->input('nom_conjointe');
-        $acteMariages->prenom_conjointe = $request->input('prenom_conjointe');
+        // $acteMariages->nom_conjointe   = $request->input('nom_conjointe');
+        // $acteMariages->prenom_conjointe = $request->input('prenom_conjointe');
         $acteMariages->date_naissance_conjointe = $request->input('date_naissance_conjointe');
         $acteMariages->age_mariage_conjointe = $request->input('age_mariage_conjointe');
         $acteMariages->sexe_conjointe = $request->input('sexe_conjointe');
@@ -212,8 +212,8 @@ class ActeMariagesController extends Controller
         $validatedData = $request->validate([
             
             'date_etablissement'            => 'required',
-            'nom_conjoint'                  => 'required|min:1|max:64',
-            'prenom_conjoint'               => 'required|min:1|max:64',
+            // 'nom_conjoint'                  => 'required|min:1|max:64',
+            // 'prenom_conjoint'               => 'required|min:1|max:64',
             'date_naissance_conjoint'       => 'required',
             'age_mariage_conjoint'          => 'required',
             'sexe_conjoint'                 => 'required',
@@ -223,8 +223,8 @@ class ActeMariagesController extends Controller
             'domicile_conjoint'             => 'required',
             'profession_conjoint_id'           => 'required',
             // Information de la conjointe
-            'nom_conjointe'                  => 'required|min:1|max:64',
-            'prenom_conjointe'               => 'required|min:1|max:64',
+            // 'nom_conjointe'                  => 'required|min:1|max:64',
+            // 'prenom_conjointe'               => 'required|min:1|max:64',
             'date_naissance_conjointe'       => 'required',
             'age_mariage_conjointe'          => 'required',
             'sexe_conjointe'                 => 'required',
@@ -249,8 +249,8 @@ class ActeMariagesController extends Controller
         $acteMariages->regime_matrimonial = $request->input('regime_matrimonial');
         $acteMariages->option_matrimonial = $request->input('option_matrimonial');
         //  Conjoint
-        $acteMariages->nom_conjoint   = $request->input('nom_conjoint');
-        $acteMariages->prenom_conjoint = $request->input('prenom_conjoint');
+        // $acteMariages->nom_conjoint   = $request->input('nom_conjoint');
+        // $acteMariages->prenom_conjoint = $request->input('prenom_conjoint');
         $acteMariages->date_naissance_conjoint = $request->input('date_naissance_conjoint');
         $acteMariages->age_mariage_conjoint = $request->input('age_mariage_conjoint');
         $acteMariages->sexe_conjoint = $request->input('sexe_conjoint');
@@ -260,8 +260,8 @@ class ActeMariagesController extends Controller
         $acteMariages->domicile_conjoint = $request->input('domicile_conjoint');        
         $acteMariages->profession_conjoint_id = $request->input('profession_conjoint_id');
         // Conjointe
-        $acteMariages->nom_conjointe   = $request->input('nom_conjointe');
-        $acteMariages->prenom_conjointe = $request->input('prenom_conjointe');
+        // $acteMariages->nom_conjointe   = $request->input('nom_conjointe');
+        // $acteMariages->prenom_conjointe = $request->input('prenom_conjointe');
         $acteMariages->date_naissance_conjointe = $request->input('date_naissance_conjointe');
         $acteMariages->age_mariage_conjointe = $request->input('age_mariage_conjointe');
         $acteMariages->sexe_conjointe = $request->input('sexe_conjointe');

@@ -15,28 +15,28 @@
     <CCard>
       <CCardHeader><h4 class="card-title mb-0">DEMOGRAPHIE</h4></CCardHeader>
     <CCardBody>
-      <IndicateursShow :commune_id="commune_id"/>
+      <IndicateursShow :commune_id="commune_id" :annee="annee"/>
     <CRow>
           <CCol sm="6" lg="6">
-            <IndicateursSecteur1 :commune_id="commune_id" indicateur="Répartition population par sexe" />
+            <IndicateursSecteur1 :commune_id="commune_id" :annee="annee" indicateur="Répartition population par sexe" />
           </CCol>
           <CCol sm="6" lg="6">
-            <IndicateursTableau :commune_id="commune_id" indicateur="Quelques Statistiques de Population" />
+            <IndicateursTableau :commune_id="commune_id" :annee="annee" indicateur="Quelques Statistiques de Population" />
           </CCol>
     </CRow>
     </CCardBody>
   </CCard>
     <CRow>
       <CCol sm="12" lg="12">
-        <GroupeBarChart :commune_id="commune_id"
+        <GroupeBarChart :commune_id="commune_id" :annee="annee"
           groupe="SERVICES" />
       </CCol>
       <CCol sm="6" lg="6">
-        <GroupeBarChart :commune_id="commune_id"
+        <GroupeBarChart :commune_id="commune_id" :annee="annee"
           groupe="ASSAINISSEMENT" />
       </CCol>
       <CCol sm="6" lg="6">
-        <GroupeBarChart :commune_id="commune_id"
+        <GroupeBarChart :commune_id="commune_id" :annee="annee"
           groupe="AGRICULTURE" />
       </CCol>
     </CRow>

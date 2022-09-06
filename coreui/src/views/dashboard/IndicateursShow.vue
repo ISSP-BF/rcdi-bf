@@ -61,7 +61,7 @@ import axios from 'axios'
 export default {
   name: 'IndicateursShow',
   components: { CChartLineSimple, CChartBarSimple },
-  props: ['commune_id'],
+  props: ['commune_id','annee'],
   data () {
     return {
       tailleMoyenneMenages: {label:"Taille moyenne des ménages",value:"Données non disponible"},
@@ -75,7 +75,8 @@ export default {
       let self = this;
       const criteria =  {
             indicateur:"Taille moyenne des ménages",
-            commune_id:this.commune_id
+            commune_id:this.commune_id,
+            annee:this.annee
           };
           
       axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
@@ -108,7 +109,8 @@ export default {
       let self = this;
       const criteria =  {
             indicateur:"Rapport de Masculinite",
-            commune_id:this.commune_id
+            commune_id:this.commune_id,
+            annee:this.annee
           };
           
       axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
@@ -141,7 +143,8 @@ export default {
       let self = this;
       const criteria =  {
             indicateur:"Population totale",
-            commune_id:this.commune_id
+            commune_id:this.commune_id,
+            annee:this.annee
           };
           
       axios.post(  this.$apiAdress + '/api/indicateurs/findBy',

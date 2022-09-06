@@ -45,9 +45,7 @@
             <CInput label="Numero Acte" type="text" placeholder="Numero Acte" v-model="acteDeces.n_acte"></CInput>
             <CInput label="Date déclaration" type="date" placeholder="Date déclaration" v-model="acteDeces.date_declaration" invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeEnCourValidator"></CInput>
-            <CInput label="Nom" type="text" placeholder="Nom" v-model="acteDeces.nom"></CInput>
-            <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteDeces.prenom"></CInput>
-            <CInput label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteDeces.date_naissance" invalid-feedback="Veuillez saisir une année valide"
+             <CInput label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteDeces.date_naissance" invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="ageCalculeAndValidator"></CInput>
             <CInput label="Date deces (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date deces" v-model="acteDeces.date_deces" invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="ageCalculeAndValidator"></CInput>
@@ -145,9 +143,7 @@ export default {
           province_id: null,
           commune_id: null,
           n_acte: '',
-          date_declaration: '',
-          nom: '',
-          prenom: '',
+          date_declaration: '', 
           date_deces: '',
           date_naissance: '',
           statut_matrimonial: '',
@@ -168,24 +164,9 @@ export default {
       this.$router.go(-1)
           },
     selectRadioSelectRole(role){
-      console.log(role)
     },
     update() {
         let self = this;
-        console.log(self.acteDeces)
-        
-        // axios.post(  this.$apiAdress + '/api/acteDecess/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
-        // {
-        //     _method: 'PUT',
-        //     code:              self.acteDeces.code,
-        //     nom_acteDeces:      self.acteDeces.nom_acteDeces,
-        //     nom_majore:        self.acteDeces.nom_majore,
-        //     region_id:         self.acteDeces.region_id,
-        //     province_id:       self.acteDeces.province_id,
-        //     lon:               self.acteDeces.lon,
-        //     lat:               self.acteDeces.lat,
-        //     superficie:        self.acteDeces.superficie
-        // })
         axios.put(  this.$apiAdress + '/api/acte_deces/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
         self.acteDeces)
         .then(function (response) {
@@ -232,17 +213,9 @@ export default {
         self.professions = response.data.professions;
     }).catch(function (error) {
         console.log(error);
-        // self.$router.push({ path: 'login' });
     });
   }
 }
-
-/*
-      items: (id) => {
-        const user = usersData.find( user => user.id.toString() === id)
-        const userDetails = user ? Object.entries(user) : [['id', 'Not found']]
-        return userDetails.map(([key, value]) => {return {key: key, value: value}})
-      },
-*/
+ 
 
 </script>

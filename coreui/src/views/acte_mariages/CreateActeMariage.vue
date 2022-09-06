@@ -91,9 +91,7 @@
         </CCardHeader>
         <CCardBody>
             <!-- Les informations du conjoints -->
-            <CInput label="Nom" type="text" placeholder="Nom" v-model="acteMariage.nom_conjoint"></CInput>
-            <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteMariage.prenom_conjoint"></CInput>
-            <div class="row ">
+             <div class="row ">
             <CInput class="col-lg-8" label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjoint"
             :is-valid="ageCalculeAndValidatorConjoint"></CInput>
             <template>
@@ -172,9 +170,7 @@
         <CCardBody>
           <!-- Les informations de la conjointe -->
 
-          <CInput label="Nom" type="text" placeholder="Nom" v-model="acteMariage.nom_conjointe"></CInput>
-            <CInput label="Prénom (s)" type="text" placeholder="Prénom (s)" v-model="acteMariage.prenom_conjointe"></CInput>
-            <div class="row">
+             <div class="row">
             <CInput class="col-lg-8" label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteMariage.date_naissance_conjointe"
             :is-valid="ageCalculeAndValidatorConjointe"></CInput>
             <template>
@@ -270,8 +266,6 @@ export default {
         acteMariage: {
           n_acte : '',
           date_etablissement : new Date().toISOString().slice(0,10),
-          nom_conjoint : '',
-          prenom_conjoint : '',
           date_naissance_conjoint : '',
           age_mariage_conjoint : '',
           sexe_conjoint : 'M',
@@ -280,8 +274,6 @@ export default {
           localite_naissance_conjoint : '',
           domicile_conjoint : '',
           profession_conjoint : '',
-          nom_conjointe : '',
-          prenom_conjointe : '',
           date_naissance_conjointe : '',
           age_mariage_conjointe : '',
           sexe_conjointe : 'F',
