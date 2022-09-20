@@ -6,7 +6,7 @@
     @update:show="(value) => $store.commit('set', ['sidebarShow', value])"
   >
     <CSidebarBrand class="d-md-down-none" to="/">
-     <img src="img/avatars/logo RCDI.jpg" size="custom-size" 
+     <img src="img/avatars/logo-full.png" size="custom-size" 
         class="d-block" 
         :height="50" 
         :viewBox="`0 0 ${minimize ? 110 : 556} 134`"/>

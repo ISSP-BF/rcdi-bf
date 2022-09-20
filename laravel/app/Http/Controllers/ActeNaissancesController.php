@@ -79,7 +79,8 @@ class ActeNaissancesController extends Controller
             // 'prenom'     => 'required|min:1|max:64',
             'sexe'         => 'required',
             'date_naissance'         => 'required',
-            'lieu_naissance_commune'         => 'required'
+            'lieu_naissance_commune'         => 'required',
+            'formation_sanitaire_id'         => 'required'
         ]);
         $user = auth()->userOrFail();
         $acteNaissances = new ActeNaissances();
@@ -165,8 +166,8 @@ class ActeNaissancesController extends Controller
             // 'nom'     => 'required|min:1|max:64',
             'sexe'         => 'required',
             'date_naissance'         => 'required',
-            'centre_sante_naissance'         => 'required',
-            'lieu_naissance_commune'         => 'required'
+            'lieu_naissance_commune'         => 'required',
+            'formation_sanitaire_id'         => 'required'
         ]);
         $user = auth()->userOrFail();
         $acteNaissances = ActeNaissances::find($id);
