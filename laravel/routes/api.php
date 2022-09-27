@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 Route::post('indicateurs/findBy', 'IndicateursController@findBy');
 Route::get('indicateurs/getcommunesliste', 'IndicateursController@getcommunesliste');
+Route::get('indicateurs/getDefaultCommune', 'IndicateursController@getDefaultCommune');
 
 // Route::get('/BkDataUpdated', function () {
 //     return "MyData";

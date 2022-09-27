@@ -114,12 +114,11 @@ export default {
   },
   mounted () {
     let self = this;
-    console.log(this.$apiAdress)
     axios.get( this.$apiAdress + '/api/menu?token=' + localStorage.getItem("api_token") + '&menu=' + 'top_menu' )
     .then(function (response) {
       self.nav = self.rebuildData(response.data);
     }).catch(function (error) {
-      console.log(error);
+      // console.log(error);
       self.$router.push({ path: '/login' });
     });
   }

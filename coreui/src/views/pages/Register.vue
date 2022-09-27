@@ -72,12 +72,18 @@
              
           </div>
         <CCard class="main-panel">
-          <div style="background-image: url(img/presentation/ob_0baedb_industrie-stats.jpg);
+          <div style="background-image: url(img/presentation/bg2.jpg);
         width:100%;height: 100%;
         background-size: 100% 100%;
         ">
-            <label class="information">
-                Nulla vitae elit libero, a pharetra augue mollis interdum.
+            <label class="information-register">
+              La mise en œuvre de ces systèmes de données infranationaux permettra à chaque commune de:
+              <ul>
+                <li>
+Disposer de données permettant une bonne connaissance de l’état socio-sanitaire et démographique de la population de l’aire de responsabilité;</li>
+<li>
+Disposer de données permettant une auto-évaluation des activités menées pour faciliter les prises de décisions au niveau local;</li>
+              </ul>
             </label>
         </div>
         </CCard>
@@ -141,11 +147,13 @@
         background-color: white;
         text-align: -webkit-center;
     }
-    .information{
-        margin-top: 70%; float: left;width: 80%;margin-left: 10%;
+    .information-register{
+        margin-top: 50%; float: left;width: 80%;margin-left: 10%;
         font-family: "Times New Roman", Times, serif;
-        font-size: xx-large;
+        font-size: x-large;
         color: white;
+        text-align: justify;
+  text-justify: inter-word;
     }
     .sidebar-wrapper{
     text-align: -webkit-center;
@@ -179,7 +187,7 @@
     .sidebar-wrapper>.card-body{
         width: 100%!important;
     }
-     .information{
+     .information-register{
         margin-top: 50%; float: left;width: 80%;margin-left: 10%;
         font-family: "Times New Roman", Times, serif;
         font-size: xx-large;

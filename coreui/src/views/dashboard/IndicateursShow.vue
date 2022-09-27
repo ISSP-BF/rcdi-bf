@@ -98,7 +98,6 @@ export default {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
-              self.showAlert();
             }else{
               console.log(error);
               self.$router.push({ path: 'login' }); 
@@ -132,9 +131,9 @@ export default {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
-              self.showAlert();
+              // self.showAlert();
             }else{
-              console.log(error);
+              // console.log(error);
               self.$router.push({ path: 'login' }); 
             }
         });

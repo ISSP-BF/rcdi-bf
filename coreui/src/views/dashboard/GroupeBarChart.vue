@@ -84,7 +84,6 @@ export default {
         )
         .then(function (response) {
             self.items = response.data;
-            console.log(self.items)
             
             for(let i=0;i<self.items.length;i=i+2)
             { 
@@ -110,9 +109,8 @@ export default {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
-              self.showAlert();
             }else{
-              console.log(error.response);
+              // console.log(error.response);
               self.$router.push({ path: 'login' }); 
             }
         });

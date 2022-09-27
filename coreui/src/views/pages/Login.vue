@@ -78,12 +78,12 @@
              
           </div>
         <CCard class="main-panel">
-          <div style="background-image: url(img/presentation/statistique-google-haas-avocats.jpg);
+          <div style="background-image: url(img/presentation/bg1.jpg);
         width:100%;height: 100%;
         background-size: 100% 100%;
         ">
             <label class="information">
-                Nulla vitae elit libero, a pharetra augue mollis interdum.
+              Trois thématiques d’intérêt sont abordés sur cette plateforme. Il s’agit des statistiques d’état civil, des statistiques sanitaires et des statistiques d’éducation de base et présecondaire.
             </label>
         </div>
         </CCard>
@@ -149,9 +149,9 @@ import axios from "axios";
         text-align: -webkit-center;
     }
     .information{
-        margin-top: 70%; float: left;width: 80%;margin-left: 10%;
+        margin-top: 61%; float: left;width: 80%;margin-left: 10%;
         font-family: "Times New Roman", Times, serif;
-        font-size: xx-large;
+        font-size: x-large;
         color: white;
     }
     .sidebar-wrapper{

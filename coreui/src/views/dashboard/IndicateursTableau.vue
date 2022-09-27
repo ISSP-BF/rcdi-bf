@@ -79,7 +79,6 @@ export default {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
-              self.showAlert();
             }else{
               console.log(error.response);
               self.$router.push({ path: 'login' }); 

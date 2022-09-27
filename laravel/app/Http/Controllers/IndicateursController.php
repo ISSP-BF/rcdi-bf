@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Indicateurs;
+use App\Models\Communes;
 
 class IndicateursController extends Controller
 {
@@ -178,6 +179,9 @@ class IndicateursController extends Controller
         $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
         return response()->json( $communes );
     }
+    public function getDefaultCommune(){
+        return $commune = Communes::where("defaut",true)->firstOrFail();
+    }
     
     /**
      * Display the specified resource.
@@ -187,6 +191,10 @@ class IndicateursController extends Controller
      */
     public function findBy(Request $request)
     {
+        $validatedData = $request->validate([
+            'commune_id' => 'required',
+            // 'annee' => 'required',
+        ]);
         $indicateurs = DB::table('indicateurs')
         ->leftJoin('provinces', function($join){
             $join->on('indicateurs.province_id', '=', 'provinces.id');
@@ -197,11 +205,7 @@ class IndicateursController extends Controller
         ->leftJoin('regions', function($join){
             $join->on('indicateurs.region_id', '=', 'regions.id');
         })
-        ->leftJoin('users', function($join){
-            $join->on('indicateurs.created_by', '=', 'users.id');
-        })
         ->select('indicateurs.*', 
-        'users.name as author', 
         'regions.region as region', 
         'provinces.province as province',
         'communes.commune as commune');
