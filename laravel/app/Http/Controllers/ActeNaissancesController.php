@@ -46,7 +46,34 @@ class ActeNaissancesController extends Controller
             $join->on('acte_naissances.formation_sanitaire_id', '=', 'formation_sanitaires.id');
         })
         ->select('acte_naissances.*', 'users.name as author', 'regions.region as region', 'communes.commune as commune', 'provinces.province as province',
-        'formation_sanitaires.nom_structure as formationSanitaire')->get();
+        'formation_sanitaires.nom_structure as formationSanitaire')->orderBy('id', 'desc')->get();
+
+        return response()->json( $acte_naissances );
+    }
+
+    public function limiter()
+    {
+        $acte_naissances = DB::table('acte_naissances')
+        ->leftJoin('provinces', function($join){
+            $join->on('acte_naissances.province_id', '=', 'provinces.id');
+        })
+        ->leftJoin('communes', function($join){
+            $join->on('acte_naissances.commune_id', '=', 'communes.id');
+        })
+        ->leftJoin('regions', function($join){
+            $join->on('acte_naissances.region_id', '=', 'regions.id');
+        })
+        ->leftJoin('users', function($join){
+            $join->on('acte_naissances.created_by', '=', 'users.id');
+        })
+        ->leftJoin('users as users2', function($join){
+            $join->on('acte_naissances.updated_by', '=', 'users2.id');
+        })
+        ->leftJoin('formation_sanitaires', function($join){
+            $join->on('acte_naissances.formation_sanitaire_id', '=', 'formation_sanitaires.id');
+        })
+        ->select('acte_naissances.*', 'users.name as author', 'regions.region as region', 'communes.commune as commune', 'provinces.province as province',
+        'formation_sanitaires.nom_structure as formationSanitaire')->orderBy('id', 'desc')->take(100)->get();
 
         return response()->json( $acte_naissances );
     }

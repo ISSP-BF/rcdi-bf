@@ -133,7 +133,7 @@ export default {
     },
     update() {
         let self = this;
-        console.log(self.acteNaissance)
+        // console.log(self.acteNaissance)
         axios.put(  this.$apiAdress + '/api/acte_naissances/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
         self.acteNaissance)
         .then(function (response) {

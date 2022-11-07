@@ -8,6 +8,7 @@
             <div class="card-header-actions">
               <AddButton @ajouter="createActeNaissance()"/>&nbsp;
               <ExportButton :items="items" title="Acte Naissances" :fields="fields"/>&nbsp;
+              <ViewAllButton @afficherTout="afficherTout()"></ViewAllButton>&nbsp;
             </div>
           </CCardHeader>
           <CCardBody>
@@ -104,11 +105,12 @@ import ExportButton from '../buttons/ExportButton.vue'
 import AddButton from '../buttons/AddButton.vue'
 import EditButton from '../buttons/EditButton.vue'
 import DeleteButton from '../buttons/DeleteButton.vue'
+import ViewAllButton from '../buttons/ViewAllButton.vue'
 
 export default {
   name: 'ActeNaissances',
   components: { 
-    ExportButton,AddButton,EditButton,DeleteButton,
+    ExportButton,AddButton,EditButton,DeleteButton,ViewAllButton
   },
   data: () => {
     return {
@@ -174,6 +176,18 @@ export default {
       this.dismissCountDown = this.dismissSecs
     },
     getActeNaissances() {
+      let self = this;
+      console.log(this.$apiAdress + '/api/acte_naissances/limiter?token=' + localStorage.getItem("api_token"))
+      axios.get(this.$apiAdress + '/api/acte_naissanceslimiter?token=' + localStorage.getItem("api_token"))
+        .then(function (response) {
+          console.log(response)
+          self.items = response.data;
+        }).catch(function (error) {
+          console.log(error);
+          self.$router.push({ path: '/login' });
+        });
+    },
+    afficherTout() {
       let self = this;
 
       axios.get(this.$apiAdress + '/api/acte_naissances?token=' + localStorage.getItem("api_token"))

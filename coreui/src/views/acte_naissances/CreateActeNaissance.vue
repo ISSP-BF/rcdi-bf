@@ -129,7 +129,7 @@ export default {
     },
     store() {
         let self = this;
-        console.log(self.acteNaissance)
+        // console.log(self.acteNaissance)
         axios.post(  this.$apiAdress + '/api/acte_naissances?token=' + localStorage.getItem("api_token"),
           self.acteNaissance
         )

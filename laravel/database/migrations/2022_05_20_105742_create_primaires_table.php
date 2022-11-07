@@ -86,7 +86,7 @@ class CreatePrimairesTable extends Migration
             $table->boolean('SourceDotationEtat')->nullable();
             $table->boolean('SourceDotationPartenaire')->nullable();
             $table->boolean('SourceDotationEndogene')->nullable();
-            $table->boolean('updated')->nullable()->default(null);
+            $table->tinyInteger('updated')->nullable()->default(0);
             
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();

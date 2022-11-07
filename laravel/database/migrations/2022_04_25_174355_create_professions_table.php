@@ -17,7 +17,7 @@ class CreateProfessionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('metier');
             $table->integer('users_id')->unsigned();
-            $table->boolean('updated')->nullable()->default(null);
+            $table->tinyInteger('updated')->nullable()->default(0);
             $table->timestamps();
         });
     }

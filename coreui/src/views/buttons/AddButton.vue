@@ -19,7 +19,7 @@ export default {
     if (roles != null) {
         roles = roles.split(',')
     }
-    console.log(roles)
+    // console.log(roles)
     if (roles != null && roles.indexOf('ajouter') >= 0){this.show = true;}
   }
 }

@@ -23,7 +23,7 @@ export default {
       this.$toasted.show("Pas de données",{type:"warning"});
       return;
       }
-      console.log(this.items)
+      // console.log(this.items)
       var blob = new Blob([this.convertToCSV(this.items)], {type: "text/csv;charset=utf-8"});
       FileSaver.saveAs(blob, this.title);
       this.successModal = false;

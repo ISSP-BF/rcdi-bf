@@ -63,7 +63,7 @@ export default {
           },
     store() {
         let self = this;
-        console.log(self.commune)
+        // console.log(self.commune)
         axios.post(  this.$apiAdress + '/api/communes?token=' + localStorage.getItem("api_token"),
           self.commune
         )

@@ -50,16 +50,16 @@ class UpdateBDController extends Controller
         $data = array('nom_table' => $nom_table, 'items' => json_encode($table_data));
         // return $data;
         if($this->post($data)!==FALSE){
-            DB::table($nom_table)->where('updated', '=', 1)->update(array('updated' => 0));
+            DB::table($nom_table)->where('updated', '=', 1)->update(array('updated' => 2));
         }
     }
 
     public function addItemsOnTable($nom_table){
-        $table_data = DB::table($nom_table)->where($nom_table.'.updated', '=', null)->get();
+        $table_data = DB::table($nom_table)->where($nom_table.'.updated', '=', null)->orWhere($nom_table.'.updated', '=', 0)->get();
         $data = array('nom_table' => $nom_table, 'items' => json_encode($table_data));
         // return $data;
         if($this->post($data)!==FALSE){
-            DB::table($nom_table)->where('updated', '=', null)->update(array('updated' => 0));
+            DB::table($nom_table)->where('updated', '=', null)->orWhere('updated', '=', 0)->update(array('updated' => 2));
         }
 
     }
@@ -92,7 +92,7 @@ class UpdateBDController extends Controller
     public function numberOfUpdated(){
         $compteur = 0;
         foreach($this->tables  as $nom_table ){
-            $compteur = $compteur + DB::table($nom_table)->where($nom_table.'.updated', '=', 1)->orWhere($nom_table.'.updated', '=', null)->get()->count();
+            $compteur = $compteur + DB::table($nom_table)->where($nom_table.'.updated', '=', 1)->orWhere($nom_table.'.updated', '=', 0)->orWhere($nom_table.'.updated', '=', null)->get()->count();
         }
         return response()->json($compteur);
     }

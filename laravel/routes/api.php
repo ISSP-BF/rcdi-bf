@@ -42,6 +42,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('professions', 'ProfessionsController');
     Route::resource('districts', 'DistrictsController');
     Route::resource('formation_sanitaires', 'FormationSanitairesController');
+    Route::get('acte_naissanceslimiter', 'ActeNaissancesController@limiter');
     Route::resource('acte_naissances', 'ActeNaissancesController');
     Route::resource('acte_deces', 'ActeDecesController');
     Route::resource('acte_mariages', 'ActeMariagesController');

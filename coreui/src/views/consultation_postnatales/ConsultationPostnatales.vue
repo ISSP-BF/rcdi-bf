@@ -163,7 +163,7 @@ export default {
       axios.get(  this.$apiAdress + '/api/consultation_postnatales?token=' + localStorage.getItem("api_token") )
       .then(function (response) {
         self.items = response.data;
-        console.log(response)
+        // console.log(response)
       }).catch(function (error) {
         console.log(error);
         self.$router.push({ path: '/login' });

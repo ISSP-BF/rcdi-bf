@@ -23,7 +23,7 @@ class CreateProvincesTable extends Migration
             $table->string('lat')->nullable();
             $table->integer('users_id')->unsigned();
             $table->boolean('defaut')->nullable()->default(null);// Si la province est celle par défaut
-            $table->boolean('updated')->nullable()->default(null);
+            $table->tinyInteger('updated')->nullable()->default(0);
             $table->timestamps();
         });
     }

@@ -608,7 +608,7 @@ export default {
         )
         .then(function (response) {
             self.items = response.data;
-            console.log(response.data);
+            // console.log(response.data);
 
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){

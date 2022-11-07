@@ -56,7 +56,7 @@ export default {
         )
         .then(function (response) {
             self.items = response.data;
-            console.log(self.items)
+            // console.log(self.items)
             self.datasets=[{
               backgroundColor: [
                 '#41B883',

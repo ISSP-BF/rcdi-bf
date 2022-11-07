@@ -329,7 +329,7 @@ export default {
         else {
           this.acteMariage.commune_naissance_conjoint = null;
         }
-        console.log(self.acteMariage)
+        // console.log(self.acteMariage)
         axios.post(  this.$apiAdress + '/api/acte_mariages?token=' + localStorage.getItem("api_token"),
           self.acteMariage
         )

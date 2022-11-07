@@ -171,7 +171,7 @@ export default {
     let self = this;
     axios.get(  this.$apiAdress + '/api/consultation_postnatales/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
-      console.log(response.data)
+      // console.log(response.data)
         self.consultationPostnatale = response.data.consultationPostnatale;
         self.regions = response.data.regions;
         self.provinces = response.data.provinces;

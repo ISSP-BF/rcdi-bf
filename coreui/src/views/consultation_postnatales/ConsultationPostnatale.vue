@@ -84,7 +84,7 @@ export default {
     axios.get(  this.$apiAdress + '/api/consultation_postnatales/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
       self.ConsultationPostnatale = response.data;
-      console.log(response)
+      // console.log(response)
     }).catch(function (error) {
       console.log(error);
       self.$router.push({ path: '/login' });

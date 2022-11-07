@@ -149,7 +149,7 @@ export default {
     },
     store() {
         let self = this;
-        console.log(self.Accouchement)
+        // console.log(self.Accouchement)
         axios.post(  this.$apiAdress + '/api/accouchements?token=' + localStorage.getItem("api_token"),
           self.Accouchement
         )

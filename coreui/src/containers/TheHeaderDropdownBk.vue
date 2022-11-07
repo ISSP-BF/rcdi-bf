@@ -32,7 +32,7 @@ export default {
       let self = this;
       axios.get(this.$apiAdress + '/api/BkDataUpdatedNumber?token=' + localStorage.getItem("api_token"))
         .then(function (response) {
-          console.log(response)
+          // console.log(response)
           self.itemsCount = response.data;
           if(self.itemsCount == 0) self.itemsCount = null;
         }).catch(function (error) {
@@ -41,9 +41,10 @@ export default {
     },
     BkDataUpdated() {
       this.$toasted.show('Veuillez patienter pendant la mise à jour',{type:"warning"});
+      self = this;
       axios.get(this.$apiAdress + '/api/BkDataUpdated?token=' + localStorage.getItem("api_token"))
         .then(function (response) {
-          this.$toasted.show('La base de donnée à été mis à jour',{type:"success"});
+          self.$toasted.show('La base de donnée à été mis à jour',{type:"success"});
         }).catch(function (error) {
           console.log(error);
         });

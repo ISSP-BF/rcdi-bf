@@ -21,7 +21,7 @@ class CreateRegionsTable extends Migration
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->boolean('defaut')->nullable()->default(null);// Si la région est celle par défaut
-            $table->boolean('updated')->nullable()->default(null);
+            $table->tinyInteger('updated')->nullable()->default(0);
             $table->timestamps();
         });
     }

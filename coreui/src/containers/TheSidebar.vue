@@ -120,7 +120,7 @@ export default {
     })
     let self = this;
 
-    console.log(this.$apiAdress);
+    // console.log(this.$apiAdress);
 
     axios.get( this.$apiAdress + '/api/menu?token=' + localStorage.getItem("api_token") )
     .then(function (response) {

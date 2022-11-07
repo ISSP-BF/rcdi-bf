@@ -100,7 +100,7 @@ export default {
     axios.get(  this.$apiAdress + '/api/accouchements/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
       self.accouchement = response.data;
-      console.log(response)
+      // console.log(response)
     }).catch(function (error) {
       console.log(error);
       self.$router.push({ path: '/login' });

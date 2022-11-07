@@ -164,7 +164,7 @@ export default {
     },
     store() {
         let self = this;
-        console.log(self.acteDeces)
+        // console.log(self.acteDeces)
         axios.post(  this.$apiAdress + '/api/acte_deces?token=' + localStorage.getItem("api_token"),
           self.acteDeces
         )
