@@ -42,6 +42,9 @@
             </CSelect>
 
             <CInput label="Numero Acte" type="text" placeholder="Numero Acte" v-model="acteDeces.n_acte"></CInput>
+            <CInput label="Nom" type="text" placeholder="Nom" v-model="acteDeces.nom"></CInput>
+            <CInput label="Prenom(s)" type="text" placeholder="Prenom(s)" v-model="acteDeces.prenom"></CInput>
+
             <CInput label="Date déclaration" type="date" placeholder="Date déclaration" v-model="acteDeces.date_declaration"  invalid-feedback="Veuillez saisir une année valide"
                   :is-valid="anneeEnCourValidator"></CInput>
             <CInput label="Date naissance (Si jour inconnu choisir le 01 du mois,Si mois inconnu choisir Janvier)" type="date" placeholder="Date naissance" v-model="acteDeces.date_naissance" invalid-feedback="Veuillez saisir une année valide"
@@ -141,11 +144,13 @@ export default {
           province_id: null,
           commune_id: null,
           n_acte: '',
+          nom: '',
+          prenom: '',
           date_declaration:  new Date().toISOString().slice(0,10),
           date_deces:  new Date().toISOString().slice(0,10),
           date_naissance: '',
           statut_matrimonial: '',
-          profession: '',
+          profession_id: '',
           date_etablissement:  new Date().toISOString().slice(0,10),
           sexe: '',
         },

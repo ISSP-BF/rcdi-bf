@@ -127,7 +127,7 @@ export default {
   data: () => {
     return {
       items: [],
-      fields: ['numero_acte', 'region', 'province', 'commune','date_declaration',
+      fields: ['numero_acte', 'region', 'province', 'commune','date_declaration','nom','prenom',
        'sexe','date_naissance','date_deces','age',
        'date_etablissement','profession','statut_matrimonial', 'actions'],
 

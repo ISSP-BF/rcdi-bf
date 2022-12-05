@@ -20,8 +20,8 @@ class CreateActeDecesTable extends Migration
             $table->integer('commune_id')->unsigned();
             $table->string('n_acte');
             $table->date('date_declaration')->nullable();
-            // $table->string('nom')->nullable();
-            // $table->string('prenom')->nullable();
+            $table->string('nom')->nullable();
+            $table->string('prenom')->nullable();
             $table->date('date_naissance')->nullable();
             $table->date('date_deces')->nullable();
             $table->integer('age')->nullable();
