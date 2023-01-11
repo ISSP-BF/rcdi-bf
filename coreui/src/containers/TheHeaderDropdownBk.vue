@@ -44,6 +44,7 @@ export default {
       self = this;
       axios.get(this.$apiAdress + '/api/BkDataUpdated?token=' + localStorage.getItem("api_token"))
         .then(function (response) {
+          self.getBkDataUpdatedNumber();
           self.$toasted.show('La base de donnée à été mis à jour',{type:"success"});
         }).catch(function (error) {
           console.log(error);

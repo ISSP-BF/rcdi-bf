@@ -38,6 +38,16 @@
                   <label>{{item.region}}</label>
                 </td>  
               </template>
+              <template #prenom="{item}">
+                <td>
+                  <label>{{item.prenom}}</label>
+                </td>  
+              </template>
+              <template #nom="{item}">
+                <td>
+                  <label>{{item.nom}}</label>
+                </td>  
+              </template>
               <template #province="{item}">
                 <td>
                   {{item.province}}
@@ -83,7 +93,7 @@
 
               <template #profession="{item}">
                 <td>
-                  {{item.profession}}
+                  <label>{{item.profession.slice(0,40)}}</label>
                 </td>
               </template>
               

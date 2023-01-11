@@ -24,7 +24,7 @@ export default {
       return;
       }
       // console.log(this.items)
-      var blob = new Blob([this.convertToCSV(this.items)], {type: "text/csv;charset=utf-8"});
+      var blob = new Blob([this.convertToCSV(this.items)], {type: "text/xls;charset=utf-8"});
       FileSaver.saveAs(blob, this.title);
       this.successModal = false;
     },

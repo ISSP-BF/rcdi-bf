@@ -45,21 +45,38 @@ class UpdateBDController extends Controller
 
     public function updateItemsOnTable($nom_table){
 
-        $table_data = DB::table($nom_table)->where($nom_table.'.updated', '=', 1)->get();
+        $table_data = DB::table($nom_table)->where($nom_table.'.updated', '=', 1)->take(200)->get();
 
         $data = array('nom_table' => $nom_table, 'items' => json_encode($table_data));
-        // return $data;
         if($this->post($data)!==FALSE){
-            DB::table($nom_table)->where('updated', '=', 1)->update(array('updated' => 2));
+            // DB::table($nom_table)->where('updated', '=', 1)->update(array('updated' => 2));
+            foreach ($table_data as $datum) {
+                $data2 = DB::table($nom_table)->where('id', '=', $datum->id)->first();
+                $data2->updated = 2;
+                DB::table($nom_table)->where('id','=',$datum->id)->update(array('updated' => 2));
+            }
+        }
+        $data_table = DB::table($nom_table)->where($nom_table.'.updated', '=', 1)->take(200)->get();
+        if(count($data_table)>1){
+            $this->updateItemsOnTable($nom_table);
         }
     }
 
     public function addItemsOnTable($nom_table){
-        $table_data = DB::table($nom_table)->where($nom_table.'.updated', '=', null)->orWhere($nom_table.'.updated', '=', 0)->get();
+        $table_data = DB::table($nom_table)->where($nom_table.'.updated', '=', null)->orWhere($nom_table.'.updated', '=', 0)->take(200)->get();
         $data = array('nom_table' => $nom_table, 'items' => json_encode($table_data));
         // return $data;
         if($this->post($data)!==FALSE){
-            DB::table($nom_table)->where('updated', '=', null)->orWhere('updated', '=', 0)->update(array('updated' => 2));
+            foreach ($table_data as $datum) {
+                $data2 = DB::table($nom_table)->where('id', '=', $datum->id)->first();
+                $data2->updated = 2;
+                DB::table($nom_table)->where('id','=',$datum->id)->update(array('updated' => 2));
+            }
+            //DB::table($nom_table)->where('updated', '=', null)->orWhere('updated', '=', 0)->update(array('updated' => 2));
+        }
+        $data_table = DB::table($nom_table)->where($nom_table.'.updated', '=', null)->orWhere($nom_table.'.updated', '=', 0)->take(200)->get();
+        if(count($data_table)>1){
+            $this->addItemsOnTable($nom_table);
         }
 
     }
@@ -75,6 +92,7 @@ class UpdateBDController extends Controller
         $url = DB::table("parametres")->where('keyval', '=', 'URL')->first()->dataval;
         // $url = 'http://51.178.18.128:8000/api/BkDataUpdated';
 
+        return $data;
         // use key 'http' even if you send the request to https://...
         $options = array(
             'http' => array(
