@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 */
 
 Route::post('indicateurs/findBy', 'IndicateursController@findBy');
+Route::get('indicateurs/search', 'IndicateursController@search');
+Route::post('indicateurs/search/groupe', 'IndicateursController@searchGroupe');
 Route::get('indicateurs/getcommunesliste', 'IndicateursController@getcommunesliste');
 Route::get('indicateurs/getDefaultCommune', 'IndicateursController@getDefaultCommune');
 

@@ -235,5 +235,28 @@ class IndicateursController extends Controller
         return response()->json( $indicateurs);
     }
 
+    
+    public function search()
+    {
+        $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
+        $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
+        $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
+        $districts = DB::table('districts')->select('districts.nom_district as label', 'districts.id as value')->get();
+        $formationSanitaires = DB::table('formation_sanitaires')->select('formation_sanitaires.nom_structure as label', 'formation_sanitaires.id as value')->get();
+        
+        $groupes = DB::table('indicateurs')->select('groupe as label','groupe as value')->distinct()->get();
+        $annees = DB::table('indicateurs')->select('annee as label','annee as value')->distinct()->get();
+        $indicateurliste = DB::table('indicateurs')->select('indicateur as label','indicateur as value')->distinct()->get();
+
+        return response()->json( ['communes'=>$communes,'regions'=>$regions,'provinces'=>$provinces,'districts'=>$districts,'formationSanitaires'=>$formationSanitaires
+        ,'groupes'=>$groupes,'annees'=>$annees,'indicateurliste'=>$indicateurliste] );
+    }
+    public function searchGroupe(Request $request)
+    {
+       $indicateurliste = DB::table('indicateurs')->where('groupe',"like",$request->groupe)->select('indicateur as label','indicateur as value')->distinct()->get();
+
+        return response()->json( ['indicateurliste'=>$indicateurliste] );
+    }
+
 
 }

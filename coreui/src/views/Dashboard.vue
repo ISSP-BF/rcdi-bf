@@ -12,21 +12,7 @@
           </div>
     </CCardBody>
   </CCard>
-    <CCard>
-      <CCardHeader><h4 class="card-title mb-0">DEMOGRAPHIE</h4></CCardHeader>
-     
-    <CCardBody v-if="!refreshing2">
-      <IndicateursShow :commune_id="commune_id" :annee="annee"/>
-    <CRow>
-          <CCol sm="6" lg="6">
-            <IndicateursSecteur1 :commune_id="commune_id" :annee="annee" indicateur="Répartition population par sexe" />
-          </CCol>
-          <CCol sm="6" lg="6">
-            <IndicateursTableau :commune_id="commune_id" :annee="annee" indicateur="Quelques Statistiques de Population" />
-          </CCol>
-    </CRow>
-    </CCardBody>
-  </CCard>
+    
     <CRow v-if="!refreshing2">
           
       <CCol xs="12" lg="12">
@@ -49,56 +35,29 @@
     </CRow>
     </CCardBody>
               </CTab>
-              <CTab active>
+              <CTab >
                 <template slot="title">
                   <CIcon name="cil-basket"/> SERVICES
                 </template>
-                2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                officia deserunt mollit anim id est laborum.
+                <GroupeBarChart :commune_id="commune_id" :annee="annee" groupe="SERVICES" />
               </CTab>
               <CTab>
                 <template slot="title">
                   <CIcon name="cil-chart-pie"/> ASSAINISSEMENT
                 </template>
-                3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                officia deserunt mollit anim id est laborum.
+                <GroupeBarChart :commune_id="commune_id" :annee="annee" groupe="ASSAINISSEMENT" />
               </CTab>
-              <CTab>
+              <CTab active>
                 <template slot="title">
                   <CIcon name="cil-chart-pie"/> AGRICULTURE
                 </template>
-                4. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                officia deserunt mollit anim id est laborum.
+                <GroupeBarChart :commune_id="commune_id" :annee="annee" groupe="AGRICULTURE" />
               </CTab>
             </CTabs>
           </CCardBody>
         </CCard>
-      </CCol>
-      
-    </CRow>
-    <CRow v-if="!refreshing2">
-      <CCol sm="12" lg="12">
-        <GroupeBarChart :commune_id="commune_id" :annee="annee"
-          groupe="SERVICES" />
-      </CCol>
-      <CCol sm="6" lg="6">
-        <GroupeBarChart :commune_id="commune_id" :annee="annee"
-          groupe="ASSAINISSEMENT" />
-      </CCol>
-      <CCol sm="6" lg="6">
-        <GroupeBarChart :commune_id="commune_id" :annee="annee"
-          groupe="AGRICULTURE" />
-      </CCol>
-    </CRow>
+      </CCol> 
+    </CRow> 
   </div>
 </template>
 
@@ -139,7 +98,7 @@ export default {
         'Shopping cart',
         'Charts'
       ],
-      activeTab: 1,
+      activeTab: 3,
       selected: 'Month',
       repartitionPopulationParSexe: [
         {
