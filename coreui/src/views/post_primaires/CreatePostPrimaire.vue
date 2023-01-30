@@ -79,7 +79,40 @@
                   <label for="statutPRIVE" class="custom-control-label"> Privé </label>
                 </div>
             </div>
+            
+            <CInput label="Nombre de labrines fonctionnelles" type="number" placeholder="0xx"
+              v-model="postPrimaire.NbPoubelle" class="col-lg-3"></CInput>
+              
+            <CInput label="Nombre de poubelles" type="number" placeholder="0xx"
+              v-model="postPrimaire.NbLatrine" class="col-lg-3"></CInput>
 
+              <div role="group" class="col-lg-3 form-group">
+              <label class="row col custom-control-inline"> Existance de Bac à Ordure </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="ExistanceBacOrdureOui" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.ExistanceBacOrdure" :value="1">
+                  <label for="ExistanceBacOrdureOui" class="custom-control-label"> Oui </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="ExistanceBacOrdureNon" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.ExistanceBacOrdure" :value="0">
+                  <label for="ExistanceBacOrdureNon" class="custom-control-label"> Non </label>
+                </div>
+            </div> 
+            
+            <div role="group" class="col-lg-3 form-group">
+              <label class="row col custom-control-inline"> Existance de Source d'Eau Ameliore </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="ExistanceSourceEauAmelioreOui" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.ExistanceSourceEauAmeliore" :value="1">
+                  <label for="ExistanceSourceEauAmelioreOui" class="custom-control-label"> Oui </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="ExistanceSourceEauAmelioreNon" type="radio" class="custom-control-input"
+                    v-model="postPrimaire.ExistanceSourceEauAmeliore" :value="0">
+                  <label for="ExistanceSourceEauAmelioreNon" class="custom-control-label"> Non </label>
+                </div>
+            </div>
             <div role="group" class="col-lg-6 form-group">
               <label class="row col custom-control-inline"> Système </label>
               <div role="group" class="custom-control custom-control-inline custom-radio">

@@ -61,6 +61,8 @@
             <CInput label="ceb" type="text" placeholder="ceb" v-model="preScolaire.ceb" class="col-lg-3"></CInput>
             <CInput label="Nom de la structure" type="text" placeholder="" v-model="preScolaire.nom_structure"
               class="col-lg-3"></CInput>
+            <CInput label="Nombre total de salles d'activités" type="number" placeholder="0xx"
+              v-model="preScolaire.NbTotalSalleActivite" class="col-lg-3"></CInput>
             <div role="group" class="col-lg-3 form-group">
               <label class="row col custom-control-inline"> Statut </label>
               <div role="group" class="custom-control custom-control-inline custom-radio">
@@ -72,6 +74,40 @@
                   <input id="statutPRIVE" type="radio" class="custom-control-input"
                     v-model="preScolaire.statut" :value="'PRIVE'">
                   <label for="statutPRIVE" class="custom-control-label"> Privé </label>
+                </div>
+            </div>
+                        
+            <CInput label="Nombre de labrines fonctionnelles" type="number" placeholder="0xx"
+              v-model="preScolaire.NbLatrine" class="col-lg-3"></CInput>
+              
+            <CInput label="Nombre de poubelles" type="number" placeholder="0xx"
+              v-model="preScolaire.NbPoubelle" class="col-lg-3"></CInput>
+
+              <div role="group" class="col-lg-3 form-group">
+              <label class="row col custom-control-inline"> Existance de Bac à Ordure </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="ExistanceBacOrdureOui" type="radio" class="custom-control-input"
+                    v-model="preScolaire.ExistanceBacOrdure" :value="1">
+                  <label for="ExistanceBacOrdureOui" class="custom-control-label"> Oui </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="ExistanceBacOrdureNon" type="radio" class="custom-control-input"
+                    v-model="preScolaire.ExistanceBacOrdure" :value="0">
+                  <label for="ExistanceBacOrdureNon" class="custom-control-label"> Non </label>
+                </div>
+            </div> 
+            
+            <div role="group" class="col-lg-3 form-group">
+              <label class="row col custom-control-inline"> Existance de Source d'Eau Ameliore </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="ExistanceSourceEauAmelioreOui" type="radio" class="custom-control-input"
+                    v-model="preScolaire.ExistanceSourceEauAmeliore" :value="1">
+                  <label for="ExistanceSourceEauAmelioreOui" class="custom-control-label"> Oui </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="ExistanceSourceEauAmelioreNon" type="radio" class="custom-control-input"
+                    v-model="preScolaire.ExistanceSourceEauAmeliore" :value="0">
+                  <label for="ExistanceSourceEauAmelioreNon" class="custom-control-label"> Non </label>
                 </div>
             </div>
             <div role="group" class="col-lg-3 form-group">
@@ -87,8 +123,6 @@
                   <label for="systemeNONFORMEL" class="custom-control-label"> Non Formel </label>
                 </div>
             </div>
-            <CInput label="Nombre total de salles d'activités" type="number" placeholder="0xx"
-              v-model="preScolaire.NbTotalSalleActivite" class="col-lg-3"></CInput>
           </div>
         </CCardBody>
       </CCard>
@@ -470,9 +504,9 @@ export default {
         axios.put(  this.$apiAdress + '/api/pre_scolaires/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
         self.preScolaire)
         .then(function (response) {
-            self.message = 'Successfully updated Formation Sanitaire.';
+            self.message = 'Successfully updated Pre Scolaire.';
             self.showAlert();
-            self.$toasted.show("planification Familiale a été mise à jour avec succès",{type:"success"});
+            self.$toasted.show("Les informations du pre scolaire ont été mises à jour avec succès",{type:"success"});
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';

@@ -113,7 +113,7 @@ export default {
     return {
       items: [],
       fields: ['id','n_ordre', 'region', 'province', 'commune','trimestre','annee',
-      'ceb','nom_structure','statut','systeme','NbTotalSalleActivite','NbGarcon_PS','NbGarconAbandon_PS','NbGarcon_MS','NbGarconAbandon_MS','NbGarcon_GS','NbGarconAbandon_GS','NbTotalGarcon','NbTotalGarconAbandon','NbGarcon_PDI','NbGarconAbandon_PDI','NbFille_PS','NbFilleAbandon_PS','NbFille_MS','NbFilleAbandon_MS','NbFille_GS','NbFilleAbandon_GS','NbTotalFille','NbTotalFilleAbandon','NbFille_PDI','NbFilleAbandon_PDI','NbTotalEnseignantHomme','NbTotalEnseignantFemme','NbEnseignantHommeRedeployes','NbEnseignantFemmeRedeployes','NbEnseignantHommeVolontaire','NbEnseignantFemmeVolontaire',
+      'ceb','nom_structure','statut','systeme','NbTotalSalleActivite','NbLatrine','NbPoubelle','ExistanceBacOrdure','ExistanceSourceEauAmeliore','NbGarcon_PS','NbGarconAbandon_PS','NbGarcon_MS','NbGarconAbandon_MS','NbGarcon_GS','NbGarconAbandon_GS','NbTotalGarcon','NbTotalGarconAbandon','NbGarcon_PDI','NbGarconAbandon_PDI','NbFille_PS','NbFilleAbandon_PS','NbFille_MS','NbFilleAbandon_MS','NbFille_GS','NbFilleAbandon_GS','NbTotalFille','NbTotalFilleAbandon','NbFille_PDI','NbFilleAbandon_PDI','NbTotalEnseignantHomme','NbTotalEnseignantFemme','NbEnseignantHommeRedeployes','NbEnseignantFemmeRedeployes','NbEnseignantHommeVolontaire','NbEnseignantFemmeVolontaire',
       'ExistenceEspacesRecreatif','ExistenceDispositifHygiene','ExistenceCantine','SourceDotationEtat','SourceDotationPartenaire','SourceDotationEndogene',
       {
         key: "actions",

@@ -73,7 +73,7 @@
                   <CCol tag="label" sm="12" class="col-form-label">
                     Situation Matrimonial
                   </CCol>
-                  <CCol sm="9" :class="'form-inline'">
+                  <CCol sm="12" :class="'form-inline'">
 
                     <div role="group" class="custom-control custom-control-inline custom-radio">
                       <input id="celibataire" type="radio" class="custom-control-input" v-model="acteDeces.statut_matrimonial" value="CELIBATAIRE">
@@ -94,6 +94,11 @@
                     <div role="group" class="custom-control custom-control-inline custom-radio">
                       <input id="veuf" type="radio" class="custom-control-input" v-model="acteDeces.statut_matrimonial" value="VEUF">
                       <label for="veuf" class="custom-control-label"> Veuf(ve) </label>
+                    </div>
+
+                    <div role="group" class="custom-control custom-control-inline custom-radio">
+                      <input id="manquant" type="radio" class="custom-control-input" v-model="acteDeces.statut_matrimonial" value="MANQUANT">
+                      <label for="manquant" class="custom-control-label"> Manquant </label>
                     </div>
 
                   </CCol>

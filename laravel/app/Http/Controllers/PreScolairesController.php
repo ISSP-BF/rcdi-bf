@@ -44,7 +44,15 @@ class PreScolairesController extends Controller
             $join->on('pre_scolaires.updated_by', '=', 'users2.id');
         })
         ->select('pre_scolaires.*', 'users.name as created_by','users2.name as updated_by', 'regions.region as region',
-        'provinces.province as province','communes.commune as commune')
+        'provinces.province as province','communes.commune as commune',
+        DB::raw('(CASE WHEN pre_scolaires.ExistenceEspacesRecreatif = 1 THEN "OUI" ELSE "NON" END) AS ExistenceEspacesRecreatif'),
+        DB::raw('(CASE WHEN pre_scolaires.ExistenceDispositifHygiene = 1 THEN "OUI" ELSE "NON" END) AS ExistenceDispositifHygiene'),
+        DB::raw('(CASE WHEN pre_scolaires.ExistenceCantine = 1 THEN "OUI" ELSE "NON" END) AS ExistenceCantine'),
+        DB::raw('(CASE WHEN pre_scolaires.SourceDotationEtat = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEtat'),
+        DB::raw('(CASE WHEN pre_scolaires.SourceDotationPartenaire = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationPartenaire'),
+        DB::raw('(CASE WHEN pre_scolaires.SourceDotationEndogene = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEndogene'),
+        DB::raw('(CASE WHEN pre_scolaires.ExistanceBacOrdure = 1 THEN "OUI" ELSE "NON" END) AS ExistanceBacOrdure'),
+        DB::raw('(CASE WHEN pre_scolaires.ExistanceSourceEauAmeliore = 1 THEN "OUI" ELSE "NON" END) AS ExistanceSourceEauAmeliore'))
         ->get();
         return response()->json( $preScolaires );
     }
@@ -93,6 +101,11 @@ class PreScolairesController extends Controller
         $preScolaire->systeme = $request->input('systeme');
         $preScolaire->n_ordre = $request->input('n_ordre');
         $preScolaire->NbTotalSalleActivite = $request->input('NbTotalSalleActivite');
+        
+        $preScolaire->NbPoubelle = $request->input('NbPoubelle');
+        $preScolaire->NbLatrine = $request->input('NbLatrine');
+        $preScolaire->ExistanceBacOrdure = $request->input('ExistanceBacOrdure');
+        $preScolaire->ExistanceSourceEauAmeliore = $request->input('ExistanceSourceEauAmeliore');
         
         $preScolaire->NbGarcon_PS = $request->input('NbGarcon_PS');
         $preScolaire->NbGarconAbandon_PS = $request->input('NbGarconAbandon_PS');
@@ -160,7 +173,15 @@ class PreScolairesController extends Controller
             $join->on('pre_scolaires.updated_by', '=', 'users2.id');
         })
         ->select('pre_scolaires.*', 'users.name as created_by','users2.name as updated_by', 'regions.region as region',
-        'provinces.province as province','communes.commune as commune')
+        'provinces.province as province','communes.commune as commune',
+        DB::raw('(CASE WHEN pre_scolaires.ExistenceEspacesRecreatif = 1 THEN "OUI" ELSE "NON" END) AS ExistenceEspacesRecreatif'),
+        DB::raw('(CASE WHEN pre_scolaires.ExistenceDispositifHygiene = 1 THEN "OUI" ELSE "NON" END) AS ExistenceDispositifHygiene'),
+        DB::raw('(CASE WHEN pre_scolaires.ExistenceCantine = 1 THEN "OUI" ELSE "NON" END) AS ExistenceCantine'),
+        DB::raw('(CASE WHEN pre_scolaires.SourceDotationEtat = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEtat'),
+        DB::raw('(CASE WHEN pre_scolaires.SourceDotationPartenaire = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationPartenaire'),
+        DB::raw('(CASE WHEN pre_scolaires.SourceDotationEndogene = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEndogene'),
+        DB::raw('(CASE WHEN pre_scolaires.ExistanceBacOrdure = 1 THEN "OUI" ELSE "NON" END) AS ExistanceBacOrdure'),
+        DB::raw('(CASE WHEN pre_scolaires.ExistanceSourceEauAmeliore = 1 THEN "OUI" ELSE "NON" END) AS ExistanceSourceEauAmeliore'))
         ->where('pre_scolaires.id', '=', $id)
         ->first();
         return response()->json( $district );
@@ -213,6 +234,12 @@ class PreScolairesController extends Controller
         $preScolaire->n_ordre = $request->input('n_ordre');
 
         $preScolaire->NbTotalSalleActivite = $request->input('NbTotalSalleActivite');
+        
+        $preScolaire->NbPoubelle = $request->input('NbPoubelle');
+        $preScolaire->NbLatrine = $request->input('NbLatrine');
+        $preScolaire->ExistanceBacOrdure = $request->input('ExistanceBacOrdure');
+        $preScolaire->ExistanceSourceEauAmeliore = $request->input('ExistanceSourceEauAmeliore');
+
         $preScolaire->NbGarcon_PS = $request->input('NbGarcon_PS');
         $preScolaire->NbGarconAbandon_PS = $request->input('NbGarconAbandon_PS');
         $preScolaire->NbGarcon_MS = $request->input('NbGarcon_MS');

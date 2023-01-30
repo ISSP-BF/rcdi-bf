@@ -26,6 +26,10 @@ class CreatePreScolairesTable extends Migration
             $table->string('statut')->nullable();
             $table->string('systeme')->nullable();
             $table->integer('NbTotalSalleActivite')->unsigned()->nullable();
+            $table->integer('NbPoubelle')->unsigned()->nullable();
+            $table->integer('NbLatrine')->unsigned()->nullable();
+            $table->boolean('ExistanceBacOrdure')->nullable();
+            $table->boolean('ExistanceSourceEauAmeliore')->nullable();
             $table->integer('NbGarcon_PS')->unsigned()->nullable();
             $table->integer('NbGarconAbandon_PS')->unsigned()->nullable();
             $table->integer('NbGarcon_MS')->unsigned()->nullable();

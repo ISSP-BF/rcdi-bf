@@ -51,6 +51,8 @@ class PostPrimairesController extends Controller
         DB::raw('(CASE WHEN post_primaires.SourceDotationEtat = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEtat'),
         DB::raw('(CASE WHEN post_primaires.SourceDotationPartenaire = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationPartenaire'),
         DB::raw('(CASE WHEN post_primaires.SourceDotationEndogene = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEndogene'),
+        DB::raw('(CASE WHEN post_primaires.ExistanceBacOrdure = 1 THEN "OUI" ELSE "NON" END) AS ExistanceBacOrdure'),
+        DB::raw('(CASE WHEN post_primaires.ExistanceSourceEauAmeliore = 1 THEN "OUI" ELSE "NON" END) AS ExistanceSourceEauAmeliore')
         )
         ->get();
         return response()->json( $postPrimaires );
@@ -100,6 +102,12 @@ class PostPrimairesController extends Controller
         $postPrimaire->n_ordre = $request->input('n_ordre');
 
         $postPrimaire->NbTotalSalleActivite = $request->input('NbTotalSalleActivite');
+        
+        $postPrimaire->NbPoubelle = $request->input('NbPoubelle');
+        $postPrimaire->NbLatrine = $request->input('NbLatrine');
+        $postPrimaire->ExistanceBacOrdure = $request->input('ExistanceBacOrdure');
+        $postPrimaire->ExistanceSourceEauAmeliore = $request->input('ExistanceSourceEauAmeliore');
+
         $postPrimaire->NbGarcon_6e = $request->input('NbGarcon_6e');
         $postPrimaire->NbGarconMoyenne_6e = $request->input('NbGarconMoyenne_6e');
         $postPrimaire->NbGarconAbandon_6e = $request->input('NbGarconAbandon_6e');
@@ -224,7 +232,16 @@ class PostPrimairesController extends Controller
             $join->on('post_primaires.updated_by', '=', 'users2.id');
         })
         ->select('post_primaires.*', 'users.name as created_by','users2.name as updated_by', 'regions.region as region',
-        'provinces.province as province','communes.commune as commune')
+        'provinces.province as province','communes.commune as commune',
+        DB::raw('(CASE WHEN post_primaires.ExistenceEspacesRecreatif = 1 THEN "OUI" ELSE "NON" END) AS ExistenceEspacesRecreatif'),
+        DB::raw('(CASE WHEN post_primaires.ExistenceDispositifHygiene = 1 THEN "OUI" ELSE "NON" END) AS ExistenceDispositifHygiene'),
+        DB::raw('(CASE WHEN post_primaires.ExistenceCantine = 1 THEN "OUI" ELSE "NON" END) AS ExistenceCantine'),
+        DB::raw('(CASE WHEN post_primaires.SourceDotationEtat = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEtat'),
+        DB::raw('(CASE WHEN post_primaires.SourceDotationPartenaire = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationPartenaire'),
+        DB::raw('(CASE WHEN post_primaires.SourceDotationEndogene = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEndogene'),
+        DB::raw('(CASE WHEN post_primaires.ExistanceBacOrdure = 1 THEN "OUI" ELSE "NON" END) AS ExistanceBacOrdure'),
+        DB::raw('(CASE WHEN post_primaires.ExistanceSourceEauAmeliore = 1 THEN "OUI" ELSE "NON" END) AS ExistanceSourceEauAmeliore')
+        )
         ->where('post_primaires.id', '=', $id)
         ->first();
         return response()->json( $postPrimaire );
@@ -277,6 +294,13 @@ class PostPrimairesController extends Controller
         $postPrimaire->n_ordre = $request->input('n_ordre');
         
         $postPrimaire->NbTotalSalleActivite = $request->input('NbTotalSalleActivite');
+
+        $postPrimaire->NbPoubelle = $request->input('NbPoubelle');
+        $postPrimaire->NbLatrine = $request->input('NbLatrine');
+        $postPrimaire->ExistanceBacOrdure = $request->input('ExistanceBacOrdure');
+        $postPrimaire->ExistanceSourceEauAmeliore = $request->input('ExistanceSourceEauAmeliore');
+
+
         $postPrimaire->NbGarcon_6e = $request->input('NbGarcon_6e');
         $postPrimaire->NbGarconMoyenne_6e = $request->input('NbGarconMoyenne_6e');
         $postPrimaire->NbGarconAbandon_6e = $request->input('NbGarconAbandon_6e');

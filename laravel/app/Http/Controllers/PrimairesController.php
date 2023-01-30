@@ -44,7 +44,15 @@ class PrimairesController extends Controller
             $join->on('primaires.updated_by', '=', 'users2.id');
         })
         ->select('primaires.*', 'users.name as created_by','users2.name as updated_by', 'regions.region as region',
-        'provinces.province as province','communes.commune as commune')
+        'provinces.province as province','communes.commune as commune',
+        DB::raw('(CASE WHEN primaires.ExistenceEspacesRecreatif = 1 THEN "OUI" ELSE "NON" END) AS ExistenceEspacesRecreatif'),
+        DB::raw('(CASE WHEN primaires.ExistenceDispositifHygiene = 1 THEN "OUI" ELSE "NON" END) AS ExistenceDispositifHygiene'),
+        DB::raw('(CASE WHEN primaires.ExistenceCantine = 1 THEN "OUI" ELSE "NON" END) AS ExistenceCantine'),
+        DB::raw('(CASE WHEN primaires.SourceDotationEtat = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEtat'),
+        DB::raw('(CASE WHEN primaires.SourceDotationPartenaire = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationPartenaire'),
+        DB::raw('(CASE WHEN primaires.SourceDotationEndogene = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEndogene'),
+        DB::raw('(CASE WHEN primaires.ExistanceBacOrdure = 1 THEN "OUI" ELSE "NON" END) AS ExistanceBacOrdure'),
+        DB::raw('(CASE WHEN primaires.ExistanceSourceEauAmeliore = 1 THEN "OUI" ELSE "NON" END) AS ExistanceSourceEauAmeliore'))
         ->get();
         return response()->json( $primaires );
     }
@@ -93,6 +101,12 @@ class PrimairesController extends Controller
         $primaire->n_ordre = $request->input('n_ordre');
 
         $primaire->NbTotalSalleActivite = $request->input('NbTotalSalleActivite');
+        
+        $primaire->NbPoubelle = $request->input('NbPoubelle');
+        $primaire->NbLatrine = $request->input('NbLatrine');
+        $primaire->ExistanceBacOrdure = $request->input('ExistanceBacOrdure');
+        $primaire->ExistanceSourceEauAmeliore = $request->input('ExistanceSourceEauAmeliore');
+
         $primaire->NbGarcon_CP1 = $request->input('NbGarcon_CP1');
         $primaire->NbGarconMoyenne_CP1 = $request->input('NbGarconMoyenne_CP1');
         $primaire->NbGarconAbandon_CP1 = $request->input('NbGarconAbandon_CP1');
@@ -185,7 +199,15 @@ class PrimairesController extends Controller
             $join->on('primaires.updated_by', '=', 'users2.id');
         })
         ->select('primaires.*', 'users.name as created_by','users2.name as updated_by', 'regions.region as region',
-        'provinces.province as province','communes.commune as commune')
+        'provinces.province as province','communes.commune as commune',
+        DB::raw('(CASE WHEN primaires.ExistenceEspacesRecreatif = 1 THEN "OUI" ELSE "NON" END) AS ExistenceEspacesRecreatif'),
+        DB::raw('(CASE WHEN primaires.ExistenceDispositifHygiene = 1 THEN "OUI" ELSE "NON" END) AS ExistenceDispositifHygiene'),
+        DB::raw('(CASE WHEN primaires.ExistenceCantine = 1 THEN "OUI" ELSE "NON" END) AS ExistenceCantine'),
+        DB::raw('(CASE WHEN primaires.SourceDotationEtat = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEtat'),
+        DB::raw('(CASE WHEN primaires.SourceDotationPartenaire = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationPartenaire'),
+        DB::raw('(CASE WHEN primaires.SourceDotationEndogene = 1 THEN "OUI" ELSE "NON" END) AS SourceDotationEndogene'),
+        DB::raw('(CASE WHEN primaires.ExistanceBacOrdure = 1 THEN "OUI" ELSE "NON" END) AS ExistanceBacOrdure'),
+        DB::raw('(CASE WHEN primaires.ExistanceSourceEauAmeliore = 1 THEN "OUI" ELSE "NON" END) AS ExistanceSourceEauAmeliore'))
         ->where('primaires.id', '=', $id)
         ->first();
         return response()->json( $district );
@@ -238,6 +260,12 @@ class PrimairesController extends Controller
         $primaire->n_ordre = $request->input('n_ordre');
         
         $primaire->NbTotalSalleActivite = $request->input('NbTotalSalleActivite');
+        
+        $primaire->NbPoubelle = $request->input('NbPoubelle');
+        $primaire->NbLatrine = $request->input('NbLatrine');
+        $primaire->ExistanceBacOrdure = $request->input('ExistanceBacOrdure');
+        $primaire->ExistanceSourceEauAmeliore = $request->input('ExistanceSourceEauAmeliore');
+
         $primaire->NbGarcon_CP1 = $request->input('NbGarcon_CP1');
         $primaire->NbGarconMoyenne_CP1 = $request->input('NbGarconMoyenne_CP1');
         $primaire->NbGarconAbandon_CP1 = $request->input('NbGarconAbandon_CP1');

@@ -85,7 +85,7 @@ export default {
       items: [],
       fields: [
       'id','n_ordre', 'region', 'province', 'commune','trimestre','annee',
-      'ceb','nom_structure','statut','type','NbTotalSalleActivite','NbGarcon_6e','NbGarconMoyenne_6e',
+      'ceb','nom_structure','statut','type','NbTotalSalleActivite','NbPoubelle','NbLatrine','ExistanceBacOrdure','ExistanceSourceEauAmeliore','NbGarcon_6e','NbGarconMoyenne_6e',
       'NbGarconAbandon_6e','NbGarcon_5e','NbGarconMoyenne_5e','NbGarconAbandon_5e','NbGarcon_4e','NbGarconMoyenne_4e',
       'NbGarconAbandon_4e','NbGarcon_3e','NbGarconMoyenne_3e','NbGarconAbandon_3e','NbTotalGarcon','NbTotalGarconMoyenne',
       'NbTotalGarconAbandon','NbGarcon_PDI','NbGarconMoyenne_PDI','NbGarconAbandon_PDI','NbFille_6e','NbFilleMoyenne_6e',

@@ -28,6 +28,64 @@
     </CCardBody>
   </CCard>
     <CRow v-if="!refreshing2">
+          
+      <CCol xs="12" lg="12">
+        <CCard> 
+          <CCardBody>
+            <CTabs add-tab-classes="mt-1">
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-calculator"/> DEMOGRAPHIE
+                </template>
+                <CCardBody v-if="!refreshing2">
+      <IndicateursShow :commune_id="commune_id" :annee="annee"/>
+    <CRow>
+          <CCol sm="6" lg="6">
+            <IndicateursSecteur1 :commune_id="commune_id" :annee="annee" indicateur="Répartition population par sexe" />
+          </CCol>
+          <CCol sm="6" lg="6">
+            <IndicateursTableau :commune_id="commune_id" :annee="annee" indicateur="Quelques Statistiques de Population" />
+          </CCol>
+    </CRow>
+    </CCardBody>
+              </CTab>
+              <CTab active>
+                <template slot="title">
+                  <CIcon name="cil-basket"/> SERVICES
+                </template>
+                2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                officia deserunt mollit anim id est laborum.
+              </CTab>
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-chart-pie"/> ASSAINISSEMENT
+                </template>
+                3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                officia deserunt mollit anim id est laborum.
+              </CTab>
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-chart-pie"/> AGRICULTURE
+                </template>
+                4. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                officia deserunt mollit anim id est laborum.
+              </CTab>
+            </CTabs>
+          </CCardBody>
+        </CCard>
+      </CCol>
+      
+    </CRow>
+    <CRow v-if="!refreshing2">
       <CCol sm="12" lg="12">
         <GroupeBarChart :commune_id="commune_id" :annee="annee"
           groupe="SERVICES" />
@@ -76,6 +134,12 @@ export default {
   },
   data() {
     return {
+      tabs: [
+        'Calculator',
+        'Shopping cart',
+        'Charts'
+      ],
+      activeTab: 1,
       selected: 'Month',
       repartitionPopulationParSexe: [
         {

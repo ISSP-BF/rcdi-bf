@@ -55,14 +55,34 @@
               <td>{{postPrimaire.statut}}</td>
             </tr>
             <tr>
-              <td>Type</td>
+              <td>Système</td>
               <td></td>
               <td>{{postPrimaire.type}}</td>
-            </tr>
+            </tr> 
             <tr>
               <td>Nombre total de salles d'activités</td>
               <td></td>
               <td>{{postPrimaire.NbTotalSalleActivite}}</td>
+            </tr>
+            <tr>
+              <td>Nombre de latrines fonctionnelles</td>
+              <td></td>
+              <td>{{postPrimaire.NbLatrine}}</td>
+            </tr>
+            <tr>
+              <td>Nombre de poubelle</td>
+              <td></td>
+              <td>{{postPrimaire.NbPoubelle}}</td>
+            </tr>
+            <tr>
+              <td>Existance de bacs à ordures</td>
+              <td></td>
+              <td>{{postPrimaire.ExistanceBacOrdure}}</td>
+            </tr>
+            <tr>
+              <td>Existance de sources d'eau améliorées (fontaine, robinet)</td>
+              <td></td>
+              <td>{{postPrimaire.ExistanceSourceEauAmeliore}}</td>
             </tr>
           </table>
           <h5>II. EFFECTIFS DES ELEVES (auditeurs)</h5>

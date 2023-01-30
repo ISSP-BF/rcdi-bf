@@ -64,6 +64,26 @@
               <td></td>
               <td>{{primaire.NbTotalSalleActivite}}</td>
             </tr>
+            <tr>
+              <td>Nombre de latrines fonctionnelles</td>
+              <td></td>
+              <td>{{primaire.NbLatrine}}</td>
+            </tr>
+            <tr>
+              <td>Nombre de poubelle</td>
+              <td></td>
+              <td>{{primaire.NbPoubelle}}</td>
+            </tr>
+            <tr>
+              <td>Existance de bacs à ordures</td>
+              <td></td>
+              <td>{{primaire.ExistanceBacOrdure}}</td>
+            </tr>
+            <tr>
+              <td>Existance de sources d'eau améliorées (fontaine, robinet)</td>
+              <td></td>
+              <td>{{primaire.ExistanceSourceEauAmeliore}}</td>
+            </tr>
           </table>
           <h5>II. EFFECTIFS DES ELEVES (auditeurs)</h5>
           <table class="table table-bordered">

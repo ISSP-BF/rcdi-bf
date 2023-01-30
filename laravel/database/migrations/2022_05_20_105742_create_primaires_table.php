@@ -26,6 +26,10 @@ class CreatePrimairesTable extends Migration
             $table->string('statut')->nullable();
             $table->string('type')->nullable();
             $table->integer('NbTotalSalleActivite')->unsigned()->nullable();
+            $table->integer('NbPoubelle')->unsigned()->nullable();
+            $table->integer('NbLatrine')->unsigned()->nullable();
+            $table->boolean('ExistanceBacOrdure')->nullable();
+            $table->boolean('ExistanceSourceEauAmeliore')->nullable();
             $table->integer('NbGarcon_CP1')->unsigned()->nullable();
             $table->integer('NbGarconMoyenne_CP1')->unsigned()->nullable();
             $table->integer('NbGarconAbandon_CP1')->unsigned()->nullable();
