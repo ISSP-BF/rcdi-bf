@@ -4,7 +4,7 @@
       <CCard no-header>
         <CCardBody>
           <h3>
-            Create User
+            Créer un utilisateur
           </h3>
           <CAlert
             :show.sync="dismissCountDown"
@@ -85,9 +85,9 @@
                 >
                   <template #prepend-content><CIcon name="cil-lock-locked"/></template>
                 </CInput>
-            <CButton color="primary" @click="store()">Save</CButton>
+            <CButton color="primary" @click="store()">Sauvegarder</CButton> &nbsp;
 
-            <CButton color="primary" @click="goBack">Back</CButton>
+            <CButton color="primary" @click="goBack">Retour</CButton>
 
         </CCardBody>
       </CCard>

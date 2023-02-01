@@ -123,7 +123,7 @@
           </CCard>
         </transition>
       </CTab>
-      <CTab>
+      <CTab active>
         <template slot="title">
           <CIcon name="cil-chart-pie" />
         </template>
@@ -172,7 +172,7 @@
                     :value.sync="indicateur.groupe"
                     :plain="true"
                     :options="groupes"
-                    v-model="indicateur.groupe" @click="filterByGroupe()"
+                    v-model="indicateur.groupe" @change="filterByGroupe($event)"
                   >
                   </CSelect>
 
@@ -187,7 +187,7 @@
                   </CSelect>
 
                   <CSelect
-                    label="Années"
+                    label="Années Debut"
                     class="col-lg-12"
                     :value.sync="indicateur.annee"
                     :plain="true"
@@ -195,6 +195,22 @@
                     v-model="indicateur.annee"
                   >
                   </CSelect>
+
+                  <CSelect
+                    label="Années Fin"
+                    class="col-lg-12"
+                    :value.sync="indicateur.anneefin"
+                    :plain="true"
+                    :options="annees"
+                    v-model="indicateur.anneefin"
+                  >
+                  </CSelect> 
+                  <select name="cars" id="cars" multiple>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select>
                 </div>
                 <CButton  v-if="!refreshing" color="primary" @click="search()">Actualiser
                 </CButton>
@@ -203,28 +219,41 @@
               </CCardBody>
             </CCard>
           </CCol>
-          <CCol col="12" lg="8" v-if="!refreshing2">
+          <CCol col="12" lg="8">
            
-            <CTabs :active-tab.sync="activeTab">
-              <CTab active>
+            <CTabs>
+              <CTab>
                 <template slot="title">
                   <CIcon name="cil-calculator"/>
                 </template>
-                <IndicateursSecteur1 :commune_id="indicateur.commune_id" :annee="indicateur.annee" :indicateur="indicateur.indicateur" />
+                <IndicateursSecteur1 v-if="!refreshing" :commune_id="indicateur.commune_id" :annee="indicateur.annee" :indicateur="indicateur.indicateur" />
 
               </CTab> 
               <CTab>
                 <template slot="title">
-                  <CIcon name="cil-chart-pie"/>
+                  <CIcon name="cil-bar-chart"/>
                 </template>
-                <GroupeBarChart :commune_id="indicateur.commune_id" :annee="indicateur.annee" :groupe="indicateur.groupe" />
+                <IndicateurBarChart v-if="!refreshing" :commune_id="indicateur.commune_id" :annee="indicateur.annee" :groupe="indicateur.groupe" :indicateur="indicateur.indicateur" />
+
+              </CTab>
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-chart-line"/>
+                </template>
+                <IndicateurLineChart v-if="!refreshing" :commune_id="indicateur.commune_id" :annee="indicateur.annee" :groupe="indicateur.groupe" :indicateur="indicateur.indicateur" />
+
+              </CTab>
+              <CTab active>
+                <template slot="title">
+                  <CIcon name="cil-chart-line"/>
+                </template>
+                <IndicateurAnneesLineChart v-if="!refreshing" :commune_id="indicateur.commune_id" :annee="indicateur.annee" :anneefin="indicateur.anneefin" :groupe="indicateur.groupe" :indicateur="indicateur.indicateur" />
 
               </CTab>
             </CTabs>
-           
 
           </CCol>
-          <CCol col="12" lg="8" v-if="!refreshing2">
+          <CCol col="12" lg="8" v-if="!refreshing">
           </CCol> </CRow
         >
       </CTab>
@@ -241,7 +270,10 @@ import EditButton from "../buttons/EditButton.vue";
 import DeleteButton from "../buttons/DeleteButton.vue";
 import IndicateursSecteur1 from './../dashboard/IndicateursSecteur1'
 import IndicateursTableau from './../dashboard/IndicateursTableau'
-import GroupeBarChart from './../dashboard/GroupeBarChart'
+import IndicateurBarChart from './../dashboard/IndicateurBarChart'
+import IndicateurLineChart from './../dashboard/IndicateurLineChart'
+import IndicateurAnneesLineChart from './../dashboard/IndicateurAnneesLineChart'
+import Multiselect from 'vue-multiselect'
 
 export default {
   name: "Indicateurs",
@@ -251,7 +283,7 @@ export default {
     EditButton,
     IndicateursSecteur1,
     IndicateursTableau,
-    DeleteButton,GroupeBarChart
+    DeleteButton,IndicateurBarChart,IndicateurLineChart,IndicateurAnneesLineChart
   },
   data: () => {
     return {
@@ -265,9 +297,18 @@ export default {
         niveau2: null,
         mois: null,
         annee: 2019,
+        anneefin: 2019,
         indice: null,
         source: null,
       },
+      options: [
+        { name: 'Vue.js', language: 'JavaScript' },
+        { name: 'Adonis', language: 'JavaScript' },
+        { name: 'Rails', language: 'Ruby' },
+        { name: 'Sinatra', language: 'Ruby' },
+        { name: 'Laravel', language: 'PHP' },
+        { name: 'Phoenix', language: 'Elixir' }
+      ],
       formationSanitaires: [],
       regions: [],
       provinces: [],
@@ -324,14 +365,16 @@ export default {
       const editLink = this.editLink(id);
       this.$router.push({ path: editLink });
     }, 
-    filterByGroupe() {
-      let self = this; 
+    filterByGroupe(event) {
+      let self = this;
+      if(this.indicateur.groupe)
       axios.post(  this.$apiAdress + '/api/indicateurs/search/groupe?token=' + localStorage.getItem("api_token"),
           self.indicateur
         )
         .then(function(response) { 
           self.indicateurliste = response.data.indicateurliste; 
           self.indicateur.indicateur = self.indicateurliste.length>0?self.indicateurliste[0].value:null;
+          self.search();
         })
         .catch(function(error) {
           console.log(error);
@@ -346,12 +389,11 @@ export default {
         this.refreshing2 = true;
           setTimeout(() => {
           this.refreshing2 = false;
-        }, 1);
-       }, 2000);
+        }, 10);
+       }, 10);
     }, 
     deleteIndicateur(id) {
       let self = this;
-      let indicateurId = id;
       axios
         .post(
           this.$apiAdress +
@@ -419,8 +461,6 @@ export default {
           self.annees = response.data.annees;
           self.groupes = response.data.groupes;
 
-
-
           // Définir valeur par défaut
           self.indicateur.region_id =
             self.regions.length > 0 ? self.regions[0].value : null;
@@ -433,7 +473,9 @@ export default {
               ? self.formationSanitaires[0].value
               : null;
           self.indicateur.indicateur = self.indicateurliste.length>0?self.indicateurliste[0].value:null;
-          self.search();
+          self.indicateur.groupe = self.groupes.length>0?self.groupes[0].value:null;
+          // self.search();
+          self.filterByGroupe();
 
           
         })

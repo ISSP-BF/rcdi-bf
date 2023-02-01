@@ -3,7 +3,7 @@
     <CCol col="12" lg="6">
       <CCard>
         <CCardHeader>
-          User id:  {{ $route.params.id }}
+          ID Utilisateur :  {{ $route.params.id }}
         </CCardHeader>
         <CCardBody>
           <CDataTable 
@@ -19,7 +19,7 @@
           </CDataTable>  
         </CCardBody>
         <CCardFooter>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton color="primary" @click="goBack">Retour</CButton>
         </CCardFooter>
       </CCard>
     </CCol>

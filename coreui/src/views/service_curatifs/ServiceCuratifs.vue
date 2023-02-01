@@ -100,6 +100,9 @@ export default {
       items: [],
       fields: ['id', 'region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
      'NbNouveaux_consultant','NbEnft_PrisCharge_PCIME','NbMaladie_MisObservation','actions'],
+     fieldsI: ['region', 'province', 'commune', 'district','formation_sanitaire','mois','annee',
+     'NbNouveaux_consultant','NbEnft_PrisCharge_PCIME','NbMaladie_MisObservation'],
+      
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

@@ -219,8 +219,13 @@ class IndicateursController extends Controller
         if(isset($request->region_id)&&$request->region_id!=null&&$request->region_id!=0){
             $indicateurs->where('indicateurs.region_id', '=', $request['region_id']);
         }
-        if(isset($request->annee)&&$request->annee!=null&&$request->annee!=0){
-            $indicateurs->where('indicateurs.annee', '=', $request['annee']);
+        if(isset($request->annee)&&$request->annee!=null&&$request->annee!=0&&isset($request->anneefin)&&$request->anneefin!=null&&$request->anneefin!=0)
+        {
+            $indicateurs->whereBetween('indicateurs.annee', [$request['annee'], $request['anneefin']])->orderBy("annee");
+        }else{
+            if(isset($request->annee)&&$request->annee!=null&&$request->annee!=0){
+                $indicateurs->where('indicateurs.annee', '=', $request['annee']);
+            }
         }
         if(isset($request->indicateur)){
             $indicateurs->where('indicateurs.indicateur', 'like', '%' . $request['indicateur'] . '%');
@@ -245,7 +250,7 @@ class IndicateursController extends Controller
         $formationSanitaires = DB::table('formation_sanitaires')->select('formation_sanitaires.nom_structure as label', 'formation_sanitaires.id as value')->get();
         
         $groupes = DB::table('indicateurs')->select('groupe as label','groupe as value')->distinct()->get();
-        $annees = DB::table('indicateurs')->select('annee as label','annee as value')->distinct()->get();
+        $annees = DB::table('indicateurs')->select('annee as label','annee as value')->distinct()->orderBy('annee')->get();
         $indicateurliste = DB::table('indicateurs')->select('indicateur as label','indicateur as value')->distinct()->get();
 
         return response()->json( ['communes'=>$communes,'regions'=>$regions,'provinces'=>$provinces,'districts'=>$districts,'formationSanitaires'=>$formationSanitaires
@@ -253,7 +258,10 @@ class IndicateursController extends Controller
     }
     public function searchGroupe(Request $request)
     {
-       $indicateurliste = DB::table('indicateurs')->where('groupe',"like",$request->groupe)->select('indicateur as label','indicateur as value')->distinct()->get();
+        if(!isset($request->groupe)){
+            return response()->json( ['indicateurliste'=>[]] );
+        }
+        $indicateurliste = DB::table('indicateurs')->where('groupe',"like",$request->groupe)->select('indicateur as label','indicateur as value')->distinct()->get();
 
         return response()->json( ['indicateurliste'=>$indicateurliste] );
     }

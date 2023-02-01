@@ -4,12 +4,12 @@
     "description": "Application de collecte et de visualisation d'indicateur",
     "author": {
         "name": "DAO Hamadou",
-        "url": "https://coreui.io",
+        "url": "https://www.linkedin.com/in/hamadou-dao/",
         "github": "https://github.com/hamirkd",
         "linkdin": "https://twitter.com/core_ui"
     },
-    "homepage": "http://rcdi-bf.com",
-    "copyright": "Copyright 2020 creativeLabs ISSP",
+    "homepage": "http://rcdi-bf.bf",
+    "copyright": "Copyright 2023 creativeLabs ISSP",
     "license": "MIT",
     "scripts": {
         "serve": "vue-cli-service serve",
@@ -34,6 +34,7 @@
         "file-saver": "^2.0.5",
         "jquery": "^3.6.0",
         "vue": "~2.6.11",
+        "vue-multiselect": "^2.1.7",
         "vue-router": "~3.1.5",
         "vue-toasted": "^1.1.28",
         "vue-xls-csv-parser": "0.0.21",
