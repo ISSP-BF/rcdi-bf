@@ -205,8 +205,7 @@
                     v-model="indicateur.anneefin"
                   >
                   </CSelect>
-                  <ejs-multiselect id='multiselect' :dataSource='sportsData' placeholder="Find a game" mode="CheckBox" :fields='fields'></ejs-multiselect>
-                </div>
+                 </div>
                 <CButton  v-if="!refreshing" color="primary" @click="search()">Actualiser
                 </CButton>
             <CButton  v-if="refreshing"><img src="img/refresh.gif" width="50"/></CButton> &nbsp;
@@ -268,12 +267,7 @@ import IndicateursTableau from './../dashboard/IndicateursTableau'
 import IndicateurBarChart from './../dashboard/IndicateurBarChart'
 import IndicateurLineChart from './../dashboard/IndicateurLineChart'
 import IndicateurAnneesLineChart from './../dashboard/IndicateurAnneesLineChart'
-
-import Vue from 'vue';
-import { MultiSelectPlugin } from "@syncfusion/ej2-vue-dropdowns";
-import { MultiSelect, CheckBoxSelection } from '@syncfusion/ej2-dropdowns';
-MultiSelect.Inject(CheckBoxSelection);
-Vue.use(MultiSelectPlugin);
+ 
 
 export default {
   name: "Indicateurs",
@@ -312,15 +306,7 @@ export default {
         anneefin: 2019,
         indice: null,
         source: null,
-      },
-      options: [
-        { name: 'Vue.js', language: 'JavaScript' },
-        { name: 'Adonis', language: 'JavaScript' },
-        { name: 'Rails', language: 'Ruby' },
-        { name: 'Sinatra', language: 'Ruby' },
-        { name: 'Laravel', language: 'PHP' },
-        { name: 'Phoenix', language: 'Elixir' }
-      ],
+      }, 
       formationSanitaires: [],
       regions: [],
       provinces: [],
