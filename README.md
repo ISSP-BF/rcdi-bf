@@ -396,3 +396,5 @@ Il faut changer les configurations suivantes :
 
 # Configuration du repertoire
 Settings->Deploy keys->Add deploy key
+
+sudo a2enmod rewrite

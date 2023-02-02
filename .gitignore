@@ -1,6 +1,5 @@
 /composer.phar
 
-/laravel/public/*
 !/laravel/public/index.php
 !/laravel/public/.htaccess
 !/laravel/public/web.config
