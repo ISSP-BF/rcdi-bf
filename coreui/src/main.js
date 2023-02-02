@@ -15,13 +15,15 @@ import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import loading from 'vuejs-loading-screen'
-
+import { MultiSelectPlugin } from '@syncfusion/ej2-vue-dropdowns';
 import Toasted from 'vue-toasted'
+
 Vue.use(Toasted, {
     duration: 1500,
     theme: 'outline',
     iconPack: 'material'
 })
+
 
 /* add icons to the library */
 library.add(faUserSecret)
@@ -29,8 +31,8 @@ library.add(faUserSecret)
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-Vue.prototype.$apiAdress = 'http://127.0.0.1:8000'
-    // Vue.prototype.$apiAdress = 'http://data.tenado.rcdi.gov.bf'
+// Vue.prototype.$apiAdress = 'http://127.0.0.1:8000'
+Vue.prototype.$apiAdress = 'http://data.tenado.rcdi.gov.bf'
     // Vue.prototype.$apiAdress = 'http://data.manga.rcdi.gov.bf'
     // Vue.prototype.$apiAdress = 'http://data.rcdi.gov.bf'
     // Vue.prototype.$apiAdress = 'http://172.16.0.165:8000'
@@ -39,6 +41,7 @@ Vue.prototype.$apiAdress = 'http://127.0.0.1:8000'
 
 Vue.config.performance = true
 Vue.use(CoreuiVue)
+
 
 Vue.use(loading, {
     bg: '#ebedef',

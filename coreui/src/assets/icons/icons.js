@@ -81,6 +81,8 @@ import {
     cilHospital,
     cilBuilding,
     cilInstitution,
+    cilBarChart,
+    cilChartLine,
     cilApplicationsSettings
 
 } from '@coreui/icons'
@@ -93,6 +95,8 @@ export const iconsSet = Object.assign({}, { logo }, {
     cilBasket,
     cilInstitution,
     cilApplicationsSettings,
+    cilBarChart,
+    cilChartLine,
     cilBell,
     cilCalculator,
     cilCalendar,

@@ -204,13 +204,8 @@
                     :options="annees"
                     v-model="indicateur.anneefin"
                   >
-                  </CSelect> 
-                  <select name="cars" id="cars" multiple>
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="opel">Opel</option>
-  <option value="audi">Audi</option>
-</select>
+                  </CSelect>
+                  <ejs-multiselect id='multiselect' :dataSource='sportsData' placeholder="Find a game" mode="CheckBox" :fields='fields'></ejs-multiselect>
                 </div>
                 <CButton  v-if="!refreshing" color="primary" @click="search()">Actualiser
                 </CButton>
@@ -273,7 +268,12 @@ import IndicateursTableau from './../dashboard/IndicateursTableau'
 import IndicateurBarChart from './../dashboard/IndicateurBarChart'
 import IndicateurLineChart from './../dashboard/IndicateurLineChart'
 import IndicateurAnneesLineChart from './../dashboard/IndicateurAnneesLineChart'
-import Multiselect from 'vue-multiselect'
+
+import Vue from 'vue';
+import { MultiSelectPlugin } from "@syncfusion/ej2-vue-dropdowns";
+import { MultiSelect, CheckBoxSelection } from '@syncfusion/ej2-dropdowns';
+MultiSelect.Inject(CheckBoxSelection);
+Vue.use(MultiSelectPlugin);
 
 export default {
   name: "Indicateurs",
@@ -283,10 +283,22 @@ export default {
     EditButton,
     IndicateursSecteur1,
     IndicateursTableau,
-    DeleteButton,IndicateurBarChart,IndicateurLineChart,IndicateurAnneesLineChart
+    DeleteButton,IndicateurBarChart,IndicateurLineChart,IndicateurAnneesLineChart,
   },
   data: () => {
-    return {
+    return {sportsData: [
+        { Id: 'game1', Game: 'Badminton' },
+        { Id: 'game2', Game: 'Football' },
+        { Id: 'game3', Game: 'Tennis' },
+        { Id: 'game4', Game: 'Golf' },
+        { Id: 'game5', Game: 'Cricket' },
+        { Id: 'game6', Game: 'Handball' },
+        { Id: 'game7', Game: 'Karate' },
+        { Id: 'game8', Game: 'Fencing' },
+        { Id: 'game9', Game: 'Boxing' }
+      ],
+      fields : { text: 'Game', value: 'Id' }
+    ,
       indicateur: {
         region_id: null,
         province_id: null,
@@ -346,7 +358,7 @@ export default {
       refreshing2:false,
     };
   },
-  computed: {},
+  computed: { },
   methods: {
     getRowCount(items) {
       return items.length;
@@ -496,4 +508,10 @@ export default {
 .card-body >>> table > tbody > tr > td {
   cursor: pointer;
 }
+</style>
+<style>
+@import "../../../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-vue-dropdowns/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-buttons/styles/material.css";
 </style>
