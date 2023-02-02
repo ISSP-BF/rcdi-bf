@@ -414,3 +414,13 @@ Il faut changer les configurations suivantes :
 - Media
 - main.js
 - web.php
+
+# Compilation du projet (Cette commande est exécutée au niveau du backend(laravel))
+npm run prod
+npm run dev
+# Exécution du projet
+npm run serve
+php artisan serve
+# Pour spécifier l'adresse au niveau de laravel
+php artisan --host=192.168.1.5
+php artisan --host=data.tenado.rcdi.bf
