@@ -29,7 +29,7 @@ class CommunesController extends Controller
         $communes = DB::table('communes')
         ->join('users', 'users.id', '=', 'communes.users_id')
         ->join('provinces', 'provinces.id', '=', 'communes.province_id')
-        ->select('communes.*', 'users.name as author', 'provinces.province as province')
+        ->select('communes.*', 'users.name as author', 'provinces.province as province')->orderBy('communes.defaut')
         ->get();
         return response()->json( $communes );
     }

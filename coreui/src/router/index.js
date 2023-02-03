@@ -341,8 +341,10 @@ const EditIndicateur = () =>
     import ('@/views/indicateurs/EditIndicateur')
 const CreateIndicateur = () =>
     import ('@/views/indicateurs/CreateIndicateur')
-
-//Roles
+    // Fichier village
+const FichierVillages = () =>
+    import ('@/views/indicateurs/FichierVillages')
+    //Roles
 const Roles = () =>
     import ('@/views/roles/Roles')
 const Role = () =>
@@ -1653,6 +1655,15 @@ function configRoutes() {
                             meta: { label: 'Create Indicateur' },
                             name: 'Create Indicateur',
                             component: CreateIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'fichier-villages',
+                            meta: { label: 'Fichier Villages' },
+                            name: 'Fichier Villages',
+                            component: FichierVillages,
                             meta: {
                                 requiresUser: true
                             }

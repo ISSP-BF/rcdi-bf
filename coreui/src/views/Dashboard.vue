@@ -19,7 +19,7 @@
         <CCard> 
           <CCardBody>
             <CTabs add-tab-classes="mt-1">
-              <CTab>
+              <CTab active>
                 <template slot="title">
                   <CIcon name="cil-calculator"/> DEMOGRAPHIE
                 </template>
@@ -35,7 +35,7 @@
     </CRow>
     </CCardBody>
               </CTab>
-              <CTab >
+              <CTab>
                 <template slot="title">
                   <CIcon name="cil-basket"/> SERVICES
                 </template>
@@ -47,11 +47,26 @@
                 </template>
                 <GroupeBarChart :commune_id="commune_id" :annee="annee" groupe="ASSAINISSEMENT" />
               </CTab>
-              <CTab active>
+              <CTab>
                 <template slot="title">
                   <CIcon name="cil-chart-pie"/> AGRICULTURE
                 </template>
                 <GroupeBarChart :commune_id="commune_id" :annee="annee" groupe="AGRICULTURE" />
+              </CTab>
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-chart-pie"/> ETAT CIVIL
+                </template>
+              </CTab>
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-chart-pie"/> EDUCATION
+                </template>
+              </CTab>
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-chart-pie"/> SANTE
+                </template>
               </CTab>
             </CTabs>
           </CCardBody>

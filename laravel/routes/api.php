@@ -72,6 +72,8 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('primaires', 'PrimairesController');
     Route::resource('post_primaires', 'PostPrimairesController');
     Route::resource('indicateurs', 'IndicateursController');
+    
+    Route::resource('fichier-villages', 'FichierVillagesController');
 
     Route::resource('resource/{table}/resource', 'ResourceController');
     
