@@ -1,5 +1,5 @@
 <template>
-  <CDropdown inNav class="c-header-nav-items" placement="bottom-end" add-menu-classes="pt-0">
+  <CDropdown inNav class="c-header-nav-items" placement="bottom-end" add-menu-classes="pt-0" v-if="isConnected">
     <template #toggler>
       <CHeaderNavLink>
         <div class="c-avatar">
@@ -30,7 +30,8 @@ export default {
   name: 'TheHeaderDropdownAccnt',
   data() {
     return {
-      itemsCount: 42,
+      itemsCount: 0,
+      isConnected:false,
     }
   },
   methods: {
@@ -46,6 +47,12 @@ export default {
         }).catch(function (error) {
           console.log(error);
         });
+    }
+  },
+  mounted: function(){
+    let roles = localStorage.getItem("roles");
+    if (roles != null) {
+      this.isConnected = true;
     }
   }
 }

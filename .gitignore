@@ -19,6 +19,7 @@
 /laravel/Homestead.yaml
 /laravel/npm-debug.log
 /laravel/yarn-error.log
+/laravel/public/*.js
 
 
 /coreui/.DS_Store

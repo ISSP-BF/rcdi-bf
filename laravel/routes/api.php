@@ -18,6 +18,7 @@ Route::get('indicateurs/search', 'IndicateursController@search');
 Route::post('indicateurs/search/groupe', 'IndicateursController@searchGroupe');
 Route::get('indicateurs/getcommunesliste', 'IndicateursController@getcommunesliste');
 Route::get('indicateurs/getDefaultCommune', 'IndicateursController@getDefaultCommune');
+Route::get('indicateurs/getDefaultAll', 'IndicateursController@getDefaultAll');
 
 // Route::get('/BkDataUpdated', function () {
 //     return "MyData";

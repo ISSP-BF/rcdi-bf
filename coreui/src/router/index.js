@@ -1647,7 +1647,7 @@ function configRoutes() {
                             path: '',
                             component: Indicateurs,
                             meta: {
-                                requiresUser: true
+                                requiresUser: false
                             }
                         },
                         {
@@ -1665,7 +1665,7 @@ function configRoutes() {
                             name: 'Fichier Villages',
                             component: FichierVillages,
                             meta: {
-                                requiresUser: true
+                                requiresUser: false
                             }
                         },
                         {
@@ -1674,7 +1674,7 @@ function configRoutes() {
                             name: 'Indicateur',
                             component: Indicateur,
                             meta: {
-                                requiresUser: true
+                                requiresUser: false
                             }
                         },
                         {

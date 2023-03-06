@@ -102,6 +102,24 @@ class IndicateursController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $district = DB::table('indicateurs')
+        ->leftJoin('users', 'users.id', '=', 'indicateurs.created_by')
+        ->leftJoin('regions', 'regions.id', '=', 'indicateurs.region_id')
+        ->leftJoin('provinces', 'provinces.id', '=', 'indicateurs.province_id')
+        ->select('indicateurs.*', 'users.name as author', 'regions.region as region', 'provinces.province as province')
+        ->where('indicateurs.id', '=', $id)
+        ->first();
+        return response()->json( $district );
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -183,6 +201,21 @@ class IndicateursController extends Controller
         return $commune = Communes::where("defaut",true)->firstOrFail();
     }
     
+
+    public function getDefaultAll(){
+
+        $commune = Communes::where("defaut",true)->firstOrFail();
+        $province = Provinces::where("defaut",true)->firstOrFail();
+        $district = Districts::where("defaut",true)->firstOrFail();
+        $region = Regions::where("defaut",true)->firstOrFail();
+        return response()->json([
+            'commune'=>$commune,
+            'province'=>$province,
+            'district'=>$district,
+            'region'=>$region
+        ]);
+    }
+    
     /**
      * Display the specified resource.
      *
@@ -192,7 +225,7 @@ class IndicateursController extends Controller
     public function findBy(Request $request)
     {
         $validatedData = $request->validate([
-            'commune_id' => 'required',
+            // 'commune_id' => 'required',
             // 'annee' => 'required',
         ]);
         $indicateurs = DB::table('indicateurs')

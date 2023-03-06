@@ -114,16 +114,15 @@ export default {
               dataSearch[item.Indicateur]=item.Valeur;
               dataVisualisation.push(dataSearch);
             }
-            if(self.fields.findIndex(p=>p==item.Indicateur)<0){
+            if(self.fields&&self.fields.findIndex(p=>p==item.Indicateur)<0){
               self.fields.push(item.Indicateur);
               self.fieldsI.push(item.Indicateur);
             }
         });
         self.fields.push('actions');
-        console.log(dataVisualisation)
       }).catch(function (error) {
         console.log(error);
-        self.$router.push({ path: '/login' });
+        //self.$router.push({ path: '/login' });
       });
     }
   },

@@ -96,6 +96,11 @@
                       <label for="veuf" class="custom-control-label"> Veuf(ve) </label>
                     </div>
 
+                    <div role="group" class="custom-control custom-control-inline custom-radio">
+                      <input id="manquant" type="radio" class="custom-control-input" v-model="acteDeces.statut_matrimonial" value="MANQUANT">
+                      <label for="manquant" class="custom-control-label"> Manquant </label>
+                    </div>
+
                   </CCol>
                 </div>
             </template>

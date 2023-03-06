@@ -2,7 +2,7 @@
   <CRow>
     <CCol col="12" lg="6">
       <CCard>
-          <CCardHeader><h4>Détail du Acte Naissance id:  {{ $route.params.id }}</h4> </CCardHeader>
+          <CCardHeader><h4>Détail de l'indicateur id:  {{ $route.params.id }}</h4> </CCardHeader>
         <CCardBody>
           <h4>Numero Acte: {{acteNaissance.n_acte}}</h4>
           <h4>Region : {{acteNaissance.region}}</h4>
@@ -49,12 +49,12 @@ export default {
   },
   mounted: function(){
     let self = this;
-    axios.get(  this.$apiAdress + '/api/acte_naissances/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/indicateurs/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
       self.acteNaissance = response.data;
     }).catch(function (error) {
       console.log(error);
-      self.$router.push({ path: '/login' });
+      // self.$router.push({ path: '/login' });
     });
   }
 }

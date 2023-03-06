@@ -31,8 +31,17 @@ library.add(faUserSecret)
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+
+let adresse = location.protocol + "//" + location.hostname
+
+// Adresse local
+if (location.port == 8080) { adresse = adresse + ":8000" }
+// Adresse web
+if (location.port == 80) { adresse = adresse + "/index.php" }
+
 // Vue.prototype.$apiAdress = 'http://127.0.0.1:8000'
-Vue.prototype.$apiAdress = 'http://data.tenado.rcdi.gov.bf/index.php'
+Vue.prototype.$apiAdress = adresse
+    // Vue.prototype.$apiAdress = 'http://data.tenado.rcdi.gov.bf/index.php'
     // Vue.prototype.$apiAdress = 'http://data.manga.rcdi.gov.bf/index.php'
     // Vue.prototype.$apiAdress = 'http://data.rcdi.gov.bf'
     // Vue.prototype.$apiAdress = 'http://172.16.0.165:8000'

@@ -62,7 +62,8 @@ export default {
             }]
             for (let d of response.data){
               self.datasets[0].data.push(d.indice);
-              self.labels.push(d.niveau1);
+             // if(d.niveau1)
+              self.labels.push(d.niveau1?d.niveau1:d.indicateur);
               self.indicateurTitle=d.indicateur;
             }
         }).catch(function (error) {

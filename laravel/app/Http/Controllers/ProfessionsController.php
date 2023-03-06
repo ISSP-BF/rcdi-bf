@@ -53,7 +53,7 @@ class ProfessionsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'metier'             => 'required|min:1|max:64',
+            'metier'             => 'required|min:1|max:191',
         ]);
         $user = auth()->userOrFail();
         $profession = new Professions();
@@ -103,7 +103,7 @@ class ProfessionsController extends Controller
         //var_dump('bazinga');
         //die();
         $validatedData = $request->validate([
-            'metier'             => 'required|min:1|max:64',
+            'metier'             => 'required|min:1|max:191',
         ]);
         $profession = Professions::find($id);
         $profession->metier     = $request->input('metier');

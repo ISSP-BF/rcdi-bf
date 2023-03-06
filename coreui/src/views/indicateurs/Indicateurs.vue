@@ -186,9 +186,10 @@
                   >
                   </CSelect>
 
+                  <div role="group" class="row col-lg-12">
                   <CSelect
-                    label="Années Debut"
-                    class="col-lg-12"
+                    :label="vueGraphe=='COURBESIMPLE'||vueGraphe=='COURBEVOLUME'?'Années Debut':'Année'"
+                    class="col-lg-6"
                     :value.sync="indicateur.annee"
                     :plain="true"
                     :options="annees"
@@ -197,14 +198,15 @@
                   </CSelect>
 
                   <CSelect
-                    label="Années Fin"
-                    class="col-lg-12"
+                    label="Années Fin"  v-if="vueGraphe=='COURBESIMPLE'||vueGraphe=='COURBEVOLUME'"
+                    class="col-lg-6"
                     :value.sync="indicateur.anneefin"
                     :plain="true"
                     :options="annees"
                     v-model="indicateur.anneefin"
                   >
                   </CSelect>
+                  </div>
                  </div>
                 <CButton  v-if="!refreshing" color="primary" @click="search()">Actualiser
                 </CButton>
@@ -214,41 +216,36 @@
             </CCard>
           </CCol>
           <CCol col="12" lg="8">
-           
-            <CTabs>
-              <CTab>
-                <template slot="title">
-                  <CIcon name="cil-calculator"/>
-                </template>
-                <IndicateursSecteur1 v-if="!refreshing" :commune_id="indicateur.commune_id" :annee="indicateur.annee" :indicateur="indicateur.indicateur" />
-
-              </CTab> 
-              <CTab>
-                <template slot="title">
-                  <CIcon name="cil-bar-chart"/>
-                </template>
-                <IndicateurBarChart v-if="!refreshing" :commune_id="indicateur.commune_id" :annee="indicateur.annee" :groupe="indicateur.groupe" :indicateur="indicateur.indicateur" />
-
-              </CTab>
-              <CTab>
-                <template slot="title">
-                  <CIcon name="cil-chart-line"/>
-                </template>
-                <IndicateurLineChart v-if="!refreshing" :commune_id="indicateur.commune_id" :annee="indicateur.annee" :groupe="indicateur.groupe" :indicateur="indicateur.indicateur" />
-
-              </CTab>
-              <CTab active>
-                <template slot="title">
-                  <CIcon name="cil-chart-line"/>
-                </template>
-                <IndicateurAnneesLineChart v-if="!refreshing" :commune_id="indicateur.commune_id" :annee="indicateur.annee" :anneefin="indicateur.anneefin" :groupe="indicateur.groupe" :indicateur="indicateur.indicateur" />
-
-              </CTab>
-            </CTabs>
-
-          </CCol>
-          <CCol col="12" lg="8" v-if="!refreshing">
-          </CCol> </CRow
+            <div role="group" class="form-group">
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="secteur" type="radio" class="custom-control-input"
+                    v-model="vueGraphe" :value="'SECTEUR'">
+                  <label for="secteur" class="custom-control-label"> Secteur </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="histogramme" type="radio" class="custom-control-input"
+                    v-model="vueGraphe" :value="'HISTOGRAMME'">
+                  <label for="histogramme" class="custom-control-label"> Histogramme </label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="courbeSimple" type="radio" class="custom-control-input"
+                    v-model="vueGraphe" :value="'COURBESIMPLE'">
+                  <label for="courbeSimple" class="custom-control-label"> Courbe simple</label>
+                </div>
+                <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="courbeVolume" type="radio" class="custom-control-input"
+                    v-model="vueGraphe" :value="'COURBEVOLUME'">
+                  <label for="courbeVolume" class="custom-control-label"> Courbe volume </label>
+                </div>
+            </div>
+            <div>
+              <IndicateursSecteur1 v-if="vueGraphe=='SECTEUR'&&!refreshing" :commune_id="indicateurSearch.commune_id" :annee="indicateurSearch.annee" :indicateur="indicateurSearch.indicateur" />
+              <IndicateurBarChart v-if="vueGraphe=='HISTOGRAMME'&&!refreshing" :commune_id="indicateurSearch.commune_id" :annee="indicateurSearch.annee" :groupe="indicateurSearch.groupe" :indicateur="indicateurSearch.indicateur" />
+              <IndicateurLineChart v-if="vueGraphe=='COURBEVOLUME'&&!refreshing" :commune_id="indicateurSearch.commune_id" :annee="indicateurSearch.annee" :groupe="indicateurSearch.groupe" :indicateur="indicateurSearch.indicateur" />
+              <IndicateurAnneesLineChart v-if="vueGraphe=='COURBESIMPLE'&&!refreshing" :commune_id="indicateurSearch.commune_id" :annee="indicateurSearch.annee" :anneefin="indicateurSearch.anneefin" :groupe="indicateurSearch.groupe" :indicateur="indicateurSearch.indicateur" />
+            </div>
+          </CCol> 
+          </CRow
         >
       </CTab>
     </CTabs>
@@ -280,23 +277,12 @@ export default {
     DeleteButton,IndicateurBarChart,IndicateurLineChart,IndicateurAnneesLineChart,
   },
   data: () => {
-    return {sportsData: [
-        { Id: 'game1', Game: 'Badminton' },
-        { Id: 'game2', Game: 'Football' },
-        { Id: 'game3', Game: 'Tennis' },
-        { Id: 'game4', Game: 'Golf' },
-        { Id: 'game5', Game: 'Cricket' },
-        { Id: 'game6', Game: 'Handball' },
-        { Id: 'game7', Game: 'Karate' },
-        { Id: 'game8', Game: 'Fencing' },
-        { Id: 'game9', Game: 'Boxing' }
-      ],
-      fields : { text: 'Game', value: 'Id' }
-    ,
-      indicateur: {
+    return {
+      vueGraphe:"SECTEUR",  
+      indicateurSearch: {
         region_id: null,
         province_id: null,
-        commune_id: 2208,
+        commune_id: null,
         groupe: null,
         indicateur: null,
         niveau1: null,
@@ -307,6 +293,24 @@ export default {
         indice: null,
         source: null,
       }, 
+      indicateur: {
+        region_id: null,
+        province_id: null,
+        commune_id: null,
+        groupe: null,
+        indicateur: null,
+        niveau1: null,
+        niveau2: null,
+        mois: null,
+        annee: 2019,
+        anneefin: 2019,
+        indice: null,
+        source: null,
+      }, 
+      region:null,
+      province:null,
+      commune:null,
+      district:null,
       formationSanitaires: [],
       regions: [],
       provinces: [],
@@ -382,6 +386,7 @@ export default {
 
     search(){
       this.refreshing = true;
+      this.indicateurSearch = JSON.parse(JSON.stringify(this.indicateur))
        setTimeout(() => {
         this.refreshing = false;
         this.refreshing2 = true;
@@ -412,7 +417,7 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-          self.$router.push({ path: "/login" });
+          // self.$router.push({ path: "/login" });
         });
     },
     createIndicateur() {
@@ -438,7 +443,7 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-          self.$router.push({ path: "/login" });
+          // self.$router.push({ path: "/login" });
         });
     },
     getAllIndicateursSearch() {
@@ -482,8 +487,35 @@ export default {
           // self.$router.push({ path: 'login' });
         });
     },
+    getDefaultAll() {
+      let self = this;
+      
+      axios
+        .get(
+          this.$apiAdress +
+            "/api/indicateurs/getDefaultAll?token=" +
+            localStorage.getItem("api_token")
+        )
+        .then(function(response) {
+          self.region = response.data.region;
+          self.indicateur.region_id = self.region.id;
+          self.province = response.data.province;
+          self.indicateur.province_id = self.province.id;
+          self.commune = response.data.commune;
+          self.indicateur.commune_id = self.commune.id;
+           
+          self.filterByGroupe();
+
+        })
+        .catch(function(error) {
+          console.log(error);
+          // self.$router.push({ path: 'login' });
+        });
+    },
   },
   mounted: function() {
+    
+    this.indicateurSearch = JSON.parse(JSON.stringify(this.indicateur))
     this.getndicateurs();
     this.getAllIndicateursSearch();
   },

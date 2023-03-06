@@ -1,7 +1,7 @@
 <template>
   <CDropdown inNav class="c-header-nav-items" placement="bottom-end" add-menu-classes="pt-0" v-if="isAdmin">
-    <template #toggler style="cursor:pointer">
-    <div>
+    <template #toggler>
+    <div style="cursor:pointer">
       <CIcon name="cil-bell" style="cursor: pointer;"> </CIcon><CBadge color="danger" shape="pill" style="cursor: pointer;">{{itemsCount}}</CBadge></div>
     </template>
     <CDropdownHeader tag="div" class="text-center" color="light">
@@ -32,7 +32,7 @@ export default {
       let self = this;
       axios.get(this.$apiAdress + '/api/BkDataUpdatedNumber?token=' + localStorage.getItem("api_token"))
         .then(function (response) {
-          // console.log(response)
+          // console.log(response) 
           self.itemsCount = response.data;
           if(self.itemsCount == 0) self.itemsCount = null;
         }).catch(function (error) {
@@ -55,6 +55,9 @@ export default {
     let roles = localStorage.getItem("roles");
     if (roles != null) {
         roles = roles.split(',')
+    }
+    else {
+      return
     }
     
     if(roles.indexOf('admin')>=0){
