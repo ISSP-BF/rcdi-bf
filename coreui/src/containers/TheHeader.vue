@@ -11,7 +11,11 @@
       @click="$store.commit('toggleSidebarDesktop')"
     />
     <CHeaderBrand class="mx-auto d-lg-none" to="/">
-      <CIcon name="logo" height="48" alt="Logo"/>
+      <!-- <CIcon name="logo" height="48" alt="Logo"/> -->
+      <img src="img/avatars/logo-full-no-logo.png" size="custom-size" 
+        class="d-block" 
+        :height="50" 
+        :viewBox="`0 0 ${minimize ? 110 : 556} 134`"/>
     </CHeaderBrand>
     <CMenu/>
     <CHeaderNav class="mr-3">

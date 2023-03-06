@@ -8,9 +8,10 @@
             <strong>Fichier Village</strong></h3>
             <h6>Source : RGPH 2019</h6>
             <div class="card-header-actions"><ExportButton
-                  :items="items"
-                  title="Indicateurs"
+                  :items="dataVisualisation"
+                  title="Fichier village"
                   :fields="fields"
+                  :showDefault="true"
                 />&nbsp;
              </div>
         </CCardHeader>
@@ -24,7 +25,7 @@
             </CAlert>
             <CDataTable
               hover
-              :items="items"
+              :items="dataVisualisation"
               :fields="fields"
               :items-per-page="10"
               pagination
@@ -49,17 +50,7 @@
                   <strong>{{item.Indicateur}}</strong>
                 </td>  
               </template>  
-              <template #actions="{item}">
-                <td>
-                  <div class="card-header-actions" style="display:flex">
-                  <CButton color="secondary"  size="sm">Détail</CButton>
-                  &nbsp;
-                  <CButton  size="sm" color="primary"><CIcon name="cil-pencil"/></CButton>
-                  &nbsp;
-                      <CButton v-if="you!=item.id"  size="sm" color="danger"><CIcon name="cil-x-circle"/></CButton>
-                  </div>
-                </td>
-              </template>
+             
             </CDataTable>
         </CCardBody>  
       </CCard>
@@ -80,6 +71,7 @@ export default {
   data: () => {
     return {
       items: [],
+      dataVisualisation:[],
       fields: ['CODE_REGION','REGION','CODE_PROVINCE','PROVINCE','CODE_COMMUNE','COMMUNE','MILIEU_RESIDENCE','codeAppel',
       'Village_Secteur','m5_new'],
       fieldsI: ['CODE_REGION','REGION','CODE_PROVINCE','PROVINCE','CODE_COMMUNE','COMMUNE','MILIEU_RESIDENCE','codeAppel',
@@ -103,23 +95,23 @@ export default {
       axios.get(  this.$apiAdress + '/api/fichier-villages?token=' + localStorage.getItem("api_token") )
       .then(function (response) {
         self.items = response.data;
-        let dataVisualisation = [];
+        self.dataVisualisation = [];
         self.items.forEach(item => {
-            let dataSearch = dataVisualisation.find(p=>p.m5_new==item.m5_new);
+            let dataSearch = self.dataVisualisation.find(p=>p.m5_new.includes(item.m5_new));
             if(dataSearch){
               dataSearch[item.Indicateur]=item.Valeur;
             }
             else{
               dataSearch=item;
               dataSearch[item.Indicateur]=item.Valeur;
-              dataVisualisation.push(dataSearch);
+              self.dataVisualisation.push(dataSearch);
             }
             if(self.fields&&self.fields.findIndex(p=>p==item.Indicateur)<0){
               self.fields.push(item.Indicateur);
               self.fieldsI.push(item.Indicateur);
             }
         });
-        self.fields.push('actions');
+        // self.fields.push('actions');
       }).catch(function (error) {
         console.log(error);
         //self.$router.push({ path: '/login' });

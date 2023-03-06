@@ -8,7 +8,7 @@ var FileSaver = require('file-saver');
 
 export default {
   name: 'ExportButton',
-  props: ['items','fields','title'],
+  props: ['items','fields','title','showDefault'],
   data: () => {
     return {
       show:false,
@@ -43,7 +43,9 @@ export default {
     if (roles != null) {
         roles = roles.split(',')
     }
+   
     if (roles != null && roles.indexOf('exporter') >= 0){this.show = true;}
+    if(this.showDefault) {this.show = true;}
   }
 }
 </script>

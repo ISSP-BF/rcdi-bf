@@ -154,7 +154,8 @@ export default {
         )
         .then(function (response) {
             self.name = '';
-            self.message = 'Successfully created menu element.';
+            // self.message = 'Successfully created menu element.';
+            self.$toasted.show("Le menu a été créé avec succès",{type:"success"});
             self.showAlert();
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
@@ -164,6 +165,7 @@ export default {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
+              self.$toasted.show("Les données sont invalides",{type:"error"});
               self.showAlert();
             }else{
               console.log(error);
