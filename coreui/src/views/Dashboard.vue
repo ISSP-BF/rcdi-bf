@@ -160,10 +160,12 @@ export default {
           setTimeout(() => {
           this.refreshing2 = false;
         }, 1);
-       }, 2000);
+       }, 500);
     },
     getCommuneDefaut (){
       let self = this;
+      this.refreshing = true;
+      // this.refreshing2 = true;
       axios.get(  this.$apiAdress + '/api/indicateurs/getDefaultCommune')
       .then(function (response) {
         localStorage.setItem("communedefaut",JSON.stringify(response))

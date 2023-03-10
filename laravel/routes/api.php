@@ -35,6 +35,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('register', 'AuthController@register'); 
+    Route::get('userProfile', 'AuthController@userProfile'); 
 
     Route::resource('notes', 'NotesController');
     Route::resource('regions', 'RegionsController');

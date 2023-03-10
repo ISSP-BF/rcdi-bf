@@ -15,7 +15,6 @@ import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import loading from 'vuejs-loading-screen'
-import { MultiSelectPlugin } from '@syncfusion/ej2-vue-dropdowns';
 import Toasted from 'vue-toasted'
 
 Vue.use(Toasted, {
@@ -40,8 +39,8 @@ if (location.port == 8080) { adresse = adresse + ":8000" }
 if (location.port == 80) { adresse = adresse + "/index.php" } else {
     adresse = adresse + "/index.php"
 }
-console.log(location, " Information location")
-    // Vue.prototype.$apiAdress = 'http://127.0.0.1:8000'
+// console.log(location, " Information location")
+// Vue.prototype.$apiAdress = 'http://127.0.0.1:8000'
 Vue.prototype.$apiAdress = adresse
     // Vue.prototype.$apiAdress = 'http://data.tenado.rcdi.gov.bf/index.php'
     // Vue.prototype.$apiAdress = 'http://data.manga.rcdi.gov.bf/index.php'

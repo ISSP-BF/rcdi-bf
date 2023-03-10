@@ -132,7 +132,7 @@
             <CCard no-header>
               <CCardBody>
                 <h3>
-                  Filtrer
+                  Filtre
                 </h3>
 
                 <div class="row ">
@@ -392,8 +392,8 @@ export default {
         this.refreshing2 = true;
           setTimeout(() => {
           this.refreshing2 = false;
-        }, 10);
-       }, 10);
+        }, 1);
+       }, 1);
     }, 
     deleteIndicateur(id) {
       let self = this;

@@ -4,7 +4,7 @@
       <CCard no-header>
         <CCardBody>
           <h3>
-            Create Menu
+            Ajouter un  Menu
           </h3>
           <CAlert
             :show.sync="dismissCountDown"
@@ -14,10 +14,10 @@
             ({{dismissCountDown}}) {{ message }}
           </CAlert>
 
-          <CInput label="Name" type="text" placeholder="Name" v-model="name"></CInput>
+          <CInput label="Name" type="text" placeholder="Intitulé" v-model="name"></CInput>
 
-          <CButton color="primary" @click="store()">Create</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton color="primary" @click="store()">Ajouter</CButton>
+          <CButton color="primary" @click="goBack">Retourner</CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -27,7 +27,7 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'CreateMenu',
+  name: 'AjouterMenu',
   data: () => {
     return {
         name: '',

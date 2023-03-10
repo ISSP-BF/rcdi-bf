@@ -84,7 +84,8 @@ import {
     cilBarChart,
     cilChartLine,
     cilApplicationsSettings,
-    cilHouse
+    cilHouse,
+    cilTrash
 
 } from '@coreui/icons'
 
@@ -143,7 +144,8 @@ export const iconsSet = Object.assign({}, { logo }, {
     cilUserFollow,
     cilXCircle,
     cilHospital,
-    cilHouse
+    cilHouse,
+    cilTrash
 }, {
     cifUs,
     cifBr,

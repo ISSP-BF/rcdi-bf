@@ -458,7 +458,7 @@ function configRoutes() {
     return [{
             path: '/',
             redirect: '/dashboard',
-            name: 'Home',
+            name: 'Accueil',
             component: TheContainer,
             children: [{
                     path: 'media',
@@ -470,7 +470,7 @@ function configRoutes() {
                 },
                 {
                     path: 'dashboard',
-                    name: 'Dashboard',
+                    name: 'Tableau de bord',
                     component: Dashboard
                 },
                 {
@@ -563,7 +563,7 @@ function configRoutes() {
                         {
                             path: ':menu/menuelement/create',
                             meta: { label: 'Create Menu Element' },
-                            name: 'Create Menu Element',
+                            name: 'Ajouter un element du menu',
                             component: CreateMenuElement,
                             meta: {
                                 requiresAdmin: true
@@ -581,7 +581,7 @@ function configRoutes() {
                         {
                             path: ':menu/menuelement/:id/edit',
                             meta: { label: 'Edit Menu Element' },
-                            name: 'Edit Menu Element',
+                            name: 'Modifier Menu Element',
                             component: EditMenuElement,
                             meta: {
                                 requiresAdmin: true
@@ -590,7 +590,7 @@ function configRoutes() {
                         {
                             path: ':menu/menuelement/:id/delete',
                             meta: { label: 'Delete Menu Element' },
-                            name: 'Delete Menu Element',
+                            name: 'Supprimer Menu Element',
                             component: DeleteMenuElement,
                             meta: {
                                 requiresAdmin: true
@@ -600,7 +600,7 @@ function configRoutes() {
                 },
                 {
                     path: 'users',
-                    meta: { label: 'Users' },
+                    meta: { label: 'Utilisateurs' },
                     component: {
                         render(c) { return c('router-view') }
                     },
@@ -614,7 +614,7 @@ function configRoutes() {
                         {
                             path: 'create',
                             meta: { label: 'Create User' },
-                            name: 'Create User',
+                            name: 'Ajouter un utilisateur',
                             component: CreateUser,
                             meta: {
                                 requiresAdmin: true
@@ -623,7 +623,7 @@ function configRoutes() {
                         {
                             path: 'profil',
                             meta: { label: 'Profil User' },
-                            name: 'Profil User',
+                            name: 'Profil utilisateur',
                             component: ProfilUser,
                             meta: {
                                 requiresUser: true
@@ -632,7 +632,7 @@ function configRoutes() {
                         {
                             path: ':id',
                             meta: { label: 'User Details' },
-                            name: 'User',
+                            name: 'Utilisateur',
                             component: User,
                             meta: {
                                 requiresAdmin: true
@@ -641,7 +641,7 @@ function configRoutes() {
                         {
                             path: ':id/edit',
                             meta: { label: 'Edit User' },
-                            name: 'Edit User',
+                            name: 'Modifier utilisateur',
                             component: EditUser,
                             meta: {
                                 requiresAdmin: true
@@ -707,7 +707,7 @@ function configRoutes() {
                         {
                             path: 'create',
                             meta: { label: 'Create Region' },
-                            name: 'Create Region',
+                            name: 'Ajouter region',
                             component: CreateRegion,
                             meta: {
                                 requiresUser: true
@@ -716,7 +716,7 @@ function configRoutes() {
                         {
                             path: ':id',
                             meta: { label: 'Region Details' },
-                            name: 'Region',
+                            name: 'Regions',
                             component: Region,
                             meta: {
                                 requiresUser: true
@@ -725,7 +725,7 @@ function configRoutes() {
                         {
                             path: ':id/edit',
                             meta: { label: 'Edit Region' },
-                            name: 'Edit Region',
+                            name: 'modifier Region',
                             component: EditRegion,
                             meta: {
                                 requiresUser: true
@@ -995,7 +995,7 @@ function configRoutes() {
                 },
                 {
                     path: 'acte_deces',
-                    meta: { label: 'ActeDecess' },
+                    meta: { label: 'Acte de décès' },
                     component: {
                         render(c) { return c('router-view') }
                     },
@@ -1008,8 +1008,8 @@ function configRoutes() {
                         },
                         {
                             path: 'create',
-                            meta: { label: 'Create ActeDeces' },
-                            name: 'Create ActeDeces',
+                            meta: { label: 'Ajout d\'un acte de décès' },
+                            name: 'Ajout d\'un acte de décès',
                             component: CreateActeDeces,
                             meta: {
                                 requiresUser: true
@@ -1017,8 +1017,8 @@ function configRoutes() {
                         },
                         {
                             path: ':id',
-                            meta: { label: 'ActeDeces Details' },
-                            name: 'ActeDeces',
+                            meta: { label: 'Details Acte décès' },
+                            name: 'Acte décès',
                             component: ActeDeces,
                             meta: {
                                 requiresUser: true
@@ -1026,8 +1026,8 @@ function configRoutes() {
                         },
                         {
                             path: ':id/edit',
-                            meta: { label: 'Edit ActeDeces' },
-                            name: 'Edit ActeDeces',
+                            meta: { label: 'Modification Acte décès' },
+                            name: 'Modification Acte décès',
                             component: EditActeDeces,
                             meta: {
                                 requiresUser: true
@@ -1051,8 +1051,8 @@ function configRoutes() {
                         },
                         {
                             path: 'create',
-                            meta: { label: 'Create ActeMariage' },
-                            name: 'Create ActeMariage',
+                            meta: { label: 'Ajout d\'un acte de mariage' },
+                            name: 'Ajout d\'un acte de mariage',
                             component: CreateActeMariage,
                             meta: {
                                 requiresUser: true
@@ -1060,8 +1060,8 @@ function configRoutes() {
                         },
                         {
                             path: ':id',
-                            meta: { label: 'ActeMariage Details' },
-                            name: 'ActeMariage',
+                            meta: { label: 'Détail de l\'acte de mariage' },
+                            name: 'Acte de Mariage',
                             component: ActeMariage,
                             meta: {
                                 requiresUser: true
@@ -1069,8 +1069,8 @@ function configRoutes() {
                         },
                         {
                             path: ':id/edit',
-                            meta: { label: 'Edit ActeMariage' },
-                            name: 'Edit ActeMariage',
+                            meta: { label: 'Modification de l\'acte de mariage' },
+                            name: 'Modification de l\'acte de mariage',
                             component: EditActeMariage,
                             meta: {
                                 requiresUser: true

@@ -4,7 +4,6 @@
 
 <script>
 
-
 export default {
   name: 'AddButton',
   emits: ['ajouter'],

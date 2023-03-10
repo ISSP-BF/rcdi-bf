@@ -9,7 +9,8 @@
        <CRow>
     
     <CCol col="12" xl="12">
-     </CCol>
+       <xls-csv-parser :columns="columns" @on-validate="onValidate" :help="help" lang="fr"></xls-csv-parser>
+    </CCol>
     <CCol col="12" xl="12"  v-if="items.length>0">
       <transition name="slide">
             <CDataTable
@@ -44,11 +45,13 @@
 <script>
 
 import axios from 'axios'
- 
+import { XlsCsvParser } from 'vue-xls-csv-parser';
+
 export default {
   name: 'ImportButton',
   components: {
-     },
+      XlsCsvParser,
+    },
   props: ['fields','title','apiUrl'],
   
   data: () => {
@@ -80,6 +83,8 @@ export default {
                 NbFemmeVueCPN, NbFemmeInscriteCPN1, NbFemmeInscriteCPN1_Trim1, NbFemmeVueCPN4, 
                 NbFemmeInscriteVueCPN_2Td, NbFemmeFer_Acide_Folique, NbFemmeFer_Acide_Folique_CPN3, 
                 NbGrossesse_Refere, NbFemmeVueCPN_TPI3 et NbFemmeVueCPN_TPI3_MILDA `,
+    
+
       currentPage: 1,
       
       totalRows: 0,

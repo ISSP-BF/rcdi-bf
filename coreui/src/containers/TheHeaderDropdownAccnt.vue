@@ -42,14 +42,32 @@ export default {
       let self = this;
       axios.post(this.$apiAdress + '/api/logout?token=' + localStorage.getItem("api_token"), {})
         .then(function (response) {
-          localStorage.setItem('roles', '');
+          localStorage.removeItem('api_token');
+          localStorage.removeItem('roles');
           self.$router.push({ path: '/login' });
         }).catch(function (error) {
+          localStorage.removeItem('api_token');
+          localStorage.removeItem('roles');
+          self.$router.push({ path: '/login' });
           console.log(error);
+        });
+    },
+    refresh() {
+      let self = this;
+      axios.post(this.$apiAdress + '/api/refresh?token=' + localStorage.getItem("api_token"),{})
+        .then(function (response) {
+            localStorage.setItem("api_token", response.data.access_token);
+            localStorage.setItem('roles', response.data.roles);
+        }).catch(function (error) {
+          console.log(error);
+          localStorage.removeItem("api_token")
+          localStorage.removeItem("roles")
+          // self.$router.push({ path: '/login' });
         });
     }
   },
   mounted: function(){
+    this.refresh();
     let roles = localStorage.getItem("roles");
     if (roles != null) {
       this.isConnected = true;

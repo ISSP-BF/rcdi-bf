@@ -7,7 +7,7 @@
             <h4>
               Menus
             </h4>
-              <CButton color="primary" @click="addMenu()" class="mb-3">Add Menu</CButton>
+              <CButton color="primary" @click="addMenu()" class="mb-3">Ajouter un Menu</CButton>
               <CDataTable
                 hover
                 :items="items"
@@ -15,24 +15,22 @@
                 :items-per-page="10"
                 pagination
               >
-                <template #name="{item}">
+                <template #intitule="{item}">
                   <td>
                     <strong>{{item.name}}</strong>
                   </td>
                 </template>
-                <template #menu_elements="{item}">
+                <template #elements_menu="{item}">
                   <td>
-                    <CButton color="primary" @click="menuElements( item.id )">Menu Elements</CButton>
+                    <CButton color="primary" @click="menuElements( item.id )">Sous element du menu</CButton>
                   </td>
                 </template>
-                <template #edit="{item}">
+                <template #actions="{item}">
                   <td>
-                    <CButton color="primary" @click="editMenu( item.id )">Edit</CButton>
+                    <CButton color="primary" @click="editMenu( item.id )">Actions</CButton>
                   </td>
-                </template>
-                <template #delete="{item}">
                   <td>
-                    <CButton color="danger" @click="deleteMenu( item.id )">Delete</CButton>
+                    <CButton color="danger" @click="deleteMenu( item.id )">Supprimer</CButton>
                   </td>
                 </template>
               </CDataTable>
@@ -49,7 +47,7 @@ export default {
   name: 'MenuIndex',
   data () {
     return {
-      fields: ['name', 'menu_elements', 'edit', 'delete'],
+      fields: ['intitule', 'elements_menu', 'actions'],
       items: [],
     }
   },
