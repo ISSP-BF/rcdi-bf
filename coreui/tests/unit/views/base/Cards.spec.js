@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { shallowMount, mount } from '@vue/test-utils'
-import CoreuiVue from '@coreui/vue'
+import CoreuiVue from '@coreui/vue-pro'
 import Cards from '@/views/base/Cards'
 
 Vue.use(CoreuiVue)
@@ -19,11 +19,11 @@ describe('Cards.vue', () => {
   })
   it('is Vue instance', () => {
     const wrapper = shallowMount(Cards)
-    expect(wrapper.isVueInstance()).toBe(true)
+    expect(wrapper.vm).toBeTruthy()
   })
   it('is Cards', () => {
     const wrapper = shallowMount(Cards)
-    expect(wrapper.is(Cards)).toBe(true)
+    expect(wrapper.findComponent(Cards)).toBeTruthy()
   })
   test('renders correctly', () => {
     const wrapper = mount(Cards)

@@ -161,7 +161,7 @@ export const iconsSet = Object.assign({}, { logo }, {
     cibTumblr,
     cibXing,
     cibGithub,
-    cibStackOverflow,
+    // cibStackOverflow,
     cibYoutube,
     cibDribbble,
     cibInstagram,

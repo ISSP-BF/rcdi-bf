@@ -13,12 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('indicateurs/findBy', 'IndicateursController@findBy');
-Route::get('indicateurs/search', 'IndicateursController@search');
-Route::post('indicateurs/search/groupe', 'IndicateursController@searchGroupe');
-Route::get('indicateurs/getcommunesliste', 'IndicateursController@getcommunesliste');
-Route::get('indicateurs/getDefaultCommune', 'IndicateursController@getDefaultCommune');
-Route::get('indicateurs/getDefaultAll', 'IndicateursController@getDefaultAll');
+Route::post('indicateurs-old/findBy', 'IndicateursOldController@findBy');
+Route::get('indicateurs-old/search', 'IndicateursOldController@search');
+Route::post('indicateurs-old/search/groupe', 'IndicateursOldController@searchGroupe');
+Route::get('indicateurs-old/getcommunesliste', 'IndicateursOldController@getcommunesliste');
+Route::get('indicateurs-old/getDefaultCommune', 'IndicateursOldController@getDefaultCommune');
+Route::get('indicateurs-old/getDefaultAll', 'IndicateursOldController@getDefaultAll');
 
 // Route::get('/BkDataUpdated', function () {
 //     return "MyData";
@@ -46,7 +46,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('professions', 'ProfessionsController');
     Route::resource('districts', 'DistrictsController');
     Route::resource('formation_sanitaires', 'FormationSanitairesController');
-    Route::get('acte_naissanceslimiter', 'ActeNaissancesController@limiter');
+    Route::get('acte_naissances/limiter', 'ActeNaissancesController@limiter');
     Route::resource('acte_naissances', 'ActeNaissancesController');
     Route::resource('acte_deces', 'ActeDecesController');
     Route::resource('acte_mariages', 'ActeMariagesController');
@@ -73,9 +73,18 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('pre_scolaires', 'PreScolairesController');
     Route::resource('primaires', 'PrimairesController');
     Route::resource('post_primaires', 'PostPrimairesController');
-    Route::resource('indicateurs', 'IndicateursController');
+    Route::resource('indicateurs-old', 'IndicateursOldController');
     
     Route::resource('fichier-villages', 'FichierVillagesController');
+    Route::resource('groupes', 'GroupesController');
+    Route::resource('sous_groupes', 'SousGroupesController');
+    Route::get('sous_groupes/findByGroupe/{id}', 'SousGroupesController@findByGroupe');
+    Route::resource('desagregations', 'DesagregationsController');
+    Route::resource('sous_indicateurs', 'SousIndicateursController');
+    Route::get('sous_indicateurs/findByDesagregation/{id}', 'SousIndicateursController@findByDesagregation');
+    Route::resource('indicateurs', 'IndicateursController');
+    Route::get('indicateurs/findByGroupe/{id}', 'IndicateursController@findByGroupe');
+    Route::resource('donnees', 'DonneesController');
 
     Route::resource('resource/{table}/resource', 'ResourceController');
     

@@ -332,6 +332,65 @@ const EditPostPrimaire = () =>
 const CreatePostPrimaire = () =>
     import ('@/views/post_primaires/CreatePostPrimaire')
 
+//OldIndicateurs
+const OldIndicateurs = () =>
+    import ('@/views/indicateurs-old/Indicateurs')
+const OldIndicateur = () =>
+    import ('@/views/indicateurs-old/Indicateur')
+const OldEditIndicateur = () =>
+    import ('@/views/indicateurs-old/EditIndicateur')
+const OldCreateIndicateur = () =>
+    import ('@/views/indicateurs-old/CreateIndicateur')
+    // Fichier village
+const FichierVillages = () =>
+    import ('@/views/indicateurs-old/FichierVillages')
+    // Fichier village
+const MultiSelect = () =>
+    import ('@/views/indicateurs-old/MultiSelect')
+
+
+
+
+//Groupes
+const Groupes = () =>
+    import ('@/views/groupes/Groupes')
+const Groupe = () =>
+    import ('@/views/groupes/Groupe')
+const EditGroupe = () =>
+    import ('@/views/groupes/EditGroupe')
+const CreateGroupe = () =>
+    import ('@/views/groupes/CreateGroupe')
+
+//Groupes
+const SousGroupes = () =>
+    import ('@/views/sous_groupes/SousGroupes')
+const SousGroupe = () =>
+    import ('@/views/sous_groupes/SousGroupe')
+const EditSousGroupe = () =>
+    import ('@/views/sous_groupes/EditSousGroupe')
+const CreateSousGroupe = () =>
+    import ('@/views/sous_groupes/CreateSousGroupe')
+
+//Desagregations
+const Desagregations = () =>
+    import ('@/views/desagregations/Desagregations')
+const Desagregation = () =>
+    import ('@/views/desagregations/Desagregation')
+const EditDesagregation = () =>
+    import ('@/views/desagregations/EditDesagregation')
+const CreateDesagregation = () =>
+    import ('@/views/desagregations/CreateDesagregation')
+
+//Sous Indicateur
+const SousIndicateurs = () =>
+    import ('@/views/sous_indicateurs/SousIndicateurs')
+const SousIndicateur = () =>
+    import ('@/views/sous_indicateurs/SousIndicateur')
+const EditSousIndicateur = () =>
+    import ('@/views/sous_indicateurs/EditSousIndicateur')
+const CreateSousIndicateur = () =>
+    import ('@/views/sous_indicateurs/CreateSousIndicateur')
+
 //Indicateurs
 const Indicateurs = () =>
     import ('@/views/indicateurs/Indicateurs')
@@ -341,10 +400,19 @@ const EditIndicateur = () =>
     import ('@/views/indicateurs/EditIndicateur')
 const CreateIndicateur = () =>
     import ('@/views/indicateurs/CreateIndicateur')
-    // Fichier village
-const FichierVillages = () =>
-    import ('@/views/indicateurs/FichierVillages')
-    //Roles
+
+
+//Donnees
+const Donnees = () =>
+    import ('@/views/donnees/Donnees')
+const Donnee = () =>
+    import ('@/views/donnees/Donnee')
+const EditDonnee = () =>
+    import ('@/views/donnees/EditDonnee')
+const CreateDonnee = () =>
+    import ('@/views/donnees/CreateDonnee')
+
+//Roles
 const Roles = () =>
     import ('@/views/roles/Roles')
 const Role = () =>
@@ -1638,14 +1706,14 @@ function configRoutes() {
                 },
 
                 {
-                    path: 'indicateurs',
+                    path: 'indicateurs-old',
                     meta: { label: 'Indicateurs' },
                     component: {
                         render(c) { return c('router-view') }
                     },
                     children: [{
                             path: '',
-                            component: Indicateurs,
+                            component: OldIndicateurs,
                             meta: {
                                 requiresUser: false
                             }
@@ -1654,7 +1722,7 @@ function configRoutes() {
                             path: 'create',
                             meta: { label: 'Create Indicateur' },
                             name: 'Create Indicateur',
-                            component: CreateIndicateur,
+                            component: OldCreateIndicateur,
                             meta: {
                                 requiresUser: true
                             }
@@ -1669,10 +1737,19 @@ function configRoutes() {
                             }
                         },
                         {
+                            path: 'multi-select',
+                            meta: { label: 'MultiSelect' },
+                            name: 'MultiSelect',
+                            component: MultiSelect,
+                            meta: {
+                                requiresUser: false
+                            }
+                        },
+                        {
                             path: ':id',
                             meta: { label: 'Indicateur Details' },
                             name: 'Indicateur',
-                            component: Indicateur,
+                            component: OldIndicateur,
                             meta: {
                                 requiresUser: false
                             }
@@ -1681,7 +1758,265 @@ function configRoutes() {
                             path: ':id/edit',
                             meta: { label: 'Edit Indicateur' },
                             name: 'Edit Indicateur',
+                            component: OldEditIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'groupes',
+                    meta: { label: 'Groupes' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Groupes,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Groupe' },
+                            name: 'Ajouter groupe',
+                            component: CreateGroupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Groupe Details' },
+                            name: 'Groupes',
+                            component: Groupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Groupe' },
+                            name: 'modifier Groupe',
+                            component: EditGroupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'sous_groupes',
+                    meta: { label: 'Sous Groupes' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: SousGroupes,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Sous Groupe' },
+                            name: 'Ajouter sous groupe',
+                            component: CreateSousGroupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Sous Groupe Details' },
+                            name: 'SousGroupes',
+                            component: SousGroupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Groupe' },
+                            name: 'modifier SOusGroupe',
+                            component: EditSousGroupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'desagregations',
+                    meta: { label: 'Desagregations' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Desagregations,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Desagregation' },
+                            name: 'Ajouter desagregation',
+                            component: CreateDesagregation,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Desagregation Details' },
+                            name: 'Desagregations',
+                            component: Desagregation,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Desagregation' },
+                            name: 'modifier Desagregation',
+                            component: EditDesagregation,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'sous_indicateurs',
+                    meta: { label: 'SousIndicateurs' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: SousIndicateurs,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create SousIndicateur' },
+                            name: 'Ajouter sous_indicateurs',
+                            component: CreateSousIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'SousIndicateur Details' },
+                            name: 'SousIndicateurs',
+                            component: SousIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit SousIndicateur' },
+                            name: 'modifier sous indicateur',
+                            component: EditSousIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'indicateurs',
+                    meta: { label: 'Indicateurs' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Indicateurs,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Indicateur' },
+                            name: 'Ajouter indicateurs',
+                            component: CreateIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Indicateur Details' },
+                            name: 'Indicateurs',
+                            component: Indicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Indicateur' },
+                            name: 'modifier indicateur',
                             component: EditIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'donnees',
+                    meta: { label: 'Donnees' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Donnees,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Donnee' },
+                            name: 'Ajouter donnees',
+                            component: CreateDonnee,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Donnee Details' },
+                            name: 'Donnees',
+                            component: Donnee,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Donnee' },
+                            name: 'modifier donnee',
+                            component: EditDonnee,
                             meta: {
                                 requiresUser: true
                             }

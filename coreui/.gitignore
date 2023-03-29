@@ -1,5 +1,7 @@
 .DS_Store
 node_modules
+package-lock.json
+
 /dist
 /coverage
 
@@ -24,3 +26,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+
+# release
+/coreui-pro-vue-admin-template*.zip

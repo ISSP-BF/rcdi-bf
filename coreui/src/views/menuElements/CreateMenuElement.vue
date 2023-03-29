@@ -31,7 +31,7 @@
                   @update:checked="selectRadioSelectRole(rol)"
               />
             </div>
-            <CInput label="Name" type="text" placeholder="Name" v-model="menuelement.name"></CInput>
+            <CInput label="Libelle" type="text" placeholder="Libelle" v-model="menuelement.name"></CInput>
             <CSelect
               label="Type" 
               :value.sync="menuelement.type"
@@ -40,13 +40,13 @@
               @update:value="changeType()"
             >
             </CSelect>
-            <p>Other</p>
+            <p>Autre</p>
             <div v-if="divHref">
               <CInput label="Href" type="text" placeholder="Href" v-model="menuelement.href"></CInput>
             </div>
             <div v-if="divDropdownParent">
               <CSelect
-                label="Dropdown parent" 
+                label="Parent déroulant" 
                 :value.sync="menuelement.parent"
                 :plain="true"
                 :options="parents"
@@ -54,18 +54,18 @@
               </CSelect>
             </div>
             <div v-if="divIcon">
-              Icon - Find icon class in: 
+              Icon - Rechercher une classe d'icônes dans: 
               <a 
                 href="https://coreui.io/docs/icons/icons-list/#coreui-icons-free-502-icons"
                 target="_blank"
               >
-                CoreUI icons documentation
+               Documentation des icônes CoreUI
               </a>
               <br>
               <CInput type="text" placeholder="CoreUI Icon class - example: cil-bell" v-model="menuelement.icon"></CInput>
             </div>
-          <CButton color="primary" @click="store()">Create</CButton> &nbsp;
-          <CButton color="secondary" @click="goBack">Back</CButton>
+          <CButton color="primary" @click="store()">Ajouter</CButton> &nbsp;
+          <CButton color="secondary" @click="goBack">Retour</CButton>
         </CCardBody>
       </CCard>
     </CCol>
@@ -148,7 +148,6 @@ export default {
     },
     store() {
         let self = this;
-        console.log( self.menuelement )
         axios.post(  this.$apiAdress + '/api/menu/element/store?token=' + localStorage.getItem("api_token"),
           self.menuelement
         )

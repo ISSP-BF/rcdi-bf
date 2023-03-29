@@ -17,7 +17,7 @@
           <CInput label="Name" type="text" placeholder="Intitulé" v-model="name"></CInput>
 
           <CButton color="primary" @click="store()">Ajouter</CButton>
-          <CButton color="primary" @click="goBack">Retourner</CButton>
+          <CButton color="primary" @click="goBack">Retour</CButton>
         </CCardBody>
       </CCard>
     </CCol>

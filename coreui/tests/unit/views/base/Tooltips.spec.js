@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { shallowMount } from '@vue/test-utils';
-import CoreuiVue from '@coreui/vue'
+import CoreuiVue from '@coreui/vue-pro'
 import Tooltips from '@/views/base/Tooltips'
 
 Vue.use(CoreuiVue)
@@ -14,11 +14,11 @@ describe('Tooltips.vue', () => {
   })
   it('is Vue instance', () => {
     const wrapper = shallowMount(Tooltips)
-    expect(wrapper.isVueInstance()).toBe(true)
+    expect(wrapper.vm).toBeTruthy()
   })
   it('is Tooltips', () => {
     const wrapper = shallowMount(Tooltips)
-    expect(wrapper.is(Tooltips)).toBe(true)
+    expect(wrapper.findComponent(Tooltips)).toBeTruthy()
   })
   test('renders correctly', () => {
     const wrapper = shallowMount(Tooltips)

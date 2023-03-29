@@ -12,6 +12,15 @@
             </div>
           </CCardHeader>
           <CCardBody>
+            <div>
+              <EasyDataTable
+                v-model:server-options="serverOptions"
+                :server-items-length="serverItemsLength"
+                :loading="loading"
+                :headers="headers"
+                :items="items"
+              />
+            </div>
             <CAlert :show.sync="dismissCountDown" color="primary" fade>
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
@@ -178,7 +187,7 @@ export default {
     getActeNaissances() {
       let self = this;
       console.log(this.$apiAdress + '/api/acte_naissances/limiter?token=' + localStorage.getItem("api_token"))
-      axios.get(this.$apiAdress + '/api/acte_naissanceslimiter?token=' + localStorage.getItem("api_token"))
+      axios.get(this.$apiAdress + '/api/acte_naissances/limiter?token=' + localStorage.getItem("api_token"))
         .then(function (response) {
           console.log(response)
           self.items = response.data;

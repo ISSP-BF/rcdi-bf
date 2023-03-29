@@ -4,9 +4,7 @@
       <CWidgetDropdown color="primary" :header="tailleMoyenneMenages.value" :text="tailleMoyenneMenages.label">
        
         <template #footer>
-          <div
-            
-            class="mt-3 mx-3"
+          <div class="mt-3 mx-3"
             style="height:70px"
           />
         </template>
@@ -79,7 +77,7 @@ export default {
             annee:this.annee
           };
           
-      axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
+      axios.post(  this.$apiAdress + '/api/indicateurs-old/findBy',
          criteria
         )
         .then(function (response) {
@@ -112,7 +110,7 @@ export default {
             annee:this.annee
           };
           
-      axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
+      axios.post(  this.$apiAdress + '/api/indicateurs-old/findBy',
          criteria
         )
         .then(function (response) {
@@ -146,7 +144,7 @@ export default {
             annee:this.annee
           };
           
-      axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
+      axios.post(  this.$apiAdress + '/api/indicateurs-old/findBy',
          criteria
         )
         .then(function (response) {

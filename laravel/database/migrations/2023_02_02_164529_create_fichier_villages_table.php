@@ -28,6 +28,10 @@ class CreateFichierVillagesTable extends Migration
             $table->string('m5_new',255)->nullable();
             $table->string('Indicateur',255)->nullable();
             $table->string('Valeur',255)->nullable();
+            $table->tinyInteger('updated')->nullable()->default(0);
+            
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->integer('created_by')->unsigned()->nullable();
             $table->timestamps();
         });
     }

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Indicateurs;
-use App\Models\Communes;
+use App\Models\SousIndicateur;
+use App\Models\Indicateur;
+use App\Models\Groupe;
+use App\Models\SousGroupe;
+use App\Models\Desagregation;
 
 class IndicateursController extends Controller
 {
@@ -17,7 +20,7 @@ class IndicateursController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -27,28 +30,9 @@ class IndicateursController extends Controller
      */
     public function index()
     {
-        $indicateurs = DB::table('indicateurs')
-        ->leftJoin('provinces', function($join){
-            $join->on('indicateurs.province_id', '=', 'provinces.id');
-        })
-        ->leftJoin('communes', function($join){
-            $join->on('indicateurs.commune_id', '=', 'communes.id');
-        })
-        ->leftJoin('regions', function($join){
-            $join->on('indicateurs.region_id', '=', 'regions.id');
-        })
-        ->leftJoin('users', function($join){
-            $join->on('indicateurs.created_by', '=', 'users.id');
-        })
-        ->select('indicateurs.*', 
-        'users.name as author', 
-        'regions.region as region', 
-        'provinces.province as province',
-        'communes.commune as commune')->orderBy('id', 'DESC')
-        ->get();
-        return response()->json( $indicateurs );
+        return Indicateur::all();
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -56,248 +40,101 @@ class IndicateursController extends Controller
      */
     public function create()
     {
-        $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
-        $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
-        $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
-        $districts = DB::table('districts')->select('districts.nom_district as label', 'districts.id as value')->get();
-        $formationSanitaires = DB::table('formation_sanitaires')->select('formation_sanitaires.nom_structure as label', 'formation_sanitaires.id as value')->get();
-        return response()->json( ['communes'=>$communes,'regions'=>$regions,'provinces'=>$provinces,'districts'=>$districts,'formationSanitaires'=>$formationSanitaires] );
+        $desagregations = Desagregation::select('libelle as label', 'id as value')->get();
+        $groupes = Groupe::select('libelle as label', 'id as value')->get();
+        $sous_groupes = SousGroupe::select('libelle as label', 'id as value')->get();
+        return response()->json(['desagregations'=>$desagregations,'groupes'=>$groupes,'sous_groupes'=>$sous_groupes]);
     }
-    
+
     /**
-     * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->middleware('auth:api'); 
         $validatedData = $request->validate([
-            'region_id' => 'required',
-            'province_id' => 'required',
-            'commune_id' => 'required',
-            'indicateur' => 'required',
-            'indice' => 'required',
-            'source' => 'required',
-            'annee' => 'required',
-            'mois' => 'required'
+            'groupe_id'             => 'required',
+            'periode'             => 'required',
+            'libelle'             => 'required|min:1|max:64'
         ]);
-        $user = auth()->userOrFail();
-        $indicateurs = new Indicateurs();
-        $indicateurs->region_id = $request->input('region_id');
-        $indicateurs->province_id = $request->input('province_id');
-        $indicateurs->commune_id = $request->input('commune_id');
-        $indicateurs->groupe = $request->input('groupe');
-        $indicateurs->indicateur = $request->input('indicateur');
-        $indicateurs->niveau1 = $request->input('niveau1');
-        $indicateurs->niveau2 = $request->input('niveau2');
-        $indicateurs->mois = $request->input('mois');
-        $indicateurs->annee = $request->input('annee');
-        $indicateurs->indice = $request->input('indice');
-        $indicateurs->source = $request->input('source');
-        $indicateurs->created_by = $user->id;
-        $indicateurs->save();
-        return response()->json( ['status' => 'success'] );
+        Indicateur::create(MyFunction::audit($request->all()));
+        return response()->json([
+            'message' => 'Un nouveau indicateur a été ajouté',
+            'status' => 200
+        ], 200);
     }
 
     /**
-     * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Indicateur $indicateur)
     {
-        $district = DB::table('indicateurs')
-        ->leftJoin('users', 'users.id', '=', 'indicateurs.created_by')
-        ->leftJoin('regions', 'regions.id', '=', 'indicateurs.region_id')
-        ->leftJoin('provinces', 'provinces.id', '=', 'indicateurs.province_id')
-        ->select('indicateurs.*', 'users.name as author', 'regions.region as region', 'provinces.province as province')
-        ->where('indicateurs.id', '=', $id)
-        ->first();
-        return response()->json( $district );
-    }
+        return $indicateur;
+    } 
 
     /**
-     * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $groupe_id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function findByGroupe($groupe_id)
     {
-        $indicateur = DB::table('indicateurs')->where('id', '=', $id)->first();
-        $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
-        $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
-        $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
- 
-        return response()->json( [ 'provinces' => $provinces, 'regions' => $regions,  'communes' => $communes,'indicateur'=>$indicateur] );
-    }
+        $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->where('groupe_id',"=",$groupe_id)->get();
+        return $indicateurs;
+    } 
+
     
     /**
-     * Store a newly created resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Indicateur $indicateur)
+    {
+        $desagregations = Desagregation::select('libelle as label', 'id as value')->get();
+        $groupes = Groupe::select('libelle as label', 'id as value')->get();
+        $sous_groupes = SousGroupe::select('libelle as label', 'id as value')->get();
+        return response()->json(['indicateur'=>$indicateur,'desagregations'=>$desagregations,'groupes'=>$groupes,'sous_groupes'=>$sous_groupes]);
+    }
+
+    
+    /**
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Indicateur $indicateur)
     {
-        $this->middleware('auth:api'); 
         $validatedData = $request->validate([
-            'region_id' => 'required',
-            'province_id' => 'required',
-            'commune_id' => 'required',
-            'indicateur' => 'required',
-            'indice' => 'required',
-            'source' => 'required',
-            'annee' => 'required',
-            'mois' => 'required'
+            'groupe_id'             => 'required',
+            'periode'             => 'required',
+            'libelle'             => 'required|min:1|max:64',
         ]);
-        $user = auth()->userOrFail();
-        $indicateurs = Indicateurs::find($id);
-        $indicateurs->region_id = $request->input('region_id');
-        $indicateurs->province_id = $request->input('province_id');
-        $indicateurs->commune_id = $request->input('commune_id');
-        $indicateurs->groupe = $request->input('groupe');
-        $indicateurs->indicateur = $request->input('indicateur');
-        $indicateurs->niveau1 = $request->input('niveau1');
-        $indicateurs->niveau2 = $request->input('niveau2');
-        $indicateurs->mois = $request->input('mois');
-        $indicateurs->annee = $request->input('annee');
-        $indicateurs->indice = $request->input('indice');
-        $indicateurs->source = $request->input('source');
-        $indicateurs->updated = 1;
-        $indicateurs->updated_by = $user->id;
-        $indicateurs->save();
-        return response()->json( ['status' => 'success'] );
+
+        $indicateur->update(MyFunction::audit($request->all()));
+        
+        return response()->json([
+            'message' => 'L\'indicateur a été modifié avec succès',
+            'status' => 200
+        ], 200);
     }
 
-    
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Indicateur $indicateur)
     {
-        $indicateurs = Indicateurs::find($id);
-        if($indicateurs){
-            $indicateurs->delete();
-        }
-        return response()->json( ['status' => 'success'] );
-    }
-
-    /**
-     * Recupérer la liste des communes
-     */
-    public function getcommunesliste()
-    {
-        $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
-        return response()->json( $communes );
-    }
-    public function getDefaultCommune(){
-        return $commune = Communes::where("defaut",true)->firstOrFail();
-    }
-    
-
-    public function getDefaultAll(){
-
-        $commune = Communes::where("defaut",true)->firstOrFail();
-        $province = Provinces::where("defaut",true)->firstOrFail();
-        $district = Districts::where("defaut",true)->firstOrFail();
-        $region = Regions::where("defaut",true)->firstOrFail();
+        $indicateur->delete();
         return response()->json([
-            'commune'=>$commune,
-            'province'=>$province,
-            'district'=>$district,
-            'region'=>$region
-        ]);
+            'message' => 'L\'indicateur a été supprimé avec succès',
+            'status' => 200
+        ], 200);
     }
-    
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function findBy(Request $request)
-    {
-        $validatedData = $request->validate([
-            // 'commune_id' => 'required',
-            // 'annee' => 'required',
-        ]);
-        $indicateurs = DB::table('indicateurs')
-        ->leftJoin('provinces', function($join){
-            $join->on('indicateurs.province_id', '=', 'provinces.id');
-        })
-        ->leftJoin('communes', function($join){
-            $join->on('indicateurs.commune_id', '=', 'communes.id');
-        })
-        ->leftJoin('regions', function($join){
-            $join->on('indicateurs.region_id', '=', 'regions.id');
-        })
-        ->select('indicateurs.*', 
-        'regions.region as region', 
-        'provinces.province as province',
-        'communes.commune as commune');
-        
-        if(isset($request->commune_id)&&$request->commune_id!=null&&$request->commune_id!=0){
-            $indicateurs->where('indicateurs.commune_id', '=', $request['commune_id']);
-        }
-        if(isset($request->province_id)&&$request->province_id!=null&&$request->province_id!=0){
-            $indicateurs->where('indicateurs.province_id', '=', $request['province_id']);
-        }
-        if(isset($request->region_id)&&$request->region_id!=null&&$request->region_id!=0){
-            $indicateurs->where('indicateurs.region_id', '=', $request['region_id']);
-        }
-        if(isset($request->annee)&&$request->annee!=null&&$request->annee!=0&&isset($request->anneefin)&&$request->anneefin!=null&&$request->anneefin!=0)
-        {
-            $indicateurs->whereBetween('indicateurs.annee', [$request['annee'], $request['anneefin']])->orderBy("annee");
-        }else{
-            if(isset($request->annee)&&$request->annee!=null&&$request->annee!=0){
-                $indicateurs->where('indicateurs.annee', '=', $request['annee']);
-            }
-        }
-        if(isset($request->indicateur)){
-            $indicateurs->where('indicateurs.indicateur', 'like', '%' . $request['indicateur'] . '%');
-        }
-        if(isset($request->groupe)){
-            $indicateurs->where('indicateurs.groupe', 'like', '%' . $request['groupe'] . '%');
-        }
-        if(isset($request->id)&&$request->id!=null&&$request->id!=0){
-            $indicateurs->where('indicateurs.id', '=', $request['id']);
-        }
-        $indicateurs = $indicateurs->get();
-        return response()->json( $indicateurs);
-    }
-
-    
-    public function search()
-    {
-        $regions = DB::table('regions')->select('regions.region as label', 'regions.id as value')->get();
-        $provinces = DB::table('provinces')->select('provinces.province as label', 'provinces.id as value')->get();
-        $communes = DB::table('communes')->select('communes.commune as label', 'communes.id as value')->get();
-        $districts = DB::table('districts')->select('districts.nom_district as label', 'districts.id as value')->get();
-        $formationSanitaires = DB::table('formation_sanitaires')->select('formation_sanitaires.nom_structure as label', 'formation_sanitaires.id as value')->get();
-        
-        $groupes = DB::table('indicateurs')->select('groupe as label','groupe as value')->distinct()->get();
-        $annees = DB::table('indicateurs')->select('annee as label','annee as value')->distinct()->orderBy('annee')->get();
-        $indicateurliste = DB::table('indicateurs')->select('indicateur as label','indicateur as value')->distinct()->get();
-
-        return response()->json( ['communes'=>$communes,'regions'=>$regions,'provinces'=>$provinces,'districts'=>$districts,'formationSanitaires'=>$formationSanitaires
-        ,'groupes'=>$groupes,'annees'=>$annees,'indicateurliste'=>$indicateurliste] );
-    }
-    public function searchGroupe(Request $request)
-    {
-        if(!isset($request->groupe)){
-            return response()->json( ['indicateurliste'=>[]] );
-        }
-        $indicateurliste = DB::table('indicateurs')->where('groupe',"like",$request->groupe)->select('indicateur as label','indicateur as value')->distinct()->get();
-
-        return response()->json( ['indicateurliste'=>$indicateurliste] );
-    }
-
-
 }

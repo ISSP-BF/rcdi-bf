@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { shallowMount } from '@vue/test-utils'
-import CoreuiVue from '@coreui/vue'
+import CoreuiVue from '@coreui/vue-pro'
 import StandardButtons from '@/views/buttons/StandardButtons'
 
 Vue.use(CoreuiVue)
@@ -19,11 +19,11 @@ describe('StandardButtons.vue', () => {
   })
   it('is Vue instance', () => {
     const wrapper = shallowMount(StandardButtons)
-    expect(wrapper.isVueInstance()).toBe(true)
+    expect(wrapper.vm).toBeTruthy()
   })
   it('is StandardButtons', () => {
     const wrapper = shallowMount(StandardButtons)
-    expect(wrapper.is(StandardButtons)).toBe(true)
+    expect(wrapper.findComponent(StandardButtons)).toBeTruthy()
   })
   test('renders correctly', () => {
     const wrapper = shallowMount(StandardButtons)

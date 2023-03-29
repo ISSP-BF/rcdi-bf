@@ -2,18 +2,20 @@ import 'core-js/stable'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import CoreuiVue from '@coreui/vue'
 import { iconsSet as icons } from './assets/icons/icons.js'
 
+//import CoreuiVuePro from '@coreui/vue-pro'
+import CoreuiVuePro from '../node_modules/@coreui/vue-pro/src/index.js'
+import i18n from './i18n.js'
 import store from './store'
 /* import the fontawesome core */
-import { library } from '@fortawesome/fontawesome-svg-core'
+// import { library } from '@fortawesome/fontawesome-svg-core'
 
-/* import specific icons */
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+// /* import specific icons */
+// import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 
 /* import font awesome icon component */
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import loading from 'vuejs-loading-screen'
 import Toasted from 'vue-toasted'
 
@@ -25,10 +27,10 @@ Vue.use(Toasted, {
 
 
 /* add icons to the library */
-library.add(faUserSecret)
+// library.add(faUserSecret)
 
 /* add font awesome icon component */
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+// Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 
 let adresse = location.protocol + "//" + location.hostname
@@ -50,7 +52,6 @@ Vue.prototype.$apiAdress = adresse
     // Vue.prototype.$apiAdress = 'http://192.168.5.1:8000'
 
 Vue.config.performance = true
-Vue.use(CoreuiVue)
 
 
 Vue.use(loading, {
@@ -74,15 +75,19 @@ Vue.filter('formatDate', function(value) {
 })
 
 
-window.onload = function() {
-    var app = new Vue({
-        el: '#app',
-        router,
-        store,
-        icons,
-        template: '<App/>',
-        components: {
-            App
-        },
-    })
-}
+
+Vue.use(CoreuiVuePro)
+Vue.prototype.$log = console.log.bind(console)
+
+new Vue({
+    el: '#app',
+    router,
+    store,
+    //CIcon component documentation: https://coreui.io/vue/docs/components/icon
+    icons,
+    i18n,
+    template: '<App/>',
+    components: {
+        App
+    }
+})

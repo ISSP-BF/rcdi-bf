@@ -183,9 +183,9 @@ export default {
               email: ''
             };
             self.message = 'Successfully created user.';
+            self.$toasted.show(self.message,{type:"success"});
             self.showAlert();
         }).catch(function (error) {
-              console.log(error);
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';
               for (let key in error.response.data.errors) {
@@ -193,7 +193,7 @@ export default {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
-              self.showAlert();
+            self.$toasted.show(self.message,{type:"danger"});
             }else{
               console.log(error);
               // self.$router.push({ path: 'login' }); 

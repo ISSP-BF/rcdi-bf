@@ -909,7 +909,6 @@ export default {
   cursor: pointer;
 }
 
-.no-margin-padding {}
 
 .no-margin-padding>.form-group {
   margin: 0 !important;

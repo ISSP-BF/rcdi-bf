@@ -1,6 +1,6 @@
 <template>
   <CCard>
-    <CCardHeader><label class="h4">{{indicateurTitle}}</label>
+    <CCardHeader><label class="h5">{{indicateurTitle}}</label>
             <div class="card-header-actions">
               
               <CDropdown
@@ -64,7 +64,7 @@ export default {
             commune_id:this.commune_id,
             annee:this.annee
           };
-      axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
+      axios.post(  this.$apiAdress + '/api/indicateurs-old/findBy',
          criteria
         )
         .then(function (response) {
