@@ -12,15 +12,6 @@
             </div>
           </CCardHeader>
           <CCardBody>
-            <div>
-              <EasyDataTable
-                v-model:server-options="serverOptions"
-                :server-items-length="serverItemsLength"
-                :loading="loading"
-                :headers="headers"
-                :items="items"
-              />
-            </div>
             <CAlert :show.sync="dismissCountDown" color="primary" fade>
               ({{ dismissCountDown }}) {{ message }}
             </CAlert>
