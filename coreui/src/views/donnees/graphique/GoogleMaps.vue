@@ -61,7 +61,7 @@ Vue.use(VueGoogleMaps, {
 })
 
 export default {
-  name: 'GoogleMaps',
+  name: 'google-maps',
   data () {
     return {
       center: {lat: 37.431489, lng: -122.163719},

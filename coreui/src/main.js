@@ -9,6 +9,8 @@ import i18n from './i18n.js'
 import store from './store'
 import loading from 'vuejs-loading-screen'
 import Toasted from 'vue-toasted'
+import HighchartsVue from 'highcharts-vue'
+Vue.use(HighchartsVue)
 
 Vue.use(Toasted, {
         duration: 1500,

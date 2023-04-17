@@ -285,6 +285,17 @@
                         <CIcon name="cib-openstreetmap" />
                       </CButton>
                     </CCol>
+                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
+                      <CButton
+                        variant="outline"
+                        shape="pill"
+                        color="primary"
+                        :pressed.sync="togglePressMaps2"
+                        @click="choicesGraphe('MAPS2')"
+                      >
+                        <CIcon name="cib-openstreetmap" />
+                      </CButton>
+                    </CCol>
 
                     <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
                       <CButton
@@ -313,6 +324,8 @@
                   />
                   <GoogleMaps 
                     v-if="vueGraphe == 'MAPS'"/>
+                  <ShapeMaps 
+                    v-if="vueGraphe == 'MAPS2'"/>
                 </div>
               </CCol>
             </CRow>
@@ -333,6 +346,7 @@ import ImportButton from "../buttons/ImportButton.vue";
 import IndicateursSecteur from "./graphique/IndicateursSecteur";
 import IndicateurBarChart from "./graphique/IndicateurBarChart";
 import GoogleMaps from "./graphique/GoogleMaps";
+import ShapeMaps from "./graphique/ShapeMaps";
 
 import MaskedInput from "vue-text-mask";
 import Multiselect from "vue-multiselect";
@@ -353,7 +367,7 @@ export default {
     ImportButton,
     IndicateursSecteur,
     IndicateurBarChart,
-    GoogleMaps,
+    GoogleMaps,ShapeMaps,
   },
   data: () => {
     return {
@@ -465,7 +479,8 @@ export default {
       periodesDispobible: [],
       choixPeriodes: [],
       tableFilterValue:null,
-      togglePressMaps:false
+      togglePressMaps:false,
+      togglePressMaps2:false,
     };
   },
   watch: {
@@ -593,31 +608,43 @@ export default {
           this.togglePressSecteur = true; 
           this.togglePressHistogramme = false;
           this.togglePressMaps = false;
+          this.togglePressMaps2 = false;
           break;
         case "MAPS":
           this.togglePressSecteur = false; 
           this.togglePressHistogramme = false;
           this.togglePressMaps = true;
+          this.togglePressMaps2 = false;
+          break;
+        case "MAPS2":
+          this.togglePressSecteur = false; 
+          this.togglePressHistogramme = false;
+          this.togglePressMaps = false;
+          this.togglePressMaps2 = true;
           break;
         case "HISTOGRAMME":
           this.togglePressHistogramme = true; 
           this.togglePressSecteur = false;
           this.togglePressMaps = false;
+          this.togglePressMaps2 = false;
           break;
         case "COURBEVOLUME":
           this.togglePressCourbe2 = true; 
           this.togglePressSecteur = false;
           this.togglePressMaps = false;
+          this.togglePressMaps2 = false;
           break;
         case "COURBESIMPLE":
           this.togglePressCourbe = true; 
           this.togglePressSecteur = false;
           this.togglePressMaps = false;
+          this.togglePressMaps2 = false;
           break;
         default:
           this.togglePressSecteur = false; 
           this.togglePressHistogramme = false;
           this.togglePressMaps = false;
+          this.togglePressMaps2 = false;
           // setTimeout(() => {
             // console.log(local, "local===>");
             this.vueGraphe = null;
