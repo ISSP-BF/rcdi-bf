@@ -25,7 +25,8 @@
               sorter
               :items="items"
               :fields="fields"
-              :items-per-page="10"
+              :items-per-page="10" 
+              :loading="loading"
               pagination
             >
               <template #numero_acte="{item}">
@@ -140,7 +141,7 @@ export default {
       fields: ['numero_acte', 'region', 'province', 'commune','date_declaration','nom','prenom',
        'sexe','date_naissance','date_deces','age',
        'date_etablissement','profession','statut_matrimonial', 'actions'],
-
+       loading:false,
       currentPage: 1,
       perPage: 5,
       totalRows: 0,
@@ -197,11 +198,14 @@ export default {
     },
     getActeDecess (){
       let self = this;
+      this.loading = true;
       axios.get(  this.$apiAdress + '/api/acte_deces?token=' + localStorage.getItem("api_token") )
       .then(function (response) {
         self.items = response.data;
+        self.loading = false;
       }).catch(function (error) {
         console.log(error);
+        self.loading = false;
         // self.$router.push({ path: '/login' });
       });
     }

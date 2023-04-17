@@ -4,30 +4,19 @@ import App from './App'
 import router from './router'
 import { iconsSet as icons } from './assets/icons/icons.js'
 
-//import CoreuiVuePro from '@coreui/vue-pro'
 import CoreuiVuePro from '../node_modules/@coreui/vue-pro/src/index.js'
 import i18n from './i18n.js'
 import store from './store'
-/* import the fontawesome core */
-// import { library } from '@fortawesome/fontawesome-svg-core'
-
-// /* import specific icons */
-// import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
-
-/* import font awesome icon component */
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import loading from 'vuejs-loading-screen'
 import Toasted from 'vue-toasted'
 
 Vue.use(Toasted, {
-    duration: 1500,
-    theme: 'outline',
-    iconPack: 'material'
-})
-
-
-/* add icons to the library */
-// library.add(faUserSecret)
+        duration: 1500,
+        theme: 'outline',
+        iconPack: 'material'
+    })
+    /* add icons to the library */
+    // library.add(faUserSecret)
 
 /* add font awesome icon component */
 // Vue.component('font-awesome-icon', FontAwesomeIcon)

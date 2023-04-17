@@ -7,6 +7,28 @@
             Modifier Groupe
           </h3>
             <CInput label="Libelle" type="text" placeholder="Libelle" v-model="groupe.libelle"/>
+            
+          <div class="row ">
+            <div role="group" class="col-lg-12 form-group">
+              <label class="custom-control-inline"> Localisation </label>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="ecole" type="radio" class="custom-control-input"
+                    v-model="groupe.localisation" value="ecoles">
+                  <label for="ecole" class="custom-control-label"> Ecoles</label>
+                </div>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="formation_sanitaire" type="radio" class="custom-control-input"
+                    v-model="groupe.localisation" value="formation_sanitaires">
+                  <label for="formation_sanitaire" class="custom-control-label"> Formation Sanitaire</label>
+                </div>
+              <div role="group" class="custom-control custom-control-inline custom-radio">
+                  <input id="aucun" type="radio" class="custom-control-input"
+                    v-model="groupe.localisation" value="">
+                  <label for="aucun" class="custom-control-label"> Aucun</label>
+                </div>
+            </div>
+          </div>
+
             <CTextarea label="Description" type="text" placeholder="Description" v-model="groupe.description"  rows="9"/>
           <CButton color="primary" @click="update()">Modifier</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
@@ -47,6 +69,7 @@ export default {
             _method: 'PUT',
             libelle:            self.groupe.libelle,
             description:          self.groupe.description,
+            localisation:          self.groupe.localisation,
           
         })
         .then(function (response) {

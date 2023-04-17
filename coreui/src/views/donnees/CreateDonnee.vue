@@ -16,43 +16,51 @@
             >
             </CSelect>
 
-          <CSelect
-              label="Indicateur" 
-              :value.sync="donnee.indicateur_id"
-              :plain="true"
-              :options="indicateurs"
-              @change="findSousIndicateurByDesagregation($event)"
-            >
+            <CSelect
+                label="Localisation" 
+                :value.sync="donnee.localisation_id"
+                :plain="true"
+                :options="localisations"
+              >
+              </CSelect>
+
+            <CSelect
+                label="Indicateur" 
+                :value.sync="donnee.indicateur_id"
+                :plain="true"
+                :options="indicateurs"
+                @change="findSousIndicateurByDesagregation($event)"
+              >
             </CSelect>
-          <CSelect v-if="desagregation_id"
-              label="Sous indicateur" 
-              :value.sync="donnee.sous_indicateur_id"
-              :plain="true"
-              :options="sousIndicateurs"
-            >
-            </CSelect>
+            <CSelect v-if="desagregation_id"
+                label="Sous indicateur" 
+                :value.sync="donnee.sous_indicateur_id"
+                :plain="true"
+                :options="sousIndicateurs"
+              >
+              </CSelect>
 
              
             
-          <div class="row ">
-            <div role="group" class="col-lg-12 form-group">
-              <label class="custom-control-inline"> Période </label>
-              <div role="group" class="custom-control custom-control-inline custom-radio" v-for="rol in periodesDispobible" :key="rol"
-                  :label="rol">
-                  <input :id="'periode'+rol" type="radio" class="custom-control-input"
-                    v-model="donnee.periode" :value="rol" @click="updatedListPeriode(rol)">
-                  <label :for="'periode'+rol" class="custom-control-label"> {{ rol }} </label>
-                </div>
+            <div class="row ">
+              <div role="group" class="col-lg-12 form-group">
+                <label class="custom-control-inline"> Période </label>
+                <div role="group" class="custom-control custom-control-inline custom-radio" v-for="rol in periodesDispobible" :key="rol"
+                    :label="rol">
+                    <input :id="'periode'+rol" type="radio" class="custom-control-input"
+                      v-model="donnee.periode" :value="rol" @click="updatedListPeriode(rol)">
+                    <label :for="'periode'+rol" class="custom-control-label"> {{ rol }} </label>
+                  </div>
+              </div>
             </div>
-          </div>
 
-          <CSelect
-            label="Choix période" v-if="donnee.periode&&donnee.periode!='ANNUEL'"
-            :value.sync="donnee.periode_value"
-            :plain="true"
-            :options.sync="choixPeriodes"
-          >
-          </CSelect>
+            <CSelect
+              label="Choix période" v-if="donnee.periode&&donnee.periode!='ANNUEL'"
+              :value.sync="donnee.periode_value"
+              :plain="true"
+              :options.sync="choixPeriodes"
+            >
+            </CSelect>
           <CInput label="Annee" type="text" placeholder="Annee" v-model="donnee.annee" :is-valid="anneeValidator"></CInput>
 
           <CInput label="Valeur" type="text" placeholder="Valeur" v-model="donnee.valeur"></CInput>
@@ -86,6 +94,7 @@ export default {
         },
         groupes:[],
         periodes:[],
+        localisations:[],
         periodeList:['MENSUEL','TRIMESTRIEL','SEMESTRIEL', 'ANNUEL'],
         indicateurs: [],
         sousIndicateurs: [],
@@ -166,8 +175,21 @@ export default {
     anneeValidator(val) {
       return val ? (val <= 2023 && val >= 1900 ? null : false) : null;
     },
+    findLocalisationByGroupe(event){
+      let self = this;
+      axios.get(  this.$apiAdress + '/api/indicateurs/findLocalisationByGroupe/'+self.donnee.groupe_id+'?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+      console.log(response)
+        self.localisations = response.data;
+        let lest = [{label:'',value:null}]
+        lest.push(...self.localisations);
+        self.localisations = lest;
+    }).catch(function (error) {
+      self.localisations  = []
+    });
+    },
     findIndicateurByGroupe(event){
-      console.log(event)
+      this.findLocalisationByGroupe(event);
       let self = this;
       axios.get(  this.$apiAdress + '/api/indicateurs/findByGroupe/'+self.donnee.groupe_id+'?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
@@ -225,6 +247,7 @@ export default {
         self.indicateurs = lest;
         // // Definir la valeur par défaut
         self.donnee.groupe_id = self.groupes.length>0?self.groupes[0].value:null;
+        self.findLocalisationByGroupe(null)
     }).catch(function (error) {
         // console.log(error);
         self.$router.push({ path: 'login' });

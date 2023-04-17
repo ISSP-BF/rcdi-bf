@@ -5,6 +5,7 @@
         <CCardHeader><h4>Détail du groupe id:  {{ $route.params.id }}</h4> </CCardHeader>
         <CCardBody>
           <h4>Libelle: {{ groupe.libelle }}</h4>
+          <h4>Localisation: {{ groupe.localisation }}</h4>
           <h4>Description : {{ groupe.description }}</h4> 
           <CButton color="secondary" @click="goBack">Retour</CButton>
         </CCardBody>

@@ -16,6 +16,14 @@
             >
             </CSelect>
 
+
+            <CSelect
+                label="Localisation" 
+                :value.sync="donnee.localisation_id"
+                :plain="true"
+                :options="localisations"
+              >
+              </CSelect>
           <CSelect
               label="Indicateur" 
               :value.sync="donnee.indicateur_id"
@@ -84,6 +92,7 @@ export default {
           sous_indicateur_id: '',
           periode:null
         },
+        localisations:[],
         groupes:[],
         periodes:[],
         periodeList:['MENSUEL','TRIMESTRIEL','SEMESTRIEL', 'ANNUEL'],
@@ -158,7 +167,21 @@ export default {
     anneeValidator(val) {
       return val ? (val <= 2023 && val >= 1900 ? null : false) : null;
     },
+    findLocalisationByGroupe(event){
+      let self = this;
+      axios.get(  this.$apiAdress + '/api/indicateurs/findLocalisationByGroupe/'+self.donnee.groupe_id+'?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+      console.log(response)
+        self.localisations = response.data;
+        let lest = [{label:'',value:null}]
+        lest.push(...self.localisations);
+        self.localisations = lest;
+    }).catch(function (error) {
+      self.localisations  = []
+    });
+    },
     findIndicateurByGroupe(event){
+      this.findLocalisationByGroupe(event);
       console.log(event)
       let self = this;
       axios.get(  this.$apiAdress + '/api/indicateurs/findByGroupe/'+self.donnee.groupe_id+'?token=' + localStorage.getItem("api_token"))
@@ -190,8 +213,6 @@ export default {
           self.desagregation_id = indicateur.desagregation_id
         }
       }
-      
-      
       axios.get(  this.$apiAdress + '/api/sous_indicateurs/findByDesagregation/'+self.desagregation_id+'?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
         self.sousIndicateurs = response.data;

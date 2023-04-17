@@ -3,20 +3,21 @@
   <CModal
       :title="title"
       color="success"
-      size="lg"
+      size="xl"
       :show.sync="successModal" style="display: contents;"
     > 
        <CRow>
     
     <CCol col="12" xl="12">
+       <xls-csv-parser :columns="columns" @on-validate="onValidate" :help="help" lang="fr"></xls-csv-parser>
      </CCol>
     <CCol col="12" xl="12"  v-if="items.length>0">
       <transition name="slide">
             <CDataTable
               hover 
               sorter
-              :items="items" 
-              :fields="fields2"
+              :items="items" :items-per-page="20"
+              :fields="fields2" pagination
             >
           <template #actions="{item}">
                 <td>
@@ -44,11 +45,13 @@
 <script>
 
 import axios from 'axios'
+import { XlsCsvParser } from 'vue-xls-csv-parser';
  
 export default {
   name: 'ImportButton',
   components: {
-     },
+      XlsCsvParser,
+    },
   props: ['fields','title','apiUrl'],
   
   data: () => {

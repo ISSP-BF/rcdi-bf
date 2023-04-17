@@ -6,7 +6,9 @@
          <CCardHeader>
             Liste des indicateurs
             <div class="card-header-actions">
-             <CButton color="primary" @click="createIndicateur()">Ajouter</CButton>
+             <AddButton @ajouter="createIndicateur()"/>&nbsp;
+             <ExportButton :items="items" title="La liste des indicateurs" :fields="fieldsI"/>&nbsp;
+            &nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -54,13 +56,21 @@
 
 <script>
 import axios from 'axios'
+import AddButton from '../buttons/AddButton.vue'
+import EditButton from '../buttons/EditButton.vue'
+import DeleteButton from '../buttons/DeleteButton.vue'
+import ExportButton from '../buttons/ExportButton.vue'
 
 export default {
   name: 'Indicateur',
+  components: { 
+    ExportButton,AddButton,EditButton,DeleteButton
+  },
   data: () => {
     return {
       items: [],
       fields: ['id','groupe','sous_groupe', 'libelle', 'desagregation','periode', 'actions'],
+      fieldsI: ['id','groupe','sous_groupe', 'libelle', 'desagregation','periode', 'actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0, 

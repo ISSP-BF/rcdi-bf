@@ -21,7 +21,10 @@ import {
     cibStripe,
     cibPaypal,
     cibGooglePay,
-    cibCcAmex
+    cibCcAmex,
+    cilEyedropper,
+    cibEyeem,
+    cibOpenstreetmap
 } from '@coreui/icons'
 import {
     cifUs,
@@ -103,6 +106,8 @@ export const iconsSet = Object.assign({}, { logo }, {
     cilCalculator,
     cilCalendar,
     cilCloudDownload,
+    cibEyeem,
+    cibOpenstreetmap,
     cilChartPie,
     cilCheck,
     cilChevronBottom,
@@ -145,7 +150,8 @@ export const iconsSet = Object.assign({}, { logo }, {
     cilXCircle,
     cilHospital,
     cilHouse,
-    cilTrash
+    cilTrash,
+    cilEyedropper
 }, {
     cifUs,
     cifBr,

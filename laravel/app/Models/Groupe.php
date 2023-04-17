@@ -12,6 +12,7 @@ class Groupe extends Model
 
     protected $fillable = [
         'libelle',
+        'localisation',//['ecoles', 'formation_sanitaires']
         'description',
         'updated_by',
         'created_by',

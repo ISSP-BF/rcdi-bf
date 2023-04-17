@@ -17,7 +17,6 @@ class SousIndicateursController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
     }
 
     /**
@@ -27,6 +26,7 @@ class SousIndicateursController extends Controller
      */
     public function index()
     {
+        $this->middleware('auth:api');
         return SousIndicateur::all();
     }
 
@@ -37,6 +37,7 @@ class SousIndicateursController extends Controller
      */
     public function create()
     {
+        $this->middleware('auth:api');
         $desagregations = Desagregation::select('libelle as label', 'id as value')->get();
         return response()->json($desagregations);
     }
@@ -48,6 +49,7 @@ class SousIndicateursController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth:api');
         $validatedData = $request->validate([
             'desagregation_id'             => 'required',
             'libelle'             => 'required|min:1|max:64'
@@ -66,6 +68,7 @@ class SousIndicateursController extends Controller
      */
     public function show(SousIndicateur $sousIndicateur)
     {
+        $this->middleware('auth:api');
         return $sousIndicateur;
     } 
 
@@ -88,6 +91,7 @@ class SousIndicateursController extends Controller
      */
     public function edit(SousIndicateur $sousIndicateur)
     {
+        $this->middleware('auth:api');
         $desagregations = Desagregation::select('libelle as label', 'id as value')->get();
         return response()->json( $sousIndicateur,$desagregations );
     }
@@ -101,6 +105,7 @@ class SousIndicateursController extends Controller
      */
     public function update(Request $request, SousIndicateur $sousIndicateur)
     {
+        $this->middleware('auth:api');
         $validatedData = $request->validate([
             'desagregation_id'             => 'required',
             'libelle'             => 'required|min:1|max:64',
@@ -122,6 +127,7 @@ class SousIndicateursController extends Controller
      */
     public function destroy(SousIndicateur $sousIndicateur)
     {
+        $this->middleware('auth:api');
         $sousIndicateur->delete();
         return response()->json([
             'message' => 'Le sous indicateur a été supprimé avec succès',

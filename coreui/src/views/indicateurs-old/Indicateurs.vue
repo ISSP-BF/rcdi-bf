@@ -483,7 +483,6 @@ export default {
     },
     getndicateurs() {
       let self = this;
-
       axios
         .get(
           this.$apiAdress +

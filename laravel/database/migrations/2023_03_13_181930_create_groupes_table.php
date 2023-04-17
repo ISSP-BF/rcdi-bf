@@ -17,6 +17,7 @@ class CreateGroupesTable extends Migration
             $table->id();
             $table->string('libelle',255)->nullable();
             $table->text('description')->nullable();
+            $table->enum('localisation', ['ecoles', 'formation_sanitaires'])->nullable();
             $table->tinyInteger('updated')->nullable()->default(0);
             
             $table->integer('updated_by')->unsigned()->nullable();

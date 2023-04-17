@@ -17,6 +17,7 @@ class CreateDonneesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('indicateur_id')->nullable();
             $table->integer('sous_indicateur_id')->nullable();
+            $table->integer('localisation_id')->nullable();
 
 
             $table->float('valeur');

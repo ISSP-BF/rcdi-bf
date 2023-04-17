@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Indicateurs;
 use App\Models\Communes;
+use App\Models\Provinces;
+use App\Models\Districts;
+use App\Models\Regions;
+
 
 class IndicateursOldController extends Controller
 {

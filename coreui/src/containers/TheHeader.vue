@@ -40,6 +40,11 @@ export default {
   components: {
     TheHeaderDropdownAccnt,TheHeaderDropdownBk,
     CMenu
+  },
+  data: () => {
+    return {
+      minimize:''
+    }
   }
 }
 </script>

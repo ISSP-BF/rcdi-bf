@@ -361,7 +361,33 @@ const EditGroupe = () =>
 const CreateGroupe = () =>
     import ('@/views/groupes/CreateGroupe')
 
-//Groupes
+
+//Dashboards
+const Dashboards = () =>
+    import ('@/views/dashboards/Dashboards')
+const Dashboard2 = () =>
+    import ('@/views/dashboards/Dashboard')
+const EditDashboard = () =>
+    import ('@/views/dashboards/EditDashboard')
+const CreateDashboard = () =>
+    import ('@/views/dashboards/CreateDashboard')
+
+
+//Dashboards
+const DashboardItems = () =>
+    import ('@/views/dashboard_items/DashboardItems')
+const DashboardItem = () =>
+    import ('@/views/dashboard_items/DashboardItem')
+const EditDashboardItem = () =>
+    import ('@/views/dashboard_items/EditDashboardItem')
+const CreateDashboardItem = () =>
+    import ('@/views/dashboard_items/CreateDashboardItem')
+
+//Dashboards_vue
+const Dashboards_vue = () =>
+    import ('@/views/dashboards_vues/Dashboards_vue')
+
+//SousGroupes
 const SousGroupes = () =>
     import ('@/views/sous_groupes/SousGroupes')
 const SousGroupe = () =>
@@ -411,6 +437,16 @@ const EditDonnee = () =>
     import ('@/views/donnees/EditDonnee')
 const CreateDonnee = () =>
     import ('@/views/donnees/CreateDonnee')
+
+//Ecoles
+const Ecoles = () =>
+    import ('@/views/ecoles/Ecoles')
+const Ecole = () =>
+    import ('@/views/ecoles/Ecole')
+const EditEcole = () =>
+    import ('@/views/ecoles/EditEcole')
+const CreateEcole = () =>
+    import ('@/views/ecoles/CreateEcole')
 
 //Roles
 const Roles = () =>
@@ -525,7 +561,7 @@ export default router
 function configRoutes() {
     return [{
             path: '/',
-            redirect: '/dashboard',
+            redirect: '/1/dashboard-personalise',
             name: 'Accueil',
             component: TheContainer,
             children: [{
@@ -1991,7 +2027,7 @@ function configRoutes() {
                             path: '',
                             component: Donnees,
                             meta: {
-                                requiresUser: true
+                                requiresUser: false
                             }
                         },
                         {
@@ -2023,6 +2059,149 @@ function configRoutes() {
                         },
                     ]
                 },
+
+                {
+                    path: 'ecoles',
+                    meta: { label: 'Ecoles' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Ecoles,
+                            meta: {
+                                requiresUser: false
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Ecole' },
+                            name: 'Ajouter ecoles',
+                            component: CreateEcole,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Ecole Details' },
+                            name: 'Ecoles',
+                            component: Ecole,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Ecole' },
+                            name: 'modifier ecole',
+                            component: EditEcole,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'dashboards',
+                    meta: { label: 'Dashboards' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Dashboards,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Dashboard' },
+                            name: 'Ajouter dashboard',
+                            component: CreateDashboard,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Dashboard Details' },
+                            name: 'Dashboards',
+                            component: Dashboard2,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Dashboard' },
+                            name: 'modifier Dashboard',
+                            component: EditDashboard,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+                {
+                    path: ':dashboard/dashboard-items',
+                    meta: { label: 'Les requêtes' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: DashboardItems,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Création de la requête' },
+                            name: 'Ajouter DashboardItem',
+                            component: CreateDashboardItem,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Détail de la requête' },
+                            name: 'Détail de la requête',
+                            component: DashboardItem,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edition de la requête' },
+                            name: 'Edition de la requête',
+                            component: EditDashboardItem,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+                {
+                    path: ':id/dashboard-personalise',
+                    meta: { label: 'Tableau de board personnalisé' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                        path: '',
+                        component: Dashboards_vue,
+                        meta: {
+                            requiresUser: false
+                        }
+                    }]
+                },
+
                 {
                     path: 'roles',
                     meta: { label: 'Roles' },

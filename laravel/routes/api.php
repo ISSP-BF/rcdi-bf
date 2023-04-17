@@ -46,7 +46,10 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('professions', 'ProfessionsController');
     Route::resource('districts', 'DistrictsController');
     Route::resource('formation_sanitaires', 'FormationSanitairesController');
-    Route::get('acte_naissances/limiter', 'ActeNaissancesController@limiter');
+    Route::get('acte_naissanceslimiter', 'ActeNaissancesController@limiter');
+    
+    Route::get('acte_naissancespaginate/{pageSize}/{pageIndex}/{column}/{asc}', 'ActeNaissancesController@paginate');
+
     Route::resource('acte_naissances', 'ActeNaissancesController');
     Route::resource('acte_deces', 'ActeDecesController');
     Route::resource('acte_mariages', 'ActeMariagesController');
@@ -84,11 +87,23 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get('sous_indicateurs/findByDesagregation/{id}', 'SousIndicateursController@findByDesagregation');
     Route::resource('indicateurs', 'IndicateursController');
     Route::get('indicateurs/findByGroupe/{id}', 'IndicateursController@findByGroupe');
-    Route::resource('donnees', 'DonneesController');
+    Route::get('indicateurs/findBySousGroupe/{id}', 'IndicateursController@findBySousGroupe');
+    Route::get('indicateurs/findLocalisationByGroupe/{id}', 'IndicateursController@findLocalisationByGroupe');
 
+    Route::get('donnees/elementSearch', 'DonneesController@elementSearch');
+    Route::resource('donnees', 'DonneesController');
+    Route::post('donnees/storeMany', 'DonneesController@storeMany');
+    Route::post('donnees/findBy', 'DonneesController@findBy');
+    Route::post('donnees/findByGetSql', 'DonneesController@findByGetSql');
+    Route::post('donneespaginate/{pageSize}/{pageIndex}/{column}/{asc}', 'DonneesController@paginate');
+    Route::resource('dashboards', 'DashboardsController');
+    Route::get('dashboard-items/findBy/{dashboard_id}', 'DashboardItemsController@findBy');
+    Route::resource('dashboard-items', 'DashboardItemsController');
+    Route::resource('ecoles', 'EcolesController');
     Route::resource('resource/{table}/resource', 'ResourceController');
     
     Route::get('users/profil', 'UsersController@profil');
+    
     Route::put('users/updateProfil', 'UsersController@updateProfil');
     
     Route::get('/BkDataUpdated', 'UpdateBDController@index');

@@ -4,21 +4,23 @@
       <transition name="slide">
         <CCard>
           <CCardHeader>
-            Acte Naissances
+            <b>La liste des actes de naissances</b>
             <div class="card-header-actions">
               <AddButton @ajouter="createActeNaissance()"/>&nbsp;
               <ExportButton :items="items" title="Acte Naissances" :fields="fields"/>&nbsp;
-              <ViewAllButton @afficherTout="afficherTout()"></ViewAllButton>&nbsp;
             </div>
           </CCardHeader>
           <CCardBody>
-            <CAlert :show.sync="dismissCountDown" color="primary" fade>
-              ({{ dismissCountDown }}) {{ message }}
-            </CAlert>
-            <CDataTable id="table" hover 
+            <CDataTable id="table" hover
               tableFilter
-              itemsPerPageSelect
-              sorter :items="items" :fields="fields" :items-per-page="10" pagination>
+              sorter :items="loadedItems" :fields="fields" :items-per-page.sync="perPage" 
+               
+              :sort-by.sync="sortBy"
+              :sort-desc.sync="sortDesc" 
+              :loading="loading"
+              items-per-page-select
+              :sorter-value.sync="sorterValue"
+              >
               <template #numero_acte="{ item }">
                 <td>
                   <strong>{{ item.n_acte }}</strong>
@@ -65,7 +67,7 @@
 
               <template #centre_sante_naissance="{ item }">
                 <td>
-                  {{ item.formationSanitaire }}
+                  {{ item.centre_sante_naissance }}
                 </td>
               </template>
 
@@ -92,6 +94,12 @@
                 </td>
               </template>
             </CDataTable>
+            
+    <CPagination
+      v-show="pages > 1"
+      :pages="pages"
+      :active-page.sync="activePage"
+    />
           </CCardBody>
         </CCard>
       </transition>
@@ -120,18 +128,37 @@ export default {
         'lieu_naissance_commune', 'centre_sante_naissance',
         'date_etablissement', 'actions'],
 
-      currentPage: 1,
-      perPage: 5,
       totalRows: 0,
-      you: null,
+      sorterValue: { column: null, asc: true },
       message: '',
       showMessage: false,
       dismissSecs: 7,
       dismissCountDown: 0,
-      showDismissibleAlert: false
+      showDismissibleAlert: false,
+      perPage: 10, // nombre d'éléments par page
+      sortBy: "", // champ de tri
+      sortDesc: false, // tri croissant ou décroissant,
+      activePage: 1,
+      loadedItems:[],
+      loading: false,
+      pages: 5
+    }
+  },
+  watch: {
+    reloadParams () {
+      this.onTableChange()
     }
   },
   computed: {
+    reloadParams () {
+      return [  
+        this.sorterValue,
+        this.columnFilterValue,
+        this.tableFilterValue,
+        this.activePage,
+        this.perPage
+      ]
+    }
   },
   methods: {
     getRowCount(items) {
@@ -153,17 +180,26 @@ export default {
     },
     deleteActeNaissance(id) {
       let self = this;
-      let acteNaissanceId = id;
       axios.post(this.$apiAdress + '/api/acte_naissances/' + id + '?token=' + localStorage.getItem("api_token"), {
         _method: 'DELETE'
       })
         .then(function (response) {
-          self.message = 'Successfully deleted acteNaissance.';
-          self.showAlert();
+          self.$toasted.show("Acte de naissance a été supprimée avec succès",{type:"success"});
+
           self.getActeNaissances();
         }).catch(function (error) {
-          console.log(error);
+          if(error.response.data.message == 'The given data was invalid.'){
+              self.message = '';
+              for (let key in error.response.data.errors) {
+                if (error.response.data.errors.hasOwnProperty(key)) {
+                  self.message += error.response.data.errors[key][0] + '  ';
+                }
+              }
+            self.$toasted.show(self.message,{type:"error"});
+            }else{
+              console.log(error);
           self.$router.push({ path: '/login' });
+            }
         });
     },
     createActeNaissance() {
@@ -174,33 +210,32 @@ export default {
     },
     showAlert() {
       this.dismissCountDown = this.dismissSecs
-    },
-    getActeNaissances() {
-      let self = this;
-      console.log(this.$apiAdress + '/api/acte_naissances/limiter?token=' + localStorage.getItem("api_token"))
-      axios.get(this.$apiAdress + '/api/acte_naissances/limiter?token=' + localStorage.getItem("api_token"))
-        .then(function (response) {
-          console.log(response)
-          self.items = response.data;
-        }).catch(function (error) {
+    }, 
+    
+    onTableChange () {
+      this.loading = true
+      let self = this; 
+      console.log(this.$apiAdress + '/api/acte_naissancespaginate/'+this.perPage+'/'+this.activePage+'/'+this.sorterValue.column+'/'+this.sorterValue.asc+'?token=' + localStorage.getItem("api_token"))
+      axios
+        .get(this.$apiAdress + '/api/acte_naissancespaginate/'+this.perPage+'/'+this.activePage+'/'+this.sorterValue.column+'/'+this.sorterValue.asc+'?token=' + localStorage.getItem("api_token"))
+        .then((response) => {
+          // mettre à jour les données
+          self.loading = false
+          self.items = response.data.data;
+          self.loadedItems =  response.data.data
+          self.totalRows = response.data.total;
+          self.pages = Math.ceil(response.data.total / self.perPage)
+        })
+        .catch((error) => {
+          self.loading = false
           console.log(error);
-          self.$router.push({ path: '/login' });
         });
-    },
-    afficherTout() {
-      let self = this;
-
-      axios.get(this.$apiAdress + '/api/acte_naissances?token=' + localStorage.getItem("api_token"))
-        .then(function (response) {
-          self.items = response.data;
-        }).catch(function (error) {
-          console.log(error);
-          self.$router.push({ path: '/login' });
-        });
+ 
     }
   },
   mounted: function () {
-    this.getActeNaissances();
+    // this.getActeNaissances();
+    this.onTableChange();
   }
 }
 

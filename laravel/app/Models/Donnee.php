@@ -13,6 +13,7 @@ class Donnee extends Model
     protected $fillable = [
         'indicateur_id',
         'sous_indicateur_id',
+        'localisation_id',
         'valeur',
         'periode',
         'periode_value',

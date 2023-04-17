@@ -9,6 +9,8 @@ use App\Models\Indicateur;
 use App\Models\Groupe;
 use App\Models\SousGroupe;
 use App\Models\Desagregation;
+use App\Models\Ecole;
+use App\Models\FormationSanitaire;
 
 class IndicateursController extends Controller
 {
@@ -20,7 +22,6 @@ class IndicateursController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
     }
 
     /**
@@ -30,6 +31,7 @@ class IndicateursController extends Controller
      */
     public function index()
     {
+        $this->middleware('auth:api');
         return Indicateur::all();
     }
 
@@ -40,6 +42,7 @@ class IndicateursController extends Controller
      */
     public function create()
     {
+        $this->middleware('auth:api');
         $desagregations = Desagregation::select('libelle as label', 'id as value')->get();
         $groupes = Groupe::select('libelle as label', 'id as value')->get();
         $sous_groupes = SousGroupe::select('libelle as label', 'id as value')->get();
@@ -53,6 +56,7 @@ class IndicateursController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth:api');
         $validatedData = $request->validate([
             'groupe_id'             => 'required',
             'periode'             => 'required',
@@ -86,6 +90,39 @@ class IndicateursController extends Controller
         return $indicateurs;
     } 
 
+    /**
+     *
+     * @param  int  $groupe_id
+     * @return \Illuminate\Http\Response
+     */
+    public function findLocalisationByGroupe($groupe_id)
+    {
+        $groupe = Groupe::find($groupe_id);
+        switch ($groupe->localisation) {
+            case 'ecoles':
+                return Ecole::select('nom_structure as label', 'id as value')->get();
+                break;
+            case 'formation_sanitaires':
+                return FormationSanitaire::select('nom_structure as label', 'id as value')->get();
+                break;
+            
+            default:
+                return [];
+                break;
+        }
+        return [];
+    } 
+    /**
+     *
+     * @param  int  $groupe_id
+     * @return \Illuminate\Http\Response
+     */
+    public function findBySousGroupe($sous_groupe_id)
+    {
+        $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->where('sous_groupe_id',"=",$sous_groupe_id)->get();
+        return $indicateurs;
+    } 
+
     
     /**
      *
@@ -94,6 +131,7 @@ class IndicateursController extends Controller
      */
     public function edit(Indicateur $indicateur)
     {
+        $this->middleware('auth:api');
         $desagregations = Desagregation::select('libelle as label', 'id as value')->get();
         $groupes = Groupe::select('libelle as label', 'id as value')->get();
         $sous_groupes = SousGroupe::select('libelle as label', 'id as value')->get();
@@ -109,6 +147,7 @@ class IndicateursController extends Controller
      */
     public function update(Request $request, Indicateur $indicateur)
     {
+        $this->middleware('auth:api');
         $validatedData = $request->validate([
             'groupe_id'             => 'required',
             'periode'             => 'required',
@@ -131,6 +170,7 @@ class IndicateursController extends Controller
      */
     public function destroy(Indicateur $indicateur)
     {
+        $this->middleware('auth:api');
         $indicateur->delete();
         return response()->json([
             'message' => 'L\'indicateur a été supprimé avec succès',

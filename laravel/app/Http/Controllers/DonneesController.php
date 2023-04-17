@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\Models\SousDonnee;
 use App\Models\Donnee;
 use App\Models\Groupe;
+use App\Models\SousGroupe;
 use App\Models\Indicateur;
+use App\Models\SousIndicateur;
 use App\Models\Desagregation;
+
 
 class DonneesController extends Controller
 {
@@ -20,7 +24,6 @@ class DonneesController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
     }
 
     /**
@@ -30,8 +33,48 @@ class DonneesController extends Controller
      */
     public function index()
     {
+        $this->middleware('auth:api');
         return Donnee::all();
     }
+
+    
+    
+    public function paginate(Request $request,$pageSize,$pageIndex,$column,$asc)
+    {
+        switch ($column) {
+            case 'indicateur':
+                $column = "indicateurs.libelle";
+                // $column = "null";
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        $donnees =  DB::table('donnees')->
+        leftJoin('indicateurs', function($join){
+            $join->on('donnees.indicateur_id', '=', 'indicateurs.id');
+        })->leftJoin('groupes', function($join){
+            $join->on('indicateurs.groupe_id', '=', 'groupes.id');
+        })->leftJoin('sous_indicateurs', function($join){
+            $join->on('donnees.sous_indicateur_id', '=', 'sous_indicateurs.id');
+        })->leftJoin('sous_groupes', function($join){
+            $join->on('indicateurs.sous_groupe_id', '=', 'sous_groupes.id');
+        })->select("donnees.*","groupes.libelle as groupe","sous_groupes.libelle as sous_groupe","indicateurs.libelle as indicateur");
+        
+        if(isset($request->tableFilterValue)){
+            $donnees->where('groupes.libelle','like','%'.$request->tableFilterValue.'%');
+            $donnees->orWhere('indicateurs.libelle','like','%'.$request->tableFilterValue.'%');
+            $donnees->orWhere('sous_groupes.libelle','like','%'.$request->tableFilterValue.'%');
+            $donnees->orWhere('donnees.valeur','like','%'.$request->tableFilterValue.'%');
+            $donnees->orWhere('donnees.periode','like','%'.$request->tableFilterValue.'%');
+            $donnees->orWhere('donnees.periode_value','like','%'.$request->tableFilterValue.'%');
+        }
+        return $donnees->orderBy($column!=null&&$column!='null'?$column:'id', $asc=="true"?'asc':'desc')
+            ->paginate($pageSize,"*",null,$pageIndex);        
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -40,6 +83,7 @@ class DonneesController extends Controller
      */
     public function create()
     {
+        $this->middleware('auth:api');
         $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->get();
         $groupes = Groupe::select('libelle as label', 'id as value')->get();
         return response()->json(['indicateurs'=>$indicateurs,'groupes'=>$groupes]);
@@ -52,6 +96,7 @@ class DonneesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth:api');
         $validatedData = $request->validate([
             'indicateur_id'     => 'required',
             'valeur'            => 'required',
@@ -64,6 +109,26 @@ class DonneesController extends Controller
             'message' => 'Une nouvelle donnee a été ajoutée',
             'status' => 200
         ], 200);
+    }
+
+    
+    /**
+     * storeMany a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMany(Request $request)
+    {
+        $this->middleware('auth:api');
+        $validatedData = $request->validate([
+            'items' => 'required',
+        ]);
+
+        foreach($request->input('items')  as $item ){
+            Donnee::create(MyFunction::audit($item));
+        }
+        return response()->json( ['status' => 'success'] );
     }
 
     /**
@@ -84,6 +149,7 @@ class DonneesController extends Controller
      */
     public function edit(Donnee $donnee)
     {
+        $this->middleware('auth:api');
         $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->get();
         $sousIndicateurs = SousIndicateur::select('*','libelle as label', 'id as value')->get();
         $groupes = Groupe::select('libelle as label', 'id as value')->get();
@@ -99,6 +165,7 @@ class DonneesController extends Controller
      */
     public function update(Request $request, Donnee $donnee)
     {
+        $this->middleware('auth:api');
         $validatedData = $request->validate([
             'indicateur_id'     => 'required',
             'valeur'            => 'required',
@@ -123,10 +190,132 @@ class DonneesController extends Controller
      */
     public function destroy(Donnee $donnee)
     {
+        $this->middleware('auth:api');
         $donnee->delete();
         return response()->json([
             'message' => 'La donnee a été supprimée avec succès',
             'status' => 200
         ], 200);
     }
+    
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function findBy(Request $request)
+    {
+        $validatedData = $request->validate([
+            // 'indicateur' => 'required',
+            // 'groupe' => 'required',
+            'annee' => 'required',
+        ]);
+        $donnees = DB::table('donnees')->
+        leftJoin('indicateurs', function($join){
+            $join->on('donnees.indicateur_id', '=', 'indicateurs.id');
+        })->leftJoin('groupes', function($join){
+            $join->on('indicateurs.groupe_id', '=', 'groupes.id');
+        })->leftJoin('sous_indicateurs', function($join){
+            $join->on('donnees.sous_indicateur_id', '=', 'sous_indicateurs.id');
+        })->leftJoin('sous_groupes', function($join){
+            $join->on('indicateurs.sous_groupe_id', '=', 'sous_groupes.id');
+        })->select("donnees.*","groupes.libelle as groupe","sous_groupes.libelle as sous_groupe","indicateurs.libelle as indicateur");
+
+         
+        if(isset($request->indicateur_id)&&$request->indicateur_id!=null&&$request->indicateur_id!=0){
+            $donnees->where('donnees.indicateur_id', '=', $request['indicateur_id']);
+        }
+        if(isset($request->periode_value)&&$request->periode_value!=null&&$request->periode_value!=0){
+                $donnees->whereIn('donnees.periode_value', $request['periode_value']);
+        }
+        if(isset($request->periode)&&$request->periode!=null){
+            $donnees->where('donnees.periode', 'like', $request['periode']);
+        }
+        
+        if(isset($request->groupe_id)){
+            $donnees->where('groupes.id', '=', $request->groupe_id);
+        }
+        if(isset($request->id)&&$request->id!=null&&$request->id!=0){
+            $donnees->where('donnees.id', '=', $request['id']);
+        }
+        if(isset($request->annee)&&$request->annee!=null&&$request->annee!=0){
+                $donnees->whereIn('donnees.annee', $request['annee'])->orderBy("annee","ASC");
+        }
+        $donnees = $donnees->orderBy("annee","ASC")->get();
+        return response()->json( $donnees);
+    }
+    
+
+    
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function findByGetSql(Request $request)
+    {
+        $validatedData = $request->validate([
+            // 'indicateur' => 'required',
+            // 'groupe' => 'required',
+            'annee' => 'required',
+        ]);
+        $donnees = DB::table('donnees')->
+        leftJoin('indicateurs', function($join){
+            $join->on('donnees.indicateur_id', '=', 'indicateurs.id');
+        })->leftJoin('groupes', function($join){
+            $join->on('indicateurs.groupe_id', '=', 'groupes.id');
+        })->leftJoin('sous_indicateurs', function($join){
+            $join->on('donnees.sous_indicateur_id', '=', 'sous_indicateurs.id');
+        })->leftJoin('sous_groupes', function($join){
+            $join->on('indicateurs.sous_groupe_id', '=', 'sous_groupes.id');
+        })->select("donnees.*","groupes.libelle as groupe","sous_groupes.libelle as sous_groupe","indicateurs.libelle as indicateur");
+
+         
+        if(isset($request->indicateur_id)&&$request->indicateur_id!=null&&$request->indicateur_id!=0){
+            $donnees->where('donnees.indicateur_id', '=', $request['indicateur_id']);
+        }
+        if(isset($request->periode_value)&&$request->periode_value!=null&&$request->periode_value!=0){
+                $donnees->whereIn('donnees.periode_value', $request['periode_value']);
+        }
+        if(isset($request->periode)&&$request->periode!=null){
+            $donnees->where('donnees.periode', 'like', $request['periode']);
+        }
+        
+        if(isset($request->groupe_id)){
+            $donnees->where('groupes.id', '=', $request->groupe_id);
+        }
+        if(isset($request->id)&&$request->id!=null&&$request->id!=0){
+            $donnees->where('donnees.id', '=', $request['id']);
+        }
+        if(isset($request->annee)&&$request->annee!=null&&$request->annee!=0){
+                $donnees->whereIn('donnees.annee', $request['annee'])->orderBy("annee","ASC");
+        }
+        $donnees = $donnees->orderBy("annee","ASC");
+        
+        $sql =  Str::replaceArray('?', $donnees->getBindings(), $donnees->toSql());
+
+        return response()->json( $donnees->getBindings());
+    }
+    
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function elementSearch()
+    {
+        $groupes = Groupe::select('libelle as label', 'id as value')->get();
+        $sous_groupes = SousGroupe::select('libelle as label', 'id as value')->get();
+        $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->get();
+        $sousIndicateurs = SousIndicateur::select('*','libelle as label', 'id as value')->get();
+        $annees = DB::table('donnees')->select('annee as label','annee as value')->distinct()->orderBy('annee')->get();
+        $annees2 = DB::table('donnees')->select('annee as value','annee as text')->distinct()->orderBy('annee')->get();
+        return response()->json(['indicateurs'=>$indicateurs,'sousIndicateurs'=>$sousIndicateurs,'groupes'=>$groupes,'sous_groupes'=>$sous_groupes,'annees'=>$annees,'annees2'=>$annees2]);        
+    }
+
 }
