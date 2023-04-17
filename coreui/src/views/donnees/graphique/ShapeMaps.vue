@@ -13,7 +13,7 @@
 </template>
 
 <script> 
-import Vue from 'vue'
+
 import {Chart} from 'highcharts-vue'
 import Highcharts from 'highcharts'
 import mapData from './world.geo.json'
