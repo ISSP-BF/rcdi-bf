@@ -324,8 +324,8 @@
                   />
                   <GoogleMaps 
                     v-if="vueGraphe == 'MAPS'"/>
-                  <ShapeMaps 
-                    v-if="vueGraphe == 'MAPS2'"/>
+                  <!-- <ShapeMaps 
+                    v-if="vueGraphe == 'MAPS2'"/> -->
                 </div>
               </CCol>
             </CRow>
@@ -346,7 +346,7 @@ import ImportButton from "../buttons/ImportButton.vue";
 import IndicateursSecteur from "./graphique/IndicateursSecteur";
 import IndicateurBarChart from "./graphique/IndicateurBarChart";
 import GoogleMaps from "./graphique/GoogleMaps";
-import ShapeMaps from "./graphique/ShapeMaps";
+// import ShapeMaps from "./graphique/ShapeMaps";
 
 import MaskedInput from "vue-text-mask";
 import Multiselect from "vue-multiselect";
@@ -367,7 +367,8 @@ export default {
     ImportButton,
     IndicateursSecteur,
     IndicateurBarChart,
-    GoogleMaps,ShapeMaps,
+    GoogleMaps,
+    // ShapeMaps,
   },
   data: () => {
     return {

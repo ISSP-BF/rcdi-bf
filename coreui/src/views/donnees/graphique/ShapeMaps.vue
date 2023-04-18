@@ -17,8 +17,8 @@
 import {Chart} from 'highcharts-vue'
 import Highcharts from 'highcharts'
 import mapData from './tenado.geo.json'
-import HighchartsMapModule from 'highcharts/modules/map'
-HighchartsMapModule(Highcharts)
+// import HighchartsMapModule from 'highcharts/modules/map'
+// HighchartsMapModule(Highcharts)
 Highcharts.maps['myMapName'] = mapData
 
  
