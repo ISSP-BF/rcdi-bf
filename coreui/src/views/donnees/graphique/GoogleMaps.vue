@@ -23,10 +23,11 @@
       </div>
     </CCardHeader>
     <CCardBody>  
-      <GmapMap
+      <GmapMap  v-if="reload"
         :center="center"
         :zoom="11"
-        style="height: 400px"
+        style="height: 80vh"
+        ref="mapRef"
       >
         <GmapInfoWindow :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
           <CLink :href="infoLink" target="_blank">{{infoContent}}</CLink>
@@ -41,7 +42,15 @@
           :draggable="m.draggable"
           @click="toggleInfoWindow(m, index)"
         />
+        <GmapCircle :center="m.position" :zoom="7" :key="index" :radius="m.volume"
+          v-for="(m, index) in markers" />
+        <GmapPolygon
+        
+          :draggable="false"
+      :path.sync="tenadoMapData"
+    />
       </GmapMap>
+      
     </CCardBody>
   </CCard>
 </template>
@@ -49,6 +58,9 @@
 <script>
 import * as VueGoogleMaps from 'vue2-google-maps'
 import Vue from 'vue'
+import mapData from './tenado.geo.json'
+import tenadoMapDat from './tenadodata.json'
+import ecoledata from './ecoledata.json'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -64,15 +76,17 @@ export default {
   name: 'google-maps',
   data () {
     return {
-      center: {lat: 37.431489, lng: -122.163719},
+      reload:true,
+      tenadoMapData:tenadoMapDat,
+      center: {lng: -2.66153, lat: 12.19218},
       markers: [{
-        position: {lat: 37.431489, lng: -122.163719},
+        position: {lat: 12.19218, lng: -2.66153},
         label: 'S',
         draggable: false,
         title: 'Stanford',
         www: 'https://www.stanford.edu/'
       }, {
-        position: {lat: 37.394694, lng: -122.150333},
+        position: {lat: 12.19218, lng: -2.63153},
         label: 'T',
         draggable: false,
         title: 'Tesla',
@@ -90,6 +104,15 @@ export default {
         title: 'Facebook',
         www: 'https://www.facebook.com/'
       }],
+      lines: [{
+        id:0,
+        path: [{lat: 12.19218, lng: -2.66153},{lat: 12.19218, lng: -2.63153}],
+        label: 'S',
+        draggable: false,
+        title: 'Stanford',
+        www: 'https://www.stanford.edu/'
+      }, 
+    ],
       infoContent: '',
       infoLink: '',
       infoWindowPos: {
@@ -121,6 +144,47 @@ export default {
         this.infoWinOpen = true
       }
     }
+  },
+  mounted () {
+    // At this point, the child GmapMap has been mounted, but
+    // its map has not been initialized.
+    // Therefore we need to write mapRef.$mapPromise.then(() => ...)
+
+    this.$refs.mapRef.$mapPromise.then((map) => {
+      map.panTo({lat: 12.19218, lng: -2.66153});
+      // INITISALISATION DU POLYGONE
+      map['features'] = mapData['features'];
+      // map.data.loadGeoJson('http://example.com/states.json');
+    })
+    // let sql = "";
+    this.markers = [];
+    
+    for(let o of ecoledata){
+     let lng =  o.geometry.coordinates[0]
+     let lat =  o.geometry.coordinates[1]
+    //  if(o.properties.type=="EDUCATION"&&o.properties.Code_Provi==22){
+    //   sql = sql + `INSERT INTO ecoles SET lat='${lat}', lon='${lng}',nom_structure="${o.properties.Désignati}",province_id=${o.properties.Code_Provi},commune_id=2208;\n`
+    //  }
+     
+     if(o.properties.type=="EDUCATION"&&o.properties.Code_Provi==22){
+      let mark =
+      {
+        position: {lat: lat, lng: lng},
+        label: o.properties.Désignati.charAt(0),
+        draggable: false,
+        title: o.properties.Désignati,
+        www: 'https://www.apple.com/',
+        volume : Math.random()*1000
+      }
+      this.markers.push(mark)
+     }
+    }
+    console.log(this.markers)
+    this.reload = false;
+    setTimeout(() => {
+      this.reload = true;
+    }, 10);
+    // console.log(sql)
   }
 }
 </script>

@@ -4,9 +4,9 @@
       <CIcon name="cil-map"/>
       Shape File 
     </CCardHeader>
-    <CCardBody>    
+    <CCardBody style="height: 80vh;">    
       <highcharts :constructorType="'mapChart'" class="hc" :options="chartOptions2" ref="chart"
-        style="height: 400px"></highcharts>
+        style="height: 80vh"></highcharts>
 
     </CCardBody>
   </CCard>
@@ -16,7 +16,7 @@
 
 import {Chart} from 'highcharts-vue'
 import Highcharts from 'highcharts'
-import mapData from './world.geo.json'
+import mapData from './tenado.geo.json'
 import HighchartsMapModule from 'highcharts/modules/map'
 HighchartsMapModule(Highcharts)
 Highcharts.maps['myMapName'] = mapData
@@ -36,10 +36,10 @@ export default {
           map: mapData
         },
         title: {
-          text: 'Highmaps basic demo'
+          text: 'Commune de Tenado'
         },
         subtitle: {
-          text: 'Source map: <a href="http://code.highcharts.com/mapdata/custom/world.js">World, Miller projection, medium resolution</a>'
+          text: 'Source map: ISSP</a>'
         },
         mapNavigation: {
           enabled: true,
@@ -61,9 +61,16 @@ export default {
             enabled: true,
             format: '{point.name}'
           },
-          allAreas: false,
+          allAreas: true,
+          markers: [{
+        position: {lat: -2.66153, lng: 12.19218},
+        label: 'S',
+        draggable: false,
+        title: 'Stanford',
+        www: 'https://www.stanford.edu/'
+      },],
           data: [
-            ['fo', 0],
+            ['fo', 10],
             ['um', 1],
             ['us', 2],
             ['jp', 3],
