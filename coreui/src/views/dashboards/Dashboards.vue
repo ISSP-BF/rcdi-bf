@@ -39,7 +39,9 @@
               <template #actions="{item}">
                 <td>
                   
-                  <div class="card-header-actions" style="display:flex"><CButton color="secondary" size="sm" @click="redirectionElement(item.id)">Les requêtes  </CButton>
+                  <div class="card-header-actions" style="display:flex">
+                    <CButton color="success" @click="visualiser(item.id)"> <CIcon name="cil-speedometer"/>Visualiser</CButton> &nbsp;
+                    <CButton color="secondary" size="sm" @click="redirectionElement(item.id)">Les requêtes  </CButton>
                     &nbsp;
                     <CButton color="secondary" size="sm" @click="showdashboard(item.id)">Détail</CButton>
                     &nbsp;
@@ -87,6 +89,9 @@ export default {
   computed: {
   },
   methods: {
+    visualiser(id){
+      this.$router.push({path: id+'/dashboard-personalise'});
+    },
     getRowCount (items) {
       return items.length
     },
