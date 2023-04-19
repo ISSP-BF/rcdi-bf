@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     visualiser(id){
-      this.$router.push({path: id+'/dashboard-personalise'});
+      this.$router.push({path:'dashboard-personalise/'+ id});
     },
     getRowCount (items) {
       return items.length
