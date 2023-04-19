@@ -95,6 +95,7 @@ export default {
   },
   data: () => {
     return { 
+      refreshing:false,
       layout: storedLayout || baseLayout,
       storedLayout,
       gridKey: 0,
@@ -102,7 +103,17 @@ export default {
       message: '',
     }
   },
+  watch: {
+    reloadParams() {
+      console.log(this.$route.params.id)
+      this.refreshing = false;
+      this.getdashboardItemsByDashboardId();
+    },
+  },
   computed: {
+    reloadParams() {
+      return [this.$route.params.id];
+    },
   },
   methods: { 
     getdashboardItemsByDashboardId (){
