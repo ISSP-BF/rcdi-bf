@@ -6,7 +6,7 @@
     </CCardHeader>
     <CCardBody style="height: 80vh;">    
       <highcharts :constructorType="'mapChart'" class="hc" :options="chartOptions2" ref="chart"
-        style="height: 80vh" v-if="refreshing"></highcharts>
+        style="height: 80vh"></highcharts>
 
     </CCardBody>
   </CCard>
@@ -31,23 +31,17 @@ export default {
   },
   data () {
     return { 
-      refreshing:true,
         data:[],
       chartOptions2: {
         chart: {
           map: mapData
         },
         title: {
-          text: mapData.name
+          text: 'Commune de Tenado'
         },
         subtitle: {
           text: 'Source map: ISSP</a>'
         },
-        
-        tooltip: {
-                headerFormat: '',
-                pointFormat: '<b>{point.country}</b><br>Lat: {point.lat:.5f}, Lon: {point.lon:.5f}'
-            },
         mapNavigation: {
           enabled: true,
           buttonOptions: {
@@ -58,7 +52,7 @@ export default {
           min: 0
         },
         series: [
-          {
+        {
                 name: 'Europe',
                 accessibility: {
                     exposeAsGroupOnly: true
@@ -67,41 +61,26 @@ export default {
                 nullColor: 'rgba(177, 244, 177, 0.5)',
                 showInLegend: false
             },
-          {
-            type: 'mappoint',
-            enableMouseTracking: true,
-            accessibility: {
-                point: {
-                    descriptionFormatter: function (point) {
-                        if (point.isCluster) {
-                            return 'Grouping of ' + point.clusterPointsAmount + ' points.';
-                        }
-                        return point.name + ', country code: ' + point.country + '.';
-                    }
-                }
+        {
+          name: 'Random data',
+          states: {
+            hover: {
+              color: '#BADA55'
+            }
           },
-        colorKey: 'clusterPointsAmount',
-        data: [],
-        color: Highcharts.getOptions().colors[5],
-        marker: {
-                  lineWidth: 1,
-                  lineColor: '#fff',
-                  symbol: 'mapmarker',
-                  radius: 8
-              },
-        dataLabels: {
-            verticalAlign: 'top'
-        },
-        states: {
-          hover: {
-            color: '#BADA55'
-          }
-        },
-        dataLabels: {
-          enabled: true,
-          format: '{point.name}'
-        },
-        allAreas: true,  
+          dataLabels: {
+            enabled: true,
+            format: '{point.name}'
+          },
+          allAreas: true,
+          markers: [{
+        position: {lat: -2.66153, lng: 12.19218},
+        label: 'S',
+        draggable: false,
+        title: 'Stanford',
+        www: 'https://www.stanford.edu/'
+      },],
+          data: this.data
         }]
       }
     }
@@ -111,6 +90,7 @@ export default {
   }
   ,mounted () {
     this.data = [];
+    
     for(let o of ecoledata){
      let lon =  o.geometry.coordinates[0]
      let lat =  o.geometry.coordinates[1]
@@ -118,20 +98,16 @@ export default {
       let mark =
       {
         lat: lat, lon: lon,
-        name: o.properties.Désignati.charAt(0),
+        label: o.properties.Désignati.charAt(0),
         draggable: false,
-        country: o.properties.Désignati,
+        title: o.properties.Désignati,
+        www: 'https://www.apple.com/',
         volume : Math.random()*1000
       }
       this.data.push(mark)
      }
     }
-    this.chartOptions2.series[1].data = this.data;
-    console.log(this.chartOptions2)
-    this.refreshing = false;
-    setTimeout(() => {
-      this.refreshing = true;
-    }, 10);
+    this.chartOptions2.
   }
 }
 </script>

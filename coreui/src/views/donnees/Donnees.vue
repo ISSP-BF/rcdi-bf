@@ -91,30 +91,15 @@
                 </td>
               </template>
 
-              <template #actions="{ item }">
+              
+              <template #actions="{item}">
                 <td>
-                  <div class="card-header-actions" style="display: flex">
-                    <CButton
-                      color="secondary"
-                      size="sm"
-                      @click="showDonnee(item.id)"
-                      >Détail</CButton
-                    >
-                    &nbsp;
-                    <CButton
-                      size="sm"
-                      color="primary"
-                      @click="editDonnee(item.id)"
-                      ><CIcon name="cil-pencil"
-                    /></CButton>
-                    &nbsp;
-                    <CButton
-                      v-if="you != item.id"
-                      size="sm"
-                      color="danger"
-                      @click="deleteDonnee(item.id)"
-                      ><CIcon name="cil-x-circle"
-                    /></CButton>
+                  <div class="card-header-actions" style="display:flex">
+                  <CButton color="secondary"  size="sm" @click="showDonnee( item.id )">Détail</CButton>
+                  &nbsp;
+                  <EditButton  @modifier="editDonnee( item.id )"/>
+                  &nbsp;
+                      <DeleteButton @supprimer="deleteDonnee( item.id )"/>
                   </div>
                 </td>
               </template>
@@ -204,7 +189,7 @@
                       >Période</label
                     >
                     <CSelect
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&togglePressMaps"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(!togglePressMaps||!togglePressMaps2)"
                       class="col-lg-12"
                       placeholder="Choisir une période"
                       :value.sync="donnee.selectedPeriode_values"
@@ -213,7 +198,7 @@
                     >
                     </CSelect>
                     <multiselect
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&!togglePressMaps"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(!togglePressMaps||!togglePressMaps2)"
                       class="col-lg-11"
                       v-model="selectedPeriode_values"
                       :options="choixPeriodes"
@@ -324,8 +309,8 @@
                   />
                   <GoogleMaps 
                     v-if="vueGraphe == 'MAPS'"/>
-                  <!-- <ShapeMaps 
-                    v-if="vueGraphe == 'MAPS2'"/> -->
+                  <ShapeMaps 
+                    v-if="vueGraphe == 'MAPS2'"/>
                 </div>
               </CCol>
             </CRow>
@@ -346,7 +331,7 @@ import ImportButton from "../buttons/ImportButton.vue";
 import IndicateursSecteur from "./graphique/IndicateursSecteur";
 import IndicateurBarChart from "./graphique/IndicateurBarChart";
 import GoogleMaps from "./graphique/GoogleMaps";
-// import ShapeMaps from "./graphique/ShapeMaps";
+import ShapeMaps from "./graphique/ShapeMaps";
 
 import MaskedInput from "vue-text-mask";
 import Multiselect from "vue-multiselect";
@@ -368,7 +353,7 @@ export default {
     IndicateursSecteur,
     IndicateurBarChart,
     GoogleMaps,
-    // ShapeMaps,
+    ShapeMaps,
   },
   data: () => {
     return {

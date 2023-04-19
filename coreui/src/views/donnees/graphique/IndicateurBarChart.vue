@@ -20,14 +20,14 @@
           :datasets="datasets"
           :options="computedOptions"
           :labels="labels"
-          style="min-height: 50vh"
+          style="min-height: 60vh"
         />
         
         <CChartLine  v-if="togglePress"
             :datasets="datasets"
             :options="computedOptions"
             :labels="labels"
-            style="min-height: 50vh"
+            style="min-height: 60vh"
             pointed
           />
       </div>
