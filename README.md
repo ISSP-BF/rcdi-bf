@@ -398,3 +398,16 @@ Il faut changer les configurations suivantes :
 Settings->Deploy keys->Add deploy key
 
 sudo a2enmod rewrite
+
+# Deploiement
+
+npm run build
+cp -r dist/* ../laravel/public/
+cp dist/index.html ../laravel/resources/views/coreui/homepage.blade.php
+chown -R www-data:www-data laravel/public
+chown -R www-data:www-data laravel/storage
+
+
+git add * 
+git stash
+git pull
