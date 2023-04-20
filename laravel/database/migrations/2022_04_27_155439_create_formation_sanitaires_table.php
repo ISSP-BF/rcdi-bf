@@ -21,8 +21,8 @@ class CreateFormationSanitairesTable extends Migration
             $table->integer('district_id')->unsigned();
             $table->string('code')->nullable();
             $table->string('nom_structure');
-            $table->string('lon')->nullable();
-            $table->string('lat')->nullable();
+            $table->float('lon')->nullable();
+            $table->float('lat')->nullable();
             $table->string('type')->nullable();
             $table->string('adresse')->nullable();
             $table->string('adresse_postale')->nullable();

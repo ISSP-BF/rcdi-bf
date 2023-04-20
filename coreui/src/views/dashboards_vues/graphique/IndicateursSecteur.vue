@@ -223,12 +223,10 @@ export default {
       for (let t = 0; t < nombre; t++) {
         let c = "#";
         for (let i = 0; i < 6; i++) {
-          console.log(Math.floor(Math.random() * 16));
           c += choixVariableCouleur[Math.floor(Math.random() * 16)];
         }
         couleurs.push(c);
       }
-      console.log(couleurs);
       return couleurs;
     },
     getDatasets() {
@@ -253,7 +251,6 @@ export default {
           self.anneelist = [];
           for (let x of self.items) {
             let verif = false;
-            console.log(x);
             for (let y of self.anneelist) {
               if (y === x.annee) {
                 verif = true;
@@ -268,7 +265,6 @@ export default {
           self.periodelist = [];
           for (let x of self.items) {
             let verif = false;
-            console.log(x);
             for (let y of self.periodelist) {
               if (y === x.periode_value) {
                 verif = true;

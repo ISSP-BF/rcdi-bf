@@ -19,6 +19,8 @@ class CreateCommunesTable extends Migration
             $table->string('province_id');
             $table->string('commune');
             $table->integer('users_id')->unsigned();
+            $table->float('lon')->nullable();
+            $table->float('lat')->nullable();
             $table->boolean('defaut')->nullable()->default(null);// Si la commune est celle par défaut
             $table->tinyInteger('updated')->nullable()->default(0);
             $table->timestamps();

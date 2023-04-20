@@ -10,6 +10,7 @@ use App\Models\Groupe;
 use App\Models\SousGroupe;
 use App\Models\Desagregation;
 use App\Models\Ecole;
+use App\Models\Communes;
 use App\Models\FormationSanitaire;
 
 class IndicateursController extends Controller
@@ -98,12 +99,13 @@ class IndicateursController extends Controller
     public function findLocalisationByGroupe($groupe_id)
     {
         $groupe = Groupe::find($groupe_id);
+        $commune = Communes::where("defaut",true)->firstOrFail();
         switch ($groupe->localisation) {
             case 'ecoles':
-                return Ecole::select('nom_structure as label', 'id as value')->get();
+                return Ecole::select('nom_structure as label', 'id as value')->where("commune_id","=",$commune->id)->get();
                 break;
             case 'formation_sanitaires':
-                return FormationSanitaire::select('nom_structure as label', 'id as value')->get();
+                return FormationSanitaire::select('nom_structure as label', 'id as value')->where("commune_id","=",$commune->id)->get();
                 break;
             
             default:

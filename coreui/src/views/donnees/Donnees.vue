@@ -9,7 +9,7 @@
               <AddButton @ajouter="createDonnee()" />&nbsp;
               <ImportButton
                 title="Importation des données calculées des indicateurs"
-                :fields="fieldsI"
+                :fields="fieldsII"
                 apiUrl="donnees"
               />&nbsp;
               <ExportButton
@@ -61,12 +61,17 @@
 
               <template #indicateur="{ item }">
                 <td>
-                  <strong>{{ item.indicateur }}</strong>
+                  <strong>{{ item.indicateur.libelle }}</strong>
                 </td>
               </template>
               <template #groupe="{ item }">
                 <td>
                   <strong>{{ item.groupe }}</strong>
+                </td>
+              </template>
+              <template #localisation="{ item }">
+                <td>
+                  <strong>{{ item.localisation?(item.localisation.nom_structure?item.localisation.nom_structure:item.localisation):item.localisation }}</strong>
                 </td>
               </template>
               <template #sous_indicateur="{ item }">
@@ -127,6 +132,16 @@
                       @change="findSousGroupeByGroupe($event)"
                     >
                     </CSelect>
+
+                    <CSelect
+                        label="Localisation" 
+                      class="col-lg-12"
+                        :value.sync="donnee.localisation_id"
+                        :plain="true"
+                        :options="localisations"
+                      >
+                      </CSelect>
+
                     <CSelect
                       label="Sous Groupe"
                       class="col-lg-12"
@@ -185,20 +200,20 @@
 
                     <label
                       class="col-lg-12"
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(!togglePressMaps||!togglePressMaps2)"
                       >Période</label
                     >
                     <CSelect
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(!togglePressMaps||!togglePressMaps2)"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(togglePressMaps||togglePressMaps2)"
                       class="col-lg-12"
                       placeholder="Choisir une période"
-                      :value.sync="donnee.selectedPeriode_values"
+                      :value.sync="donnee.periode_value"
                       :plain="true"
                       :options="choixPeriodes"
                     >
                     </CSelect>
                     <multiselect
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(!togglePressMaps||!togglePressMaps2)"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&!(togglePressMaps||togglePressMaps2)"
                       class="col-lg-11"
                       v-model="selectedPeriode_values"
                       :options="choixPeriodes"
@@ -216,17 +231,17 @@
                     <label class="col-lg-12">Années</label>
                     
                     <CSelect
-                      v-if="togglePressMaps"
+                      v-if="togglePressMaps||togglePressMaps2"
                       class="col-lg-12"
                       placeholder="Choisir une année"
-                      :value.sync="donnee.selectedItems"
+                      :value.sync="donnee.annee"
                       :plain="true"
                       :options="annees"
                     >
                     </CSelect>
 
                     <multiselect
-                      v-if="!togglePressMaps"
+                      v-if="!(togglePressMaps||togglePressMaps2)"
                       class="col-lg-11"
                       v-model="selectedItems"
                       :options="annees"
@@ -242,7 +257,8 @@
                     </multiselect>
                   </div>
                   <br />
-                   <CButton timeout="2000" color="primary" @click="search()">Actualiser</CButton>
+                   <CButton v-if="!(togglePressMaps||togglePressMaps2)" timeout="2000" color="primary" @click="search()">Actualiser</CButton>
+                   <CButton v-if="(togglePressMaps||togglePressMaps2)" timeout="2000" color="primary" @click="searchCarte()">Actualiser</CButton>
 
                    <br/>
                   &nbsp;
@@ -307,10 +323,11 @@
                     v-if="vueGraphe == 'HISTOGRAMME'"
                     :donneeSearch="donneeSearch" :refreshing="refreshing"
                   />
-                  <GoogleMaps 
-                    v-if="vueGraphe == 'MAPS'"/>
-                  <ShapeMaps 
-                    v-if="vueGraphe == 'MAPS2'"/>
+                  
+                  <GoogleMaps  v-if="vueGraphe == 'MAPS2'" :center="{lat:commune.lat,lng:commune.lon}" :mapDatao="mapDataCoordonnate" :markers="coordinatesWithDataMarker"/>
+                  <ShapeMaps  v-if="vueGraphe == 'MAPS'" :mapDatao="mapData" :markers="coordinatesWithDataMarker2"/>
+                   
+
                 </div>
               </CCol>
             </CRow>
@@ -322,7 +339,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"; 
 import ExportButton from "../buttons/ExportButton.vue";
 import AddButton from "../buttons/AddButton.vue";
 import EditButton from "../buttons/EditButton.vue";
@@ -333,11 +350,13 @@ import IndicateurBarChart from "./graphique/IndicateurBarChart";
 import GoogleMaps from "./graphique/GoogleMaps";
 import ShapeMaps from "./graphique/ShapeMaps";
 
+
 import MaskedInput from "vue-text-mask";
 import Multiselect from "vue-multiselect";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import "vue-multiselect/dist/vue-multiselect.min.css";
+import mapData from './graphique/tenado.geo.json'
 
 export default {
   name: "Donnee",
@@ -357,6 +376,8 @@ export default {
   },
   data: () => {
     return {
+      mapData:mapData, 
+      mapDataCoordonnate:[],
       perPageValues: [
         { value: "5", label: "5" },
         { value: "10", label: "10" },
@@ -403,9 +424,10 @@ export default {
       selectedPeriode_values: [],
       region: null,
       province: null,
-      commune: null,
+      commune: {},
       district: null,
       groupes: [],
+      localisations:[],
       indicateurs: [],
       sous_groupes: [],
       periodes: [],
@@ -415,6 +437,8 @@ export default {
       annees: [],
       anneesSelect: null,
       indicateurliste: [],
+      coordinatesWithDataMarker: [],
+      coordinatesWithDataMarker2: [],
       items: [],
       fields: [
         "id",
@@ -423,6 +447,7 @@ export default {
         "indicateur",
         "sous_indicateur",
         "periode",
+        "localisation",
         "periode_value",
         "annee",
         "valeur",
@@ -433,6 +458,17 @@ export default {
         "groupe_id",
         "sous_groupe_id",
         "indicateur_id",
+        "localisation_id",
+        "sous_indicateur_id",
+        "periode",
+        "periode_value",
+        "annee",
+        "valeur",
+        "source",
+      ],
+      fieldsII: [
+        "indicateur_id",
+        "localisation_id",
         "sous_indicateur_id",
         "periode",
         "periode_value",
@@ -555,7 +591,23 @@ export default {
       this.donnee.periode_value =
         this.choixPeriodes.length > 0 ? this.choixPeriodes[0].value : null;
     },
+    
+    findLocalisationByGroupe(event){
+      let self = this;
+      axios.get(  this.$apiAdress + '/api/indicateurs/findLocalisationByGroupe/'+self.donnee.groupe_id+'?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+      console.log(response)
+        self.localisations = response.data;
+        let lest = [{label:'Niveau Commune',value:null}]
+        lest.push(...self.localisations);
+        self.localisations = lest;
+    }).catch(function (error) {
+      self.localisations  = []
+    });
+    }, 
+     
     findSousGroupeByGroupe(event) {
+      this.findLocalisationByGroupe(event);
       this.sous_groupes = [];
       let self = this;
       axios
@@ -742,6 +794,57 @@ export default {
       }
       this.choicesGraphe();
     },
+
+    searchCarte() {
+      this.refreshing = ! this.refreshing;
+      let self = this;
+      this.donneeSearch = JSON.parse(JSON.stringify(this.donnee));
+      if(this.donneeSearch.periode=="ANNUEL"){
+        this.donneeSearch.periode_value = this.donneeSearch.annee;
+      }
+      console.log(self.donneeSearch)
+      axios.post(  this.$apiAdress + '/api/donnees/findCarteDataBy?token=' + localStorage.getItem("api_token"),
+         self.donneeSearch
+        )
+        .then(function (response) {
+            console.log(response)
+            self.items = response.data;
+            self.coordinatesWithDataMarker = [];
+            self.coordinatesWithDataMarker2 = [];
+            for(let co of response.data){
+              let mark =
+                {
+                  position: {lat: parseFloat(co.localisation.lat), lng: parseFloat(co.localisation.lon)},
+                  label: co.localisation.nom_structure.charAt(0),
+                  draggable: false,
+                  title: co.localisation.nom_structure,
+                  valeur : co.valeur,
+                  source : co.source
+                }
+              self.coordinatesWithDataMarker.push(mark);
+            } 
+
+            for(let co of response.data){
+              let mark =
+                {
+                   valeur : co.valeur,
+                  lat: parseFloat(co.localisation.lat), lon: parseFloat(co.localisation.lon),
+                  name: co.localisation.nom_structure.charAt(0),
+                  draggable: false,
+                  country: co.localisation.nom_structure,
+                  source : co.source
+                }
+              self.coordinatesWithDataMarker2.push(mark);
+            } 
+        })
+      .catch(function (error) {
+          console.log(error);
+          // self.$router.push({ path: 'login' });
+        });
+      this.choicesGraphe();
+    },
+
+
     findElementFiltre() {
       let self = this;
       axios
@@ -755,6 +858,8 @@ export default {
           self.groupes = response.data.groupes;
           self.sous_groupes = response.data.sous_groupes;
 
+          // Recupération de la commune par défaut
+          self.commune = response.data.commune; 
           let lest2 = [{ label: "", value: null }];
           lest2.push(...self.sous_groupes);
           self.sous_groupes = lest2;
@@ -766,6 +871,7 @@ export default {
             self.sous_groupes.length > 0 ? self.sous_groupes[0].value : null;
           self.annees = response.data.annees;
           self.refreshing3 = false;
+          self.findLocalisationByGroupe(event);
           setTimeout(() => {
             self.refreshing3 = true;
           }, 1);
@@ -882,11 +988,17 @@ export default {
           console.log(error);
         });
     },
+    correctionCordonne(){
+      this.mapDataCoordonnate = [];
+      for (let coordina of this.mapData["features"][0]["geometry"]["coordinates"][0][0]) {
+        this.mapDataCoordonnate.push({ lng: coordina[0], lat: coordina[1] });
+      }
+    }
   },
   mounted: function () {
-    this.onTableChange();
-    // this.getAllIndicateursSearch();
+    this.onTableChange(); 
     this.findElementFiltre();
+    this.correctionCordonne();
   },
 };
 </script>

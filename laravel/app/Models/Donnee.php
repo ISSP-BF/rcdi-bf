@@ -37,6 +37,19 @@ class Donnee extends Model
           return $sousIndicateur!=null?$sousIndicateur->libelle:$this->sous_indicateur_id;
       }
 
+      public function getLocalisationAttribute()
+      {
+        $indicateur =  Indicateur::find($this->indicateur_id); 
+        if($indicateur->groupeok->localisation=="ecoles"){
+            return Ecole::find($this->localisation_id);
+        }
+        if($indicateur->groupeok->localisation=="formation_sanitaires"){
+            return FormationSanitaire::find($this->localisation_id);
+        }
+         
+          return $this->localisation_id;
+      }
+
     public function getCreatedUserAttribute()
     {
         $user = User::find($this->created_by);
@@ -53,6 +66,6 @@ class Donnee extends Model
         }
     }
 
-    protected $appends = ['updated_user','created_user','indicateur','sous_indicateur'];
+    protected $appends = ['updated_user','created_user','indicateur','sous_indicateur','localisation'];
     
 }

@@ -11,9 +11,12 @@ class Commune extends Model
     use HasFactory;
     
     protected $fillable = [
+        'region_id',
         'province_id',
         'commune',
         'code',
+        'lon',
+        'lat',
         'defaut',
         'updated',
         'updated_by',
@@ -21,4 +24,16 @@ class Commune extends Model
         'updated_at',
         'created_at',
       ];
+      
+      public function getRegionAttribute()
+      {
+          return Region::find($this->region_id);
+      }
+      
+      public function getProvinceAttribute()
+      {
+          return Province::find($this->province_id);
+      }
+  
+      protected $appends = ['region','province'];
 }

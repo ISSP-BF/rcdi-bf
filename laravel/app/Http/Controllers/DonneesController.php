@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\SousDonnee;
 use App\Models\Donnee;
 use App\Models\Groupe;
+use App\Models\Commune;
 use App\Models\SousGroupe;
 use App\Models\Indicateur;
 use App\Models\SousIndicateur;
@@ -24,6 +25,8 @@ class DonneesController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth:api', ['except' => ['index', 'paginate', 'paginate', 'show', 'show', 'show',
+        'update', 'destroy', 'findBy', 'findCarteDataBy', 'elementSearch']]);
     }
 
     /**
@@ -33,7 +36,6 @@ class DonneesController extends Controller
      */
     public function index()
     {
-        $this->middleware('auth:api');
         return Donnee::all();
     }
 
@@ -51,7 +53,7 @@ class DonneesController extends Controller
                 # code...
                 break;
         }
-        $donnees =  DB::table('donnees')->
+        $donnees =  Donnee::
         leftJoin('indicateurs', function($join){
             $join->on('donnees.indicateur_id', '=', 'indicateurs.id');
         })->leftJoin('groupes', function($join){
@@ -83,7 +85,6 @@ class DonneesController extends Controller
      */
     public function create()
     {
-        $this->middleware('auth:api');
         $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->get();
         $groupes = Groupe::select('libelle as label', 'id as value')->get();
         return response()->json(['indicateurs'=>$indicateurs,'groupes'=>$groupes]);
@@ -96,7 +97,6 @@ class DonneesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->middleware('auth:api');
         $validatedData = $request->validate([
             'indicateur_id'     => 'required',
             'valeur'            => 'required',
@@ -120,14 +120,17 @@ class DonneesController extends Controller
      */
     public function storeMany(Request $request)
     {
-        $this->middleware('auth:api');
         $validatedData = $request->validate([
             'items' => 'required',
         ]);
 
+        $items = [];
         foreach($request->input('items')  as $item ){
-            Donnee::create(MyFunction::audit($item));
+            // Donnee::create(MyFunction::audit($item));
+            $items[] = MyFunction::audit($item);
         }
+        Donnee::insert($items);
+        // return $items;
         return response()->json( ['status' => 'success'] );
     }
 
@@ -149,7 +152,6 @@ class DonneesController extends Controller
      */
     public function edit(Donnee $donnee)
     {
-        $this->middleware('auth:api');
         $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->get();
         $sousIndicateurs = SousIndicateur::select('*','libelle as label', 'id as value')->get();
         $groupes = Groupe::select('libelle as label', 'id as value')->get();
@@ -165,7 +167,6 @@ class DonneesController extends Controller
      */
     public function update(Request $request, Donnee $donnee)
     {
-        $this->middleware('auth:api');
         $validatedData = $request->validate([
             'indicateur_id'     => 'required',
             'valeur'            => 'required',
@@ -190,7 +191,6 @@ class DonneesController extends Controller
      */
     public function destroy(Donnee $donnee)
     {
-        $this->middleware('auth:api');
         $donnee->delete();
         return response()->json([
             'message' => 'La donnee a été supprimée avec succès',
@@ -206,7 +206,7 @@ class DonneesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function findBy(Request $request)
-    {
+    { 
         $validatedData = $request->validate([
             // 'indicateur' => 'required',
             // 'groupe' => 'required',
@@ -227,6 +227,7 @@ class DonneesController extends Controller
         if(isset($request->indicateur_id)&&$request->indicateur_id!=null&&$request->indicateur_id!=0){
             $donnees->where('donnees.indicateur_id', '=', $request['indicateur_id']);
         }
+        $donnees->where('donnees.localisation_id','=',$request['localisation_id']);
         if(isset($request->periode_value)&&$request->periode_value!=null&&$request->periode_value!=0){
                 $donnees->whereIn('donnees.periode_value', $request['periode_value']);
         }
@@ -246,6 +247,67 @@ class DonneesController extends Controller
         $donnees = $donnees->orderBy("annee","ASC")->get();
         return response()->json( $donnees);
     }
+    
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function findCarteDataBy(Request $request)
+    {
+        
+        $validatedData = $request->validate([
+            'indicateur_id' => 'required',
+            'periode' => 'required',
+            // 'periode_value' => 'required',
+            'annee' => 'required',
+        ]);
+        $donnees = Donnee::
+        leftJoin('indicateurs', function($join){
+            $join->on('donnees.indicateur_id', '=', 'indicateurs.id');
+        })->leftJoin('groupes', function($join){
+            $join->on('indicateurs.groupe_id', '=', 'groupes.id');
+        })->leftJoin('sous_indicateurs', function($join){
+            $join->on('donnees.sous_indicateur_id', '=', 'sous_indicateurs.id');
+        })->leftJoin('sous_groupes', function($join){
+            $join->on('indicateurs.sous_groupe_id', '=', 'sous_groupes.id');
+        })->select("donnees.*","groupes.libelle as groupe","sous_groupes.libelle as sous_groupe","indicateurs.libelle as indicateur");
+
+         
+        if(isset($request->indicateur_id)&&$request->indicateur_id!=null&&$request->indicateur_id!=0){
+            $donnees->where('donnees.indicateur_id', '=', $request['indicateur_id']);
+        }
+
+        if(isset($request->localisation_id)&&$request->localisation_id!=null&&$request->localisation_id!=0){
+            $donnees->where('donnees.localisation_id','=',$request['localisation_id']);
+        }
+        else {
+            $donnees->where('donnees.localisation_id','<>',null);
+        }
+        
+        if(isset($request->periode_value)&&$request->periode_value!=null&&$request->periode_value!=0){
+                $donnees->where('donnees.periode_value','=', $request['periode_value']);
+        }
+        if(isset($request->periode)&&$request->periode!=null){
+            $donnees->where('donnees.periode', 'like', $request['periode']);
+        }
+        
+        if(isset($request->groupe_id)){
+            $donnees->where('groupes.id', '=', $request->groupe_id);
+        }
+        if(isset($request->id)&&$request->id!=null&&$request->id!=0){
+            $donnees->where('donnees.id', '=', $request['id']);
+        }
+        if(isset($request->annee)&&$request->annee!=null&&$request->annee!=0){
+                $donnees->where('donnees.annee','=', $request['annee'])->orderBy("annee","ASC");
+        }
+        return $donnees = $donnees->orderBy("annee","ASC")->get();
+       // return response()->json( $donnees);
+    }
+    
+
     
 
     
@@ -309,13 +371,15 @@ class DonneesController extends Controller
      */
     public function elementSearch()
     {
+        
         $groupes = Groupe::select('libelle as label', 'id as value')->get();
+        $commune = Commune::where("defaut",true)->firstOrFail();
         $sous_groupes = SousGroupe::select('libelle as label', 'id as value')->get();
         $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->get();
         $sousIndicateurs = SousIndicateur::select('*','libelle as label', 'id as value')->get();
         $annees = DB::table('donnees')->select('annee as label','annee as value')->distinct()->orderBy('annee')->get();
         $annees2 = DB::table('donnees')->select('annee as value','annee as text')->distinct()->orderBy('annee')->get();
-        return response()->json(['indicateurs'=>$indicateurs,'sousIndicateurs'=>$sousIndicateurs,'groupes'=>$groupes,'sous_groupes'=>$sous_groupes,'annees'=>$annees,'annees2'=>$annees2]);        
+        return response()->json(['indicateurs'=>$indicateurs,'sousIndicateurs'=>$sousIndicateurs,'groupes'=>$groupes,'sous_groupes'=>$sous_groupes,'annees'=>$annees,'annees2'=>$annees2,'commune'=>$commune]);        
     }
 
 }

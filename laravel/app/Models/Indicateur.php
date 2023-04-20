@@ -31,6 +31,12 @@ class Indicateur extends Model
           return $groupe!=null?$groupe->libelle:$this->groupe_id;
       }
     
+      public function getGroupeokAttribute()
+      {
+          $groupe =  Groupe::find($this->groupe_id);
+          return $groupe;
+      }
+    
       public function getSousGroupeAttribute()
       {
           $sous_groupe =  SousGroupe::find($this->sous_groupe_id);
@@ -64,6 +70,6 @@ class Indicateur extends Model
         }
     }
 
-    protected $appends = ['updated_user','created_user','desagregation','groupe','sous_indicateurs','sous_groupe'];
+    protected $appends = ['updated_user','created_user','desagregation','groupe','groupeok','sous_indicateurs','sous_groupe'];
     
 }

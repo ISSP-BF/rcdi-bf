@@ -1,72 +1,63 @@
 <template>
-  <CCard>
-    <CCardHeader>
-      <CIcon name="cil-map"/>
-      Shape File 
-    </CCardHeader>
-    <CCardBody style="height: 80vh;">    
-      <highcharts :constructorType="'mapChart'" class="hc" :options="chartOptions2" ref="chart"
-        style="height: 80vh" v-if="refreshing"></highcharts>
-
-    </CCardBody>
-  </CCard>
+  <highcharts
+    :constructorType="'mapChart'"
+    class="hc"
+    :options="chartOptions2"
+    ref="chart"
+    style="height: 75vh"
+    v-if="refreshing"
+  ></highcharts>
 </template>
 
-<script> 
-
-import {Chart} from 'highcharts-vue'
-import Highcharts from 'highcharts'
-import mapData from './tenado.geo.json'
-import HighchartsMapModule from 'highcharts/modules/map'
-HighchartsMapModule(Highcharts)
-Highcharts.maps['myMapName'] = mapData
-import ecoledata from './ecoledata.json'
-
- 
+<script>
+import { Chart } from "highcharts-vue";
+import Highcharts from "highcharts";
+import HighchartsMapModule from "highcharts/modules/map";
+HighchartsMapModule(Highcharts);
 
 export default {
-  name: 'ShapeMaps',
+  name: "ShapeMaps",
+  props: ["mapDatao","markers"],
   components: {
-    highcharts: Chart 
+    highcharts: Chart,
   },
-  data () {
-    return { 
-      refreshing:true,
-        data:[],
+  data() {
+    return {
+      refreshing: true,
       chartOptions2: {
         chart: {
-          map: mapData
+          map: null,
         },
         title: {
-          text: mapData.name
+          text: null,
         },
-        subtitle: {
-          text: 'Source map: ISSP</a>'
-        },
-        
         tooltip: {
                 headerFormat: '',
-                pointFormat: '<b>{point.country}</b><br>Lat: {point.lat:.5f}, Lon: {point.lon:.5f}'
+                pointFormat: '<b>{point.country}</b><br>Valeur : {point.valeur:.2f}<br>Source : {point.source}'
             },
         mapNavigation: {
           enabled: true,
           buttonOptions: {
-            alignTo: 'spacingBox'
-          }
+            alignTo: "spacingBox",
+          },
         },
         colorAxis: {
-          min: 0
+          min: 0,
         },
+        exporting: {
+    buttons: {
+        contextButton: {
+            menuItems: ['viewFullscreen', 'downloadPNG', 'downloadJPEG', 'downloadPDF']
+        }
+    }
+},
         series: [
           {
-                name: 'Europe',
-                accessibility: {
-                    exposeAsGroupOnly: true
-                },
-                borderColor: '#A0A0A0',
-                nullColor: 'rgba(177, 244, 177, 0.5)',
-                showInLegend: false
-            },
+            name: "Europe",
+            borderColor: "#A0A0A0",
+            nullColor: "rgba(177, 244, 177, 0.5)",
+            showInLegend: false,
+          },
           {
             type: 'mappoint',
             enableMouseTracking: true,
@@ -80,14 +71,15 @@ export default {
                     }
                 }
           },
+          showInLegend: false,
         colorKey: 'clusterPointsAmount',
         data: [],
         color: Highcharts.getOptions().colors[5],
         marker: {
-                  lineWidth: 1,
+                  lineWidth: 5,
                   lineColor: '#fff',
                   symbol: 'mapmarker',
-                  radius: 8
+                  radius: 16
               },
         dataLabels: {
             verticalAlign: 'top'
@@ -102,36 +94,35 @@ export default {
           format: '{point.name}'
         },
         allAreas: true,  
-        }]
-      }
-    }
+        }
+        ],
+      },
+    };
+  },
+  watch: {
+    reloadParams() { 
+       this.init();
+    },
+  },
+  computed:{
+    reloadParams() {
+      return [this.markers,this.mapDatao
+      ];
+    },
   },
   methods: {
-     
-  }
-  ,mounted () {
-    this.data = [];
-    for(let o of ecoledata){
-     let lon =  o.geometry.coordinates[0]
-     let lat =  o.geometry.coordinates[1]
-     if(o.properties.type=="EDUCATION"&&o.properties.Code_Provi==22){
-      let mark =
-      {
-        lat: lat, lon: lon,
-        name: o.properties.Désignati.charAt(0),
-        draggable: false,
-        country: o.properties.Désignati,
-        volume : Math.random()*1000
-      }
-      this.data.push(mark)
-     }
-    }
-    this.chartOptions2.series[1].data = this.data;
-    console.log(this.chartOptions2)
+    init(){
+      this.chartOptions2.chart.map = this.mapDatao;
+    this.chartOptions2.series[1].data = this.markers; 
+    this.chartOptions2.series[1].name = "Name"; 
     this.refreshing = false;
     setTimeout(() => {
       this.refreshing = true;
     }, 10);
-  }
-}
+    }
+  },
+  mounted() {
+    this.init();
+  },
+};
 </script>

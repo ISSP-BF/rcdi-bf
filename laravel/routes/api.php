@@ -94,6 +94,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('donnees', 'DonneesController');
     Route::post('donnees/storeMany', 'DonneesController@storeMany');
     Route::post('donnees/findBy', 'DonneesController@findBy');
+    Route::post('donnees/findCarteDataBy', 'DonneesController@findCarteDataBy');
     Route::post('donnees/findByGetSql', 'DonneesController@findByGetSql');
     Route::post('donneespaginate/{pageSize}/{pageIndex}/{column}/{asc}', 'DonneesController@paginate');
     Route::resource('dashboards', 'DashboardsController');

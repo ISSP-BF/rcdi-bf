@@ -105,7 +105,6 @@ export default {
   },
   watch: {
     reloadParams() {
-      console.log(this.$route.params.id)
       this.refreshing = false;
       this.getdashboardItemsByDashboardId();
     },

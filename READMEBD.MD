@@ -19,3 +19,8 @@ Importantion
 ALTER TABLE `provinces`  ADD `defaut` TINYINT NULL DEFAULT NULL  AFTER `lat`;
 ALTER TABLE `regions` ADD `defaut` TINYINT NULL DEFAULT NULL AFTER `users_id`
 ALTER TABLE `donnees` ADD `localisation_id` INT(11) NULL AFTER `sous_indicateur_id`;
+
+ALTER TABLE `communes` ADD `lat` VARCHAR(255) NULL AFTER `commune`
+ALTER TABLE `communes` ADD `lon` VARCHAR(255) NULL AFTER `commune`
+
+UPDATE `formation_sanitaires` SET `commune_id`=(SELECT id from communes where communes.province_id=formation_sanitaires.province_id)

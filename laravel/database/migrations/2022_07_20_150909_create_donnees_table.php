@@ -15,12 +15,13 @@ class CreateDonneesTable extends Migration
     {
         Schema::create('donnees', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('groupe_id')->nullable();
             $table->integer('indicateur_id')->nullable();
             $table->integer('sous_indicateur_id')->nullable();
             $table->integer('localisation_id')->nullable();
 
 
-            $table->float('valeur');
+            $table->float('valeur')->nullable();
             $table->enum('periode', ['TRIMESTRIEL', 'MENSUEL','ANNUEL']);
             
             // $table->integer('trimestre')->unsigned();

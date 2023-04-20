@@ -23,4 +23,11 @@ class Province extends Model
         'updated_at',
         'created_at',
       ];
+      
+      public function getRegionAttribute()
+      {
+          return Region::find($this->region_id);
+      }
+
+      protected $appends = ['region'];
 }
