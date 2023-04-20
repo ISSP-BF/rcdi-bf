@@ -400,15 +400,19 @@ Settings->Deploy keys->Add deploy key
 sudo a2enmod rewrite
 
 # Deploiement
+sudo su
+cd /home/rcdi
 chown -R rcdi:rcdi rcdi-bf
 cd rcdi-bf
 su rcdi
 cd ~/rcdi-bf
 git pull origin master
-
+cd coreui
 npm run build
 cp -r dist/* ../laravel/public/
 cp dist/index.html ../laravel/resources/views/coreui/homepage.blade.php
+exit
+cd /home/rcdi/rcdi-bf
 chown -R www-data:www-data laravel/public
 chown -R www-data:www-data laravel/storage
 
