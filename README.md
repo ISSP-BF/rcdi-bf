@@ -400,6 +400,11 @@ Settings->Deploy keys->Add deploy key
 sudo a2enmod rewrite
 
 # Deploiement
+chown -R rcdi:rcdi rcdi-bf
+cd rcdi-bf
+su rcdi
+cd ~/rcdi-bf
+git pull origin master
 
 npm run build
 cp -r dist/* ../laravel/public/
