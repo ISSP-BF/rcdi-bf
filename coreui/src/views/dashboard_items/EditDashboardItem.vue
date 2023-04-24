@@ -20,54 +20,9 @@
             rows="9"
           />
           <CRow>
-          <CInput
-            label="Ordre"
-            type="text"
-            placeholder="i"
-            v-model="dashboardItem.i"
-            class="col-lg-2"
-          />
-          <CInput
-            label="x"
-            type="text"
-            placeholder="x"
-            v-model="dashboardItem.x"
-            class="col-lg-2"
-          />
-          <CInput
-            label="y"
-            type="text"
-            placeholder="y"
-            v-model="dashboardItem.y"
-            class="col-lg-2"
-          />
-          <CInput
-            label="w"
-            type="text"
-            placeholder="w"
-            v-model="dashboardItem.w"
-            class="col-lg-2"
-          />
-          <CInput
-            label="h"
-            type="text"
-            placeholder="h"
-            v-model="dashboardItem.h"
-            class="col-lg-2"
-          />
-
-            <CRow form class="form-group col-lg-2">
-              <CCol tag="label" sm="12" class="col-form-label"> Static </CCol>
-              <CCol sm="12">
-                <CSwitch
-                  label="Static"
-                  class="mr-1"
-                  color="danger"
-                  shape="pill"
-                  :checked.sync="dashboardItem.static"
-                />
-              </CCol>
-            </CRow>
+            
+            <CInput label="Ordre" type="text" placeholder="Ordre décroissante" v-model="dashboardItem.i" class="col-lg-4"/>
+            <CInput label="Largeur [1 à 12]" type="text" placeholder="de 1 à 12" v-model="dashboardItem.w" class="col-lg-4"/>
           </CRow>
         </CCardBody>
         <CCardFooter>
@@ -87,6 +42,11 @@
                           <input id="HISTOGRAMME" type="radio" class="custom-control-input" v-model="dashboardItem.graphique"
                             value="HISTOGRAMME" />
                           <label for="HISTOGRAMME" class="custom-control-label"> HISTOGRAMME </label>
+                        </div>
+                        <div role="group" class="custom-control custom-control-inline custom-radio">
+                          <input id="COURBE" type="radio" class="custom-control-input" v-model="dashboardItem.graphique"
+                            value="COURBE" />
+                          <label for="COURBE" class="custom-control-label"> COURBE </label>
                         </div>
                         <div role="group" class="custom-control custom-control-inline custom-radio">
                           <input id="FIXE" type="radio" class="custom-control-input" v-model="dashboardItem.graphique"
@@ -115,7 +75,7 @@
                     :donneeSearch="JSON.parse(dashboardItem.requete)" :refreshing="refreshing"
                   />
                   <IndicateurBarChart
-                    v-if="dashboardItem.graphique == 'HISTOGRAMME' &&refreshing"
+                    v-if="(dashboardItem.graphique == 'HISTOGRAMME'||dashboardItem.graphique == 'COURBE') &&refreshing" :graphique="dashboardItem.graphique"
                     :donneeSearch="JSON.parse(dashboardItem.requete)" :refreshing="refreshing"
                   />
                 

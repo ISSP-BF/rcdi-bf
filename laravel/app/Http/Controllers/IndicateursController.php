@@ -61,7 +61,7 @@ class IndicateursController extends Controller
         $validatedData = $request->validate([
             'groupe_id'             => 'required',
             'periode'             => 'required',
-            'libelle'             => 'required|min:1|max:64'
+            'libelle'             => 'required|min:1|max:191'
         ]);
         Indicateur::create(MyFunction::audit($request->all()));
         return response()->json([

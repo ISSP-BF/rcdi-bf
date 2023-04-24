@@ -57,7 +57,7 @@ var FileSaver = require('file-saver');
 export default {
   name: "IndicateurBarChart",
   components: { CChartBar,CChartLine },
-  props: ["donneeSearch","refreshing"],
+  props: ["donneeSearch","refreshing","graphique"],
   data() {
     return {
       an: null,
@@ -77,11 +77,13 @@ export default {
     reloadParams() {
       localStorage.setItem("togglePress",JSON.stringify(this.togglePress))
       this.getDatasets();
+      if(this.graphique=="COURBE"){this.togglePress = true;}
+      else this.togglePress = false;
     },
   },
   computed:{
     reloadParams() {
-      return [this.refreshing
+      return [this.refreshing,this.graphique
       ];
     },
     

@@ -210,6 +210,8 @@ class DonneesController extends Controller
         $validatedData = $request->validate([
             // 'indicateur' => 'required',
             // 'groupe' => 'required',
+            'periode' => 'required',
+            'indicateur_id'     => 'required',
             'annee' => 'required',
         ]);
         $donnees = DB::table('donnees')->
@@ -304,7 +306,6 @@ class DonneesController extends Controller
                 $donnees->where('donnees.annee','=', $request['annee'])->orderBy("annee","ASC");
         }
         return $donnees = $donnees->orderBy("annee","ASC")->get();
-       // return response()->json( $donnees);
     }
     
 

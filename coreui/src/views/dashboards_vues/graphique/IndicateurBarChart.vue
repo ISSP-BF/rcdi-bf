@@ -60,7 +60,7 @@ var FileSaver = require('file-saver');
 export default {
   name: "IndicateurBarChart",
   components: { CChartBar,CChartLine },
-  props: ["donneeSearch","refreshing"],
+  props: ["donneeSearch","refreshing","choixgraphique"],
   data() {
     return {
       an: null,
@@ -71,7 +71,6 @@ export default {
       index:Math.random()*100,
       data1: [],
       labels: [],
-      choixgraphique:"HISTOGRAMME",
       items: [],
       datasets: [],
       togglePress: false,
@@ -80,6 +79,7 @@ export default {
   },
   watch: {
     reloadParams() {
+      if(!this.choixgraphique){this.choixgraphique="HISTOGRAMME"}
       localStorage.setItem("choixgraphique",JSON.stringify(this.choixgraphique))
       this.getDatasets();
     },
@@ -306,9 +306,11 @@ export default {
   },
   mounted: function () {
     this.getDatasets();
+    
     if(localStorage.getItem("choixgraphique")){
       this.choixgraphique = JSON.parse(localStorage.getItem("choixgraphique"))
-    }
+    }else 
+    if(!this.choixgraphique){this.choixgraphique="HISTOGRAMME"}
   },
 };
 </script>

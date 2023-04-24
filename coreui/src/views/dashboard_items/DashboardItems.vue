@@ -30,11 +30,17 @@
                   <strong>{{item.libelle}}</strong>
                 </td>
               </template>
+              <template #ordre="{item}">
+                <td>
+                  <strong>{{item.i}} [largeur = {{item.w}}]</strong>
+                </td>
+              </template>
               <template #description="{item}">
                 <td>
                   <strong>{{item.description}}</strong>
                 </td>
               </template>
+              
               
               <template #actions="{item}">
                 <td>
@@ -70,7 +76,7 @@ export default {
   data: () => {
     return {
       items: [],
-      fields: ['id', 'dashboardItem','graphique', 'description','actions'],
+      fields: ['id','ordre', 'dashboardItem','graphique', 'description','actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

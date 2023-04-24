@@ -1,15 +1,25 @@
 <template>
-  <div 
-    class="row col-lg-12"> 
-   
-  <div 
+  <div> 
+  <GridLayout
+  :layout.sync="items"
+  :key="gridKey"
+  :cols="{ lg: 12, md: 8, sm: 8, xs: 4, xxs: 4 }"
+  :row-height="10"
+  :is-draggable="true"
+  :is-resizable="true"
+  :responsive="true"
+  :margin="[10, 10]"
+>
+  <GridItem 
     v-for="item in items" 
     :key="item.id"
-      :class="'col-lg-'+item.w"
-      class="no-margin"
+    v-bind="{...item, accent: null }"
+    :min-h="10"
+    :min-w="2"
   >
     <CCard 
-      accent-color="primary"  
+      accent-color="primary" 
+      class="h-100"
           v-if="item.graphique !== 'FIXE'"
     >
       <CCardHeader>{{ item.libelle }}
@@ -29,11 +39,14 @@
         />
       </CCardBody>  
     </CCard>
+    
+ 
         <IndicateursShow
           v-if="item.graphique == 'FIXE'"
           :donneeSearch="JSON.parse(item.requete)" :refreshing="true"
         /> 
-  </div> 
+  </GridItem>
+</GridLayout> 
   </div>
 </template>
 
