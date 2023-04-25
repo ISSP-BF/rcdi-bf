@@ -377,7 +377,7 @@ export default {
   },
   data: () => {
     return {
-      mapData:null, 
+      mapData:mapDataTenado, 
       mapDataCoordonnate:[],
       perPageValues: [
         { value: "5", label: "5" },
