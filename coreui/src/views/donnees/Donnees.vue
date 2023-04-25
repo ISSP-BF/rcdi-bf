@@ -1004,6 +1004,7 @@ export default {
     },
     correctionCordonne(){
       this.mapDataCoordonnate = [];
+      if(!this.mapData) return;
       for (let coordina of this.mapData["features"][0]["geometry"]["coordinates"][0][0]) {
         this.mapDataCoordonnate.push({ lng: coordina[0], lat: coordina[1] });
       } 
