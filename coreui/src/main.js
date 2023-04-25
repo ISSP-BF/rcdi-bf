@@ -15,8 +15,8 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyASyYRBZmULmrmw_P9kgr7_266OhFNinPA',
-        // key: '',
+        // key: 'AIzaSyASyYRBZmULmrmw_P9kgr7_266OhFNinPA',
+        key: '',
         // To use the Google Maps JavaScript API, you must register your app project on the Google API Console and get a Google API key which you can add to your app
         // v: 'OPTIONAL VERSION NUMBER',
         // libraries: 'places', //// If you need to use place input
