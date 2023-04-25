@@ -59,7 +59,7 @@ export default {
             showInLegend: false,
           },
           {
-            type: 'mappoint',
+            type: 'mapbubble',
             enableMouseTracking: true,
             accessibility: {
                 point: {
@@ -74,12 +74,14 @@ export default {
           showInLegend: false,
         colorKey: 'clusterPointsAmount',
         data: [],
+                minSize: 0,
+                maxSize: '20%',
         color: Highcharts.getOptions().colors[5],
         marker: {
-                  lineWidth: 5,
+                  lineWidth: 1,
                   lineColor: '#fff',
-                  symbol: 'mapmarker',
-                  radius: 16
+                  // symbol: 'mapmarker',
+                  radius: 1
               },
         dataLabels: {
             verticalAlign: 'top'

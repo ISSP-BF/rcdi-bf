@@ -356,7 +356,8 @@ import Multiselect from "vue-multiselect";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import "vue-multiselect/dist/vue-multiselect.min.css";
-import mapData from './graphique/tenado.geo.json'
+import mapDataTenado from './graphique/tenado.geo.json' 
+import mapDataManga from './graphique/manga.geo.json' 
 
 export default {
   name: "Donnee",
@@ -376,7 +377,7 @@ export default {
   },
   data: () => {
     return {
-      mapData:mapData, 
+      mapData:null, 
       mapDataCoordonnate:[],
       perPageValues: [
         { value: "5", label: "5" },
@@ -828,6 +829,7 @@ export default {
               let mark =
                 {
                    valeur : co.valeur,
+                   z : co.valeur,
                   lat: parseFloat(co.localisation.lat), lon: parseFloat(co.localisation.lon),
                   name: co.localisation.nom_structure.charAt(0),
                   draggable: false,
@@ -871,6 +873,18 @@ export default {
             self.sous_groupes.length > 0 ? self.sous_groupes[0].value : null;
           self.annees = response.data.annees;
           self.refreshing3 = false;
+
+          // Correction
+          if(self.commune.id=="2208"){
+            self.mapData = mapDataTenado;
+            self.correctionCordonne();
+
+          }
+          if(self.commune.id=="3006"){
+            self.mapData = mapDataManga;
+            self.correctionCordonne();
+          }
+
           self.findLocalisationByGroupe(event);
           setTimeout(() => {
             self.refreshing3 = true;
@@ -992,12 +1006,20 @@ export default {
       this.mapDataCoordonnate = [];
       for (let coordina of this.mapData["features"][0]["geometry"]["coordinates"][0][0]) {
         this.mapDataCoordonnate.push({ lng: coordina[0], lat: coordina[1] });
-      }
+      } 
     }
   },
   mounted: function () {
+   
     this.onTableChange(); 
     this.findElementFiltre();
+    if(this.commune.id=="2208"){
+      this.mapData = mapDataTenado;
+    }
+    if(this.commune.id=="3006"){
+      this.mapData = mapDataManga;
+    }
+    
     this.correctionCordonne();
   },
 };
