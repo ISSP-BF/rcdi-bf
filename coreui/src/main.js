@@ -22,6 +22,15 @@ Vue.use(VueGoogleMaps, {
         // libraries: 'places', //// If you need to use place input
     }
 })
+
+
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+import 'leaflet/dist/leaflet.css';
+
+Vue.component('l-map', LMap);
+Vue.component('l-tile-layer', LTileLayer);
+Vue.component('l-marker', LMarker);
+
 Vue.use(Toasted, {
         duration: 1500,
         theme: 'outline',

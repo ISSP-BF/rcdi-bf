@@ -200,11 +200,11 @@
 
                     <label
                       class="col-lg-12"
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(!togglePressMaps||!togglePressMaps2)"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(!togglePressMaps||!togglePressMaps2||!togglePressMaps3)"
                       >Période</label
                     >
                     <CSelect
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(togglePressMaps||togglePressMaps2)"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(togglePressMaps||togglePressMaps2||togglePressMaps3)"
                       class="col-lg-12"
                       placeholder="Choisir une période"
                       :value.sync="donnee.periode_value"
@@ -213,7 +213,7 @@
                     >
                     </CSelect>
                     <multiselect
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&!(togglePressMaps||togglePressMaps2)"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&!(togglePressMaps||togglePressMaps2||togglePressMaps3)"
                       class="col-lg-11"
                       v-model="selectedPeriode_values"
                       :options="choixPeriodes"
@@ -231,7 +231,7 @@
                     <label class="col-lg-12">Années</label>
                     
                     <CSelect
-                      v-if="togglePressMaps||togglePressMaps2"
+                      v-if="togglePressMaps||togglePressMaps2||togglePressMaps3"
                       class="col-lg-12"
                       placeholder="Choisir une année"
                       :value.sync="donnee.annee"
@@ -241,7 +241,7 @@
                     </CSelect>
 
                     <multiselect
-                      v-if="!(togglePressMaps||togglePressMaps2)"
+                      v-if="!(togglePressMaps||togglePressMaps2||togglePressMaps3)"
                       class="col-lg-11"
                       v-model="selectedItems"
                       :options="annees"
@@ -257,8 +257,8 @@
                     </multiselect>
                   </div>
                   <br />
-                   <CButton v-if="!(togglePressMaps||togglePressMaps2)" timeout="2000" color="primary" @click="search()">Actualiser</CButton>
-                   <CButton v-if="(togglePressMaps||togglePressMaps2)" timeout="2000" color="primary" @click="searchCarte()">Actualiser</CButton>
+                   <CButton v-if="!(togglePressMaps||togglePressMaps2||togglePressMaps3)" timeout="2000" color="primary" @click="search()">Actualiser</CButton>
+                   <CButton v-if="(togglePressMaps||togglePressMaps2||togglePressMaps3)" timeout="2000" color="primary" @click="searchCarte()">Actualiser</CButton>
 
                    <br/>
                   &nbsp;
@@ -297,6 +297,17 @@
                         <CIcon name="cib-openstreetmap" />
                       </CButton>
                     </CCol>
+                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
+                      <CButton
+                        variant="outline"
+                        shape="pill"
+                        color="primary"
+                        :pressed.sync="togglePressMaps3"
+                        @click="choicesGraphe('MAPS3')"
+                      >
+                        <CIcon name="cib-openstreetmap" />
+                      </CButton>
+                    </CCol>
 
                     <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
                       <CButton
@@ -325,6 +336,7 @@
                   />
                   
                   <GoogleMaps  v-if="vueGraphe == 'MAPS2'" :center="{lat:commune.lat,lng:commune.lon}" :mapDatao="mapDataCoordonnate" :markers="coordinatesWithDataMarker"/>
+                  <LeafletMaps  v-if="vueGraphe == 'MAPS3'" :centero="{lat:commune.lat,lon:commune.lon}" :mapDatao="mapData" :markers="coordinatesWithDataMarker2"/>
                   <ShapeMaps  v-if="vueGraphe == 'MAPS'" :mapDatao="mapData" :markers="coordinatesWithDataMarker2"/>
                    
 
@@ -348,6 +360,7 @@ import ImportButton from "../buttons/ImportButton.vue";
 import IndicateursSecteur from "./graphique/IndicateursSecteur";
 import IndicateurBarChart from "./graphique/IndicateurBarChart";
 import GoogleMaps from "./graphique/GoogleMaps";
+import LeafletMaps from "./graphique/LeafletMaps";
 import ShapeMaps from "./graphique/ShapeMaps";
 
 
@@ -373,7 +386,7 @@ export default {
     IndicateursSecteur,
     IndicateurBarChart,
     GoogleMaps,
-    ShapeMaps,
+    ShapeMaps,LeafletMaps
   },
   data: () => {
     return {
@@ -504,6 +517,7 @@ export default {
       tableFilterValue:null,
       togglePressMaps:false,
       togglePressMaps2:false,
+      togglePressMaps3:false,
     };
   },
   watch: {
@@ -648,42 +662,56 @@ export default {
           this.togglePressHistogramme = false;
           this.togglePressMaps = false;
           this.togglePressMaps2 = false;
+          this.togglePressMaps3 = false;
           break;
         case "MAPS":
           this.togglePressSecteur = false; 
           this.togglePressHistogramme = false;
           this.togglePressMaps = true;
           this.togglePressMaps2 = false;
+          this.togglePressMaps3 = false;
           break;
         case "MAPS2":
           this.togglePressSecteur = false; 
           this.togglePressHistogramme = false;
           this.togglePressMaps = false;
           this.togglePressMaps2 = true;
+          this.togglePressMaps3 = false;
+          break;
+        case "MAPS3":
+          this.togglePressSecteur = false; 
+          this.togglePressHistogramme = false;
+          this.togglePressMaps = false;
+          this.togglePressMaps2 = false;
+          this.togglePressMaps3 = true;
           break;
         case "HISTOGRAMME":
           this.togglePressHistogramme = true; 
           this.togglePressSecteur = false;
           this.togglePressMaps = false;
           this.togglePressMaps2 = false;
+          this.togglePressMaps3 = false;
           break;
         case "COURBEVOLUME":
           this.togglePressCourbe2 = true; 
           this.togglePressSecteur = false;
           this.togglePressMaps = false;
           this.togglePressMaps2 = false;
+          this.togglePressMaps3 = false;
           break;
         case "COURBESIMPLE":
           this.togglePressCourbe = true; 
           this.togglePressSecteur = false;
           this.togglePressMaps = false;
           this.togglePressMaps2 = false;
+          this.togglePressMaps3 = false;
           break;
         default:
           this.togglePressSecteur = false; 
           this.togglePressHistogramme = false;
           this.togglePressMaps = false;
           this.togglePressMaps2 = false;
+          this.togglePressMaps3 = false;
           // setTimeout(() => {
             // console.log(local, "local===>");
             this.vueGraphe = null;
@@ -834,7 +862,7 @@ export default {
                   name: co.localisation.nom_structure.charAt(0),
                   draggable: false,
                   country: co.localisation.nom_structure,
-                  source : co.source
+                  source : co.source,
                 }
               self.coordinatesWithDataMarker2.push(mark);
             } 
