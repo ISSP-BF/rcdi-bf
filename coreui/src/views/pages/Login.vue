@@ -10,11 +10,12 @@
           </label>
 
             <div class="card-header-actions" style="float: left;">
-              <a href="/">
-              <div class="c-avatar" style="width: 100px">
+              
+              <CButton block color="link" class="px-0" @click="goToDashboard()">
+                <div class="c-avatar" style="width: 100px">
                 <img src="img/avatars/logo-full.png" class="c-avatar-img " />
               </div>
-              </a>
+              </CButton>
             </div>
           </CCardHeader>
           <CCardBody class="align-items-center mt-5 pt-5">
@@ -51,8 +52,9 @@
                 </CRow>
               </CForm>
             </CCardBody>
+            
             <CCardFooter class="p-4">
-              <a href="/">cliquer ici pour aller sur la page d'acceuil</a>
+                  <CButton block color="link" class="px-0" @click="goToDashboard()">cliquer ici pour aller sur la page d'acceuil</CButton>
             </CCardFooter>
             
           <div 
@@ -109,6 +111,9 @@ import axios from "axios";
       methods: {
         goRegister(){
           this.$router.push({ path: 'register' });
+        },
+        goToDashboard(){
+          this.$router.push({ path: '/' });
         },
         login() {
           let self = this;

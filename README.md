@@ -402,15 +402,25 @@ sudo a2enmod rewrite
 # Deploiement
 sudo su
 cd /home/rcdi
-chown -R rcdi:rcdi rcdi-bf
+chown -R rcdi:rcdi /home/rcdi/rcdi-bf
 cd rcdi-bf
 su rcdi
 cd ~/rcdi-bf
+git checkout master
+git checkout -f
 git pull origin master
 cd coreui
 npm run build
-cp -r dist/* ../laravel/public/
-cp dist/index.html ../laravel/resources/views/coreui/homepage.blade.php
+rm -rf /home/rcdi/rcdi-bf/laravel/public/js
+rm -rf /home/rcdi/rcdi-bf/laravel/public/css
+cp -r /home/rcdi/rcdi-bf/coreui/dist/* /home/rcdi/rcdi-bf/laravel/public/
+cp /home/rcdi/rcdi-bf/coreui/dist/index.html /home/rcdi/rcdi-bf/laravel/resources/views/coreui/homepage.blade.php
+git branch -D prod-1
+git push origin -d prod-1
+git checkout -b prod-1
+git add .
+git commit -m "_"
+git push origin prod-1
 exit
 cd /home/rcdi/rcdi-bf
 chown -R www-data:www-data laravel/public
@@ -426,9 +436,17 @@ git pull
 # Tenado
 
 cd /home/rcdi/rcdi-bf-new
-chown -R root:root rcdi-bf
+<!-- chown -R root:root rcdi-bf -->
 cd rcdi-bf
+git checkout -f
+git checkout master
+git branch -D prod-1
+git checkout -f
+git checkout master
+git pull origin master
+git checkout prod-1
 git pull origin prod-1
+git checkout -b prod-1
 git checkout prod-1
 <!-- cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/* /home/tenado/laravel/ -->
 cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/app /home/tenado/laravel/

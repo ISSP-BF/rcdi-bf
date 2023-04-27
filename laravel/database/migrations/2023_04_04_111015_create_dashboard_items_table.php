@@ -20,12 +20,12 @@ class CreateDashboardItemsTable extends Migration
             $table->text('requete')->nullable();
             $table->string('graphique',255)->nullable();
             $table->text('description')->nullable();
-            $table->integer('i')->default(0);
-            $table->integer('x')->default(0);
-            $table->integer('y')->default(0);
-            $table->integer('w')->default(0);
-            $table->integer('h')->default(0);
-            $table->boolean('static')->default(true);
+            $table->integer('i')->default(0)->nullable();
+            $table->integer('x')->default(0)->nullable();
+            $table->integer('y')->default(0)->nullable();
+            $table->integer('w')->default(0)->nullable();
+            $table->integer('h')->default(0)->nullable();
+            $table->boolean('static')->default(true)->nullable();
             $table->tinyInteger('updated')->nullable()->default(0);
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();

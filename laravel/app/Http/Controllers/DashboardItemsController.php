@@ -16,7 +16,7 @@ class DashboardItemsController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -99,7 +99,7 @@ class DashboardItemsController extends Controller
     public function update(Request $request, DashboardItem $dashboardItem)
     {
         $validatedData = $request->validate([
-            'libelle'             => 'required|min:10',
+            'requete'             => 'required|min:10',
         ]);
 
         $dashboardItem->update(MyFunction::audit($request->all()));

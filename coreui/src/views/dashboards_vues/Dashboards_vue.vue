@@ -34,6 +34,8 @@
           :donneeSearch="JSON.parse(item.requete)" :refreshing="true"
         /> 
   </div> 
+  
+  <CButton block color="link" class="px-0" @click="voirGraphique()">Voir d'autre graphique</CButton>
   </div>
 </template>
 
@@ -102,6 +104,9 @@ export default {
     },
   },
   methods: { 
+    voirGraphique(){
+      this.$router.push({ path: '/donnees' });
+    },
     getdashboardItemsByDashboardId (){
       let self = this;
       axios.get(  this.$apiAdress + '/api/dashboard-items/findBy/'+self.$route.params.id+'?token=' + localStorage.getItem("api_token") )
