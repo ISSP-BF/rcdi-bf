@@ -420,3 +420,52 @@ chown -R www-data:www-data laravel/storage
 git add * 
 git stash
 git pull
+
+
+# Deploiement ANPTIC
+# Tenado
+
+cd /home/rcdi/rcdi-bf-new
+chown -R root:root rcdi-bf
+cd rcdi-bf
+git pull origin prod-1
+git checkout prod-1
+<!-- cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/* /home/tenado/laravel/ -->
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/app /home/tenado/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/config /home/tenado/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/database /home/tenado/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/public /home/tenado/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/resources /home/tenado/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/routes /home/tenado/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/storage /home/tenado/laravel/
+cp -r /home/tenado/laravel/publictenado/favicon.ico /home/tenado/laravel/public
+cp -r /home/tenado/laravel/publictenado/favicon.png /home/tenado/laravel/public
+
+chown -R www-data:www-data /home/tenado/laravel/public
+chown -R www-data:www-data /home/tenado/laravel/storage
+# Manga
+
+cd /home/rcdi/rcdi-bf-new
+chown -R root:root rcdi-bf
+cd rcdi-bf
+git pull origin prod-1
+git checkout prod-1
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/app /home/manga/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/config /home/manga/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/database /home/manga/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/public /home/manga/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/resources /home/manga/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/routes /home/manga/laravel/
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/storage /home/manga/laravel/
+cp -r /home/manga/laravel/publicmanga/favicon.ico /home/manga/laravel/public
+cp -r /home/manga/laravel/publicmanga/favicon.png /home/manga/laravel/public
+
+chown -R www-data:www-data /home/manga/laravel/public
+chown -R www-data:www-data /home/manga/laravel/storage
+
+
+
+# COMMANDE SUPPRESSION DES DONNEES EDUCATIONS ET ETAT CIVIL
+DELETE FROM `donnees` WHERE indicateur_id in (select id from indicateurs where groupe_id=1 or groupe_id=3)
+# SUPPRESSION DES INDICATEURS EDUCATIONS ET ETAT CIVIL
+DELETE FROM `indicateurs` WHERE groupe_id=1 or groupe_id=3

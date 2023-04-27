@@ -100,7 +100,7 @@ class EcolesController extends Controller
     {
         $validatedData = $request->validate([
             'nom_structure'             => 'required|min:1|max:64',
-            'code'             => 'required|min:1|max:64',
+            // 'code'             => 'required|min:1|max:64',
         ]);
 
         $ecole->update(MyFunction::audit($request->all()));

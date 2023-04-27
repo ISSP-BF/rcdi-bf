@@ -139,6 +139,7 @@
                         :value.sync="donnee.localisation_id"
                         :plain="true"
                         :options="localisations"
+                        @change="findSousGroupeByLocalisation($event)"
                       >
                       </CSelect>
 
@@ -608,6 +609,8 @@ export default {
     },
     
     findLocalisationByGroupe(event){
+      
+      this.donnee.localisation_id = null
       let self = this;
       axios.get(  this.$apiAdress + '/api/indicateurs/findLocalisationByGroupe/'+self.donnee.groupe_id+'?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
@@ -621,32 +624,65 @@ export default {
     });
     }, 
      
-    findSousGroupeByGroupe(event) {
-      this.findLocalisationByGroupe(event);
-      this.sous_groupes = [];
-      let self = this;
-      axios
-        .get(
-          this.$apiAdress +
-            "/api/sous_groupes/findByGroupe/" +
-            self.donnee.groupe_id +
-            "?token=" +
-            localStorage.getItem("api_token")
-        )
-        .then(function (response) {
-          console.log(response);
-          self.sous_groupes = response.data;
-
-          let lest = [{ label: "", value: null }];
-          lest.push(...self.sous_groupes);
-          self.sous_groupes = lest;
-        })
-        .catch(function (error) {
-          self.indicateurs = [];
-          // console.log(error);
-          self.$router.push({ path: "login" });
-        });
-    },
+     findSousGroupeByGroupe(event) {
+       this.findLocalisationByGroupe(event);
+       this.sous_groupes = [];
+       
+       let self = this;
+       axios
+         .get(
+           this.$apiAdress +
+             "/api/sous_groupes/findByGroupe/" +
+             self.donnee.groupe_id +
+             "?token=" +
+             localStorage.getItem("api_token")
+         )
+         .then(function (response) {
+           console.log(response);
+           self.sous_groupes = response.data;
+ 
+           let lest = [{ label: "", value: null }];
+           lest.push(...self.sous_groupes);
+           self.sous_groupes = lest;
+         })
+         .catch(function (error) {
+           self.indicateurs = [];
+           // console.log(error);
+           self.$router.push({ path: "login" });
+         });
+     },
+     
+     findSousGroupeByLocalisation(event) { 
+       this.sous_groupes = [];
+       let self = this;
+       console.log("========>",
+       this.$apiAdress +
+             "/api/donnees/findSousGroupeByLocalisation/" +
+             self.donnee.localisation_id +"/"+self.donnee.groupe_id+
+             "?token=" +
+             localStorage.getItem("api_token"))
+       axios
+         .get(
+           this.$apiAdress +
+             "/api/donnees/findSousGroupeByLocalisation/" +
+             self.donnee.localisation_id  +"/"+self.donnee.groupe_id+
+             "?token=" +
+             localStorage.getItem("api_token")
+         )
+         .then(function (response) {
+           console.log(response);
+           self.sous_groupes = response.data;
+ 
+           let lest = [{ label: "", value: null }];
+           lest.push(...self.sous_groupes);
+           self.sous_groupes = lest;
+         })
+         .catch(function (error) {
+           self.indicateurs = [];
+           console.log(error);
+          //  self.$router.push({ path: "login" });
+         });
+     },
     choicesGraphe(choix) {
       if (this.vueGraphe) {
         this.togglePressSecteur = false;
@@ -1040,7 +1076,6 @@ export default {
   },
   mounted: function () {
    
-    this.onTableChange(); 
     this.findElementFiltre();
     if(this.commune.id=="2208"){
       this.mapData = mapDataTenado;
@@ -1050,6 +1085,7 @@ export default {
     }
     
     this.correctionCordonne();
+    this.onTableChange(); 
   },
 };
 </script>

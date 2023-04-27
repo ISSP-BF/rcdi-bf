@@ -11,6 +11,7 @@ use App\Models\Groupe;
 use App\Models\Commune;
 use App\Models\SousGroupe;
 use App\Models\Indicateur;
+use App\Models\IndicateurDTO;
 use App\Models\SousIndicateur;
 use App\Models\Desagregation;
 
@@ -26,7 +27,7 @@ class DonneesController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['index', 'paginate', 'paginate', 'show', 'show', 'show',
-        'update', 'destroy', 'findBy', 'findCarteDataBy', 'elementSearch']]);
+        'update', 'destroy', 'findBy', 'findCarteDataBy', 'elementSearch','findSousGroupeByLocalisation']]);
     }
 
     /**
@@ -237,9 +238,9 @@ class DonneesController extends Controller
             $donnees->where('donnees.periode', 'like', $request['periode']);
         }
         
-        if(isset($request->groupe_id)){
-            $donnees->where('groupes.id', '=', $request->groupe_id);
-        }
+        // if(isset($request->groupe_id)){
+        //     $donnees->where('groupes.id', '=', $request->groupe_id);
+        // }
         if(isset($request->id)&&$request->id!=null&&$request->id!=0){
             $donnees->where('donnees.id', '=', $request['id']);
         }
@@ -382,5 +383,33 @@ class DonneesController extends Controller
         $annees2 = DB::table('donnees')->select('annee as value','annee as text')->distinct()->orderBy('annee')->get();
         return response()->json(['indicateurs'=>$indicateurs,'sousIndicateurs'=>$sousIndicateurs,'groupes'=>$groupes,'sous_groupes'=>$sous_groupes,'annees'=>$annees,'annees2'=>$annees2,'commune'=>$commune]);        
     }
+
+    public function findSousGroupeByLocalisation($localisation_id,$groupe_id){
+        if($localisation_id=='null')
+        {
+            $sous_groupes = SousGroupe::select('*','libelle as label', 'id as value')->where('groupe_id',"=",$groupe_id)->get();
+            return $sous_groupes;
+        }
+        $donnees = DB::table('donnees')->select('indicateur_id')->distinct()->where("localisation_id","=",$localisation_id)->get();
+        $indicateur_ids = [];
+        foreach ($donnees as $donnee) {
+            $indicateur_ids[] = $donnee->indicateur_id;
+        }
+        $indicateurs = IndicateurDTO::whereIN("id",$indicateur_ids)->where("groupe_id","=",$groupe_id)->get();
+        
+        $sous_groupe_ids = [];
+        foreach ($indicateurs as $indicateur) {
+            $sous_groupe_ids[] = $indicateur->sous_groupe_id;
+        }
+
+        $sous_groupes = [];
+        
+            $sous_groupes = SousGroupe::select('*','libelle as label', 'id as value')->where('groupe_id',"=",$groupe_id)
+            ->whereIn('id',$sous_groupe_ids)->get();
+          
+        return $sous_groupes;
+    }
+   
+    
 
 }
