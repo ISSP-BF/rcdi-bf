@@ -13,12 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('indicateurs/findBy', 'IndicateursController@findBy');
-Route::get('indicateurs/search', 'IndicateursController@search');
-Route::post('indicateurs/search/groupe', 'IndicateursController@searchGroupe');
-Route::get('indicateurs/getcommunesliste', 'IndicateursController@getcommunesliste');
-Route::get('indicateurs/getDefaultCommune', 'IndicateursController@getDefaultCommune');
-Route::get('indicateurs/getDefaultAll', 'IndicateursController@getDefaultAll');
+Route::post('indicateurs-old/findBy', 'IndicateursOldController@findBy');
+Route::get('indicateurs-old/search', 'IndicateursOldController@search');
+Route::post('indicateurs-old/search/groupe', 'IndicateursOldController@searchGroupe');
+Route::get('indicateurs-old/getcommunesliste', 'IndicateursOldController@getcommunesliste');
+Route::get('indicateurs-old/getDefaultCommune', 'IndicateursOldController@getDefaultCommune');
+Route::get('indicateurs-old/getDefaultAll', 'IndicateursOldController@getDefaultAll');
 
 // Route::get('/BkDataUpdated', function () {
 //     return "MyData";
@@ -35,6 +35,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('register', 'AuthController@register'); 
+    Route::get('userProfile', 'AuthController@userProfile'); 
 
     Route::resource('notes', 'NotesController');
     Route::resource('regions', 'RegionsController');
@@ -46,6 +47,9 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('districts', 'DistrictsController');
     Route::resource('formation_sanitaires', 'FormationSanitairesController');
     Route::get('acte_naissanceslimiter', 'ActeNaissancesController@limiter');
+    
+    Route::get('acte_naissancespaginate/{pageSize}/{pageIndex}/{column}/{asc}', 'ActeNaissancesController@paginate');
+
     Route::resource('acte_naissances', 'ActeNaissancesController');
     Route::resource('acte_deces', 'ActeDecesController');
     Route::resource('acte_mariages', 'ActeMariagesController');
@@ -72,13 +76,36 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::resource('pre_scolaires', 'PreScolairesController');
     Route::resource('primaires', 'PrimairesController');
     Route::resource('post_primaires', 'PostPrimairesController');
-    Route::resource('indicateurs', 'IndicateursController');
+    Route::resource('indicateurs-old', 'IndicateursOldController');
     
     Route::resource('fichier-villages', 'FichierVillagesController');
+    Route::resource('groupes', 'GroupesController');
+    Route::resource('sous_groupes', 'SousGroupesController');
+    Route::get('sous_groupes/findByGroupe/{id}', 'SousGroupesController@findByGroupe');
+    Route::resource('desagregations', 'DesagregationsController');
+    Route::resource('sous_indicateurs', 'SousIndicateursController');
+    Route::get('sous_indicateurs/findByDesagregation/{id}', 'SousIndicateursController@findByDesagregation');
+    Route::resource('indicateurs', 'IndicateursController');
+    Route::get('indicateurs/findByGroupe/{id}', 'IndicateursController@findByGroupe');
+    Route::get('indicateurs/findBySousGroupe/{id}', 'IndicateursController@findBySousGroupe');
+    Route::get('indicateurs/findLocalisationByGroupe/{id}', 'IndicateursController@findLocalisationByGroupe');
 
+    Route::get('donnees/elementSearch', 'DonneesController@elementSearch');
+    Route::resource('donnees', 'DonneesController');
+    Route::post('donnees/storeMany', 'DonneesController@storeMany');
+    Route::post('donnees/findBy', 'DonneesController@findBy');
+    Route::post('donnees/findCarteDataBy', 'DonneesController@findCarteDataBy');
+    Route::post('donnees/findByGetSql', 'DonneesController@findByGetSql');
+    Route::get('donnees/findSousGroupeByLocalisation/{id}/{groupe_id}', 'DonneesController@findSousGroupeByLocalisation');
+    Route::post('donneespaginate/{pageSize}/{pageIndex}/{column}/{asc}', 'DonneesController@paginate');
+    Route::resource('dashboards', 'DashboardsController');
+    Route::get('dashboard-items/findBy/{dashboard_id}', 'DashboardItemsController@findBy');
+    Route::resource('dashboard-items', 'DashboardItemsController');
+    Route::resource('ecoles', 'EcolesController');
     Route::resource('resource/{table}/resource', 'ResourceController');
     
     Route::get('users/profil', 'UsersController@profil');
+    
     Route::put('users/updateProfil', 'UsersController@updateProfil');
     
     Route::get('/BkDataUpdated', 'UpdateBDController@index');

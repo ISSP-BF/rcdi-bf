@@ -1,6 +1,6 @@
 <template>
   <CRow>
-    <CCol col="12" xl="6">
+    <CCol col="12" xl="8">
       <transition name="slide">
         <CCard>
           <CCardBody>
@@ -15,12 +15,12 @@
                 :items-per-page="30"
                 pagination
               >
-                <template #dropdown="{item}">
+                <template #menu_deroulant="{item}">
                   <td>
                     <CIcon v-if="item.dropdown" :content="$options.arrowIcon"/>
                   </td>
                 </template>
-                <template #name="{item}">
+                <template #intitule="{item}">
                   <td>
                     <strong>{{item.name}}</strong>
                   </td>
@@ -28,15 +28,15 @@
                 <template #actions="{item}">
                   <td>
                     <div class="card-header-actions">
-                    <CButton size="sm" color="primary" @click="moveUp( item.id )">Haut</CButton> &nbsp;
+                    <CButton size="sm" color="warning" @click="moveUp( item.id )">Haut</CButton> &nbsp;
                   
-                    <CButton size="sm" color="primary" @click="moveDown( item.id )">Bas</CButton>&nbsp;
+                    <CButton size="sm" color="warning" @click="moveDown( item.id )">Bas</CButton>&nbsp;
                   
                     <CButton size="sm" color="primary" @click="showMenu( item.id )">Voir</CButton>&nbsp;
                  
-                    <CButton size="sm" color="primary" @click="editMenu( item.id )">Editer</CButton>&nbsp;
+                    <CButton size="sm" color="primary" @click="editMenu( item.id )"><CIcon name="cil-pencil" /></CButton>&nbsp;
                   
-                    <CButton size="sm" color="danger" @click="deleteMenu( item.id )"/>
+                    <CButton size="sm" color="danger" @click="deleteMenu( item.id )"><CIcon name="cil-trash" /></CButton>
                     </div>
                   </td>
                 </template>
@@ -56,7 +56,7 @@ export default {
   name: 'MenuIndex',
   data () {
     return {
-      fields: ['dropdown', 'name', 'actions'],
+      fields: ['menu_deroulant', 'intitule', 'actions'],
       items: [],
       buffor: [],
     }

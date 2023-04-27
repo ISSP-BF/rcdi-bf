@@ -129,7 +129,7 @@ export default {
         }
       ],
       commune_id:null,
-      annee:null,
+      annee:[2019],
       commune:{},
       refreshing:false,
       refreshing2:false
@@ -153,6 +153,10 @@ export default {
       return val ? (val <= 2022 && val >= 1900 ? null : false) : null;
     },
     refresh(){
+      if(!Array.isArray(this.annee)){
+        this.annee = [this.annee]
+      }
+       
       this.refreshing = true;
        setTimeout(() => {
         this.refreshing = false;
@@ -160,11 +164,12 @@ export default {
           setTimeout(() => {
           this.refreshing2 = false;
         }, 1);
-       }, 2000);
+       }, 100);
     },
     getCommuneDefaut (){
       let self = this;
-      axios.get(  this.$apiAdress + '/api/indicateurs/getDefaultCommune')
+      this.refreshing = true;
+      axios.get(  this.$apiAdress + '/api/indicateurs-old/getDefaultCommune')
       .then(function (response) {
         localStorage.setItem("communedefaut",JSON.stringify(response))
         self.commune = response.data;

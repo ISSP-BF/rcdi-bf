@@ -3,21 +3,21 @@
   <CModal
       :title="title"
       color="success"
-      size="lg"
+      size="xl"
       :show.sync="successModal" style="display: contents;"
     > 
        <CRow>
     
     <CCol col="12" xl="12">
        <xls-csv-parser :columns="columns" @on-validate="onValidate" :help="help" lang="fr"></xls-csv-parser>
-    </CCol>
+     </CCol>
     <CCol col="12" xl="12"  v-if="items.length>0">
       <transition name="slide">
             <CDataTable
               hover 
               sorter
-              :items="items" 
-              :fields="fields2"
+              :items="items" :items-per-page="20"
+              :fields="fields2" pagination
             >
           <template #actions="{item}">
                 <td>
@@ -34,19 +34,28 @@
   </CRow>
       <template #footer>
         <CButton @click="successModal = false" color="danger">Annuler</CButton>
-        <CButton size="sm" color="success" @click="storeMany()"   v-if="items.length>0"><CIcon name="cil-x-circle"/> Importer</CButton>
+        <CButton size="sm" color="success" @click="storeMany()"   v-if="items.length>0" :disabled="importloading>0"><CIcon name="cil-x-circle"/>
+          <div class="sk-flow" style="height: calc(var(--sk-size) * 0.3);" v-if="importloading>0">
+              <div class="sk-flow-dot"></div>
+              <div class="sk-flow-dot"></div>
+              <div class="sk-flow-dot"></div>
+            </div>
+          Importer</CButton>
       </template>
     </CModal>
     
-    <CButton color="warning" @click="successModal = true" v-if="show">Importer</CButton>&nbsp;
-</div>
+    <CButton color="warning" @click="successModal = true" v-if="show"> 
+      Importer
+      
+      </CButton>&nbsp;
+ </div>
 </template>
 
 <script>
 
 import axios from 'axios'
 import { XlsCsvParser } from 'vue-xls-csv-parser';
-
+ 
 export default {
   name: 'ImportButton',
   components: {
@@ -56,6 +65,7 @@ export default {
   
   data: () => {
     return {
+      importloading:false,
       successModal: false,
       show:false,
       items:[],
@@ -83,26 +93,24 @@ export default {
                 NbFemmeVueCPN, NbFemmeInscriteCPN1, NbFemmeInscriteCPN1_Trim1, NbFemmeVueCPN4, 
                 NbFemmeInscriteVueCPN_2Td, NbFemmeFer_Acide_Folique, NbFemmeFer_Acide_Folique_CPN3, 
                 NbGrossesse_Refere, NbFemmeVueCPN_TPI3 et NbFemmeVueCPN_TPI3_MILDA `,
-    
-
       currentPage: 1,
       
       totalRows: 0,
       you: null,
       message: '',
       showMessage: false,
-      dismissSecs: 7,
-      dismissCountDown: 0,
-      showDismissibleAlert: false
+      timeoutD:2000,
     }
   },
   methods: {
+    
+
     onValidate(results) {
         this.results = results;
         this.items = [];
         for(let i=0;i<this.results[0].data.length;i++){this.items.push(
           {
-            id:i
+            
         }
         )}
         
@@ -122,9 +130,48 @@ export default {
     deleteData ( dataToDelete ) {
       this.items = this.items.filter(function(f) { return f.id !== dataToDelete });
     },
+    
     storeMany() {
         let self = this;
         console.log({items:self.items});
+        self.importloading = 0;
+        for(let i=0;i<parseInt(this.items.length/2000)+1;i++){
+          let dataItemTrunc = [];
+          self.importloading = self.importloading+1;
+          for(let ii=i*2000;ii<2000*(i+1);ii++){
+            if(ii>=this.items.length)break;
+            dataItemTrunc.push(this.items[ii]);
+          }
+          console.log(dataItemTrunc);
+          axios.post(this.$apiAdress + '/api/'+self.apiUrl+'/storeMany?token=' + localStorage.getItem("api_token"),
+          {items:dataItemTrunc}
+        )
+        .then(function (response) {
+          self.importloading = self.importloading-1;
+            self.$toasted.show("Les données ont été importées "+(i+1)+"/"+(parseInt(self.items.length/2000)+1),{type:"success"}); 
+        }).catch(function (error) {
+          self.importloading = self.importloading-1;
+            if(error.response.data.message == 'The given data was invalid.'){
+              self.message = '';
+              for (let key in error.response.data.errors) {
+                if (error.response.data.errors.hasOwnProperty(key)) {
+                  self.message += error.response.data.errors[key][0] + '  ';
+                }
+              }
+            self.$toasted.show(self.message,{type:"error"}); 
+            }else{
+              console.log(error);
+              self.$router.push({ path: 'login' }); 
+            }
+        });
+          
+          setTimeout(() => {
+            
+          }, 1000);
+        }
+    },
+    
+    storeManyOld() {
         axios.post(this.$apiAdress + '/api/'+self.apiUrl+'/storeMany?token=' + localStorage.getItem("api_token"),
           {items:self.items}
         )
@@ -157,6 +204,7 @@ export default {
       this.fields2.push(item);
       this.help = this.help +" "+ item+","
     }
+    this.help =this.help+ "\t  ( "+this.fields.length+" colonnes )";
     this.fields2.push("actions");
     let roles = localStorage.getItem("roles");
     if (roles != null) {
@@ -166,3 +214,5 @@ export default {
   }
 }
 </script>
+
+<style src="spinkit/spinkit.min.css"></style>

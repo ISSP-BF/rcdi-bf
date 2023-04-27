@@ -9,11 +9,12 @@
           </label>
 
             <div class="card-header-actions" style="float: left;">
-              
-            <div class="c-avatar" style="width: 100px">
-              <img src="img/avatars/logo-full.png" class="c-avatar-img " />
-            </div>
-              
+               
+            <CButton block color="link" class="px-0" @click="goToDashboard()">
+                <div class="c-avatar" style="width: 100px">
+                <img src="img/avatars/logo-full.png" class="c-avatar-img " />
+              </div>
+              </CButton>
             </div>
           </CCardHeader>
           <CCardBody class="align-items-center mt-5 pt-5">
@@ -105,6 +106,9 @@ Disposer de données permettant une auto-évaluation des activités menées pour
       methods: {
         goLogin(){
           this.$router.push({ path: 'login' });
+        },
+        goToDashboard(){
+          this.$router.push({ path: '/' });
         },
         register() {
           var self = this;

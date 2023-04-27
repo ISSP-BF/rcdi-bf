@@ -27,7 +27,12 @@
                
               <template #Province="{item}">
                 <td>
-                  <strong>{{item.province}}</strong>
+                  <strong>{{item.province.province}}</strong>
+                </td>
+              </template>
+              <template #Region="{item}">
+                <td>
+                  <strong>{{item.province.region?item.province.region.region:''}}</strong>
                 </td>
               </template>
               <template #Commune="{item}">
@@ -64,7 +69,7 @@ export default {
     return {
       items: [],
       
-      fields: ['id','Province', 'Commune', 'actions'],
+      fields: ['id','Region','Province', 'Commune', 'actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

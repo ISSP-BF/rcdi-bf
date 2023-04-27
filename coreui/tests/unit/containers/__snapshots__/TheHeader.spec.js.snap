@@ -4,7 +4,6 @@ exports[`TheHeader.vue renders correctly 1`] = `
 <cheader-stub
   colorscheme="light"
   fixed="true"
-  light=""
   tag="header"
   withsubheader="true"
 >
@@ -21,12 +20,21 @@ exports[`TheHeader.vue renders correctly 1`] = `
   />
    
   <cheaderbrand-stub
-    alt="CoreUI Logo"
+    activeclass="router-link-active"
     class="mx-auto d-lg-none"
-    height="46"
-    src="img/brand/coreui-vue-logo.svg"
-    width="190"
-  />
+    event="click"
+    exactactiveclass="router-link-exact-active"
+    routertag="a"
+    tag="div"
+    target="_self"
+    to="/"
+  >
+    <cicon-stub
+      alt="Logo"
+      height="48"
+      name="logo"
+    />
+  </cheaderbrand-stub>
    
   <cheadernav-stub
     class="d-md-down-none mr-auto"
@@ -35,9 +43,9 @@ exports[`TheHeader.vue renders correctly 1`] = `
       class="px-3"
     >
       <cheadernavlink-stub
-        activeclass="active"
+        activeclass="router-link-active"
         event="click"
-        exactactiveclass="active"
+        exactactiveclass="router-link-exact-active"
         routertag="a"
         target="_self"
         to="/dashboard"
@@ -52,10 +60,10 @@ exports[`TheHeader.vue renders correctly 1`] = `
       class="px-3"
     >
       <cheadernavlink-stub
-        activeclass="active"
+        activeclass="router-link-active"
         event="click"
         exact="true"
-        exactactiveclass="active"
+        exactactiveclass="router-link-exact-active"
         routertag="a"
         target="_self"
         to="/users"
@@ -70,9 +78,9 @@ exports[`TheHeader.vue renders correctly 1`] = `
       class="px-3"
     >
       <cheadernavlink-stub
-        activeclass="active"
+        activeclass="router-link-active"
         event="click"
-        exactactiveclass="active"
+        exactactiveclass="router-link-exact-active"
         routertag="a"
         target="_self"
       >
@@ -83,58 +91,40 @@ exports[`TheHeader.vue renders correctly 1`] = `
     </cheadernavitem-stub>
   </cheadernav-stub>
    
-  <cheadernav-stub
-    class="mr-4"
-  >
+  <cheadernav-stub>
     <cheadernavitem-stub
-      class="d-md-down-none mx-2"
+      class="px-3 c-d-legacy-none"
     >
-      <cheadernavlink-stub
-        activeclass="active"
-        event="click"
-        exactactiveclass="active"
-        routertag="a"
-        target="_self"
+      <button
+        class="c-header-nav-btn"
       >
         <cicon-stub
-          name="cil-bell"
+          name="cil-moon"
         />
-      </cheadernavlink-stub>
+      </button>
     </cheadernavitem-stub>
      
-    <cheadernavitem-stub
-      class="d-md-down-none mx-2"
-    >
-      <cheadernavlink-stub
-        activeclass="active"
-        event="click"
-        exactactiveclass="active"
-        routertag="a"
-        target="_self"
-      >
-        <cicon-stub
-          name="cil-list"
-        />
-      </cheadernavlink-stub>
-    </cheadernavitem-stub>
+    <theheaderdropdownnotif-stub />
      
-    <cheadernavitem-stub
-      class="d-md-down-none mx-2"
-    >
-      <cheadernavlink-stub
-        activeclass="active"
-        event="click"
-        exactactiveclass="active"
-        routertag="a"
-        target="_self"
-      >
-        <cicon-stub
-          name="cil-envelope-open"
-        />
-      </cheadernavlink-stub>
-    </cheadernavitem-stub>
+    <theheaderdropdowntasks-stub />
+     
+    <theheaderdropdownmssgs-stub />
      
     <theheaderdropdownaccnt-stub />
+     
+    <cheadernavitem-stub
+      class="px-3"
+    >
+      <button
+        class="c-header-nav-btn"
+      >
+        <cicon-stub
+          class="mr-2"
+          name="cil-applications-settings"
+          size="lg"
+        />
+      </button>
+    </cheadernavitem-stub>
   </cheadernav-stub>
    
   <csubheader-stub
@@ -142,7 +132,7 @@ exports[`TheHeader.vue renders correctly 1`] = `
     tag="div"
   >
     <cbreadcrumbrouter-stub
-      class="border-0"
+      class="border-0 mb-0"
     />
   </csubheader-stub>
 </cheader-stub>

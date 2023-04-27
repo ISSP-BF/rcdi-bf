@@ -2,27 +2,22 @@
   <CRow>
     <CCol col="12" lg="6">
       <CCard>
-          <CCardHeader><h4>Détail de l'indicateur id:  {{ $route.params.id }}</h4> </CCardHeader>
+        <CCardHeader>
+          Indicateur id:  {{ $route.params.id }}
+        </CCardHeader>
         <CCardBody>
-          <h4>Numero Acte: {{acteNaissance.n_acte}}</h4>
-          <h4>Region : {{acteNaissance.region}}</h4>
-          <h4>Province : {{acteNaissance.province}}</h4>
-          <h4>Commune : {{acteNaissance.commune}}</h4>
-          <h4>Date déclaration : {{acteNaissance.date_declaration|formatDateShort}}</h4>
-          <h4>Nom & premom: {{acteNaissance.nom}} {{acteNaissance.prenom}}</h4>
-          <h4>Sexe: {{acteNaissance.sexe}}</h4>
-          <h4>Date naissance: {{acteNaissance.date_naissance|formatDateShort}}</h4>
-          <h4>Lieu de naissance: {{acteNaissance.lieu_naissance_commune}}</h4>
-          <h4>Centre sante naissance: {{acteNaissance.formationSanitaire}}</h4>
-
+          <p>Libelle : {{ indicateur.libelle }}</p>
+          <p>Description : {{ indicateur.description }}</p>
+          <p>Groupe : {{ indicateur.groupe }}</p>
+          <p>Méthode calcule : {{ indicateur.methode_calcule }}</p>
+          <p>Mode de calcule : {{ indicateur.mode_de_calcule }}</p>
+          <p>Desagregation : {{ indicateur.desagregation }}</p>
+          <p>Période : {{ indicateur.periode }}</p>
+          <p>Dernier modificateur : {{ indicateur.updated_user }}</p>
+          <p>Créateur : {{ indicateur.created_user }}</p>
+          <CButton color="primary" @click="goBack">Retour</CButton>
         </CCardBody>
-
-          <CCardFooter><CButton color="secondary" @click="goBack">Retour</CButton> 
-          
-          </CCardFooter>      
       </CCard>
-
-
     </CCol>
   </CRow>
 </template>
@@ -39,7 +34,7 @@ export default {
   },
   data: () => {
     return {
-      acteNaissance: [],
+      indicateur: [],
     }
   },
   methods: {
@@ -51,10 +46,10 @@ export default {
     let self = this;
     axios.get(  this.$apiAdress + '/api/indicateurs/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
-      self.acteNaissance = response.data;
+      self.indicateur = response.data;
     }).catch(function (error) {
       console.log(error);
-      // self.$router.push({ path: '/login' });
+      self.$router.push({ path: '/login' });
     });
   }
 }

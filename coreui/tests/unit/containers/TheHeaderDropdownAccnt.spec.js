@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import CoreuiVue from '@coreui/vue'
+import CoreuiVue from '@coreui/vue-pro'
 import TheHeaderDropdownAccnt from '@/containers/TheHeaderDropdownAccnt'
 import { shallowMount } from '@vue/test-utils';
 

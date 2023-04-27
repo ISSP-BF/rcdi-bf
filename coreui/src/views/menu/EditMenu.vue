@@ -4,7 +4,7 @@
       <CCard>
         <CCardBody>
           <h3>
-            Edit Menu
+            Modifier Menu
           </h3>
           <CAlert
             :show.sync="dismissCountDown"
@@ -13,9 +13,9 @@
           >
             ({{dismissCountDown}}) {{ message }}
           </CAlert>
-          <CInput label="Name" type="text" placeholder="Name" v-model="name"></CInput>
-          <CButton color="primary" @click="update()">Save</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CInput label="Name" type="text" placeholder="Intitulé" v-model="name"></CInput>
+          <CButton color="primary" @click="update()">Modifier</CButton>
+          <CButton color="primary" @click="goBack">Retour</CButton>
         </CCardBody>
       </CCard>
     </CCol>

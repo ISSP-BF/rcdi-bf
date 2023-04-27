@@ -15,19 +15,24 @@ class CreateDonneesTable extends Migration
     {
         Schema::create('donnees', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('region_id')->unsigned()->nullable();
-            $table->integer('province_id')->unsigned()->nullable();
-            $table->integer('commune_id')->unsigned()->nullable();
+            $table->integer('groupe_id')->nullable();
+            $table->integer('indicateur_id')->nullable();
+            $table->integer('sous_indicateur_id')->nullable();
+            $table->integer('localisation_id')->nullable();
 
-            $table->string('indicateur')->nullable();
-            $table->integer('indicateur_id')->unsigned()->nullable();
 
-            $table->string('niveau1')->nullable();
-            $table->string('niveau2')->nullable();
-
-            $table->float('indice');
+            $table->float('valeur')->nullable();
+            $table->enum('periode', ['TRIMESTRIEL', 'MENSUEL','ANNUEL']);
             
-            $table->integer('mois')->unsigned();
+            // $table->integer('trimestre')->unsigned();
+            // $table->integer('mois')->unsigned();
+            /**
+             * Si c'est mensuel =[1,2,3,4,5,6,7,8,9,10,11,12]
+             * Si c'est trimestriel =[1,2,3,4]
+             * Si c'est semestriel =[1,2]
+             * Si c'est annuel = [2019,2020,2021]
+             */
+            $table->integer('periode_value')->unsigned();
             $table->integer('annee')->unsigned();
             $table->string('source')->nullable();
 

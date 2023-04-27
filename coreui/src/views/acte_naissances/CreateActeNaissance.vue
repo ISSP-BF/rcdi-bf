@@ -143,7 +143,7 @@ export default {
               lon: '',
               lat: '',
             };
-            self.$toasted.show("Acte de naissance créé avec succès",{type:"success"});
+            self.$toasted.show("Acte de naissance a été créé avec succès",{type:"success"});
             self.message = 'Successfully created acteNaissance.';
             self.showAlert();
             self.goBack();

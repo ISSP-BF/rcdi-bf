@@ -51,7 +51,7 @@ export default {
             commune_id:this.commune_id,
             annee:this.annee
           };
-      axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
+      axios.post(  this.$apiAdress + '/api/indicateurs-old/findBy',
          criteria
         )
         .then(function (response) {

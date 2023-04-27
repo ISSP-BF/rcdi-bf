@@ -332,6 +332,91 @@ const EditPostPrimaire = () =>
 const CreatePostPrimaire = () =>
     import ('@/views/post_primaires/CreatePostPrimaire')
 
+//OldIndicateurs
+const OldIndicateurs = () =>
+    import ('@/views/indicateurs-old/Indicateurs')
+const OldIndicateur = () =>
+    import ('@/views/indicateurs-old/Indicateur')
+const OldEditIndicateur = () =>
+    import ('@/views/indicateurs-old/EditIndicateur')
+const OldCreateIndicateur = () =>
+    import ('@/views/indicateurs-old/CreateIndicateur')
+    // Fichier village
+const FichierVillages = () =>
+    import ('@/views/indicateurs-old/FichierVillages')
+    // Fichier village
+const MultiSelect = () =>
+    import ('@/views/indicateurs-old/MultiSelect')
+
+
+
+
+//Groupes
+const Groupes = () =>
+    import ('@/views/groupes/Groupes')
+const Groupe = () =>
+    import ('@/views/groupes/Groupe')
+const EditGroupe = () =>
+    import ('@/views/groupes/EditGroupe')
+const CreateGroupe = () =>
+    import ('@/views/groupes/CreateGroupe')
+
+
+//Dashboards
+const Dashboards = () =>
+    import ('@/views/dashboards/Dashboards')
+const Dashboard2 = () =>
+    import ('@/views/dashboards/Dashboard')
+const EditDashboard = () =>
+    import ('@/views/dashboards/EditDashboard')
+const CreateDashboard = () =>
+    import ('@/views/dashboards/CreateDashboard')
+
+
+//Dashboards
+const DashboardItems = () =>
+    import ('@/views/dashboard_items/DashboardItems')
+const DashboardItem = () =>
+    import ('@/views/dashboard_items/DashboardItem')
+const EditDashboardItem = () =>
+    import ('@/views/dashboard_items/EditDashboardItem')
+const CreateDashboardItem = () =>
+    import ('@/views/dashboard_items/CreateDashboardItem')
+
+//Dashboards_vue
+const Dashboards_vue = () =>
+    import ('@/views/dashboards_vues/Dashboards_vue')
+
+//SousGroupes
+const SousGroupes = () =>
+    import ('@/views/sous_groupes/SousGroupes')
+const SousGroupe = () =>
+    import ('@/views/sous_groupes/SousGroupe')
+const EditSousGroupe = () =>
+    import ('@/views/sous_groupes/EditSousGroupe')
+const CreateSousGroupe = () =>
+    import ('@/views/sous_groupes/CreateSousGroupe')
+
+//Desagregations
+const Desagregations = () =>
+    import ('@/views/desagregations/Desagregations')
+const Desagregation = () =>
+    import ('@/views/desagregations/Desagregation')
+const EditDesagregation = () =>
+    import ('@/views/desagregations/EditDesagregation')
+const CreateDesagregation = () =>
+    import ('@/views/desagregations/CreateDesagregation')
+
+//Sous Indicateur
+const SousIndicateurs = () =>
+    import ('@/views/sous_indicateurs/SousIndicateurs')
+const SousIndicateur = () =>
+    import ('@/views/sous_indicateurs/SousIndicateur')
+const EditSousIndicateur = () =>
+    import ('@/views/sous_indicateurs/EditSousIndicateur')
+const CreateSousIndicateur = () =>
+    import ('@/views/sous_indicateurs/CreateSousIndicateur')
+
 //Indicateurs
 const Indicateurs = () =>
     import ('@/views/indicateurs/Indicateurs')
@@ -341,10 +426,29 @@ const EditIndicateur = () =>
     import ('@/views/indicateurs/EditIndicateur')
 const CreateIndicateur = () =>
     import ('@/views/indicateurs/CreateIndicateur')
-    // Fichier village
-const FichierVillages = () =>
-    import ('@/views/indicateurs/FichierVillages')
-    //Roles
+
+
+//Donnees
+const Donnees = () =>
+    import ('@/views/donnees/Donnees')
+const Donnee = () =>
+    import ('@/views/donnees/Donnee')
+const EditDonnee = () =>
+    import ('@/views/donnees/EditDonnee')
+const CreateDonnee = () =>
+    import ('@/views/donnees/CreateDonnee')
+
+//Ecoles
+const Ecoles = () =>
+    import ('@/views/ecoles/Ecoles')
+const Ecole = () =>
+    import ('@/views/ecoles/Ecole')
+const EditEcole = () =>
+    import ('@/views/ecoles/EditEcole')
+const CreateEcole = () =>
+    import ('@/views/ecoles/CreateEcole')
+
+//Roles
 const Roles = () =>
     import ('@/views/roles/Roles')
 const Role = () =>
@@ -457,8 +561,8 @@ export default router
 function configRoutes() {
     return [{
             path: '/',
-            redirect: '/dashboard',
-            name: 'Home',
+            redirect: '/dashboard-personalise/1',
+            name: 'Accueil',
             component: TheContainer,
             children: [{
                     path: 'media',
@@ -470,7 +574,7 @@ function configRoutes() {
                 },
                 {
                     path: 'dashboard',
-                    name: 'Dashboard',
+                    name: 'Tableau de bord',
                     component: Dashboard
                 },
                 {
@@ -563,7 +667,7 @@ function configRoutes() {
                         {
                             path: ':menu/menuelement/create',
                             meta: { label: 'Create Menu Element' },
-                            name: 'Create Menu Element',
+                            name: 'Ajouter un element du menu',
                             component: CreateMenuElement,
                             meta: {
                                 requiresAdmin: true
@@ -581,7 +685,7 @@ function configRoutes() {
                         {
                             path: ':menu/menuelement/:id/edit',
                             meta: { label: 'Edit Menu Element' },
-                            name: 'Edit Menu Element',
+                            name: 'Modifier Menu Element',
                             component: EditMenuElement,
                             meta: {
                                 requiresAdmin: true
@@ -590,7 +694,7 @@ function configRoutes() {
                         {
                             path: ':menu/menuelement/:id/delete',
                             meta: { label: 'Delete Menu Element' },
-                            name: 'Delete Menu Element',
+                            name: 'Supprimer Menu Element',
                             component: DeleteMenuElement,
                             meta: {
                                 requiresAdmin: true
@@ -600,7 +704,7 @@ function configRoutes() {
                 },
                 {
                     path: 'users',
-                    meta: { label: 'Users' },
+                    meta: { label: 'Utilisateurs' },
                     component: {
                         render(c) { return c('router-view') }
                     },
@@ -614,7 +718,7 @@ function configRoutes() {
                         {
                             path: 'create',
                             meta: { label: 'Create User' },
-                            name: 'Create User',
+                            name: 'Ajouter un utilisateur',
                             component: CreateUser,
                             meta: {
                                 requiresAdmin: true
@@ -623,7 +727,7 @@ function configRoutes() {
                         {
                             path: 'profil',
                             meta: { label: 'Profil User' },
-                            name: 'Profil User',
+                            name: 'Profil utilisateur',
                             component: ProfilUser,
                             meta: {
                                 requiresUser: true
@@ -632,7 +736,7 @@ function configRoutes() {
                         {
                             path: ':id',
                             meta: { label: 'User Details' },
-                            name: 'User',
+                            name: 'Utilisateur',
                             component: User,
                             meta: {
                                 requiresAdmin: true
@@ -641,7 +745,7 @@ function configRoutes() {
                         {
                             path: ':id/edit',
                             meta: { label: 'Edit User' },
-                            name: 'Edit User',
+                            name: 'Modifier utilisateur',
                             component: EditUser,
                             meta: {
                                 requiresAdmin: true
@@ -707,7 +811,7 @@ function configRoutes() {
                         {
                             path: 'create',
                             meta: { label: 'Create Region' },
-                            name: 'Create Region',
+                            name: 'Ajouter region',
                             component: CreateRegion,
                             meta: {
                                 requiresUser: true
@@ -716,7 +820,7 @@ function configRoutes() {
                         {
                             path: ':id',
                             meta: { label: 'Region Details' },
-                            name: 'Region',
+                            name: 'Regions',
                             component: Region,
                             meta: {
                                 requiresUser: true
@@ -725,7 +829,7 @@ function configRoutes() {
                         {
                             path: ':id/edit',
                             meta: { label: 'Edit Region' },
-                            name: 'Edit Region',
+                            name: 'modifier Region',
                             component: EditRegion,
                             meta: {
                                 requiresUser: true
@@ -995,7 +1099,7 @@ function configRoutes() {
                 },
                 {
                     path: 'acte_deces',
-                    meta: { label: 'ActeDecess' },
+                    meta: { label: 'Acte de décès' },
                     component: {
                         render(c) { return c('router-view') }
                     },
@@ -1008,8 +1112,8 @@ function configRoutes() {
                         },
                         {
                             path: 'create',
-                            meta: { label: 'Create ActeDeces' },
-                            name: 'Create ActeDeces',
+                            meta: { label: 'Ajout d\'un acte de décès' },
+                            name: 'Ajout d\'un acte de décès',
                             component: CreateActeDeces,
                             meta: {
                                 requiresUser: true
@@ -1017,8 +1121,8 @@ function configRoutes() {
                         },
                         {
                             path: ':id',
-                            meta: { label: 'ActeDeces Details' },
-                            name: 'ActeDeces',
+                            meta: { label: 'Details Acte décès' },
+                            name: 'Acte décès',
                             component: ActeDeces,
                             meta: {
                                 requiresUser: true
@@ -1026,8 +1130,8 @@ function configRoutes() {
                         },
                         {
                             path: ':id/edit',
-                            meta: { label: 'Edit ActeDeces' },
-                            name: 'Edit ActeDeces',
+                            meta: { label: 'Modification Acte décès' },
+                            name: 'Modification Acte décès',
                             component: EditActeDeces,
                             meta: {
                                 requiresUser: true
@@ -1051,8 +1155,8 @@ function configRoutes() {
                         },
                         {
                             path: 'create',
-                            meta: { label: 'Create ActeMariage' },
-                            name: 'Create ActeMariage',
+                            meta: { label: 'Ajout d\'un acte de mariage' },
+                            name: 'Ajout d\'un acte de mariage',
                             component: CreateActeMariage,
                             meta: {
                                 requiresUser: true
@@ -1060,8 +1164,8 @@ function configRoutes() {
                         },
                         {
                             path: ':id',
-                            meta: { label: 'ActeMariage Details' },
-                            name: 'ActeMariage',
+                            meta: { label: 'Détail de l\'acte de mariage' },
+                            name: 'Acte de Mariage',
                             component: ActeMariage,
                             meta: {
                                 requiresUser: true
@@ -1069,8 +1173,8 @@ function configRoutes() {
                         },
                         {
                             path: ':id/edit',
-                            meta: { label: 'Edit ActeMariage' },
-                            name: 'Edit ActeMariage',
+                            meta: { label: 'Modification de l\'acte de mariage' },
+                            name: 'Modification de l\'acte de mariage',
                             component: EditActeMariage,
                             meta: {
                                 requiresUser: true
@@ -1638,14 +1742,14 @@ function configRoutes() {
                 },
 
                 {
-                    path: 'indicateurs',
+                    path: 'indicateurs-old',
                     meta: { label: 'Indicateurs' },
                     component: {
                         render(c) { return c('router-view') }
                     },
                     children: [{
                             path: '',
-                            component: Indicateurs,
+                            component: OldIndicateurs,
                             meta: {
                                 requiresUser: false
                             }
@@ -1654,7 +1758,7 @@ function configRoutes() {
                             path: 'create',
                             meta: { label: 'Create Indicateur' },
                             name: 'Create Indicateur',
-                            component: CreateIndicateur,
+                            component: OldCreateIndicateur,
                             meta: {
                                 requiresUser: true
                             }
@@ -1669,10 +1773,19 @@ function configRoutes() {
                             }
                         },
                         {
+                            path: 'multi-select',
+                            meta: { label: 'MultiSelect' },
+                            name: 'MultiSelect',
+                            component: MultiSelect,
+                            meta: {
+                                requiresUser: false
+                            }
+                        },
+                        {
                             path: ':id',
                             meta: { label: 'Indicateur Details' },
                             name: 'Indicateur',
-                            component: Indicateur,
+                            component: OldIndicateur,
                             meta: {
                                 requiresUser: false
                             }
@@ -1681,6 +1794,221 @@ function configRoutes() {
                             path: ':id/edit',
                             meta: { label: 'Edit Indicateur' },
                             name: 'Edit Indicateur',
+                            component: OldEditIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'groupes',
+                    meta: { label: 'Groupes' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Groupes,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Groupe' },
+                            name: 'Ajouter groupe',
+                            component: CreateGroupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Groupe Details' },
+                            name: 'Groupes',
+                            component: Groupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Groupe' },
+                            name: 'modifier Groupe',
+                            component: EditGroupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'sous_groupes',
+                    meta: { label: 'Sous Groupes' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: SousGroupes,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Sous Groupe' },
+                            name: 'Ajouter sous groupe',
+                            component: CreateSousGroupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Sous Groupe Details' },
+                            name: 'SousGroupes',
+                            component: SousGroupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Groupe' },
+                            name: 'modifier SOusGroupe',
+                            component: EditSousGroupe,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'desagregations',
+                    meta: { label: 'Desagregations' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Desagregations,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Desagregation' },
+                            name: 'Ajouter desagregation',
+                            component: CreateDesagregation,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Desagregation Details' },
+                            name: 'Desagregations',
+                            component: Desagregation,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Desagregation' },
+                            name: 'modifier Desagregation',
+                            component: EditDesagregation,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'sous_indicateurs',
+                    meta: { label: 'SousIndicateurs' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: SousIndicateurs,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create SousIndicateur' },
+                            name: 'Ajouter sous_indicateurs',
+                            component: CreateSousIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'SousIndicateur Details' },
+                            name: 'SousIndicateurs',
+                            component: SousIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit SousIndicateur' },
+                            name: 'modifier sous indicateur',
+                            component: EditSousIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'indicateurs',
+                    meta: { label: 'Indicateurs' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Indicateurs,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Indicateur' },
+                            name: 'Ajouter indicateurs',
+                            component: CreateIndicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Indicateur Details' },
+                            name: 'Indicateurs',
+                            component: Indicateur,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Indicateur' },
+                            name: 'modifier indicateur',
                             component: EditIndicateur,
                             meta: {
                                 requiresUser: true
@@ -1688,6 +2016,192 @@ function configRoutes() {
                         },
                     ]
                 },
+
+                {
+                    path: 'donnees',
+                    meta: { label: 'Donnees' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Donnees,
+                            meta: {
+                                requiresUser: false
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Donnee' },
+                            name: 'Ajouter donnees',
+                            component: CreateDonnee,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Donnee Details' },
+                            name: 'Donnees',
+                            component: Donnee,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Donnee' },
+                            name: 'modifier donnee',
+                            component: EditDonnee,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'ecoles',
+                    meta: { label: 'Ecoles' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Ecoles,
+                            meta: {
+                                requiresUser: false
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Ecole' },
+                            name: 'Ajouter ecoles',
+                            component: CreateEcole,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Ecole Details' },
+                            name: 'Ecoles',
+                            component: Ecole,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Ecole' },
+                            name: 'modifier ecole',
+                            component: EditEcole,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    path: 'dashboards',
+                    meta: { label: 'Dashboards' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: Dashboards,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create Dashboard' },
+                            name: 'Ajouter dashboard',
+                            component: CreateDashboard,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Dashboard Details' },
+                            name: 'Dashboards',
+                            component: Dashboard2,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit Dashboard' },
+                            name: 'modifier Dashboard',
+                            component: EditDashboard,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+                {
+                    path: ':dashboard/dashboard-items',
+                    meta: { label: 'Les requêtes' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: DashboardItems,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Création de la requête' },
+                            name: 'Ajouter DashboardItem',
+                            component: CreateDashboardItem,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'Détail de la requête' },
+                            name: 'Détail de la requête',
+                            component: DashboardItem,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edition de la requête' },
+                            name: 'Edition de la requête',
+                            component: EditDashboardItem,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+                {
+                    path: 'dashboard-personalise/:id',
+                    meta: { label: 'Tableau de board personnalisé' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                        path: '',
+                        component: Dashboards_vue,
+                        meta: {
+                            requiresUser: false
+                        }
+                    }]
+                },
+
                 {
                     path: 'roles',
                     meta: { label: 'Roles' },

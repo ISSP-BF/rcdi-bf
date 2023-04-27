@@ -4,9 +4,11 @@
       <transition name="slide">
       <CCard>
          <CCardHeader>
-            Formation Sanitaires
+            Liste des Formations Sanitaires 
             <div class="card-header-actions">
-             <CButton color="primary" @click="createFormationSanitaire()">Ajouter</CButton>
+             <AddButton @ajouter="createFormationSanitaire()"/>&nbsp;
+             <ExportButton :items="items" title="La liste des formations sanitaires" :fields="fieldsI"/>&nbsp;
+            &nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -129,9 +131,8 @@
                 <td>
                   {{item.lat}}
                 </td>
-              </template>
-              
-          <template #actions="{item}">
+              </template> 
+              <template #actions="{item}">
                 <td>
                   <div class="card-header-actions" style="display:flex">
                   <CButton color="secondary"  size="sm" @click="showFormationSanitaire( item.id )">Détail</CButton>
@@ -152,15 +153,22 @@
 
 <script>
 import axios from 'axios'
+import AddButton from '../buttons/AddButton.vue'
+import EditButton from '../buttons/EditButton.vue'
+import DeleteButton from '../buttons/DeleteButton.vue'
+import ExportButton from '../buttons/ExportButton.vue'
 
 export default {
   name: 'FormationSanitaires',
+  components: { 
+    ExportButton,AddButton,EditButton,DeleteButton
+  },
   data: () => {
     return {
       items: [],
      
-      fields: ['id', 'region', 'province','district', 'nom_structure', 'proprietaire','type','titre','n_decision','date_autorisation','date_fermeture','adresse', 'adresse_postale', 'tel', 'fax', 'email', 'lon', 'lat', 'actions'],
-
+      fields: ['id', 'region', 'province','district', 'nom_structure', 'lon', 'lat', 'proprietaire','type','titre','n_decision','date_autorisation','date_fermeture','adresse', 'adresse_postale', 'tel', 'fax', 'email', 'actions'],
+      fieldsI: ['id', 'region', 'province','district', 'nom_structure', 'proprietaire','type','titre','n_decision','date_autorisation','date_fermeture','adresse', 'adresse_postale', 'tel', 'fax', 'email', 'lon', 'lat'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

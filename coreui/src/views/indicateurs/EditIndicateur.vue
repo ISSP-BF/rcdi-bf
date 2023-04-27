@@ -2,52 +2,43 @@
   <CRow>
     <CCol col="12" lg="6">
       <CCard>
+        <CCardHeader>
+          Modifier Indicateur id:  {{ $route.params.id }}
+        </CCardHeader>
         <CCardBody>
-          <h3>
-            Modifier ActeNaissance id:  {{ $route.params.id }}
-          </h3>
-          
+
+          <CSelect
+              label="Groupe" 
+              :value.sync="indicateur.groupe_id"
+              :plain="true"
+              :options="groupes"
+            >
+            </CSelect>
+
+            <CInput label="Libelle" type="text" placeholder="Libelle" v-model="indicateur.libelle"></CInput>
+            <CTextarea label="Description" type="text" placeholder="Description" v-model="indicateur.description"  rows="9"/>
+            <CTextarea label="Methode de calcule" type="text" placeholder="Methode de calcule" v-model="indicateur.description"  rows="9"/>
            
-            <div class="row ">
+          <div class="row ">
+            <div role="group" class="col-lg-3 form-group">
+              <label class="row col custom-control-inline"> Période </label>
+              <CInputCheckbox
+                  v-for="rol in periodeList"
+                  :key="rol"
+                  :label="rol"
+                  name="Période "
+                  @update:checked="selectRadioSelectPeriode(rol)"
+                  :checked="fixedPeriode[rol]"
+                  />
+            </div>      
+          </div>
             <CSelect
-              label="Region"  class="col-lg-4"
-              :value.sync="indicateur.region_id"
+              label="Desagregation" 
+              :value.sync="indicateur.desagregation_id"
               :plain="true"
-              :options="regions"
-              v-model="indicateur.region_id"
+              :options="desagregations"
             >
             </CSelect>
-            
-            <CSelect
-              label="Province"  class="col-lg-4"
-              :value.sync="indicateur.province_id"
-              :plain="true"
-              :options="provinces"
-              v-model="indicateur.province_id"
-            >
-            </CSelect>
-            
-            <CSelect
-              label="Commune"  class="col-lg-4"
-              :value.sync="indicateur.commune_id"
-              :plain="true"
-              :options="communes"
-              v-model="indicateur.commune_id"
-            >
-            </CSelect>
-            </div>
-            
-            <div class="row ">
-            <CInput label="groupe" type="text" placeholder="groupe" v-model="indicateur.groupe"  class="col-lg-6"></CInput>
-            <CInput label="indicateur" type="text" placeholder="indicateur" v-model="indicateur.indicateur"  class="col-lg-6"></CInput>
-            <CInput label="niveau1" type="text" placeholder="niveau1" v-model="indicateur.niveau1"  class="col-lg-6"></CInput>
-            <CInput label="niveau2" type="text" placeholder="niveau2" v-model="indicateur.niveau2"  class="col-lg-6"></CInput>
-            <CInput label="mois" type="text" placeholder="mois" v-model="indicateur.mois"  class="col-lg-6"></CInput>
-            <CInput label="annee" type="text" placeholder="annee" v-model="indicateur.annee"  class="col-lg-6"></CInput>
-            <CInput label="indice" type="text" placeholder="indice" v-model="indicateur.indice"  class="col-lg-6"></CInput>
-            <CInput label="source" type="text" placeholder="source" v-model="indicateur.source"  class="col-lg-6"></CInput>
-            </div>
-             
           <CButton color="primary" @click="update()">Modifier</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
         </CCardBody>
@@ -59,7 +50,7 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'EditUser',
+  name: 'EditIndicateur',
   props: {
     caption: {
       type: String,
@@ -67,41 +58,40 @@ export default {
     },
   },
   data: () => {
-    
     return {
+        fixedPeriode: [],
         indicateur: {
-          region_id: null,
-          province_id: null,
-          commune_id: null,
-          groupe:null,
-          indicateur:null, 
-          niveau1:null, 
-          niveau2:null,
-          mois:null, 
-          annee:null,
-          indice:null,
-          source:null
+          libelle: '',
+          groupe_id: '',
+          desagregation_id: ''
         },
-        formationSanitaires: [],
-        regions: [],
-        provinces: [],
-        communes: [],
-        message: '',
+        periodes:[],
+        groupes:[],
+        periodeList:['MENSUEL','TRIMESTRIEL','SEMESTRIEL', 'ANNUEL'],
+        desagregations: [],
+        message: ''
     }
   },
   methods: {
     goBack() {
       this.$router.go(-1)
           },
+    selectRadioSelectPeriode(periode){
+      let temp = this.periodes.indexOf(periode); 
+      if (temp > -1) {
+        this.periodes.splice(temp, 1);
+      }else{
+        this.periodes.push(periode);
+      }
+    },
     update() {
-        let self = this;
-        console.log(self.indicateur)
+        let self = this; 
+        self.indicateur.periode = this.periodes.toString()
         axios.put(  this.$apiAdress + '/api/indicateurs/' + self.$route.params.id + '?token=' + localStorage.getItem("api_token"),
         self.indicateur)
         .then(function (response) {
-            self.message = 'Successfully updated Acte Naissance.';
-            self.$toasted.show("Indicateur a été modifié avec succès",{type:"success"});
-            self.goBack();
+            self.$router.go(-1) 
+            self.$toasted.show(response.data.message,{type:"success"});
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';
@@ -110,27 +100,34 @@ export default {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
-            self.$toasted.show(self.message,{type:"error"}); 
+            self.$toasted.show(self.message,{type:"success"}); 
             }else{
-              console.log(error);
-              self.$toasted.show(self.message,{type:"error"}); 
-              // self.$router.push({ path: '/login' }); 
+              self.$router.push({ path: '/login' }); 
             }
         });
-    }
+    },
   },
   mounted: function(){
     let self = this;
-    axios.get(this.$apiAdress + '/api/indicateurs/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
+    axios.get(  this.$apiAdress + '/api/indicateurs/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
-      console.log(response.data)
         self.indicateur = response.data.indicateur;
-        self.regions = response.data.regions;
-        self.provinces = response.data.provinces;
-        self.communes = response.data.communes;
+        self.desagregations = response.data.desagregations;
+        self.groupes = response.data.groupes;
+        
+        if (self.indicateur.periode != null) {
+          self.periodes = self.indicateur.periode.split(',')
+        }
+        for(let p of self.periodes){
+          self.fixedPeriode[""+p+""] = true;
+        }
+        // Definir la valeur par défaut
+        let lest = [{label:'',value:null}]
+        lest.push(...self.desagregations);
+        self.desagregations = lest;
     }).catch(function (error) {
-        console.log(error);
-        // self.$router.push({ path: 'login' });
+        // console.log(error);
+        self.$router.push({ path: '/login' });
     });
   }
 }

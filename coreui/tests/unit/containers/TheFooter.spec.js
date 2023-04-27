@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import CoreuiVue from '@coreui/vue'
+import CoreuiVue from '@coreui/vue-pro'
 import TheFooter from '@/containers/TheFooter'
 import { shallowMount } from '@vue/test-utils';
 

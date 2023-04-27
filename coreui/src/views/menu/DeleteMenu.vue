@@ -3,8 +3,8 @@
     <CCol col="6" lg="6">
       <CCard>
         <CCardBody>
-          <h4>Delete Menu</h4>
-          <p>Are you sure?</p>
+          <h4>Suppression de menu</h4>
+          <p>êtes vous sur de vouloir supprimer ?</p>
           <CAlert
             :show.sync="dismissCountDown"
             color="primary"
@@ -13,8 +13,8 @@
             ({{dismissCountDown}}) {{ message }}
           </CAlert>
 
-          <CButton color="danger" @click="deleteMenu()">Delete</CButton>
-          <CButton color="primary" @click="goBack">Back</CButton>
+          <CButton color="danger" @click="deleteMenu()">Supprimer</CButton>
+          <CButton color="primary" @click="goBack">Retour</CButton>
         </CCardBody>
       </CCard>
     </CCol>

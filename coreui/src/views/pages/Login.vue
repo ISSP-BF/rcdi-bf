@@ -10,11 +10,12 @@
           </label>
 
             <div class="card-header-actions" style="float: left;">
-              <a href="/">
-              <div class="c-avatar" style="width: 100px">
+              
+              <CButton block color="link" class="px-0" @click="goToDashboard()">
+                <div class="c-avatar" style="width: 100px">
                 <img src="img/avatars/logo-full.png" class="c-avatar-img " />
               </div>
-              </a>
+              </CButton>
             </div>
           </CCardHeader>
           <CCardBody class="align-items-center mt-5 pt-5">
@@ -51,7 +52,9 @@
                 </CRow>
               </CForm>
             </CCardBody>
+            
             <CCardFooter class="p-4">
+                  <CButton block color="link" class="px-0" @click="goToDashboard()">cliquer ici pour aller sur la page d'acceuil</CButton>
             </CCardFooter>
             
           <div 
@@ -109,6 +112,9 @@ import axios from "axios";
         goRegister(){
           this.$router.push({ path: 'register' });
         },
+        goToDashboard(){
+          this.$router.push({ path: '/' });
+        },
         login() {
           let self = this;
           axios.post(  this.$apiAdress + '/api/login', {
@@ -119,13 +125,13 @@ import axios from "axios";
             self.password = '';
             localStorage.setItem("api_token", response.data.access_token);
             localStorage.setItem('roles', response.data.roles);
-            self.$router.push({ path: 'dashboard' });
+            self.$router.push({ path: '/' });
           })
           .catch(function (error) {
-            self.message = 'Incorrect E-mail or password';
+            self.message = 'E-mail ou mot de passe incorrect';
             self.showMessage = true;
             console.log(error);
-            self.$toasted.show('Incorrect E-mail or password',{type:"error"});
+            self.$toasted.show('E-mail ou mot de passe incorrect',{type:"error"});
           });
   
         }

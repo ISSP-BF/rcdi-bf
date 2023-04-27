@@ -48,8 +48,8 @@ class CreateActeMariagesTable extends Migration
             $table->integer('profession_conjointe_id')->nullable();
 
             // Les informations communes
-            $table->string('regime_matrimonial');
-            $table->string('option_matrimonial');
+            $table->string('regime_matrimonial'); // statut_matrimonial
+            $table->string('option_matrimonial'); // regime_matrimonial
 
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();

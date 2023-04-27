@@ -1,12 +1,31 @@
 <template>
   <CCard>
-      <CCardHeader><h4 class="card-title mb-0">{{indicateurTitle}}</h4></CCardHeader>
+    <CCardHeader><label class="h5">{{indicateurTitle}}</label>
+            <div class="card-header-actions">
+              
+              <CDropdown
+                color="link"
+                size="lg"
+                :caret="false"
+              >
+                <template #toggler-content>
+                  <CIcon name="cil-options"/>
+                </template>
+                <CDropdownItem @click="toggleFullscreen">Plein écran</CDropdownItem>
+                <CDropdownItem>Exporter csv</CDropdownItem>
+              </CDropdown>
+             
+            </div>
+    </CCardHeader>
     <CCardBody>
       <template>
+        <div ref="myDiv" @click="toggleFullscreen">
+
         <CChartPie
           :datasets="datasets"
           :labels="labels"
         />
+      </div>
       </template>
     </CCardBody>
   </CCard>
@@ -45,7 +64,7 @@ export default {
             commune_id:this.commune_id,
             annee:this.annee
           };
-      axios.post(  this.$apiAdress + '/api/indicateurs/findBy',
+      axios.post(  this.$apiAdress + '/api/indicateurs-old/findBy',
          criteria
         )
         .then(function (response) {
@@ -79,6 +98,16 @@ export default {
               self.$router.push({ path: 'login' }); 
             }
         });
+    },
+    toggleFullscreen() {
+      const elem = this.$refs.myDiv;
+      if (!document.fullscreenElement) {
+        elem.requestFullscreen().catch(err => {
+          console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
     }
   },
   mounted: function(){
@@ -87,3 +116,21 @@ export default {
   }
 }
 </script>
+
+<style>
+div:-webkit-full-screen {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+div:-moz-full-screen {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+div:fullscreen {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+</style>

@@ -74,7 +74,7 @@ export default {
             annee:this.annee,
             anneefin:this.anneefin
           };
-      axios.post(  this.$apiAdress + '/api/indicateurs/findBy?token=' + localStorage.getItem("api_token"),
+      axios.post(  this.$apiAdress + '/api/indicateurs-old/findBy?token=' + localStorage.getItem("api_token"),
          criteria
         )
         .then(function (response) {

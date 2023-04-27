@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Communes;
+use App\Models\Commune;
 
 class CommunesController extends Controller
 {
@@ -26,12 +27,7 @@ class CommunesController extends Controller
      */
     public function index()
     {
-        $communes = DB::table('communes')
-        ->join('users', 'users.id', '=', 'communes.users_id')
-        ->join('provinces', 'provinces.id', '=', 'communes.province_id')
-        ->select('communes.*', 'users.name as author', 'provinces.province as province')->orderBy('communes.defaut')
-        ->get();
-        return response()->json( $communes );
+        return response()->json( Commune::all() );
     }
 
     /**
@@ -81,14 +77,14 @@ class CommunesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Commune $commune)
     {
-        $commune = DB::table('communes')
-        ->join('users', 'users.id', '=', 'communes.users_id')
-        ->join('provinces', 'provinces.id', '=', 'communes.province_id')
-        ->select('communes.*', 'users.name as author', 'provinces.name as provinces')
-        ->where('communes.id', '=', $id)
-        ->first();
+        // $commune = DB::table('communes')
+        // ->join('users', 'users.id', '=', 'communes.users_id')
+        // ->join('provinces', 'provinces.id', '=', 'communes.province_id')
+        // ->select('communes.*', 'users.name as author', 'provinces.name as provinces')
+        // ->where('communes.id', '=', $id)
+        // ->first();
         return response()->json( $commune );
     }
 

@@ -80,7 +80,17 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        // return response()->json(['message' => 'Successfully logged out']);
+        return $this->respondWithToken(auth()->refresh(),auth()->user()->email);
+    }
+
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function userProfile() {
+        return response()->json(auth()->user());
     }
 
     /**

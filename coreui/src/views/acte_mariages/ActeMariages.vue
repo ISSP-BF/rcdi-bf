@@ -7,7 +7,7 @@
             Acte Mariages
             <div class="card-header-actions">
               <AddButton @ajouter="createActeMariage()"/>&nbsp;
-              <ExportButton :items="items" title="Acte Mariages" :fields="fields"/>&nbsp;
+              <ExportButton :items="items" title="Acte Mariages" :fields="fieldsI"/>&nbsp;
             </div>
         </CCardHeader>
         <CCardBody>
@@ -124,6 +124,7 @@ export default {
     return {
       items: [],
       fields:['n_acte','region', 'province', 'commune','date_etablissement','date_naissance_conjoint','age_mariage_conjoint','sexe_conjoint','hors_commune_conjoint','commune_naissance_conjoint','localite_naissance_conjoint','domicile_conjoint','profession_conjoint','date_naissance_conjointe','age_mariage_conjointe','sexe_conjointe','hors_commune_conjointe','commune_naissance_conjointe','localite_naissance_conjointe','domicile_conjointe','profession_conjointe','regime_matrimonial','option_matrimonial','actions'],
+      fieldsI:['n_acte','region', 'province', 'commune','date_etablissement','date_naissance_conjoint','age_mariage_conjoint','sexe_conjoint','hors_commune_conjoint','commune_naissance_conjoint','localite_naissance_conjoint','domicile_conjoint','profession_conjoint','date_naissance_conjointe','age_mariage_conjointe','sexe_conjointe','hors_commune_conjointe','commune_naissance_conjointe','localite_naissance_conjointe','domicile_conjointe','profession_conjointe','regime_matrimonial','option_matrimonial'],
 
       currentPage: 1,
       perPage: 5,

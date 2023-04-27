@@ -2,7 +2,7 @@
   <CRow>
     <CCol col="12" lg="6">
       <CCard>
-          <CCardHeader><h4>Détail du Acte Deces id:  {{ $route.params.id }}</h4> </CCardHeader>
+          <CCardHeader><h4>Détail de l'acte de décès id:  {{ $route.params.id }}</h4> </CCardHeader>
         <CCardBody>
           <h4>Numero acte: {{acteDeces.n_acte}}</h4>
           <h4>Region : {{acteDeces.region}}</h4>
