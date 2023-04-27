@@ -1,10 +1,4 @@
 /node_modules
-/public/hot
-/public
-/public/storage
-/storage/*.key
-/public/*.js
-/public/*
 /vendor
 .env
 .env.backup
