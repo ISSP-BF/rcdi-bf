@@ -27,7 +27,8 @@ class DonneesController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['index', 'paginate', 'paginate', 'show', 'show', 'show',
-        'update', 'destroy', 'findBy', 'findCarteDataBy', 'elementSearch','findSousGroupeByLocalisation']]);
+        'update', 'destroy', 'findBy', 'findCarteDataBy', 'elementSearch','findSousGroupeByLocalisation',
+        'findAnneeByIndicateur','findIndicateurByGroupe']]);
     }
 
     /**
@@ -376,12 +377,11 @@ class DonneesController extends Controller
         
         $groupes = Groupe::select('libelle as label', 'id as value')->get();
         $commune = Commune::where("defaut",true)->firstOrFail();
-        $sous_groupes = SousGroupe::select('libelle as label', 'id as value')->get();
-        $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->get();
-        $sousIndicateurs = SousIndicateur::select('*','libelle as label', 'id as value')->get();
+        $sous_groupes = [];//SousGroupe::select('libelle as label', 'id as value')->get();
+        $indicateurs = [];// Indicateur::select('*','libelle as label', 'id as value')->get();
+        $sousIndicateurs = [];// SousIndicateur::select('*','libelle as label', 'id as value')->get();
         $annees = DB::table('donnees')->select('annee as label','annee as value')->distinct()->orderBy('annee')->get();
-        $annees2 = DB::table('donnees')->select('annee as value','annee as text')->distinct()->orderBy('annee')->get();
-        return response()->json(['indicateurs'=>$indicateurs,'sousIndicateurs'=>$sousIndicateurs,'groupes'=>$groupes,'sous_groupes'=>$sous_groupes,'annees'=>$annees,'annees2'=>$annees2,'commune'=>$commune]);        
+         return response()->json(['indicateurs'=>$indicateurs,'sousIndicateurs'=>$sousIndicateurs,'groupes'=>$groupes,'sous_groupes'=>$sous_groupes,'annees'=>$annees ,'commune'=>$commune]);        
     }
 
     public function findSousGroupeByLocalisation($localisation_id,$groupe_id){
@@ -409,7 +409,16 @@ class DonneesController extends Controller
           
         return $sous_groupes;
     }
-   
+
+   public function  findIndicateurByGroupe($indicateur_id){
+    $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->where('groupe_id','=',$groupe_id)->get();
+     return response()->json(['indicateurs'=>$indicateurs]);        
+   }
+
+   public function findAnneeByIndicateur($indicateur_id){
+    $annees = DB::table('donnees')->select('annee as label','annee as value')->distinct()->where("indicateur_id","=",$indicateur_id)->orderBy('annee')->get();
+     return response()->json(['annees'=>$annees]);        
+   }
     
 
 }

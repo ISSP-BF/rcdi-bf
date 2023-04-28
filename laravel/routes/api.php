@@ -96,7 +96,9 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('donnees/findBy', 'DonneesController@findBy');
     Route::post('donnees/findCarteDataBy', 'DonneesController@findCarteDataBy');
     Route::post('donnees/findByGetSql', 'DonneesController@findByGetSql');
-    Route::get('donnees/findSousGroupeByLocalisation/{id}/{groupe_id}', 'DonneesController@findSousGroupeByLocalisation');
+    Route::get('donnees/findSousGroupeByLocalisation/{localisation_id}/{groupe_id}', 'DonneesController@findSousGroupeByLocalisation');
+    Route::get('donnees/findAnneeByIndicateur/{indicateur_id}', 'DonneesController@findAnneeByIndicateur');
+    Route::get('donnees/findIndicateurByGroupe/{groupe_id}', 'DonneesController@findIndicateurByGroupe');
     Route::post('donneespaginate/{pageSize}/{pageIndex}/{column}/{asc}', 'DonneesController@paginate');
     Route::resource('dashboards', 'DashboardsController');
     Route::get('dashboard-items/findBy/{dashboard_id}', 'DashboardItemsController@findBy');

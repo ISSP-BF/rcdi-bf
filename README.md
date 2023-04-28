@@ -323,54 +323,6 @@ Menu management allows you to toggle the visibility of menu items for individual
 Allows you to create, edit, delete and reorder user roles.
 When a user has more than one role, the highest hierarchical role is used to create a menu for him.
 
-#### Manage media
-It allows to:
-* Create virtual media folders.
-* Send media to applications.
-* Move media between folders,
-* Cut images,
-
-#### BREAD system
-BREAD stands for: browse, read, edit, add, delete.
-Our BREAD system allows you to easily and quickly generate for any table, from the database, a simple BREAD.
-To create a new BREAD just enter a table name from the database.  Then enter a name for the form. Enter the number of rows in the browse table. Choose if you want the browse table to contain buttons: "show", "edit", "add", "delete".
-Assign roles for users who will be able to use the ready BREAD.
-Then complete each column of the table separately:
-* the column name visible to the user,
-* the input type for the column,
-The last step is to select the appropriate checkboxes:
-* browse (allows to display the column in the data table),
-* read (allows you to display the column in the show view,)
-* edit (enables column editing)
-* add (allows you to complete the column data when adding a record. Required if the column is not nullable).
-It is also possible to handle relationships with another table.
-If the column is a foreign key, it should be specified: in the field "Optional relation table name" - table name to which the foreign key refers, in the "Optional column name in relation table - to print" field - the name of the column that is in the relation table to be displayed. Finally, select one of the two "field types" that relate to the relation: 'relation select' or 'relation radio'.
-
-#### E-mail Templates
-It is an example of managing e-mail templates. Allows you to create, edit and delete templates. It also allows you to send an E-mail to a selected address.
-
-## Creators
-
-***Łukasz Holeczek***
-* <https://twitter.com/lukaszholeczek>
-* <https://github.com/coreui>
-
-**CoreUI Team**
-* <https://github.com/orgs/coreui/people>
-
-## Community
-
-Get updates on CoreUI's development and chat with the project maintainers and community members.
-
-- Follow [@core_ui on Twitter](https://twitter.com/core_ui).
-- Read and subscribe to [CoreUI Blog](https://coreui.io/blog/).
-
-### Community Projects
-
-Some of projects created by community but not maintained by CoreUI team.
-
-* [NuxtJS + Vue CoreUI](https://github.com/muhibbudins/nuxt-coreui)
-* [Colmena](https://github.com/colmena/colmena)
 
 # Configuration du projet
 Il faut changer les configurations suivantes :
@@ -418,6 +370,8 @@ cp /home/rcdi/rcdi-bf/coreui/dist/index.html /home/rcdi/rcdi-bf/laravel/resource
 git branch -D prod-1
 git push origin -d prod-1
 git checkout -b prod-1
+cp /home/rcdi/rcdi-bf/.gitignore-prod /home/rcdi/rcdi-bf/.gitignore
+cp /home/rcdi/rcdi-bf/laravel/.gitignore-prod /home/rcdi/rcdi-bf/laravel/.gitignore
 git add .
 git commit -m "_"
 git push origin prod-1

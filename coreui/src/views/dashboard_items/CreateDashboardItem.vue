@@ -539,6 +539,7 @@ export default {
             self.sous_groupes.length > 0 ? self.sous_groupes[0].value : null;
           self.annees = response.data.annees;
           self.refreshing3 = false;
+          self.findSousGroupeByGroupe();
           setTimeout(() => {
             self.refreshing3 = true;
           }, 1);

@@ -159,7 +159,7 @@
                       :value.sync="donnee.indicateur_id"
                       :plain="true"
                       :options="indicateurs"
-                      @change="findSousIndicateurByDesagregation($event)"
+                      @change="findSousIndicateurByDesagregation($event);findAnneeByIndicateur($event)"
                     >
                     </CSelect>
                     <CSelect
@@ -626,6 +626,7 @@ export default {
      
      findSousGroupeByGroupe(event) {
        this.findLocalisationByGroupe(event);
+       this.findIndicateurByGroupe(event);
        this.sous_groupes = [];
        
        let self = this;
@@ -646,7 +647,7 @@ export default {
            self.sous_groupes = lest;
          })
          .catch(function (error) {
-           self.indicateurs = [];
+           self.sous_groupes = [];
            // console.log(error);
            self.$router.push({ path: "login" });
          });
@@ -655,12 +656,7 @@ export default {
      findSousGroupeByLocalisation(event) { 
        this.sous_groupes = [];
        let self = this;
-       console.log("========>",
-       this.$apiAdress +
-             "/api/donnees/findSousGroupeByLocalisation/" +
-             self.donnee.localisation_id +"/"+self.donnee.groupe_id+
-             "?token=" +
-             localStorage.getItem("api_token"))
+       
        axios
          .get(
            this.$apiAdress +
@@ -757,6 +753,8 @@ export default {
       }
     },
     findIndicateurByGroupe(event) {
+      console.log("=====================")
+      let self = this;
       axios
         .get(
           this.$apiAdress +
@@ -766,9 +764,9 @@ export default {
             localStorage.getItem("api_token")
         )
         .then(function (response) {
-          console.log(response);
+          self.donnee.indicateur_id = null
           self.indicateurs = response.data;
-
+          console.log(response.data)
           let lest = [{ label: "", value: null }];
           lest.push(...self.indicateurs);
           self.indicateurs = lest;
@@ -778,12 +776,35 @@ export default {
         })
         .catch(function (error) {
           self.indicateurs = [];
+          console.log(error);
+          // self.$router.push({ path: 'login' });
+        });
+    },
+    findAnneeByIndicateur(event) { 
+      self = this;
+      self.annees = []
+      axios
+        .get(
+          this.$apiAdress +
+            "/api/donnees/findAnneeByIndicateur/" +
+            self.donnee.indicateur_id +
+            "?token=" +
+            localStorage.getItem("api_token")
+        )
+        .then(function (response) {
+          self.annees = response.data.annees;
+          self.refreshing3 = false;
+          setTimeout(() => {
+            self.refreshing3 = true;
+          }, 1);
+        })
+        .catch(function (error) {
+          self.annees = [];
           // console.log(error);
           // self.$router.push({ path: 'login' });
         });
     },
     findIndicateurBySousGroupe(event) {
-      console.log(event);
       let self = this;
       axios
         .get(
@@ -936,8 +957,7 @@ export default {
           self.donnee.sous_groupe_id =
             self.sous_groupes.length > 0 ? self.sous_groupes[0].value : null;
           self.annees = response.data.annees;
-          self.refreshing3 = false;
-
+          
           // Correction
           if(self.commune.id=="2208"){
             self.mapData = mapDataTenado;
@@ -949,7 +969,10 @@ export default {
             self.correctionCordonne();
           }
 
-          self.findLocalisationByGroupe(event);
+          self.findLocalisationByGroupe();
+          self.findSousGroupeByGroupe();
+          self.findIndicateurByGroupe();
+          self.refreshing3 = false;
           setTimeout(() => {
             self.refreshing3 = true;
           }, 1);
