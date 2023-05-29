@@ -92,7 +92,8 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     Route::get('donnees/elementSearch', 'DonneesController@elementSearch');
     Route::resource('donnees', 'DonneesController');
-    Route::post('donnees/storeMany', 'DonneesController@storeMany');
+    // Route::post('donnees/storeMany', 'DonneesController@storeMany');
+    Route::post('donnees/storeMany', 'DonneesController@storeManyWithVerification');
     Route::post('donnees/findBy', 'DonneesController@findBy');
     Route::post('donnees/findCarteDataBy', 'DonneesController@findCarteDataBy');
     Route::post('donnees/findByGetSql', 'DonneesController@findByGetSql');

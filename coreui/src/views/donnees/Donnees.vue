@@ -76,7 +76,7 @@
               </template>
               <template #sous_indicateur="{ item }">
                 <td>
-                  <strong>{{ item.sous_indicateur }}</strong>
+                  <strong>{{ item.sous_indicateur|uppercase }}</strong>
                 </td>
               </template>
               <template #sous_groupe="{ item }">

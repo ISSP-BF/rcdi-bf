@@ -7,11 +7,21 @@
         </CCardHeader>
         <CCardBody>
 
+          
           <CSelect
               label="Groupe" 
               :value.sync="indicateur.groupe_id"
               :plain="true"
               :options="groupes"
+              @change="findSousGroupeByGroupe($event)"
+            >
+            </CSelect>
+            
+          <CSelect
+              label="Sous Groupe" 
+              :value.sync="indicateur.sous_groupe_id"
+              :plain="true"
+              :options="sous_groupes"
             >
             </CSelect>
 
@@ -67,6 +77,7 @@ export default {
         },
         periodes:[],
         groupes:[],
+        sous_groupes:[],
         periodeList:['MENSUEL','TRIMESTRIEL','SEMESTRIEL', 'ANNUEL'],
         desagregations: [],
         message: ''
@@ -106,11 +117,31 @@ export default {
             }
         });
     },
+    findSousGroupeByGroupe(event){
+      this.sous_groupes = []
+      let self = this;
+      axios.get(  this.$apiAdress + '/api/sous_groupes/findByGroupe/'+self.indicateur.groupe_id+'?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+      console.log(response)
+        self.sous_groupes = response.data;
+        
+        let lest = [{label:'',value:null}]
+        lest.push(...self.sous_groupes);
+        self.sous_groupes = lest;
+
+    }).catch(function (error) {
+      self.indicateurs  = []
+        // console.log(error);
+        // self.$router.push({ path: 'login' });
+    });
+    },
   },
   mounted: function(){
     let self = this;
     axios.get(  this.$apiAdress + '/api/indicateurs/' + self.$route.params.id + '/edit?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
+      
+        self.sous_groupes = response.data.sous_groupes;
         self.indicateur = response.data.indicateur;
         self.desagregations = response.data.desagregations;
         self.groupes = response.data.groupes;

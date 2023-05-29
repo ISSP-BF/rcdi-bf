@@ -12,12 +12,18 @@
             </div>
         </CCardHeader>
         <CCardBody>
+           
             <CDataTable
               hover
+              tableFilter
               sorter
               :items="items"
               :fields="fields"
               :items-per-page="10"
+              :striped="true"
+              :border="true"
+              
+              items-per-page-select
               pagination
             > 
               <template #desagregation="{item}">
@@ -32,7 +38,7 @@
               </template>
               <template #libelle="{item}">
                 <td>
-                  <strong>{{item.libelle}}</strong>
+                  <strong>{{item.libelle|uppercase}}</strong>
                 </td>  
               </template>
               
@@ -80,7 +86,15 @@ export default {
       showMessage: false,
       dismissSecs: 7,
       dismissCountDown: 0,
-      showDismissibleAlert: false
+      showDismissibleAlert: false,
+      perPage: "10", // nombre d'éléments par page
+      perPageValues: [
+        { value: "5", label: "5" },
+        { value: "10", label: "10" },
+        { value: "20", label: "20" },
+        { value: "50", label: "50" },
+      ],
+      tableFilterValue:""
     }
   },
   computed: {

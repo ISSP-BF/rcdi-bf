@@ -136,6 +136,41 @@ class DonneesController extends Controller
         return response()->json( ['status' => 'success'] );
     }
 
+    
+    /**
+     * Permettre d'enregistrer un element, si l'élément existe, selon les clés, il fait une mise à jour
+     * clé : indicateur_id,sous_indicateur_id,localisation_id,periode,periode_value,annee
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeManyWithVerification(Request $request)
+    {
+        $validatedData = $request->validate([
+            'items' => 'required',
+        ]);
+
+        $items = [];
+        
+        foreach($request->input('items')  as $item ){
+            
+            $items[] = MyFunction::audit($item);
+            $existingData = Donnee::where("indicateur_id","=",$item['indicateur_id'])
+                    ->where("sous_indicateur_id","=",$item['sous_indicateur_id'])
+                    ->where("localisation_id","=",$item['localisation_id'])
+                    ->where("periode","=",$item['periode'])
+                    ->where("periode_value","=",$item['periode_value'])
+                    ->where("annee","=",$item['annee'])->first();
+            if(isset($existingData)){
+                $existingData->update($item);
+            }
+            else {
+                Donnee::create($item);
+            }
+        }
+        
+        return response()->json( ['status' => 'success'] );
+    }
+
     /**
      *
      * @param  int  $id

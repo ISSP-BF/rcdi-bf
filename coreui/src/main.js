@@ -78,6 +78,12 @@ Vue.filter('formatDateShort', function(value) {
         return moment(String(value)).format('DD/MM/YYYY')
     }
 })
+Vue.filter('uppercase', function(value) {
+    if (value) {
+        return String(value).toUpperCase();
+    }
+})
+
 Vue.filter('formatDate', function(value) {
     if (value) {
         return moment(String(value)).format('DD/MM/YYYY hh:mm')
