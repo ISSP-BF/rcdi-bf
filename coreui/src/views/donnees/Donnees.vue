@@ -205,7 +205,7 @@
                       >Période</label
                     >
                     <CSelect
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(togglePressMaps||togglePressMaps2||togglePressMaps3)"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(togglePressMaps)"
                       class="col-lg-12"
                       placeholder="Choisir une période"
                       :value.sync="donnee.periode_value"
@@ -214,52 +214,48 @@
                     >
                     </CSelect>
                     <multiselect
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&!(togglePressMaps||togglePressMaps2||togglePressMaps3)"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&!(togglePressMaps)"
                       class="col-lg-11"
                       v-model="selectedPeriode_values"
                       :options="choixPeriodes"
-                      :multiple="true"
-                      :close-on-select="false"
                       label="label"
                       track-by="label"
                       placeholder="Choisir une période"
                       select-label="cliquer pour ajouter"
                       deselect-label="cliquer pour supprimer"
-                      :hide-selected="true"
                     >
                     </multiselect>
 
                     <label class="col-lg-12">Années</label>
                     
-                    <CSelect
-                      v-if="togglePressMaps||togglePressMaps2||togglePressMaps3"
+                    <!-- <CSelect
+                      v-if="togglePressMaps"
                       class="col-lg-12"
                       placeholder="Choisir une année"
                       :value.sync="donnee.annee"
                       :plain="true"
                       :options="annees"
                     >
-                    </CSelect>
+                    </CSelect> --> 
 
                     <multiselect
-                      v-if="!(togglePressMaps||togglePressMaps2||togglePressMaps3)"
                       class="col-lg-11"
                       v-model="selectedItems"
                       :options="annees"
-                      :multiple="true"
-                      :close-on-select="false"
+                      :multiple="!(togglePressMaps)"
+                      :close-on-select="(togglePressMaps)"
                       label="label"
                       track-by="label"
                       placeholder="Choisir une année"
                       select-label="cliquer pour ajouter"
                       deselect-label="cliquer pour supprimer"
-                      :hide-selected="true"
+                      :hide-selected="false"
                     >
                     </multiselect>
                   </div>
                   <br />
-                   <CButton v-if="!(togglePressMaps||togglePressMaps2||togglePressMaps3)" timeout="2000" color="primary" @click="search()">Actualiser</CButton>
-                   <CButton v-if="(togglePressMaps||togglePressMaps2||togglePressMaps3)" timeout="2000" color="primary" @click="searchCarte()">Actualiser</CButton>
+                   <CButton v-if="!(togglePressMaps)" timeout="2000" color="primary" @click="search()">Actualiser</CButton>
+                   <CButton v-if="(togglePressMaps)" timeout="2000" color="primary" @click="searchCarte()">Actualiser</CButton>
 
                    <br/>
                   &nbsp;
