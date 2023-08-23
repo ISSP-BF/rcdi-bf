@@ -249,7 +249,7 @@
                       placeholder="Choisir une année"
                       select-label="cliquer pour ajouter"
                       deselect-label="cliquer pour supprimer"
-                      :hide-selected="false"
+                      :hide-selected="!(togglePressMaps)"
                     >
                     </multiselect>
                   </div>
