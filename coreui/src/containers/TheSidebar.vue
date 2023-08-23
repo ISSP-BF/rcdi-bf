@@ -6,7 +6,7 @@
     @update:show="(value) => $store.commit('set', ['sidebarShow', value])"
   >
     <CSidebarBrand class="d-md-down-none" to="/">
-     <img src="img/avatars/logo-full.png" size="custom-size" 
+     <img :src="'img/avatars/logo-'+commune.commune+'-full.png'" size="custom-size" 
         class="d-block" 
         :height="50" 
         :viewBox="`0 0 ${minimize ? 110 : 556} 134`"/>
@@ -29,6 +29,7 @@ export default {
       nav: [],
       //show: true,
       buffor: [],
+      commune: null,
     }
   },
   computed: {
@@ -107,9 +108,40 @@ export default {
         }
       }
       return this.buffor;
+    },
+    getCommuneDefaut (){
+      let self = this;
+      this.refreshing = true;
+
+      axios.get(  this.$apiAdress + '/api/indicateurs-old/getDefaultCommune')
+      .then(function (response) {
+        localStorage.setItem("communedefaut",JSON.stringify(response.data))
+        self.commune = response.data;
+        self.commune.commune = self.commune.commune.toLowerCase();
+        self.commune_id = self.commune.id;
+       
+      }).catch(function (error) {
+        console.log(error);
+        // self.$router.push({ path: '/login' });
+        localStorage.removeItem("communedefaut")
+        self.commune_id = 0;
+        self.commune = 0;
+      });
     }
   },
   mounted () {
+    
+    if(localStorage.getItem("communedefaut")){
+        this.commune = JSON.parse(localStorage.getItem("communedefaut"));
+        console.log(this.commune)
+        // this.commune.commune = this.commune.commune.toLowerCase();
+        this.commune_id = this.commune.id;
+      }
+      else {
+        this.commune_id = null;
+      }
+     this.getCommuneDefaut();
+
     this.$root.$on('toggle-sidebar', () => {
       const sidebarOpened = this.show === true || this.show === 'responsive'
       this.show = sidebarOpened ? false : 'responsive'

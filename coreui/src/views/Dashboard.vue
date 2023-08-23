@@ -171,7 +171,7 @@ export default {
       this.refreshing = true;
       axios.get(  this.$apiAdress + '/api/indicateurs-old/getDefaultCommune')
       .then(function (response) {
-        localStorage.setItem("communedefaut",JSON.stringify(response))
+        localStorage.setItem("communedefaut",JSON.stringify(response.data))
         self.commune = response.data;
         self.commune_id = self.commune.id;
         self.refresh();
@@ -192,7 +192,7 @@ export default {
       else {
         this.commune_id = null;
       }
-    this.getCommuneDefaut();
+     this.getCommuneDefaut();
     let self = this;
   }
 }

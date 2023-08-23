@@ -4,7 +4,7 @@
       <transition name="slide">
         <CCard>
           <CCardHeader>
-            Les données calculées
+           <b style="font-size: medium;"> Les données calculées</b>
             <div class="card-header-actions">
               <AddButton @ajouter="createDonnee()" />&nbsp;
               <ImportButton
@@ -37,7 +37,7 @@
                         <CInput class="col-lg-8 custom-control-inline" type="text" placeholder="Valeur" v-model="tableFilterValue"></CInput>
                   </div>
                   <div class="col-lg-6 text-right">
-                        <label class="custom-control-inline"> Items per page </label>
+                        <label class="custom-control-inline"> Elements par page </label>
                         <CSelect class=" custom-control custom-control-inline custom-radio" :value.sync="perPage" :options="perPageValues">
                         </CSelect>
                   </div>
@@ -276,18 +276,7 @@
                         <CIcon name="cil-chart-pie" />
                       </CButton>
                     </CCol>
-                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
-                      <CButton
-                        variant="outline"
-                        shape="pill"
-                        color="primary"
-                        :pressed.sync="togglePressMaps"
-                        @click="choicesGraphe('MAPS')"
-                      >
-                        <CIcon name="cib-openstreetmap" />
-                      </CButton>
-                    </CCol>
-                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
+                    <!-- <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
                       <CButton
                         variant="outline"
                         shape="pill"
@@ -308,7 +297,7 @@
                       >
                         <CIcon name="cib-openstreetmap" />
                       </CButton>
-                    </CCol>
+                    </CCol> -->
 
                     <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
                       <CButton
@@ -319,6 +308,17 @@
                         @click="choicesGraphe('HISTOGRAMME')"
                       >
                         <CIcon name="cil-bar-chart" />
+                      </CButton>
+                    </CCol>
+                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
+                      <CButton
+                        variant="outline"
+                        shape="pill"
+                        color="primary"
+                        :pressed.sync="togglePressMaps"
+                        @click="choicesGraphe('MAPS')"
+                      >
+                        <CIcon name="cib-openstreetmap" />
                       </CButton>
                     </CCol>
                   </CRow>
@@ -336,8 +336,8 @@
                     :donneeSearch="donneeSearch" :refreshing="refreshing"
                   />
                   
-                  <GoogleMaps  v-if="vueGraphe == 'MAPS2'" :center="{lat:commune.lat,lng:commune.lon}" :mapDatao="mapDataCoordonnate" :markers="coordinatesWithDataMarker"/>
-                  <LeafletMaps  v-if="vueGraphe == 'MAPS3'" :centero="{lat:commune.lat,lon:commune.lon}" :mapDatao="mapData" :markers="coordinatesWithDataMarker2"/>
+                  <!-- <GoogleMaps  v-if="vueGraphe == 'MAPS2'" :center="{lat:commune.lat,lng:commune.lon}" :mapDatao="mapDataCoordonnate" :markers="coordinatesWithDataMarker"/>
+                  <LeafletMaps  v-if="vueGraphe == 'MAPS3'" :centero="{lat:commune.lat,lon:commune.lon}" :mapDatao="mapData" :markers="coordinatesWithDataMarker2"/> -->
                   <ShapeMaps  v-if="vueGraphe == 'MAPS'" :mapDatao="mapData" :markers="coordinatesWithDataMarker2"/>
                    
 
@@ -753,7 +753,6 @@ export default {
       }
     },
     findIndicateurByGroupe(event) {
-      console.log("=====================")
       let self = this;
       axios
         .get(

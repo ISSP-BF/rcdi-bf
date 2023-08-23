@@ -387,6 +387,12 @@ git pull
 
 
 # Deploiement ANPTIC
+
+npm run build
+rm -rf /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/public/js
+rm -rf /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/public/css
+cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/coreui/dist/* /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/public/
+cp /home/rcdi/rcdi-bf-new/rcdi-bf/coreui/dist/index.html /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/resources/views/coreui/homepage.blade.php
 # Tenado
 
 cd /home/rcdi/rcdi-bf-new
@@ -417,9 +423,8 @@ chown -R www-data:www-data /home/tenado/laravel/public
 chown -R www-data:www-data /home/tenado/laravel/storage
 # Manga
 
-cd /home/rcdi/rcdi-bf-new
-chown -R root:root rcdi-bf
-cd rcdi-bf
+cd /home/rcdi/rcdi-bf-new/rcdi-bf
+<!-- chown -R root:root rcdi-bf -->
 git pull origin prod-1
 git checkout prod-1
 cp -r /home/rcdi/rcdi-bf-new/rcdi-bf/laravel/app /home/manga/laravel/

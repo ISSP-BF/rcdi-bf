@@ -12,7 +12,7 @@
     />
     <CHeaderBrand class="mx-auto d-lg-none" to="/">
       <!-- <CIcon name="logo" height="48" alt="Logo"/> -->
-      <img src="img/avatars/logo-full-no-logo.png" size="custom-size" 
+      <img :src="'img/avatars/logo-'+commune+'-full.png'" size="custom-size" 
         class="d-block" 
         :height="50" 
         :viewBox="`0 0 ${minimize ? 110 : 556} 134`"/>
@@ -43,8 +43,18 @@ export default {
   },
   data: () => {
     return {
-      minimize:''
+      minimize:'',
+      commune: ''
     }
-  }
+  },
+  mounted () {
+    
+    if(localStorage.getItem("communedefaut")){
+        this.commune = JSON.parse(localStorage.getItem("communedefaut"));
+        this.commune = this.commune.commune.toLowerCase();
+      }
+      else {
+        this.commune_id = null;
+      }}
 }
 </script>

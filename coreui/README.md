@@ -146,3 +146,9 @@ Some of projects created by community but not maintained by CoreUI team.
 ## Support CoreUI Development
 
 If you are a business that is building core products using CoreUI, we are open to conversations regarding custom sponsorship / consulting arrangements. Get in touch on [Twitter](https://twitter.com/lukaszholeczek).
+
+## Configuration required
+node 14.20.1
+npm 6.14.17
+php 7.4.27
+Laravel Framework 8.6.0
