@@ -171,6 +171,7 @@ import axios from "axios";
         font-size: x-large;
         color: white;
     background-color: rgb(83, 133, 225);
+    opacity: 0.9!important;
     }
     .sidebar-wrapper{
     text-align: -webkit-center;

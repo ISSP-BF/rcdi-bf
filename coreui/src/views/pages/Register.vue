@@ -171,6 +171,7 @@
         text-align: justify;
   text-justify: inter-word;
     background-color: rgb(83, 133, 225);
+    opacity: 0.9!important;
     }
     .sidebar-wrapper{
     text-align: -webkit-center;
