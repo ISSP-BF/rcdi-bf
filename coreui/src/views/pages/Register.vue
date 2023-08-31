@@ -170,6 +170,7 @@
         color: white;
         text-align: justify;
   text-justify: inter-word;
+    background-color: rgb(83, 133, 225);
     }
     .sidebar-wrapper{
     text-align: -webkit-center;
@@ -183,14 +184,14 @@
     
     .tenado{
     background-color: rgb(83, 133, 225);
-    opacity: 90%!important;
+    opacity: 0.9!important;
     border-radius: 5px;
     padding: 1%;
       
     }
     .manga{
     background-color: rgb(255, 145, 1);
-        opacity: 90%!important;
+        opacity: 0.9!important;
     border-radius: 5px;
     padding: 1%;
       
