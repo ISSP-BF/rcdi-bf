@@ -446,3 +446,5 @@ chown -R www-data:www-data /home/manga/laravel/storage
 DELETE FROM `donnees` WHERE indicateur_id in (select id from indicateurs where groupe_id=1 or groupe_id=3)
 # SUPPRESSION DES INDICATEURS EDUCATIONS ET ETAT CIVIL
 DELETE FROM `indicateurs` WHERE groupe_id=1 or groupe_id=3
+
+sudo certbot --apache -d your_domain -d www.your_domain

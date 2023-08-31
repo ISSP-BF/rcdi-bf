@@ -78,7 +78,6 @@
                     Pour tout problème avec votre compte, veuillez contacter notre support d'assistance pour vous aider
                 </p>
             </div> 
-            :src="'img/avatars/logo-'+commune+'-full.png'" 
              
           </div>
         <CCard class="main-panel">
@@ -183,14 +182,14 @@ import axios from "axios";
     }
     .tenado{
     background-color: rgb(83, 133, 225);
-        opacity: 90%;
+    opacity: 90%!important;
     border-radius: 5px;
     padding: 1%;
       
     }
     .manga{
     background-color: rgb(255, 145, 1);
-        opacity: 90%;
+        opacity: 90%!important;
     border-radius: 5px;
     padding: 1%;
       

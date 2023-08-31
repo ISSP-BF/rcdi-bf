@@ -180,16 +180,17 @@
         width: 80%!important;
         margin-top: 7%!important;
     }
+    
     .tenado{
     background-color: rgb(83, 133, 225);
-        opacity: 90%;
+    opacity: 90%!important;
     border-radius: 5px;
     padding: 1%;
       
     }
     .manga{
     background-color: rgb(255, 145, 1);
-        opacity: 90%;
+        opacity: 90%!important;
     border-radius: 5px;
     padding: 1%;
       
