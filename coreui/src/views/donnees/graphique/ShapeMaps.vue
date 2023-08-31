@@ -1,4 +1,5 @@
 <template>
+  <CCard>
   <highcharts
     :constructorType="'mapChart'"
     class="hc"
@@ -7,6 +8,7 @@
     style="height: 75vh"
     v-if="refreshing"
   ></highcharts>
+  </CCard>
 </template>
 
 <script>
