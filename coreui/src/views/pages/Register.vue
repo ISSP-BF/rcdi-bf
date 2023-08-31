@@ -11,8 +11,8 @@
             <div class="card-header-actions" style="float: left;">
                
             <CButton block color="link" class="px-0" @click="goToDashboard()">
-                <div class="c-avatar" style="width: 100px">
-                <img src="img/avatars/logo-full.png" class="c-avatar-img " />
+                <div class="c-avatar" style="width: 134px">
+                  <img :src="'img/avatars/logo-'+commune+'-full.png'" class="c-avatar-img " />
               </div>
               </CButton>
             </div>
@@ -73,20 +73,22 @@
              
           </div>
         <CCard class="main-panel">
+          
           <div style="background-image: url(img/presentation/bg2.jpg);
         width:100%;height: 100%;
         background-size: 100% 100%;
-        ">
-            <label class="information-register">
-              La mise en œuvre de ces systèmes de données infranationaux permettra à chaque commune de:
+        " v-bind:style="{ backgroundImage: 'url(img/presentation/bg-'+commune+'-2.jpg)' }">
+            <div class="information-register" 
+            v-bind:class="[commune]">
+            La mise en œuvre de ces systèmes de données infranationaux permettra à la commune de {{ commune }} :
               <ul>
-                <li>
-Disposer de données permettant une bonne connaissance de l’état socio-sanitaire et démographique de la population de l’aire de responsabilité;</li>
-<li>
-Disposer de données permettant une auto-évaluation des activités menées pour faciliter les prises de décisions au niveau local;</li>
-              </ul>
-            </label>
+                <li>Disposer de données permettant une bonne connaissance de l’état socio-sanitaire et démographique de la population de l’aire de responsabilité;</li>
+                <li>Disposer de données permettant une auto-évaluation des activités menées pour faciliter les prises de décisions au niveau local;</li>
+              </ul>            
+            </div>
         </div>
+
+           
         </CCard>
       </CRow>
     </CContainer>
@@ -100,7 +102,8 @@ Disposer de données permettant une auto-évaluation des activités menées pour
           name: '',
           email: '',
           password: '',
-          password_confirmation: ''
+          password_confirmation: '',
+          commune: ''
         }
       },    
       methods: {
@@ -132,7 +135,16 @@ Disposer de données permettant une auto-évaluation des activités menées pour
           });
   
         }
+      },
+  mounted () {
+    
+    if(localStorage.getItem("communedefaut")){
+        this.commune = JSON.parse(localStorage.getItem("communedefaut"));
+        this.commune = this.commune.commune.toLowerCase();
       }
+      else {
+        this.commune_id = null;
+      }}
     }
   
   </script>
@@ -167,6 +179,20 @@ Disposer de données permettant une auto-évaluation des activités menées pour
     .sidebar-wrapper>.card-body{
         width: 80%!important;
         margin-top: 7%!important;
+    }
+    .tenado{
+    background-color: rgb(83, 133, 225);
+        opacity: 90%;
+    border-radius: 5px;
+    padding: 1%;
+      
+    }
+    .manga{
+    background-color: rgb(255, 145, 1);
+        opacity: 90%;
+    border-radius: 5px;
+    padding: 1%;
+      
     }
 }
 @media (max-width: 991px){

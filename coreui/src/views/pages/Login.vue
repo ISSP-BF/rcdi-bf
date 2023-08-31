@@ -12,8 +12,8 @@
             <div class="card-header-actions" style="float: left;">
               
               <CButton block color="link" class="px-0" @click="goToDashboard()">
-                <div class="c-avatar" style="width: 100px">
-                <img src="img/avatars/logo-full.png" class="c-avatar-img " />
+                <div class="c-avatar" style="width: 134px">
+                <img :src="'img/avatars/logo-'+commune+'-full.png'" class="c-avatar-img " />
               </div>
               </CButton>
             </div>
@@ -77,17 +77,19 @@
                 <p class="card-description">
                     Pour tout problème avec votre compte, veuillez contacter notre support d'assistance pour vous aider
                 </p>
-            </div>
+            </div> 
+            :src="'img/avatars/logo-'+commune+'-full.png'" 
              
           </div>
         <CCard class="main-panel">
           <div style="background-image: url(img/presentation/bg1.jpg);
         width:100%;height: 100%;
         background-size: 100% 100%;
-        ">
-            <label class="information">
+        " v-bind:style="{ backgroundImage: 'url(img/presentation/bg-'+commune+'-1.jpg)' }">
+            <div class="information" 
+            v-bind:class="[commune]">
               Trois thématiques d’intérêt sont abordés sur cette plateforme. Il s’agit des statistiques d’état civil, des statistiques sanitaires et des statistiques d’éducation de base et présecondaire.
-            </label>
+            </div>
         </div>
         </CCard>
       </CRow>
@@ -106,6 +108,7 @@ import axios from "axios";
           password: '',
           showMessage: false,
           message: '',
+          commune: ''
         }
       },
       methods: {
@@ -135,7 +138,16 @@ import axios from "axios";
           });
   
         }
+      },
+  mounted () {
+    
+    if(localStorage.getItem("communedefaut")){
+        this.commune = JSON.parse(localStorage.getItem("communedefaut"));
+        this.commune = this.commune.commune.toLowerCase();
       }
+      else {
+        this.commune_id = null;
+      }}
     }
 
 </script>
@@ -168,6 +180,20 @@ import axios from "axios";
     .sidebar-wrapper>.card-body{
         width: 80%!important;
         margin-top: 7%!important;
+    }
+    .tenado{
+    background-color: rgb(83, 133, 225);
+        opacity: 90%;
+    border-radius: 5px;
+    padding: 1%;
+      
+    }
+    .manga{
+    background-color: rgb(255, 145, 1);
+        opacity: 90%;
+    border-radius: 5px;
+    padding: 1%;
+      
     }
 }
 @media (max-width: 991px){

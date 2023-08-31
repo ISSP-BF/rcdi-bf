@@ -1,17 +1,27 @@
 <template>
   <div>
     <CCard>
-    <CCardBody>
-          <div class="row">
-            <label v-if="commune">{{commune.commune}}</label>
-            <label v-if="!commune">Pas de commune par défaut</label>
-          <CInput label="Année" type="number" placeholder="Ex. 2019" v-model="annee" class="col-lg-3"
-            invalid-feedback="Veuillez saisir une année valide" :is-valid="anneeValidator"></CInput>
-            <CButton v-if="!refreshing"  color="primary" @click="refresh()">Actualiser </CButton> &nbsp;
-            <CButton  v-if="refreshing"><img src="img/refresh.gif" width="50"/></CButton> &nbsp;
-          </div>
-    </CCardBody>
-  </CCard>
+      <CCardBody>
+            <div class="row">
+              <div class="col-md-6">
+                <img :src="'img/presentation/bg-'+communelabel+'-1.jpg'" style="width: 100%;
+    height: auto;" />
+              </div>
+            </div>
+      </CCardBody>
+    </CCard>
+    <CCard>
+      <CCardBody>
+            <div class="row">
+              <label v-if="commune">{{commune.commune}}</label>
+              <label v-if="!commune">Pas de commune par défaut</label>
+            <CInput label="Année" type="number" placeholder="Ex. 2019" v-model="annee" class="col-lg-3"
+              invalid-feedback="Veuillez saisir une année valide" :is-valid="anneeValidator"></CInput>
+              <CButton v-if="!refreshing"  color="primary" @click="refresh()">Actualiser </CButton> &nbsp;
+              <CButton  v-if="refreshing"><img src="img/refresh.gif" width="50"/></CButton> &nbsp;
+            </div>
+      </CCardBody>
+    </CCard>
     
     <CRow v-if="!refreshing2">
           
@@ -131,6 +141,7 @@ export default {
       commune_id:null,
       annee:[2019],
       commune:{},
+      communelabel:'',
       refreshing:false,
       refreshing2:false
     }
@@ -174,6 +185,7 @@ export default {
         localStorage.setItem("communedefaut",JSON.stringify(response.data))
         self.commune = response.data;
         self.commune_id = self.commune.id;
+        self.communelabel = self.commune.commune.toLowerCase();
         self.refresh();
       }).catch(function (error) {
         console.log(error);
