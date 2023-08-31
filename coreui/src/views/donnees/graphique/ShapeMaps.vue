@@ -15,17 +15,19 @@
 import { Chart } from "highcharts-vue";
 import Highcharts from "highcharts";
 import HighchartsMapModule from "highcharts/modules/map";
+import axios from "axios"; 
 HighchartsMapModule(Highcharts);
 
 export default {
   name: "ShapeMaps",
-  props: ["mapDatao","markers"],
+  props: ["mapDataO","donneeSearch","refreshingparent"],
   components: {
     highcharts: Chart,
   },
   data() {
     return {
       refreshing: true,
+      markers:[],
       chartOptions2: {
         chart: {
           map: null,
@@ -82,7 +84,7 @@ export default {
         marker: {
                   lineWidth: 1,
                   lineColor: '#fff',
-                  // symbol: 'mapmarker',
+                  symbol: 'mapmarker',
                   radius: 1
               },
         dataLabels: {
@@ -105,28 +107,62 @@ export default {
   },
   watch: {
     reloadParams() { 
-       this.init();
+      this.init();
+       this.getDatasets();
     },
   },
   computed:{
     reloadParams() {
-      return [this.markers,this.mapDatao
+      return [this.refreshingparent
       ];
     },
   },
   methods: {
     init(){
-      this.chartOptions2.chart.map = this.mapDatao;
-    this.chartOptions2.series[1].data = this.markers; 
-    this.chartOptions2.series[1].name = "Name"; 
-    this.refreshing = false;
-    setTimeout(() => {
-      this.refreshing = true;
-    }, 10);
-    }
+    this.chartOptions2.chart.map = this.mapDataO;
+            this.refreshing = false;
+            setTimeout(() => {
+              this.refreshing = true;
+            }, 10);
+    
+    },
+    getDatasets (){
+      let self = this;
+      axios.post(this.$apiAdress + '/api/donnees/findCarteDataBy?token=' + localStorage.getItem("api_token"),
+         self.donneeSearch
+        )
+        .then(function (response) {
+            self.markers = [];
+
+            for(let co of response.data){
+              let mark =
+                {
+                   valeur : co.valeur,
+                   z : co.valeur,
+                  lat: parseFloat(co.localisation.lat), lon: parseFloat(co.localisation.lon),
+                  name: 'o',
+                  draggable: false,
+                  country: co.localisation.nom_structure,
+                  source : co.source,
+                }
+              self.markers.push(mark);
+            }
+            self.chartOptions2.series[1].data = self.markers; 
+            self.chartOptions2.series[1].name = "Name"; 
+            self.refreshing = false;
+            setTimeout(() => {
+              self.refreshing = true;
+            }, 10);
+        })
+      .catch(function (error) {
+          console.log(error);
+          // self.$router.push({ path: 'login' });
+        });
+    },
   },
   mounted() {
-    this.init();
+    this.getDatasets();
+     this.init();
   },
 };
 </script>

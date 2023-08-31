@@ -199,12 +199,12 @@
                       </div>
                     </div>
 
-                    <label
+                    <!-- <label
                       class="col-lg-12"
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(!togglePressMaps||!togglePressMaps2||!togglePressMaps3)"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(!togglePressMaps)"
                       >Période</label
-                    >
-                    <CSelect
+                    > -->
+                    <!-- <CSelect
                       v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(togglePressMaps)"
                       class="col-lg-12"
                       placeholder="Choisir une période"
@@ -212,12 +212,15 @@
                       :plain="true"
                       :options="choixPeriodes"
                     >
-                    </CSelect>
+                    </CSelect> -->
                     <multiselect
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&!(togglePressMaps)"
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'"
                       class="col-lg-11"
                       v-model="selectedPeriode_values"
                       :options="choixPeriodes"
+                      :multiple="!(togglePressMaps)"
+                      :close-on-select="(togglePressMaps)"
+                      :hide-selected="!(togglePressMaps)"
                       label="label"
                       track-by="label"
                       placeholder="Choisir une période"
@@ -334,7 +337,8 @@
                   
                   <!-- <GoogleMaps  v-if="vueGraphe == 'MAPS2'" :center="{lat:commune.lat,lng:commune.lon}" :mapDatao="mapDataCoordonnate" :markers="coordinatesWithDataMarker"/>
                   <LeafletMaps  v-if="vueGraphe == 'MAPS3'" :centero="{lat:commune.lat,lon:commune.lon}" :mapDatao="mapData" :markers="coordinatesWithDataMarker2"/> -->
-                  <ShapeMaps  v-if="vueGraphe == 'MAPS'" :mapDatao="mapData" :markers="coordinatesWithDataMarker2"/>
+                  <ShapeMaps  v-if="vueGraphe == 'MAPS'" :mapDataO="mapData"
+                    :donneeSearch="donneeSearch" :refreshingparent="refreshing"/>
                    
 
                 </div>
@@ -682,7 +686,7 @@ export default {
         this.togglePressCourbe2 = false;
         this.togglePressHistogramme = false;
       }
-      let local = JSON.stringify(this.vueGraphe);
+      let local = this.vueGraphe;
       this.vueGraphe = choix;
       switch (choix) {
         case "SECTEUR":
@@ -691,6 +695,13 @@ export default {
           this.togglePressMaps = false;
           this.togglePressMaps2 = false;
           this.togglePressMaps3 = false;
+          if(!Array.isArray(this.selectedItems)&&this.selectedItems){
+            this.selectedItems = [this.selectedItems]
+          }
+          if(!Array.isArray(this.selectedPeriode_values)&&this.selectedPeriode_values){
+            this.selectedPeriode_values = [this.selectedPeriode_values]
+          }
+          
           break;
         case "MAPS":
           this.togglePressSecteur = false; 
@@ -698,20 +709,12 @@ export default {
           this.togglePressMaps = true;
           this.togglePressMaps2 = false;
           this.togglePressMaps3 = false;
-          break;
-        case "MAPS2":
-          this.togglePressSecteur = false; 
-          this.togglePressHistogramme = false;
-          this.togglePressMaps = false;
-          this.togglePressMaps2 = true;
-          this.togglePressMaps3 = false;
-          break;
-        case "MAPS3":
-          this.togglePressSecteur = false; 
-          this.togglePressHistogramme = false;
-          this.togglePressMaps = false;
-          this.togglePressMaps2 = false;
-          this.togglePressMaps3 = true;
+          if(Array.isArray(this.selectedItems)&&this.selectedItems.length>0){
+            this.selectedItems = this.selectedItems[0]
+          }
+          if(Array.isArray(this.selectedPeriode_values)&&this.selectedPeriode_values.length>0){
+            this.selectedPeriode_values = this.selectedPeriode_values[0]
+          }
           break;
         case "HISTOGRAMME":
           this.togglePressHistogramme = true; 
@@ -719,6 +722,13 @@ export default {
           this.togglePressMaps = false;
           this.togglePressMaps2 = false;
           this.togglePressMaps3 = false;
+          if(!Array.isArray(this.selectedItems)&&this.selectedItems){
+            this.selectedItems = [this.selectedItems]
+          }
+          if(!Array.isArray(this.selectedPeriode_values)&&this.selectedPeriode_values){
+            this.selectedPeriode_values = [this.selectedPeriode_values]
+          }
+          
           break;
         case "COURBEVOLUME":
           this.togglePressCourbe2 = true; 
@@ -743,7 +753,7 @@ export default {
           // setTimeout(() => {
             // console.log(local, "local===>");
             this.vueGraphe = null;
-            this.choicesGraphe(local ? JSON.parse(local) : "SECTEUR");
+            this.choicesGraphe(local ? local : "SECTEUR");
           // }, 1);
           break;
       }
@@ -880,49 +890,10 @@ export default {
       this.refreshing = ! this.refreshing;
       let self = this;
       this.donneeSearch = JSON.parse(JSON.stringify(this.donnee));
+        this.donneeSearch.annee = this.selectedItems.value;
       if(this.donneeSearch.periode=="ANNUEL"){
-        this.donneeSearch.periode_value = this.donneeSearch.annee;
+        this.donneeSearch.periode_value = this.selectedItems.annee;
       }
-      console.log(self.donneeSearch)
-      axios.post(  this.$apiAdress + '/api/donnees/findCarteDataBy?token=' + localStorage.getItem("api_token"),
-         self.donneeSearch
-        )
-        .then(function (response) {
-            console.log(response)
-            self.items = response.data;
-            self.coordinatesWithDataMarker = [];
-            self.coordinatesWithDataMarker2 = [];
-            for(let co of response.data){
-              let mark =
-                {
-                  position: {lat: parseFloat(co.localisation.lat), lng: parseFloat(co.localisation.lon)},
-                  label: co.localisation.nom_structure.charAt(0),
-                  draggable: false,
-                  title: co.localisation.nom_structure,
-                  valeur : co.valeur,
-                  source : co.source
-                }
-              self.coordinatesWithDataMarker.push(mark);
-            } 
-
-            for(let co of response.data){
-              let mark =
-                {
-                   valeur : co.valeur,
-                   z : co.valeur,
-                  lat: parseFloat(co.localisation.lat), lon: parseFloat(co.localisation.lon),
-                  name: co.localisation.nom_structure.charAt(0),
-                  draggable: false,
-                  country: co.localisation.nom_structure,
-                  source : co.source,
-                }
-              self.coordinatesWithDataMarker2.push(mark);
-            } 
-        })
-      .catch(function (error) {
-          console.log(error);
-          // self.$router.push({ path: 'login' });
-        });
       this.choicesGraphe();
     },
 
