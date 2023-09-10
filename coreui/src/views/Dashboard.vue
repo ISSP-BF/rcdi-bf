@@ -287,7 +287,7 @@ export default {
     if (localStorage.getItem("communedefaut")) {
       this.commune = JSON.parse(localStorage.getItem("communedefaut"));
       this.commune_id = this.commune.id;
-      this.communelabel = this.commune.commune;
+      this.communelabel = this.commune.commune.toLowerCase();
     } else {
       this.commune_id = null; 
     }
