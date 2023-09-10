@@ -12,6 +12,8 @@ import Toasted from 'vue-toasted'
 import HighchartsVue from 'highcharts-vue'
 Vue.use(HighchartsVue)
 import * as VueGoogleMaps from 'vue2-google-maps'
+import { CarouselPlugin } from 'bootstrap-vue'
+Vue.use(CarouselPlugin)
 
 Vue.use(VueGoogleMaps, {
     load: {

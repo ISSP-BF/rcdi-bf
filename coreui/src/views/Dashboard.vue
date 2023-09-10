@@ -1,77 +1,57 @@
 <template>
   <div>
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <!-- Ajoutez la classe 'text-center' pour centrer le texte -->
-                <p class="text-center h1  h11">
-                  <label>Bienvenue sur la plateforme de </label>&nbsp; <label class="bienvenue h1 h11" style="text-transform: capitalize;">{{communelabel}}</label>
-                </p>
-            </div>
+      <div class="row">
+        <div class="col">
+          <!-- Ajoutez la classe 'text-center' pour centrer le texte -->
+          <p class="text-center h1 h11">
+            <label>Bienvenue sur la plateforme de données de la commune de </label>&nbsp;
+            <label
+              class="bienvenue h1 h11"
+              style="text-transform: capitalize"
+              >{{ communelabel }}</label
+            >
+          </p>
         </div>
+      </div>
     </div>
+    <div></div>
 
     <CCard>
       <CCardBody>
         <div class="row">
           <div class="col-md-6">
             <img
+              class="img-fluid w-100"
               :src="'img/presentation/bg-' + communelabel + '-1.jpg'"
-              style="height: auto; width: 100%;"
+              style="max-height: 400px; min-height: 400px"
             />
           </div>
-          <div class="col-md-6 card" v-if="actualites">
-          <CCarousel class="card"
-            arrows
+          <b-carousel
+            class="col-md-6"
+            v-if="actualites"
+            id="carousel-1"
+            v-model="slide"
+            :interval="4000"
+            controls
             indicators
-            animate
-            height="450px"
+            background="#ababab"
+            style="text-shadow: 1px 1px 2px #333; height: 400px"
           >
-            <CCarouselItem  v-for="n in actualites" v-bind:key="n.id"
-              :captionHeader="n.title.rendered"
-              :image="n.imageAcceuil"
-              :captionText="strippedContent(n.excerpt.rendered)"
-            />
-          </CCarousel>
-            <CCarousel  controls indicators transition="crossfade" v-if="false">
-              
-              <CCarouselItem v-for="n in actualites" v-bind:key="n.id">
+            <b-carousel-slide v-for="n in actualites" v-bind:key="n.id">
+              <h2>{{ n.title.rendered }}</h2>
+              <p v-html="n.excerpt.rendered"></p>
+              <a :href="n.link" target="_blank">Voir plus</a>
+              <template #img>
                 <img
-                  class="d-block w-100"
+                  class="img-fluid w-100"
                   :src="n.imageAcceuil"
-                  :alt="n.title.rendered"
+                  alt="image slot"
+                  style="max-height: 400px; min-height: 400px"
                 />
-                <CCarouselCaption class="d-none d-md-block">
-                  <h5 v-html="n.title.rendered"></h5>
-                  
-                    <p v-html="n.excerpt.rendered"></p> 
-                  
-                </CCarouselCaption>
-              </CCarouselItem>
-            </CCarousel>
-          </div>
-        </div>
-      </CCardBody>
-    </CCard>
-    <CCard>
-      <CCardBody>
-        <div class="row">
-          <label v-if="commune">{{ commune.commune }}</label>
-          <label v-if="!commune">Pas de commune par défaut</label>
-          <CInput
-            label="Année"
-            type="number"
-            placeholder="Ex. 2019"
-            v-model="annee"
-            class="col-lg-3"
-            invalid-feedback="Veuillez saisir une année valide"
-            :is-valid="anneeValidator"
-          ></CInput>
-          <CButton color="primary" @click="refresh()"
-            >Actualiser
-          </CButton>
-          &nbsp;
-          &nbsp;
+              </template>
+            </b-carousel-slide>
+          </b-carousel>
         </div>
       </CCardBody>
     </CCard>
@@ -201,7 +181,10 @@ export default {
       commune: {},
       communelabel: "",
       refreshing: false,
-      refreshing2: false,actualites:null,
+      refreshing2: false,
+      actualites: null,
+      slide: 0,
+      sliding: null,
     };
   },
   methods: {
@@ -217,6 +200,12 @@ export default {
         $color = "danger";
       }
       return $color;
+    },
+    onSlideStart(slide) {
+      this.sliding = true;
+    },
+    onSlideEnd(slide) {
+      this.sliding = false;
     },
     anneeValidator(val) {
       return val ? (val <= 2022 && val >= 1900 ? null : false) : null;
@@ -236,20 +225,25 @@ export default {
       }, 1);
     },
     strippedContent(string) {
-           string = string.replace(/<\/?[^>]+>/ig, " ");
-           string = string.replace('&hellip;',"...");
-           return string.replace('&nbsp;',' ');
+      string = string.replace(/<\/?[^>]+>/gi, " ");
+      string = string.replace("&hellip;", "...");
+      string = string.replace(/&nbsp;/g, " ");
+      return string;
+    },
+    visiterLePost(n) {
+      window.open(n.link, "_blank");
     },
     getPost() {
       let self = this;
       this.refreshing = true;
       // if(!this.commune)return;
       axios
-        .get(this.commune.urlSiteWeb+'?categories='+this.commune.categorie)
+        .get(this.commune.urlSiteWeb + "?categories=" + this.commune.categorie)
         .then(function (response) {
           let actualites = response.data;
-          for(let actualite of actualites){
-            actualite['imageAcceuil'] = actualite['yoast_head_json']['og_image'][0]['url']
+          for (let actualite of actualites) {
+            actualite["imageAcceuil"] =
+              actualite["yoast_head_json"]["og_image"][0]["url"];
           }
           self.actualites = actualites;
         })
@@ -271,7 +265,6 @@ export default {
             self.getPost();
           }, 500);
           self.refresh();
-          
         })
         .catch(function (error) {
           console.log(error);
@@ -289,7 +282,7 @@ export default {
       this.commune_id = this.commune.id;
       this.communelabel = this.commune.commune.toLowerCase();
     } else {
-      this.commune_id = null; 
+      this.commune_id = null;
     }
     this.getPost();
     this.getCommuneDefaut();
@@ -297,27 +290,31 @@ export default {
 };
 </script>
 <style>
-  @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-40px);
-            }
-            60% {
-                transform: translateY(-10px);
-            }
-        }
-        .h11{
-          font-family: Arial, sans-serif; /* Police de caractères */
-            font-weight: bold; /* Poids de la police (gras) */
-            text-align: center; /* Alignement du texte */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ombre du texte */
-        }
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-40px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+.h11 {
+  font-family: Arial, sans-serif; /* Police de caractères */
+  font-weight: bold; /* Poids de la police (gras) */
+  text-align: center; /* Alignement du texte */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ombre du texte */
+}
 
-        .bienvenue {
-            animation: bounce 5s infinite;
-            color: #FF5733;
-            text-transform: capitalize;
-        }
+.bienvenue {
+  animation: bounce 5s infinite;
+  color: #ff5733;
+  text-transform: capitalize;
+}
 </style>
