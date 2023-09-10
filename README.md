@@ -450,7 +450,10 @@ DELETE FROM `indicateurs` WHERE groupe_id=1 or groupe_id=3
 sudo certbot --apache -d your_domain -d www.your_domain
 
 
-
+su rcdi
+cd /home/rcdi/rcdi-bf/coreui
+npm run build
+exit
 
 rm -rf /home/rcdi/tenado/public/js
 rm -rf /home/rcdi/tenado/public/css

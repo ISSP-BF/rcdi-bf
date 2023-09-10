@@ -5,7 +5,7 @@
             <div class="col">
                 <!-- Ajoutez la classe 'text-center' pour centrer le texte -->
                 <p class="text-center h1  h11">
-                  <label>Bienvenue sur la plateforme de </label>&nbsp; <label class="bienvenue h1 h11">{{communelabel | upper}}</label>
+                  <label>Bienvenue sur la plateforme de </label>&nbsp; <label class="bienvenue h1 h11">{{communelabel}}</label>
                 </p>
             </div>
         </div>
