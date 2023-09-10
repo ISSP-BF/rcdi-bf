@@ -1,5 +1,16 @@
 <template>
   <div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <!-- Ajoutez la classe 'text-center' pour centrer le texte -->
+                <p class="text-center h1  h11">
+                  <label>Bienvenue sur la plateforme de </label>&nbsp; <label class="bienvenue h1 h11">{{communelabel | upper}}</label>
+                </p>
+            </div>
+        </div>
+    </div>
+
     <CCard>
       <CCardBody>
         <div class="row">
@@ -56,13 +67,10 @@
             invalid-feedback="Veuillez saisir une année valide"
             :is-valid="anneeValidator"
           ></CInput>
-          <CButton v-if="!refreshing" color="primary" @click="refresh()"
+          <CButton color="primary" @click="refresh()"
             >Actualiser
           </CButton>
           &nbsp;
-          <CButton v-if="refreshing"
-            ><img src="img/refresh.gif" width="50"
-          /></CButton>
           &nbsp;
         </div>
       </CCardBody>
@@ -288,3 +296,28 @@ export default {
   },
 };
 </script>
+<style>
+  @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-40px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        .h11{
+          font-family: Arial, sans-serif; /* Police de caractères */
+            font-weight: bold; /* Poids de la police (gras) */
+            text-align: center; /* Alignement du texte */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ombre du texte */
+        }
+
+        .bienvenue {
+            animation: bounce 5s infinite;
+            color: #FF5733;
+            text-transform: capitalize;
+        }
+</style>
