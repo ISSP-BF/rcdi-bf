@@ -17,7 +17,7 @@
           <div class="col-md-6">
             <img
               :src="'img/presentation/bg-' + communelabel + '-1.jpg'"
-              style="height: 400px"
+              style="height: auto; width: 100%;"
             />
           </div>
           <div class="col-md-6 card" v-if="actualites">
@@ -25,7 +25,7 @@
             arrows
             indicators
             animate
-            height="400px"
+            height="450px"
           >
             <CCarouselItem  v-for="n in actualites" v-bind:key="n.id"
               :captionHeader="n.title.rendered"
