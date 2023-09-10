@@ -258,8 +258,11 @@ export default {
           self.commune = response.data;
           self.commune_id = self.commune.id;
           self.communelabel = self.commune.commune.toLowerCase();
+          setTimeout(() => {
+            self.getPost();
+          }, 500);
           self.refresh();
-          self.getPost();
+          
         })
         .catch(function (error) {
           console.log(error);
