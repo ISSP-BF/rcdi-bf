@@ -22,6 +22,8 @@ class CreateCommunesTable extends Migration
             $table->float('lon')->nullable();
             $table->float('lat')->nullable();
             $table->boolean('defaut')->nullable()->default(null);// Si la commune est celle par défaut
+            $table->integer('categorie')->nullable();
+            $table->string('urlSiteWeb')->nullable();
             $table->tinyInteger('updated')->nullable()->default(0);
             $table->timestamps();
         });

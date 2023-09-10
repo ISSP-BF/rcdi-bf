@@ -79,12 +79,13 @@
                 </p>
             </div> 
              
+         <!-- " v-bind:style="{ backgroundImage: 'url(img/presentation/bg-'+commune+'-1.jpg)' }"> -->
           </div>
         <CCard class="main-panel">
           <div style="background-image: url(img/presentation/bg1.jpg);
         width:100%;height: 100%;
         background-size: 100% 100%;
-        " v-bind:style="{ backgroundImage: 'url(img/presentation/bg-'+commune+'-1.jpg)' }">
+        " v-bind:style="{ backgroundImage: 'url(img/presentation/bg1.jpg)' }">
             <div class="information" 
             v-bind:class="[commune]">
               Trois thématiques d’intérêt sont abordés sur cette plateforme. Il s’agit des statistiques d’état civil, des statistiques sanitaires et des statistiques d’éducation de base et présecondaire.

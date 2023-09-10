@@ -614,7 +614,6 @@ export default {
       let self = this;
       axios.get(  this.$apiAdress + '/api/indicateurs/findLocalisationByGroupe/'+self.donnee.groupe_id+'?token=' + localStorage.getItem("api_token"))
     .then(function (response) {
-      console.log(response)
         self.localisations = response.data;
         let lest = [{label:'Niveau Commune',value:null}]
         lest.push(...self.localisations);
@@ -639,7 +638,6 @@ export default {
              localStorage.getItem("api_token")
          )
          .then(function (response) {
-           console.log(response);
            self.sous_groupes = response.data;
  
            let lest = [{ label: "", value: null }];
@@ -648,7 +646,6 @@ export default {
          })
          .catch(function (error) {
            self.sous_groupes = [];
-           // console.log(error);
            self.$router.push({ path: "login" });
          });
      },
@@ -666,7 +663,6 @@ export default {
              localStorage.getItem("api_token")
          )
          .then(function (response) {
-           console.log(response);
            self.sous_groupes = response.data;
  
            let lest = [{ label: "", value: null }];
@@ -675,7 +671,6 @@ export default {
          })
          .catch(function (error) {
            self.indicateurs = [];
-           console.log(error);
           //  self.$router.push({ path: "login" });
          });
      },
@@ -751,7 +746,6 @@ export default {
           this.togglePressMaps2 = false;
           this.togglePressMaps3 = false;
           // setTimeout(() => {
-            // console.log(local, "local===>");
             this.vueGraphe = null;
             this.choicesGraphe(local ? local : "SECTEUR");
           // }, 1);
@@ -771,7 +765,6 @@ export default {
         .then(function (response) {
           self.donnee.indicateur_id = null
           self.indicateurs = response.data;
-          console.log(response.data)
           let lest = [{ label: "", value: null }];
           lest.push(...self.indicateurs);
           self.indicateurs = lest;
@@ -820,7 +813,6 @@ export default {
             localStorage.getItem("api_token")
         )
         .then(function (response) {
-          console.log(response, "======><");
           self.indicateurs = response.data;
 
           let lest = [{ label: "", value: null }];

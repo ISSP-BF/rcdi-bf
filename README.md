@@ -448,3 +448,17 @@ DELETE FROM `donnees` WHERE indicateur_id in (select id from indicateurs where g
 DELETE FROM `indicateurs` WHERE groupe_id=1 or groupe_id=3
 
 sudo certbot --apache -d your_domain -d www.your_domain
+
+
+
+
+rm -rf /home/rcdi/tenado/public/js
+rm -rf /home/rcdi/tenado/public/css
+cp -r /home/rcdi/rcdi-bf/coreui/dist/* /home/rcdi/tenado/public/
+cp /home/rcdi/rcdi-bf/coreui/dist/index.html /home/rcdi/tenado/resources/views/coreui/homepage.blade.php
+
+
+rm -rf /home/rcdi/manga/public/js
+rm -rf /home/rcdi/manga/public/css
+cp -r /home/rcdi/rcdi-bf/coreui/dist/* /home/rcdi/manga/public/
+cp /home/rcdi/rcdi-bf/coreui/dist/index.html /home/rcdi/manga/resources/views/coreui/homepage.blade.php

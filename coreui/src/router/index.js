@@ -561,7 +561,7 @@ export default router
 function configRoutes() {
     return [{
             path: '/',
-            redirect: '/dashboard-personalise/1',
+            redirect: '/dashboard',
             name: 'Accueil',
             component: TheContainer,
             children: [{

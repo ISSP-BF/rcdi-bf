@@ -74,10 +74,11 @@
           </div>
         <CCard class="main-panel">
           
+         <!-- " v-bind:style="{ backgroundImage: 'url(img/presentation/bg-'+commune+'-2.jpg)' }">  -->
           <div style="background-image: url(img/presentation/bg2.jpg);
         width:100%;height: 100%;
         background-size: 100% 100%;
-        " v-bind:style="{ backgroundImage: 'url(img/presentation/bg-'+commune+'-2.jpg)' }">
+        " v-bind:style="{ backgroundImage: 'url(img/presentation/bg2.jpg)' }">
             <div class="information-register" 
             v-bind:class="[commune]">
             La mise en œuvre de ces systèmes de données infranationaux permettra à la commune de {{ commune }} :
