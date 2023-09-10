@@ -24,3 +24,6 @@ ALTER TABLE `communes` ADD `lat` VARCHAR(255) NULL AFTER `commune`
 ALTER TABLE `communes` ADD `lon` VARCHAR(255) NULL AFTER `commune`
 
 UPDATE `formation_sanitaires` SET `commune_id`=(SELECT id from communes where communes.province_id=formation_sanitaires.province_id)
+
+
+ALTER TABLE `communes` ADD `categorie` INT(11) NULL AFTER `defaut`, ADD `urlSiteWeb` VARCHAR(255) NULL AFTER `categorie`;

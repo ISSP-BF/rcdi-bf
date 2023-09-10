@@ -6,12 +6,11 @@
           <div class="col-md-6">
             <img
               :src="'img/presentation/bg-' + communelabel + '-1.jpg'"
-              style="width: 100%; height: auto"
+              style="height: 400px"
             />
           </div>
-          <div class="col-md-6" v-if="actualites">
-            
-          <CCarousel
+          <div class="col-md-6 card" v-if="actualites">
+          <CCarousel class="card"
             arrows
             indicators
             animate
@@ -128,17 +127,17 @@
                   groupe="AGRICULTURE"
                 />
               </CTab>
-              <CTab>
+              <CTab v-if="false">
                 <template slot="title">
                   <CIcon name="cil-chart-pie" /> ETAT CIVIL
                 </template>
               </CTab>
-              <CTab>
+              <CTab v-if="false">
                 <template slot="title">
                   <CIcon name="cil-chart-pie" /> EDUCATION
                 </template>
               </CTab>
-              <CTab>
+              <CTab v-if="false">
                 <template slot="title">
                   <CIcon name="cil-chart-pie" /> SANTE
                 </template>
