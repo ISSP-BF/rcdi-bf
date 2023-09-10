@@ -234,7 +234,7 @@ export default {
     getPost() {
       let self = this;
       this.refreshing = true;
-      if(!this.commune)return;
+      // if(!this.commune)return;
       axios
         .get(this.commune.urlSiteWeb+'?categories='+this.commune.categorie)
         .then(function (response) {
