@@ -259,6 +259,7 @@ export default {
           self.commune_id = self.commune.id;
           self.communelabel = self.commune.commune.toLowerCase();
           self.refresh();
+          self.getPost();
         })
         .catch(function (error) {
           console.log(error);
