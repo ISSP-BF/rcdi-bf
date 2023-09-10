@@ -228,8 +228,9 @@ export default {
       }, 1);
     },
     strippedContent(string) {
-           string = string.replace(/<\/?[^>]+>/ig, " "); 
-           return string.replace('&hellip;',"...").replace('&nbsp;',' ');
+           string = string.replace(/<\/?[^>]+>/ig, " ");
+           string = string.replace('&hellip;',"...");
+           return string.replace('&nbsp;',' ');
     },
     getPost() {
       let self = this;
