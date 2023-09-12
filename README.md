@@ -451,6 +451,8 @@ sudo certbot --apache -d your_domain -d www.your_domain
 
 
 su rcdi
+cd /home/rcdi/rcdi-bf/
+git pull
 cd /home/rcdi/rcdi-bf/coreui
 npm run build
 exit

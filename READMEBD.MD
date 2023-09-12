@@ -27,3 +27,6 @@ UPDATE `formation_sanitaires` SET `commune_id`=(SELECT id from communes where co
 
 
 ALTER TABLE `communes` ADD `categorie` INT(11) NULL AFTER `defaut`, ADD `urlSiteWeb` VARCHAR(255) NULL AFTER `categorie`;
+
+
+SELECT * FROM `donnees`,indicateurs,sous_groupes WHERE donnees.indicateur_id=indicateurs.id and sous_groupes.id=indicateurs.sous_groupe_id
