@@ -143,6 +143,7 @@ import IndicateursShow from "./dashboard/IndicateursShow";
 import IndicateursSecteur1 from "./dashboard/IndicateursSecteur1";
 import IndicateursTableau from "./dashboard/IndicateursTableau";
 import GroupeBarChart from "./dashboard/GroupeBarChart";
+import DashboardsVue from "./dashboards_vues/Dashboards_vue"
 import axios from "axios";
 
 export default {
@@ -151,7 +152,7 @@ export default {
     IndicateursShow,
     IndicateursSecteur1,
     IndicateursTableau,
-    GroupeBarChart,
+    GroupeBarChart,DashboardsVue
   },
   computed: {
     defaultDatasets() {

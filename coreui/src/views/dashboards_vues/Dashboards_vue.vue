@@ -75,7 +75,8 @@ const layoutKey = 'CoreUI-Vue-Draggable-Layouts'
 const storedLayout = JSON.parse(localStorage[layoutKey] || null)
 
 export default {
-  name: 'dashboards',
+  name: 'DashboardsVue',
+  props: ['idData'],
   components: {  
     IndicateursSecteur,
     IndicateurBarChart,IndicateursShow,
