@@ -281,9 +281,9 @@ class DonneesController extends Controller
             $donnees->where('donnees.id', '=', $request['id']);
         }
         if(isset($request->annee)&&$request->annee!=null&&$request->annee!=0){
-                $donnees->whereIn('donnees.annee', $request['annee'])->orderBy("annee","ASC");
+                $donnees->whereIn('donnees.annee', $request['annee'])->orderBy("annee","ASC")->orderBy("periode_value","ASC");
         }
-        $donnees = $donnees->orderBy("annee","ASC")->get();
+        $donnees = $donnees->orderBy("annee","ASC")->orderBy("periode_value","ASC")->get();
         return response()->json( $donnees);
     }
     
