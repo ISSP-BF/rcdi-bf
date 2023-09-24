@@ -101,7 +101,7 @@ export default {
   },
   computed: {
     reloadParams() {
-      return [this.$route.params.id];
+      return [this.$route.params.id,this.idData];
     },
   },
   methods: { 
@@ -110,7 +110,8 @@ export default {
     },
     getdashboardItemsByDashboardId (){
       let self = this;
-      axios.get(  this.$apiAdress + '/api/dashboard-items/findBy/'+self.$route.params.id+'?token=' + localStorage.getItem("api_token") )
+      const id = this.idData ? this.idData : (self.$route.params.id?self.$route.params.id:null);
+      axios.get(  this.$apiAdress + '/api/dashboard-items/findBy/'+id+'?token=' + localStorage.getItem("api_token") )
       .then(function (response) {
         self.items = response.data;
       console.log(self.items)

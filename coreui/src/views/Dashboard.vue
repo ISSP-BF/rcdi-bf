@@ -115,20 +115,23 @@
                   groupe="AGRICULTURE"
                 />
               </CTab>
-              <CTab v-if="false">
-                <template slot="title">
-                  <CIcon name="cil-chart-pie" /> ETAT CIVIL
-                </template>
-              </CTab>
-              <CTab v-if="false">
-                <template slot="title">
-                  <CIcon name="cil-chart-pie" /> EDUCATION
-                </template>
-              </CTab>
-              <CTab v-if="false">
+              <CTab>
                 <template slot="title">
                   <CIcon name="cil-chart-pie" /> SANTE
                 </template>
+                <DashboardsVue :idData="1"></DashboardsVue>
+              </CTab>
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-chart-pie" /> EDUCATION
+                </template>
+                <DashboardsVue :idData="2"></DashboardsVue>
+              </CTab>
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-chart-pie" /> ETAT CIVIL
+                </template>
+                <DashboardsVue :idData="3"></DashboardsVue>
               </CTab>
             </CTabs>
           </CCardBody>

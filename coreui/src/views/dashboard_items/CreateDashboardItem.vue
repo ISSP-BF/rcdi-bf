@@ -38,7 +38,7 @@
                       :value.sync="donnee.indicateur_id"
                       :plain="true"
                       :options="indicateurs"
-                      @change="findSousIndicateurByDesagregation($event)"
+                      @change="findSousIndicateurByDesagregation($event);findAnneeByIndicateur($event)"
                     >
                     </CSelect>
                     <CSelect
@@ -435,6 +435,30 @@ export default {
         })
         .catch(function (error) {
           self.indicateurs = [];
+          // console.log(error);
+          // self.$router.push({ path: 'login' });
+        });
+    },
+    findAnneeByIndicateur(event) { 
+      self = this;
+      self.annees = [];
+      axios
+        .get(
+          this.$apiAdress +
+            "/api/donnees/findAnneeByIndicateur/" +
+            self.donnee.indicateur_id +
+            "?token=" +
+            localStorage.getItem("api_token")
+        )
+        .then(function (response) {
+          self.annees = response.data.annees;
+          self.refreshing3 = false;
+          setTimeout(() => {
+            self.refreshing3 = true;
+          }, 1);
+        })
+        .catch(function (error) {
+          self.annees = [];
           // console.log(error);
           // self.$router.push({ path: 'login' });
         });
