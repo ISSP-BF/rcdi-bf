@@ -421,7 +421,7 @@ export default {
             self.donnee.groupe_id +
             "?token=" +
             localStorage.getItem("api_token")
-        )
+         )
         .then(function (response) {
           console.log(response);
           self.indicateurs = response.data;

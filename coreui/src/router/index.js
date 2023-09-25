@@ -122,6 +122,16 @@ const EditRegion = () =>
 const CreateRegion = () =>
     import ('@/views/regions/CreateRegion')
 
+//FoireQuestions
+const FoireQuestions = () =>
+    import ('@/views/FoireQuestion/FoireQuestions')
+const FoireQuestion = () =>
+    import ('@/views/FoireQuestion/FoireQuestion')
+const EditFoireQuestion = () =>
+    import ('@/views/FoireQuestion/EditFoireQuestion')
+const CreateFoireQuestion = () =>
+    import ('@/views/FoireQuestion/CreateFoireQuestion')
+
 //Provinces
 const Provinces = () =>
     import ('@/views/provinces/Provinces')
@@ -831,6 +841,45 @@ function configRoutes() {
                             meta: { label: 'Edit Region' },
                             name: 'modifier Region',
                             component: EditRegion,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                    ]
+                },
+                {
+                    path: 'foire-questions',
+                    meta: { label: 'FoireQuestions' },
+                    component: {
+                        render(c) { return c('router-view') }
+                    },
+                    children: [{
+                            path: '',
+                            component: FoireQuestions
+                        },
+                        {
+                            path: 'create',
+                            meta: { label: 'Create FoireQuestion' },
+                            name: 'Ajouter foire-question',
+                            component: CreateFoireQuestion,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id',
+                            meta: { label: 'FoireQuestion Details' },
+                            name: 'FoireQuestions',
+                            component: FoireQuestion,
+                            meta: {
+                                requiresUser: true
+                            }
+                        },
+                        {
+                            path: ':id/edit',
+                            meta: { label: 'Edit FoireQuestion' },
+                            name: 'modifier FoireQuestion',
+                            component: EditFoireQuestion,
                             meta: {
                                 requiresUser: true
                             }

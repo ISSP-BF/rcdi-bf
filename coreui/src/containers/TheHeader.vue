@@ -18,6 +18,18 @@
         :viewBox="`0 0 ${minimize ? 110 : 556} 134`"/>
     </CHeaderBrand>
     <CMenu/>
+    
+    <CHeaderNav>
+      <CHeaderNavItem class="px-3 c-d-legacy-none">
+        <button
+          @click="() => $store.commit('toggle', 'darkMode')"
+          class="c-header-nav-btn"
+        >
+          <CIcon v-if="$store.state.darkMode" name="cil-sun"/>
+          <CIcon v-else name="cil-moon"/>
+        </button>
+      </CHeaderNavItem>
+    </CHeaderNav>
     <CHeaderNav class="mr-3">
       <TheHeaderDropdownBk/>
     </CHeaderNav>

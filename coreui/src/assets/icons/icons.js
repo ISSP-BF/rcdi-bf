@@ -24,7 +24,9 @@ import {
     cibCcAmex,
     cilEyedropper,
     cibEyeem,
-    cibOpenstreetmap
+    cibOpenstreetmap,
+    cilAccountLogout,
+    cilSun
 } from '@coreui/icons'
 import {
     cifUs,
@@ -108,6 +110,8 @@ export const iconsSet = Object.assign({}, { logo }, {
     cilCloudDownload,
     cibEyeem,
     cibOpenstreetmap,
+    cilAccountLogout,
+    cilSun,
     cilChartPie,
     cilCheck,
     cilChevronBottom,
