@@ -461,6 +461,7 @@ rm -rf /home/rcdi/tenado/public/js
 rm -rf /home/rcdi/tenado/public/css
 cp -r /home/rcdi/rcdi-bf/coreui/dist/* /home/rcdi/tenado/public/
 cp -r /home/rcdi/rcdi-bf/laravel/app /home/rcdi/tenado/
+cp -r /home/rcdi/rcdi-bf/laravel/routes /home/rcdi/tenado/
 cp /home/rcdi/rcdi-bf/coreui/dist/index.html /home/rcdi/tenado/resources/views/coreui/homepage.blade.php
 
 
@@ -468,6 +469,7 @@ rm -rf /home/rcdi/manga/public/js
 rm -rf /home/rcdi/manga/public/css
 cp -r /home/rcdi/rcdi-bf/coreui/dist/* /home/rcdi/manga/public/
 cp -r /home/rcdi/rcdi-bf/laravel/app /home/rcdi/manga/
+cp -r /home/rcdi/rcdi-bf/laravel/routes /home/rcdi/manga/
 cp /home/rcdi/rcdi-bf/coreui/dist/index.html /home/rcdi/manga/resources/views/coreui/homepage.blade.php
 
 
