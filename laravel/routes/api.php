@@ -110,6 +110,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get('users/profil', 'UsersController@profil');
     
     Route::put('users/updateProfil', 'UsersController@updateProfil');
+    Route::resource('foire-questions', 'FoireQuestionsController');
     
     Route::get('/BkDataUpdated', 'UpdateBDController@index');
     Route::get('/BkDataUpdatedNumber', 'UpdateBDController@numberOfUpdated');
