@@ -7,18 +7,21 @@
             <b>La liste des actes de naissances</b>
             <div class="card-header-actions">
               <AddButton @ajouter="createActeNaissance()"/>&nbsp;
-              <ExportButton :items="items" title="Acte Naissances" :fields="fields"/>&nbsp;
+              <ExportButton :items="items" title="Acte Naissances" :fields="fields"/>&nbsp;&nbsp;&nbsp;
+              
+                  <CButton color="warning" @click="exporterTout()" :disabled="loading" >Exporter Tout</CButton>
             </div>
           </CCardHeader>
           <CCardBody>
             <CDataTable id="table" hover
               tableFilter
-              sorter :items="loadedItems" :fields="fields" :items-per-page.sync="perPage" 
-               
+              :itemsPerPageSelect="true"
+              sorter :items="loadedItems" :fields="fields"
+              
+              :itemsPerPage="perPage"
               :sort-by.sync="sortBy"
               :sort-desc.sync="sortDesc" 
               :loading="loading"
-              items-per-page-select
               :sorter-value.sync="sorterValue"
               >
               <template #numero_acte="{ item }">
@@ -114,6 +117,7 @@ import AddButton from '../buttons/AddButton.vue'
 import EditButton from '../buttons/EditButton.vue'
 import DeleteButton from '../buttons/DeleteButton.vue'
 import ViewAllButton from '../buttons/ViewAllButton.vue'
+var FileSaver = require('file-saver');
 
 export default {
   name: 'ActeNaissances',
@@ -135,7 +139,7 @@ export default {
       dismissSecs: 7,
       dismissCountDown: 0,
       showDismissibleAlert: false,
-      perPage: 10, // nombre d'éléments par page
+      perPage: 20, // nombre d'éléments par page
       sortBy: "", // champ de tri
       sortDesc: false, // tri croissant ou décroissant,
       activePage: 1,
@@ -231,7 +235,47 @@ export default {
           console.log(error);
         });
  
-    }
+    },
+    
+    exporterTout () {
+      let self = this; 
+      this.loading = true
+      axios
+        .get(this.$apiAdress + '/api/acte_naissances?token=' + localStorage.getItem("api_token"))
+        .then((response) => {
+          self.exporter(response.data);
+          self.loading = false;
+          
+        })
+        .catch((error) => {
+          self.loading = false
+          console.log(error);
+        });
+ 
+    },
+    
+    exporter(items){
+      this.loading = true
+      if(!items||items.length==0){
+      this.$toasted.show("Pas de données",{type:"warning"});
+      return;
+      }
+
+      var blob = new Blob([this.convertToCSV(items)], {type: "text/csv;charset=utf-8"});
+      FileSaver.saveAs(blob, "Acte Naissances.csv");
+      this.loading = false
+    },
+    convertToCSV(arr) {
+      arr.forEach(item=>{
+          Object.keys(arr[0]).forEach(champ => {
+              item[champ]=item[champ]?item[champ].toString().trim():item[champ]
+            });
+        })
+        const array = [Object.keys(arr[0])].concat(arr)
+        return array.map(it => {
+            return Object.values(it).join(';').toString()
+        }).join('\n')
+    },
   },
   mounted: function () {
     // this.getActeNaissances();
