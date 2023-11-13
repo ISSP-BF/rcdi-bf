@@ -65,7 +65,7 @@ Vue.prototype.$apiAdressSite = 'https://rcdi.bf/wp-json/wp/v2/posts';
 // Vue.prototype.$apiAdress = 'http://172.16.0.165:8000'
 // Vue.prototype.$apiAdress = 'http://172.16.0.165:8000'
 // Vue.prototype.$apiAdress = 'http://192.168.5.1:8000'
-Vue.prototype.$apiAdress = 'http://127.0.0.1:8000'
+// Vue.prototype.$apiAdress = 'http://127.0.0.1:8000'
 
 Vue.config.performance = true
 

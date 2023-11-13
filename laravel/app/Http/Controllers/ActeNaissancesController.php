@@ -77,7 +77,7 @@ class ActeNaissancesController extends Controller
             $join->on('acte_naissances.formation_sanitaire_id', '=', 'formation_sanitaires.id');
         })
         ->select('acte_naissances.*', 'users.name as author', 'regions.region as region', 'communes.commune as commune', 'provinces.province as province',
-        'formation_sanitaires.nom_structure as centre_sante_naissance')->orderBy($column!=null&&$column!='null'?$column:'id', $asc=="true"?'asc':'desc')->paginate($pageSize,"*",null,$pageIndex);
+        'formation_sanitaires.nom_structure as centre_sante_naissance')->orderBy($column!=null&&$column!='null'?$column:'id', $asc=="true"?'desc':'asc')->paginate($pageSize,"*",null,$pageIndex);
 
         return response()->json( $acte_naissances );
     }
