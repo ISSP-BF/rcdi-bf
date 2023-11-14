@@ -57,7 +57,7 @@ export default {
     }
   },
   methods: {
-    getDatasets (){
+    async getDatasets (){
       let self = this;
       const criteria =  {
             indicateur:this.indicateur,
@@ -111,8 +111,7 @@ export default {
     }
   },
   mounted: function(){
-    let self = this;
-    self.getDatasets();
+    this.getDatasets();
   }
 }
 </script>

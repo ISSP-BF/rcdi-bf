@@ -72,7 +72,7 @@ export default {
     }
   },
   methods: {
-    getDatasets (){
+    async getDatasets (){
       let self = this;
       const criteria =  {
             groupe:this.groupe,
@@ -117,8 +117,7 @@ export default {
     }
   },
   mounted: function(){
-    let self = this;
-    self.getDatasets();
+    this.getDatasets();
   }
 }
 </script>

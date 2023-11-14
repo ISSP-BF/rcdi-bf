@@ -1,13 +1,13 @@
 <template>  
       <CRow class="col-lg-12">
-        <CChartBar  v-if="choixgraphique=='HISTOGRAMME'"
+        <CChartBar  v-if="choixgraphiquelocal=='HISTOGRAMME'"
           :datasets="datasets"
           :options="computedOptions"
           :labels="labels"
           style="min-height: 50vh" class="col-lg-12"
         />
         
-        <CChartLine  v-if="choixgraphique=='COURBE'"
+        <CChartLine  v-if="choixgraphiquelocal=='COURBE'"
             :datasets="datasets"
             :options="computedOptions"
             :labels="labels"
@@ -25,7 +25,7 @@
             :id="'HISTOGRAMME'+index" 
             type="radio"
             class="custom-control-input"
-            v-model="choixgraphique"
+            v-model="choixgraphiquelocal"
             value="HISTOGRAMME"
           />
           <label :for="'HISTOGRAMME'+index"  class="custom-control-label"> HISTOGRAMME </label>
@@ -38,7 +38,7 @@
             :id="'COURBE'+index"
             type="radio"
             class="custom-control-input"
-            v-model="choixgraphique"
+            v-model="choixgraphiquelocal"
             value="COURBE"
           />
           <label :for="'COURBE'+index" class="custom-control-label"> COURBE </label>
@@ -65,6 +65,7 @@ export default {
     return {
       an: null,
       compteur: 0,
+      choixgraphiquelocal: null,
       anneelist: [],
       periodelist:[],
       indicateurTitle:"",
@@ -79,8 +80,8 @@ export default {
   },
   watch: {
     reloadParams() {
-      if(!this.choixgraphique){this.choixgraphique="HISTOGRAMME"}
-      localStorage.setItem("choixgraphique",JSON.stringify(this.choixgraphique))
+      if(!this.choixgraphiquelocal){this.choixgraphiquelocal="HISTOGRAMME"}
+      localStorage.setItem("choixgraphiquelocal",JSON.stringify(this.choixgraphiquelocal))
       this.getDatasets();
     },
   },
@@ -305,11 +306,12 @@ export default {
   },
   mounted: function () {
     this.getDatasets();
+    this.choixgraphiquelocal = this.choixgraphique;
     
-    if(localStorage.getItem("choixgraphique")){
-      this.choixgraphique = JSON.parse(localStorage.getItem("choixgraphique"))
+    if(localStorage.getItem("choixgraphiquelocal")){
+      this.choixgraphiquelocal = JSON.parse(localStorage.getItem("choixgraphiquelocal"))
     }else 
-    if(!this.choixgraphique){this.choixgraphique="HISTOGRAMME"}
+    if(!this.choixgraphiquelocal){this.choixgraphiquelocal="HISTOGRAMME"}
   },
 };
 </script>

@@ -66,7 +66,7 @@ export default {
     }
   },
   methods: {
-    getDatasets (){
+    async getDatasets (){
       let self = this;
       const criteria =  {
             groupe:this.groupe,
