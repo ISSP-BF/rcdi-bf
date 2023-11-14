@@ -140,10 +140,10 @@ export default {
   methods: {
     init() {
       this.chartOptions2.series[1].mapData = this.mapDataO;
-      this.refreshing = false;
-      setTimeout(() => {
-        this.refreshing = true;
-      }, 10);
+      // this.refreshing = false;
+      // setTimeout(() => {
+      //   this.refreshing = true;
+      // }, 10);
     },
     getDatasets() {
       let self = this;
@@ -175,10 +175,10 @@ export default {
           self.chartOptions2.series[2].data = self.markers;
           self.chartOptions2.series[2].name = "Name";
           self.chartOptions2.title.text = response.data[0].indicateur.libelle;
-          self.refreshing = false;
-          setTimeout(() => {
-            self.refreshing = true;
-          }, 10);
+          // self.refreshing = false;
+          // setTimeout(() => {
+          //   self.refreshing = true;
+          // }, 10);
         })
         .catch(function (error) {
           console.log(error);
