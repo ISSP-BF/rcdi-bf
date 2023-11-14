@@ -1,13 +1,7 @@
 <template>
   <CCard>
-    <highcharts
-      :constructorType="'mapChart'"
-      class="hc"
-      :options="chartOptions2"
-      ref="chart"
-      style="height: 75vh"
-      v-if="refreshing"
-    ></highcharts>
+    <highcharts :constructorType="'mapChart'" class="hc" :options="chartOptions2" ref="chart" style="height: 75vh"
+      v-if="refreshing"></highcharts>
   </CCard>
 </template>
 
@@ -17,12 +11,14 @@ import Highcharts from "highcharts";
 import HighchartsMapModule from "highcharts/modules/map";
 import accessibility from 'highcharts/modules/accessibility'; // Assure-toi d'inclure le module d'accessibilité
 import exporting from 'highcharts/modules/exporting'; // Assure-toi d'inclure le module exporting
+import tiledwebmap from "highcharts/modules/tiledwebmap";
 
 accessibility(Highcharts);
 exporting(Highcharts);
+// tiledwebmap(Highcharts);
 import axios from "axios";
 HighchartsMapModule(Highcharts);
-
+tiledwebmap(Highcharts);
 export default {
   name: "ShapeMaps",
   props: ["mapDataO", "donneeSearch", "refreshingparent"],
@@ -38,95 +34,95 @@ export default {
           map: null,
         },
         title: {
-          text: null,
+          text: '',
+        },
+        legend: {
+          enabled: true,
         },
         tooltip: {
           headerFormat: "",
           pointFormat:
             "<b>{point.country}</b><br>Valeur : {point.valeur:.2f}<br>Source : {point.source}",
         },
-
-        legend: {
-            title: {
-                text: 'Degrees Celsius'
-            },
-            floating: true,
-            backgroundColor: '#ffffffcc'
-        },
         mapNavigation: {
           enabled: true,
           buttonOptions: {
             alignTo: "spacingBox",
-                verticalAlign: 'bottom'
+            verticalAlign: 'bottom'
           },
         },
 
-      colorAxis: {
-          min: 0,
-          max: 400,
-          labels: {
-              format: '{valeur}'
-          },
-          stops: [
-              [0, '#0000ff'],
-              [0.3, '#6da5ff'],
-              [0.6, '#ffff00'],
-              [1, '#ff0000']
-          ]
-      },
-      
-      exporting: {
-        enabled: true, // Active les boutons d'exportation
-            buttons: {
-                contextButton: {
-                    align: 'left',
-                    menuItems: [
-                      "viewFullscreen",
-                      "downloadPNG",
-                      "downloadJPEG",
-                      "downloadPDF",
-                    ],
-                }
+        exporting: {
+          enabled: true, // Active les boutons d'exportation
+          buttons: {
+            contextButton: {
+              align: 'left',
+              menuItems: [
+                "viewFullscreen",
+                "downloadPNG",
+                "downloadJPEG",
+                "downloadPDF",
+              ],
             }
+          }
         },
         series: [
+
           {
-            name: "Europe",
-            borderColor: "#A0A0A0",
-            nullColor: "rgba(177, 244, 177, 0.5)",
-            showInLegend: false,
+            type: 'tiledwebmap',
+            name: 'Carte OpenStreetMap',
+            provider: {
+              type: 'OpenStreetMap',// Thunderforest|OpenStreetMap|Esri|Stamen
+              theme: 'Standard',// OpenTopoMap|Standard,
+              subdomain: 'a'
+              // https://www.highcharts.com/docs/maps/tiledwebmap
+            },
+            states: {
+              hover: {
+                enabled: true,
+                opacity: 0.2,
+                color: 'rgba(0, 0, 0, 0)', // Couleur transparente au survol
+              },
+            },
+          },
+
+          {
+
+            data: [],
+            name: 'Commune',
+            dataLabels: {
+              verticalAlign: 'top'
+            },
+            borderColor: '#A0A0A0',
+            nullColor: 'rgba(0, 0, 0, 0.5)',
           },
           {
-            data: [],
-            animation: false,
-            type: 'mappoint',
+            type: 'mapbubble',
+            enableMouseTracking: true,
             showInLegend: false,
+            colorKey: 'clusterPointsAmount',
+            data: [],
+            minSize: '5%',
+            maxSize: '20%',
+            color: '#2caffe',
             marker: {
-                enabled: false
+              lineWidth: 0.1,
+              lineColor: '#000',
+              symbol: 'topology',
+              radius: 1
             },
-            // dataLabels: {
-            //   enabled: false,
-            // },
-            // allAreas: true,
             dataLabels: {
-                crop: true,
-                format: '{y}',
-                inside: true,
-                y: -14,
-                style: {
-                    color: 'contrast',
-                    textOutline: 'none'
-                },
-                shape: 'mapmarker',
-                borderColor: 'black',
-                borderWidth: 1,
-                backgroundColor: 'auto'
+              verticalAlign: 'top'
+            },
+            dataLabels: {
+              enabled: true,
+              format: '{point.name}'
             },
           },
         ],
-      accessibility: {
-        enabled: true, // Assure-toi que l'accessibilité est activée
-      },
+        accessibility: {
+          enabled: true, // Assure-toi que l'accessibilité est activée
+        },
       },
     };
   },
@@ -143,7 +139,7 @@ export default {
   },
   methods: {
     init() {
-      this.chartOptions2.chart.map = this.mapDataO;
+      this.chartOptions2.series[1].mapData = this.mapDataO;
       this.refreshing = false;
       setTimeout(() => {
         this.refreshing = true;
@@ -154,8 +150,8 @@ export default {
       axios
         .post(
           this.$apiAdress +
-            "/api/donnees/findCarteDataBy?token=" +
-            localStorage.getItem("api_token"),
+          "/api/donnees/findCarteDataBy?token=" +
+          localStorage.getItem("api_token"),
           self.donneeSearch
         )
         .then(function (response) {
@@ -168,7 +164,7 @@ export default {
               y: co.valeur,
               lat: parseFloat(co.localisation.lat),
               lon: parseFloat(co.localisation.lon),
-              name: ".",
+              name: "",
               draggable: false,
               country: co.localisation.nom_structure,
               source: co.source,
@@ -176,8 +172,9 @@ export default {
             };
             self.markers.push(mark);
           }
-          self.chartOptions2.series[1].data = self.markers;
-          self.chartOptions2.series[1].name = "Name";
+          self.chartOptions2.series[2].data = self.markers;
+          self.chartOptions2.series[2].name = "Name";
+          self.chartOptions2.title.text = response.data[0].indicateur.libelle;
           self.refreshing = false;
           setTimeout(() => {
             self.refreshing = true;

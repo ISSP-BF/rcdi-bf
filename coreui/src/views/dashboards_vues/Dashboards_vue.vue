@@ -108,7 +108,7 @@ export default {
     voirGraphique(){
       this.$router.push({ path: '/donnees' });
     },
-    getdashboardItemsByDashboardId (){
+    async getdashboardItemsByDashboardId (){
       let self = this;
       const id = this.idData ? this.idData : (self.$route.params.id?self.$route.params.id:null);
       axios.get(  this.$apiAdress + '/api/dashboard-items/findBy/'+id+'?token=' + localStorage.getItem("api_token") )

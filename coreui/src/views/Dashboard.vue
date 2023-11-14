@@ -237,7 +237,7 @@ export default {
     visiterLePost(n) {
       window.open(n.link, "_blank");
     },
-    getPost() {
+    async getPost() {
       let self = this;
       this.refreshing = true;
       // if(!this.commune)return;
@@ -255,7 +255,7 @@ export default {
           console.log(error);
         });
     },
-    getCommuneDefaut() {
+    async getCommuneDefaut() {
       let self = this;
       this.refreshing = true;
       axios

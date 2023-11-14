@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\SousIndicateur;
 use App\Models\Indicateur;
+use App\Models\IndicateurOptimise;
 use App\Models\Groupe;
 use App\Models\SousGroupe;
 use App\Models\Desagregation;
@@ -85,9 +86,9 @@ class IndicateursController extends Controller
      * @param  int  $groupe_id
      * @return \Illuminate\Http\Response
      */
-    public function findByGroupe($groupe_id)
+    public function findByGroupe($id)
     {
-        $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->where('groupe_id',"=",$groupe_id)->get();
+        $indicateurs = IndicateurOptimise::select('*','libelle as label', 'id as value')->where('groupe_id',"=",$id)->get();
         return $indicateurs;
     } 
 
@@ -96,9 +97,9 @@ class IndicateursController extends Controller
      * @param  int  $groupe_id
      * @return \Illuminate\Http\Response
      */
-    public function findLocalisationByGroupe($groupe_id)
+    public function findLocalisationByGroupe($id)
     {
-        $groupe = Groupe::find($groupe_id);
+        $groupe = Groupe::find($id);
         $commune = Communes::where("defaut",true)->firstOrFail();
         switch ($groupe->localisation) {
             case 'ecoles':
@@ -119,9 +120,9 @@ class IndicateursController extends Controller
      * @param  int  $groupe_id
      * @return \Illuminate\Http\Response
      */
-    public function findBySousGroupe($sous_groupe_id)
+    public function findBySousGroupe($id)
     {
-        $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->where('sous_groupe_id',"=",$sous_groupe_id)->get();
+        $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->where('sous_groupe_id',"=",$id)->get();
         return $indicateurs;
     } 
 

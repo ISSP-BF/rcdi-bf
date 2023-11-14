@@ -97,7 +97,7 @@ export default {
         
 
     },
-    getDatasets(){
+    async getDatasets(){
       let self = this;
       axios.post(  this.$apiAdress + '/api/donnees/findBy?token=' + localStorage.getItem("api_token"),
       self.donneeSearch

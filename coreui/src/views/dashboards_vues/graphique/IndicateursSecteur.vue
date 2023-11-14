@@ -229,7 +229,7 @@ export default {
       }
       return couleurs;
     },
-    getDatasets() {
+    async getDatasets() {
       let self = this;
       axios
         .post(

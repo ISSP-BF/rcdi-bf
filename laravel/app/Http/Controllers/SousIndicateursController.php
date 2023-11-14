@@ -77,9 +77,9 @@ class SousIndicateursController extends Controller
      * @param  int  $groupe_id
      * @return \Illuminate\Http\Response
      */
-    public function findByDesagregation($desagregation_id)
+    public function findByDesagregation($id)
     {
-        $sousIndicateurs = SousIndicateur::select('*','libelle as label', 'id as value')->where('desagregation_id',"=",$desagregation_id)->get();
+        $sousIndicateurs = SousIndicateur::select('*','libelle as label', 'id as value')->where('desagregation_id',"=",$id)->get();
         return $sousIndicateurs;
     } 
 

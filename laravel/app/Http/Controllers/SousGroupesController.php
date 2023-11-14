@@ -74,9 +74,9 @@ class SousGroupesController extends Controller
      * @param  int  $groupe_id
      * @return \Illuminate\Http\Response
      */
-    public function findByGroupe($groupe_id)
+    public function findByGroupe($id)
     {
-        $sous_groupes = SousGroupe::select('*','libelle as label', 'id as value')->where('groupe_id',"=",$groupe_id)->get();
+        $sous_groupes = SousGroupe::select('*','libelle as label', 'id as value')->where('groupe_id',"=",$id)->get();
         return $sous_groupes;
     } 
 

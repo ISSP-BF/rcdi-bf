@@ -645,6 +645,7 @@ export default {
            self.sous_groupes = lest;
          })
          .catch(function (error) {
+          console.log(error)
            self.sous_groupes = [];
            self.$router.push({ path: "login" });
          });
