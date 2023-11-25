@@ -102,8 +102,8 @@ export default {
             showInLegend: false,
             colorKey: 'clusterPointsAmount',
             data: [],
-            minSize: '5%',
-            maxSize: '20%',
+            minSize: '1%',
+            maxSize: '5%',
             color: '#2caffe',
             marker: {
               lineWidth: 0.1,

@@ -474,9 +474,16 @@ cp /home/rcdi/rcdi-bf/coreui/dist/index.html /home/rcdi/manga/resources/views/co
 
 
 // test
-
-
+su rcdi
+chown -R www-data:www-data /home/rcdi/rcdi-bf/laravel/public
+cd /home/rcdi/rcdi-bf
+git pull
+cd /home/rcdi/rcdi-bf/coreui
+npm run build
 rm -rf /home/rcdi/rcdi-bf/laravel/public/js
 rm -rf /home/rcdi/rcdi-bf/laravel/public/css
 cp -r /home/rcdi/rcdi-bf/coreui/dist/* /home/rcdi/rcdi-bf/laravel/public/
 cp /home/rcdi/rcdi-bf/coreui/dist/index.html /home/rcdi/rcdi-bf/laravel/resources/views/coreui/homepage.blade.php
+exit
+chown -R www-data:www-data /home/rcdi/rcdi-bf/laravel/public
+chown -R www-data:www-data /home/rcdi/rcdi-bf/laravel/storage

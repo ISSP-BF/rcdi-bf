@@ -34,7 +34,7 @@
               v-if="togglePress">
                   <div class="col-lg-6 float-left">
                         <label class="custom-control-inline"> Filtrer </label>
-                        <CInput class="col-lg-8 custom-control-inline" type="text" placeholder="Valeur" v-model="tableFilterValue"></CInput>
+                        <CInput class="col-lg-8 custom-control-inline" type="text" placeholder="Valeur" v-model="tableFilterValue" v-on:keyup.enter="onEnter"></CInput>
                   </div>
                   <div class="col-lg-6 text-right">
                         <label class="custom-control-inline"> Elements par page </label>
@@ -531,13 +531,17 @@ export default {
       return [
         this.sorterValue,
         this.columnFilterValue,
-        this.tableFilterValue,
+        // this.tableFilterValue,
         this.activePage,
         this.perPage,
       ];
     },
   },
   methods: {
+    onEnter(){
+      console.log("----------")
+      this.onTableChange();
+    },
     getRowCount(items) {
       return items.length;
     },
