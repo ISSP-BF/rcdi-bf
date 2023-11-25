@@ -204,7 +204,8 @@ export default {
               self.$toasted.show(self.message, { type: "error" });
             } else {
               console.log(error);
-              self.$router.push({ path: "login" });
+              self.$toasted.show(self.message, { type: "error" });
+              //self.$router.push({ path: "login" });
             }
           });
 
