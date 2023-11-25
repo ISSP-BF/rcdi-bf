@@ -69,7 +69,7 @@ export default {
   },
   
   methods: {
-    getTailleMoyenneMenages(){
+    async getTailleMoyenneMenages(){
       let self = this;
       const criteria =  {
             indicateur:"Taille moyenne des ménages",
@@ -102,7 +102,7 @@ export default {
             }
         });
     },
-    getRM(){
+    async getRM(){
       let self = this;
       const criteria =  {
             indicateur:"Rapport de Masculinite",
@@ -136,7 +136,7 @@ export default {
             }
         });
     },
-    getPopulationTotale(){
+    async getPopulationTotale(){
       let self = this;
       const criteria =  {
             indicateur:"Population totale",
@@ -173,10 +173,9 @@ export default {
     
   },
   mounted: function(){
-    let self = this;
-    self.getTailleMoyenneMenages ();
-    self.getRM();
-    self.getPopulationTotale();
+    this.getTailleMoyenneMenages ();
+    this.getRM();
+    this.getPopulationTotale();
   }
 }
 </script>

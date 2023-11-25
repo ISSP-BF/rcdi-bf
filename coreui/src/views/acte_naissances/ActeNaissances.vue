@@ -13,12 +13,21 @@
             </div>
           </CCardHeader>
           <CCardBody>
-            <CDataTable id="table" hover
-              tableFilter
-              :itemsPerPageSelect="true"
-              sorter :items="loadedItems" :fields="fields"
-              
-              :itemsPerPage="perPage"
+            <div class="float-justify custom-control-inline row">
+                  <div class="col-lg-6 float-left">
+                        <!-- <label class="custom-control-inline"> Filtrer </label>
+                        <CInput class="col-lg-8 custom-control-inline" type="text" placeholder="Valeur" v-model="tableFilterValue"></CInput> -->
+                  </div>
+                  <div class="col-lg-6 text-right">
+                        <label class="custom-control-inline"> Elements par page </label>
+                        <CSelect class=" custom-control custom-control-inline custom-radio" :value.sync="perPage" :options="perPageValues">
+                        </CSelect>
+                  </div>
+            </div>
+            <CDataTable id="table"
+              hover
+              sorter :items="loadedItems"
+              :fields="fields"
               :sort-by.sync="sortBy"
               :sort-desc.sync="sortDesc" 
               :loading="loading"
@@ -131,6 +140,14 @@ export default {
         'sexe', 'date_naissance',
         'lieu_naissance_commune', 'centre_sante_naissance',
         'date_etablissement', 'actions'],
+      perPageValues: [
+        { value: "10", label: "10" },
+        { value: "20", label: "20" },
+        { value: "50", label: "50" },
+        { value: "100", label: "100" },
+        { value: "500", label: "500" },
+        { value: "1000", label: "1000" },
+      ],
 
       totalRows: 0,
       sorterValue: { column: null, asc: true },
@@ -145,6 +162,7 @@ export default {
       activePage: 1,
       loadedItems:[],
       loading: false,
+      tableFilterValue:null,
       pages: 5
     }
   },
