@@ -76,8 +76,8 @@ export default {
   data: () => {
     return {
       items: [],
-      fields: ['id','groupe','sous_groupe', 'libelle', 'desagregation','periode', 'actions'],
-      fieldsI: ['id','groupe','sous_groupe', 'libelle', 'desagregation','periode', 'actions'],
+      fields: ['id','groupe','sous_groupe', 'code','libelle', 'desagregation','periode', 'actions'],
+      fieldsI: ['id','groupe','sous_groupe', 'code','libelle', 'desagregation','periode', 'actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0, 

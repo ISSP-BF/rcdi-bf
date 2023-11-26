@@ -23,6 +23,7 @@
             >
             </CSelect>
 
+            <CInput label="Code" type="text" placeholder="Code" v-model="indicateur.code"></CInput>
             <CInput label="Libelle" type="text" placeholder="Libelle" v-model="indicateur.libelle"></CInput>
             <CTextarea label="Description" type="text" placeholder="Description" v-model="indicateur.description"  rows="9"/>
             <CTextarea label="Methode de calcule" type="text" placeholder="Methode de calcule" v-model="indicateur.description"  rows="9"/>

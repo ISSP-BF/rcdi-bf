@@ -6,6 +6,7 @@
           Indicateur id:  {{ $route.params.id }}
         </CCardHeader>
         <CCardBody>
+          <p>Code : {{ indicateur.code }}</p>
           <p>Libelle : {{ indicateur.libelle }}</p>
           <p>Description : {{ indicateur.description }}</p>
           <p>Groupe : {{ indicateur.groupe }}</p>

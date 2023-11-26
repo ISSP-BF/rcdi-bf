@@ -142,7 +142,20 @@
                         @change="findSousGroupeByLocalisation($event)"
                       >
                       </CSelect>
-
+                      <!-- <label class="col-lg-12">Localisation</label>
+                      <multiselect
+                        class="col-lg-11"
+                        v-model="donnee.localisation_ids"
+                        :options="localisations"
+                        :multiple="true"
+                        :close-on-select="true"
+                        label="label"
+                        track-by="label"
+                        placeholder="Choisir une localité"
+                        select-label="cliquer pour ajouter"
+                        deselect-label="cliquer pour supprimer"
+                      >
+                      </multiselect> -->
                     <CSelect
                       label="Sous Groupe"
                       class="col-lg-12"
@@ -198,21 +211,6 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- <label
-                      class="col-lg-12"
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(!togglePressMaps)"
-                      >Période</label
-                    > -->
-                    <!-- <CSelect
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'&&(togglePressMaps)"
-                      class="col-lg-12"
-                      placeholder="Choisir une période"
-                      :value.sync="donnee.periode_value"
-                      :plain="true"
-                      :options="choixPeriodes"
-                    >
-                    </CSelect> -->
                     <multiselect
                       v-if="donnee.periode && donnee.periode != 'ANNUEL'"
                       class="col-lg-11"
@@ -230,17 +228,7 @@
                     </multiselect>
 
                     <label class="col-lg-12">Années</label>
-                    
-                    <!-- <CSelect
-                      v-if="togglePressMaps"
-                      class="col-lg-12"
-                      placeholder="Choisir une année"
-                      :value.sync="donnee.annee"
-                      :plain="true"
-                      :options="annees"
-                    >
-                    </CSelect> --> 
-
+                   
                     <multiselect
                       class="col-lg-11"
                       v-model="selectedItems"

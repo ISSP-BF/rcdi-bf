@@ -13,6 +13,7 @@ class CreateIndicateursTable extends Migration
     {
         Schema::create('indicateurs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('code')->nullable();
             $table->string('libelle')->nullable();
             $table->text('description')->nullable();
             $table->text('methode_calcule')->nullable();

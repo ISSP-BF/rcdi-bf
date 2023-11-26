@@ -11,6 +11,7 @@ class Indicateur extends Model
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'libelle',
         'description',
         'methode_calcule',

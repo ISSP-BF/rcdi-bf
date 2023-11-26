@@ -2,6 +2,15 @@
   <CCard>
     <highcharts :constructorType="'mapChart'" class="hc" :options="chartOptions2" ref="chart" style="height: 75vh"
       v-if="refreshing"></highcharts>
+      <div style="display: inline-flex;">
+        
+        <CSwitch
+          class="mr-1"
+          color="danger"
+          shape="pill"
+          :checked.sync="togglePress" @change="getDatasets()"  
+        /> &nbsp;&nbsp; <label>{{togglePress?"Cercle":'Icon'}}</label>
+      </div>
   </CCard>
 </template>
 
@@ -28,6 +37,7 @@ export default {
   data() {
     return {
       refreshing: true,
+      togglePress: true,
       markers: [],
       chartOptions2: {
         chart: {
@@ -119,6 +129,28 @@ export default {
               format: '{point.name}'
             },
           },
+          {
+            type: 'mappoint',
+            showInLegend: false,
+            name: 'Formation Sanitaire',
+            marker: {
+              symbol: 'url(img/hospital.svg)',
+              width: 24,
+              height: 24
+            },
+            data: []
+          },
+          {
+            type: 'mappoint',
+            showInLegend: false,
+            name: 'Structure Educative',
+            marker: {
+              symbol: 'url(img/school.svg)',
+              width: 24,
+              height: 24
+            },
+            data: []
+          }
         ],
         accessibility: {
           enabled: true, // Assure-toi que l'accessibilité est activée
@@ -134,7 +166,7 @@ export default {
   },
   computed: {
     reloadParams() {
-      return [this.refreshingparent];
+      return [this.refreshingparent,this.togglePress];
     },
   },
   methods: {
@@ -172,9 +204,24 @@ export default {
             };
             self.markers.push(mark);
           }
+          self.chartOptions2.series[2].data = [];
+          self.chartOptions2.series[3].data = [];
+          self.chartOptions2.series[4].data = [];
+          self.chartOptions2.series[3].showInLegend = false;
+          self.chartOptions2.series[4].showInLegend = false;
+          if(self.togglePress){
           self.chartOptions2.series[2].data = self.markers;
-          self.chartOptions2.series[2].name = "Name";
-          self.chartOptions2.title.text = response.data[0].indicateur.libelle;
+          }
+          else if(self.donneeSearch.groupe_id == 2){
+          self.chartOptions2.series[3].data = self.markers;
+          self.chartOptions2.series[3].showInLegend = true;
+          }
+          else if(self.donneeSearch.groupe_id == 3){
+          self.chartOptions2.series[4].data = self.markers;
+          self.chartOptions2.series[4].showInLegend = true;
+          }
+
+          self.chartOptions2.title.text =response.data && response.data.length>0? response.data[0].indicateur.libelle:'';
           // self.refreshing = false;
           // setTimeout(() => {
           //   self.refreshing = true;
