@@ -266,7 +266,11 @@ class DonneesController extends Controller
         if(isset($request->indicateur_id)&&$request->indicateur_id!=null&&$request->indicateur_id!=0){
             $donnees->where('donnees.indicateur_id', '=', $request['indicateur_id']);
         }
+        if($request['localisation_id']!=-1)
         $donnees->where('donnees.localisation_id','=',$request['localisation_id']);
+        else {
+            $donnees->where('donnees.localisation_id','!=',null);
+        }
         if(isset($request->periode_value)&&$request->periode_value!=null&&$request->periode_value!=0){
                 $donnees->whereIn('donnees.periode_value', $request['periode_value']);
         }

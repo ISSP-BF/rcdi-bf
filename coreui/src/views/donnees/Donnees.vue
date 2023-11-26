@@ -609,6 +609,7 @@ export default {
         self.localisations = response.data;
         let lest = [{label:'Niveau Commune',value:null}]
         lest.push(...self.localisations);
+        lest.push({label:'Niveau Désagrégé',value:-1});
         self.localisations = lest;
     }).catch(function (error) {
       self.localisations  = []
@@ -646,12 +647,16 @@ export default {
      findSousGroupeByLocalisation(event) { 
        this.sous_groupes = [];
        let self = this;
+       let localisationId = null;
+       if(self.donnee.localisation_id!==-1){
+        localisationId = self.donnee.localisation_id;
+       }
        
        axios
          .get(
            this.$apiAdress +
              "/api/donnees/findSousGroupeByLocalisation/" +
-             self.donnee.localisation_id  +"/"+self.donnee.groupe_id+
+             localisationId  +"/"+self.donnee.groupe_id+
              "?token=" +
              localStorage.getItem("api_token")
          )
