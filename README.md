@@ -474,6 +474,7 @@ cp /home/rcdi/rcdi-bf/coreui/dist/index.html /home/rcdi/manga/resources/views/co
 
 
 // test
+sudo su
 chown -R rcdi:rcdi /home/rcdi/rcdi-bf/laravel/public
 chown -R rcdi:rcdi /home/rcdi/rcdi-bf/laravel/storage
 su rcdi
