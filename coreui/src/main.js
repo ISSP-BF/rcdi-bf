@@ -52,7 +52,7 @@ if (location.port == 8080) { adresse = adresse + ":8000" }
 // Adresse web
 else if (location.port == 8000) { adresse = adresse + ":8000/index.php" }
 // Adresse web
-else if (location.port == 80) { adresse = adresse + "/index.php" } else {
+else if (location.port == 80) { adresse = adresse + "backend/index.php" } else {
     adresse = adresse + "/index.php"
 }
 // console.log(location, " Information location")
