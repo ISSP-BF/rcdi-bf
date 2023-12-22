@@ -53,7 +53,7 @@ if (location.port == 8080) { adresse = adresse + ":8000" }
 else if (location.port == 8000) { adresse = adresse + ":8000/index.php" }
 // Adresse web
 else if (location.port == 80) { adresse = adresse + "/backend/index.php" } else {
-    adresse = adresse + "/backend/index.php"
+    adresse = adresse + "/backend/public/index.php"
 }
 // console.log(location, " Information location")
 // Vue.prototype.$apiAdress = 'http://127.0.0.1:8000'
