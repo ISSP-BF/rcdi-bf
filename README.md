@@ -489,3 +489,8 @@ cp /home/rcdi/rcdi-bf/coreui/dist/index.html /home/rcdi/rcdi-bf/laravel/resource
 exit
 chown -R www-data:www-data /home/rcdi/rcdi-bf/laravel/public
 chown -R www-data:www-data /home/rcdi/rcdi-bf/laravel/storage
+
+Serveur CEH - RCDI
+debian
+P@assw0rd
+RCDI@2023
