@@ -118,7 +118,7 @@
             />
 
             <CRow v-if="!togglePress">
-              <CCol col="12" lg="3">
+              <CCol col="12" lg="2">
                 <div>
                   <h3>Filtre</h3>
 
@@ -312,7 +312,7 @@
                   &nbsp;
                 </div>
               </CCol>
-              <CCol col="12" lg="9">
+              <CCol col="12" lg="8">
                 <div>
                   <IndicateursSecteur
                     v-if="vueGraphe == 'SECTEUR'"
@@ -329,6 +329,192 @@
                     :donneeSearch="donneeSearch" :refreshingparent="refreshing"/>
                    
 
+                </div>
+              </CCol>
+              <CCol col="12" lg="2">
+                <div>
+                  <h3>Filtre</h3>
+
+                  <div class="row">
+                    
+
+                    <CSelect
+                        label="Localisation" 
+                      class="col-lg-12"
+                        :value.sync="donnee.localisation_id"
+                        :plain="true"
+                        :options="localisations"
+                        @change="findSousGroupeByLocalisation($event)"
+                      >
+                      </CSelect>
+                      <!-- <label class="col-lg-12">Localisation</label>
+                      <multiselect
+                        class="col-lg-11"
+                        v-model="donnee.localisation_ids"
+                        :options="localisations"
+                        :multiple="true"
+                        :close-on-select="true"
+                        label="label"
+                        track-by="label"
+                        placeholder="Choisir une localité"
+                        select-label="cliquer pour ajouter"
+                        deselect-label="cliquer pour supprimer"
+                      >
+                      </multiselect> -->
+                    <CSelect
+                      label="Sous Groupe"
+                      class="col-lg-12"
+                      :value.sync="donnee.sous_groupe_id"
+                      :plain="true"
+                      :options="sous_groupes"
+                      @change="findIndicateurBySousGroupe($event)"
+                    >
+                    </CSelect>
+
+                    <CSelect
+                      label="Indicateur"
+                      class="col-lg-12"
+                      :value.sync="donnee.indicateur_id"
+                      :plain="true"
+                      :options="indicateurs"
+                      @change="findSousIndicateurByDesagregation($event);findAnneeByIndicateur($event)"
+                    >
+                    </CSelect>
+                    <CSelect
+                      v-if="desagregation_id"
+                      class="col-lg-12"
+                      label="Sous indicateur"
+                      :value.sync="donnee.sous_indicateur_id"
+                      :plain="true"
+                      :options="sousIndicateurs"
+                    >
+                    </CSelect>
+                    <div class="row col-lg-12">
+                      <div role="group" class="col-lg-12 form-group">
+                        <label class="custom-control-inline"> Période </label>
+                        <div
+                          role="group"
+                          class="custom-control custom-control-inline custom-radio"
+                          v-for="rol in periodesDispobible"
+                          :key="rol"
+                          :label="rol"
+                        >
+                          <input
+                            :id="'periode' + rol"
+                            type="radio"
+                            class="custom-control-input"
+                            v-model="donnee.periode"
+                            :value="rol"
+                            @click="updatedListPeriode(rol)"
+                          />
+                          <label
+                            :for="'periode' + rol"
+                            class="custom-control-label"
+                          >
+                            {{ rol }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <multiselect
+                      v-if="donnee.periode && donnee.periode != 'ANNUEL'"
+                      class="col-lg-11"
+                      v-model="selectedPeriode_values"
+                      :options="choixPeriodes"
+                      :multiple="!(togglePressMaps)"
+                      :close-on-select="(togglePressMaps)"
+                      :hide-selected="!(togglePressMaps)"
+                      label="label"
+                      track-by="label"
+                      placeholder="Choisir une période"
+                      select-label="cliquer pour ajouter"
+                      deselect-label="cliquer pour supprimer"
+                    >
+                    </multiselect>
+
+                    <label class="col-lg-12">Années</label>
+                   
+                    <multiselect
+                      class="col-lg-11"
+                      v-model="selectedItems"
+                      :options="annees"
+                      :multiple="!(togglePressMaps)"
+                      :close-on-select="(togglePressMaps)"
+                      label="label"
+                      track-by="label"
+                      placeholder="Choisir une année"
+                      select-label="cliquer pour ajouter"
+                      deselect-label="cliquer pour supprimer"
+                      :hide-selected="!(togglePressMaps)"
+                    >
+                    </multiselect>
+                  </div>
+                  <br />
+                   <CButton v-if="!(togglePressMaps)" timeout="2000" color="primary" @click="search()">Actualiser</CButton>
+                   <CButton v-if="(togglePressMaps)" timeout="2000" color="primary" @click="searchCarte()">Actualiser</CButton>
+
+                   <br/>
+                  &nbsp;
+
+                  <CRow class="align-items-center">
+                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
+                      <CButton
+                        variant="outline"
+                        shape="pill"
+                        color="primary"
+                        :pressed.sync="togglePressSecteur"
+                        @click="choicesGraphe('SECTEUR')"
+                      >
+                        <CIcon name="cil-chart-pie" />
+                      </CButton>
+                    </CCol>
+                    <!-- <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
+                      <CButton
+                        variant="outline"
+                        shape="pill"
+                        color="primary"
+                        :pressed.sync="togglePressMaps2"
+                        @click="choicesGraphe('MAPS2')"
+                      >
+                        <CIcon name="cib-openstreetmap" />
+                      </CButton>
+                    </CCol>
+                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
+                      <CButton
+                        variant="outline"
+                        shape="pill"
+                        color="primary"
+                        :pressed.sync="togglePressMaps3"
+                        @click="choicesGraphe('MAPS3')"
+                      >
+                        <CIcon name="cib-openstreetmap" />
+                      </CButton>
+                    </CCol> -->
+
+                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
+                      <CButton
+                        variant="outline"
+                        shape="pill"
+                        color="primary"
+                        :pressed.sync="togglePressHistogramme"
+                        @click="choicesGraphe('HISTOGRAMME')"
+                      >
+                        <CIcon name="cil-bar-chart" />
+                      </CButton>
+                    </CCol>
+                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
+                      <CButton
+                        variant="outline"
+                        shape="pill"
+                        color="primary"
+                        :pressed.sync="togglePressMaps"
+                        @click="choicesGraphe('MAPS')"
+                      >
+                        <CIcon name="cib-openstreetmap" />
+                      </CButton>
+                    </CCol>
+                  </CRow>
+                  &nbsp;
                 </div>
               </CCol>
             </CRow>

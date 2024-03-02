@@ -2713,6 +2713,11 @@ function configRoutes() {
                     name: 'Register',
                     component: Register
                 },
+                {
+                    path: 'dashboard-p',
+                    name: 'Tableau de bord',
+                    component: Dashboard
+                },
             ]
         },
         {

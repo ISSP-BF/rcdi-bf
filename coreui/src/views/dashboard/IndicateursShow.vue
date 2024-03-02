@@ -64,7 +64,7 @@ export default {
     return {
       tailleMoyenneMenages: {label:"Taille moyenne des ménages",value:"Données non disponible"},
       rM: {label:"Rapport de Masculinite",value:"Données non disponible"},
-      pt: {label:"pt",value:"Données non disponible"},
+      pt: {label:"Population totale",value:"Données non disponible"},
     }
   },
   
