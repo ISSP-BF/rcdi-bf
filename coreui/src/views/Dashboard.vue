@@ -63,6 +63,24 @@
             <CTabs add-tab-classes="mt-1">
               <CTab active>
                 <template slot="title">
+                  <CIcon name="cil-chart-pie" /> SANTE
+                </template>
+                <DashboardsVue :idData="1"></DashboardsVue>
+              </CTab>
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-chart-pie" /> EDUCATION
+                </template>
+                <DashboardsVue :idData="2"></DashboardsVue>
+              </CTab>
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-chart-pie" /> ETAT CIVIL
+                </template>
+                <DashboardsVue :idData="3"></DashboardsVue>
+              </CTab>
+              <CTab>
+                <template slot="title">
                   <CIcon name="cil-calculator" /> DEMOGRAPHIE
                 </template>
                 <CCardBody v-if="!refreshing2">
@@ -114,24 +132,6 @@
                   :annee="annee"
                   groupe="AGRICULTURE"
                 />
-              </CTab>
-              <CTab>
-                <template slot="title">
-                  <CIcon name="cil-chart-pie" /> SANTE
-                </template>
-                <DashboardsVue :idData="1"></DashboardsVue>
-              </CTab>
-              <CTab>
-                <template slot="title">
-                  <CIcon name="cil-chart-pie" /> EDUCATION
-                </template>
-                <DashboardsVue :idData="2"></DashboardsVue>
-              </CTab>
-              <CTab>
-                <template slot="title">
-                  <CIcon name="cil-chart-pie" /> ETAT CIVIL
-                </template>
-                <DashboardsVue :idData="3"></DashboardsVue>
               </CTab>
             </CTabs>
           </CCardBody>
@@ -220,13 +220,13 @@ export default {
       }
 
       this.refreshing = true;
-      setTimeout(() => {
-        this.refreshing = false;
-        this.refreshing2 = true;
-        setTimeout(() => {
-          this.refreshing2 = false;
-        }, 1);
-      }, 1);
+      // setTimeout(() => {
+      //   this.refreshing = false;
+      //   this.refreshing2 = true;
+      //   // setTimeout(() => {
+      //   //   this.refreshing2 = false;
+      //   // }, 1);
+      // }, 1);
     },
     strippedContent(string) {
       string = string.replace(/<\/?[^>]+>/gi, " ");
@@ -265,10 +265,10 @@ export default {
           self.commune = response.data;
           self.commune_id = self.commune.id;
           self.communelabel = self.commune.commune.toLowerCase();
-          setTimeout(() => {
+          // setTimeout(() => {
             self.getPost();
-          }, 500);
-          self.refresh();
+          // }, 500);
+          // self.refresh();
         })
         .catch(function (error) {
           console.log(error);

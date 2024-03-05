@@ -11,14 +11,10 @@
             type="text"
             placeholder="Libelle"
             v-model="dashboardItem.libelle"
-          />
-          <CTextarea
-            label="Description"
-            type="text"
-            placeholder="Description"
-            v-model="dashboardItem.description"
-            rows="9"
-          />
+          /> 
+              <label for="">Description</label>
+              <quill-editor :content="dashboardItem.description" v-model="dashboardItem.description" />
+            
           <CRow>
             
             <CInput label="Ordre" type="text" placeholder="Ordre décroissante" v-model="dashboardItem.i" class="col-lg-4"/>

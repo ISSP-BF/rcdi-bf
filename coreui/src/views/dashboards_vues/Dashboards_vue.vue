@@ -1,7 +1,9 @@
 <template>
   <div 
     class="row col-lg-12"> 
-   
+    <div class="col-lg-12">
+    <p v-html="reponsed"></p>
+  </div>
   <div 
     v-for="item in items" 
     :key="item.id"
@@ -13,6 +15,9 @@
           v-if="item.graphique !== 'FIXE'"
     >
       <CCardHeader>{{ item.libelle }}
+        <div>
+          Description {{ item.description }}
+        </div>
       </CCardHeader> 
       <CCardBody>
         <IndicateursSecteur
@@ -85,17 +90,18 @@ export default {
   },
   data: () => {
     return { 
-      refreshing:false,
+      // refreshing:false,
       layout: storedLayout || baseLayout,
       storedLayout,
       gridKey: 0,
       items: [], 
       message: '',
+      reponsed:'Resumé : Les centres de santé au Burkina Faso offrent des soins de santé de base tels que des consultations, des vaccinations et des traitements pour les maladies courantes. Cependant, ils font face à des défis tels que des ressources limitées, des pénuries de personnel et des infrastructures inadéquates.',
     }
   },
   watch: {
     reloadParams() {
-      this.refreshing = false;
+      // this.refreshing = false;
       this.getdashboardItemsByDashboardId();
     },
   },

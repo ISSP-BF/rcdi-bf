@@ -2,195 +2,148 @@
   <CRow>
     <CCol col="12" lg="6">
       <CCard>
-          <CCardHeader>
-            <h5>Ajouter une requête</h5>
-          </CCardHeader>
+        <CCardHeader>
+          <h5>Ajouter une requête</h5>
+        </CCardHeader>
         <CCardBody>
-         
+
 
           <CRow>
-              <CCol col="12" lg="12">
-                <div>
+            <CCol col="12" lg="12">
+              <div>
 
-                  <div class="row">
-                    <CSelect
-                      label="Groupe"
-                      class="col-lg-12"
-                      :value.sync="donnee.groupe_id"
-                      :plain="true"
-                      :options="groupes"
-                      @change="findSousGroupeByGroupe($event)"
-                    >
-                    </CSelect>
-                    <CSelect
-                      label="Sous Groupe"
-                      class="col-lg-12"
-                      :value.sync="donnee.sous_groupe_id"
-                      :plain="true"
-                      :options="sous_groupes"
-                      @change="findIndicateurBySousGroupe($event)"
-                    >
-                    </CSelect>
+                <div class="row">
+                  <CSelect label="Groupe" class="col-lg-12" :value.sync="donnee.groupe_id" :plain="true"
+                    :options="groupes" @change="findSousGroupeByGroupe($event)">
+                  </CSelect>
+                  <CSelect label="Sous Groupe" class="col-lg-12" :value.sync="donnee.sous_groupe_id" :plain="true"
+                    :options="sous_groupes" @change="findIndicateurBySousGroupe($event)">
+                  </CSelect>
 
-                    <CSelect
-                      label="Indicateur"
-                      class="col-lg-12"
-                      :value.sync="donnee.indicateur_id"
-                      :plain="true"
-                      :options="indicateurs"
-                      @change="findSousIndicateurByDesagregation($event);findAnneeByIndicateur($event)"
-                    >
-                    </CSelect>
-                    <CSelect
-                      v-if="desagregation_id"
-                      class="col-lg-12"
-                      label="Sous indicateur"
-                      :value.sync="donnee.sous_indicateur_id"
-                      :plain="true"
-                      :options="sousIndicateurs"
-                    >
-                    </CSelect>
-                    <div class="row col-lg-12">
-                      <div role="group" class="col-lg-12 form-group">
-                        <label class="custom-control-inline"> Période </label>
-                        <div
-                          role="group"
-                          class="custom-control custom-control-inline custom-radio"
-                          v-for="rol in periodesDispobible"
-                          :key="rol"
-                          :label="rol"
-                        >
-                          <input
-                            :id="'periode' + rol"
-                            type="radio"
-                            class="custom-control-input"
-                            v-model="donnee.periode"
-                            :value="rol"
-                            @click="updatedListPeriode(rol)"
-                          />
-                          <label
-                            :for="'periode' + rol"
-                            class="custom-control-label"
-                          >
-                            {{ rol }}
-                          </label>
-                        </div>
+                  <CSelect label="Indicateur" class="col-lg-12" :value.sync="donnee.indicateur_id" :plain="true"
+                    :options="indicateurs"
+                    @change="findSousIndicateurByDesagregation($event);findAnneeByIndicateur($event)">
+                  </CSelect>
+                  <CSelect v-if="desagregation_id" class="col-lg-12" label="Sous indicateur"
+                    :value.sync="donnee.sous_indicateur_id" :plain="true" :options="sousIndicateurs">
+                  </CSelect>
+                  <div class="row col-lg-12">
+                    <div role="group" class="col-lg-12 form-group">
+                      <label class="custom-control-inline"> Période </label>
+                      <div role="group" class="custom-control custom-control-inline custom-radio"
+                        v-for="rol in periodesDispobible" :key="rol" :label="rol">
+                        <input :id="'periode' + rol" type="radio" class="custom-control-input" v-model="donnee.periode"
+                          :value="rol" @click="updatedListPeriode(rol)" />
+                        <label :for="'periode' + rol" class="custom-control-label">
+                          {{ rol }}
+                        </label>
                       </div>
                     </div>
-
-                    <label
-                      class="col-lg-12"
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'"
-                      >Période</label
-                    >
-                    <multiselect
-                      v-if="donnee.periode && donnee.periode != 'ANNUEL'"
-                      class="col-lg-11"
-                      v-model="selectedPeriode_values"
-                      :options="choixPeriodes"
-                      :multiple="true"
-                      :close-on-select="false"
-                      label="label"
-                      track-by="label"
-                      placeholder="Choisir une période"
-                      select-label="cliquer pour ajouter"
-                      deselect-label="cliquer pour supprimer"
-                      :hide-selected="true"
-                    >
-                    </multiselect>
-
-                    <label class="col-lg-12">Années</label>
-                    <multiselect
-                      class="col-lg-11"
-                      v-model="selectedItems"
-                      :options="annees"
-                      :multiple="true"
-                      :close-on-select="false"
-                      label="label"
-                      track-by="label"
-                      placeholder="Choisir une année"
-                      select-label="cliquer pour ajouter"
-                      deselect-label="cliquer pour supprimer"
-                      :hide-selected="true"
-                    >
-                    </multiselect>
                   </div>
-                  
-                   <br/>
-                  &nbsp;
 
-                  <CRow class="align-items-center">
-                    
-                    <div class="row col-lg-12">
-                      <div role="group" class="col-lg-12 form-group">
-                        <label class="custom-control-inline"> Période </label>
-                        <div role="group" class="custom-control custom-control-inline custom-radio">
-                          <input id="SECTEUR2" type="radio" class="custom-control-input" v-model="graphique"
-                            value="SECTEUR" />
-                          <label for="SECTEUR2" class="custom-control-label"> SECTEUR </label>
-                        </div>
-                        <div role="group" class="custom-control custom-control-inline custom-radio">
-                          <input id="HISTOGRAMME" type="radio" class="custom-control-input" v-model="graphique"
-                            value="HISTOGRAMME" />
-                          <label for="HISTOGRAMME" class="custom-control-label"> HISTOGRAMME </label>
-                        </div>
-                        <div role="group" class="custom-control custom-control-inline custom-radio">
-                          <input id="FIXE" type="radio" class="custom-control-input" v-model="graphique"
-                            value="FIXE" />
-                          <label for="FIXE" class="custom-control-label"> FIXE </label>
-                        </div>
-                      </div>
-                    </div> 
-                  </CRow>
-                  &nbsp;
+                  <label class="col-lg-12" v-if="donnee.periode && donnee.periode != 'ANNUEL'">Période</label>
+                  <multiselect v-if="donnee.periode && donnee.periode != 'ANNUEL'" class="col-lg-11"
+                    v-model="selectedPeriode_values" :options="choixPeriodes" :multiple="true" :close-on-select="false"
+                    label="label" track-by="label" placeholder="Choisir une période" select-label="cliquer pour ajouter"
+                    deselect-label="cliquer pour supprimer" :hide-selected="true">
+                  </multiselect>
+
+                  <label class="col-lg-12">Années</label>
+                  <multiselect class="col-lg-11" v-model="selectedItems" :options="annees" :multiple="true"
+                    :close-on-select="false" label="label" track-by="label" placeholder="Choisir une année"
+                    select-label="cliquer pour ajouter" deselect-label="cliquer pour supprimer" :hide-selected="true">
+                  </multiselect>
                 </div>
-              </CCol>
-              </CRow>
-              <CRow  class="col-lg-12 text-justify">
-           
-        <CButton color="success" @click="visualiser()"> <CIcon name="cil-speedometer"/>Visualiser</CButton> &nbsp;
-      
-   </CRow>
+
+                <br />
+                &nbsp;
+
+                <CRow class="align-items-center">
+
+                  <div class="row col-lg-12">
+                    <div role="group" class="col-lg-12 form-group">
+                      <label class="custom-control-inline"> Période </label>
+                      <div role="group" class="custom-control custom-control-inline custom-radio">
+                        <input id="SECTEUR2" type="radio" class="custom-control-input" v-model="graphique"
+                          value="SECTEUR" />
+                        <label for="SECTEUR2" class="custom-control-label"> SECTEUR </label>
+                      </div>
+                      <div role="group" class="custom-control custom-control-inline custom-radio">
+                        <input id="HISTOGRAMME" type="radio" class="custom-control-input" v-model="graphique"
+                          value="HISTOGRAMME" />
+                        <label for="HISTOGRAMME" class="custom-control-label"> HISTOGRAMME </label>
+                      </div>
+                      <div role="group" class="custom-control custom-control-inline custom-radio">
+                        <input id="FIXE" type="radio" class="custom-control-input" v-model="graphique" value="FIXE" />
+                        <label for="FIXE" class="custom-control-label"> FIXE </label>
+                      </div>
+                    </div>
+                  </div>
+                </CRow>
+                &nbsp;
+              </div>
+            </CCol>
+          </CRow>
+          <CRow class="col-lg-12 text-justify">
+
+            <CButton color="success" @click="visualiser()">
+              <CIcon name="cil-speedometer" />Visualiser
+            </CButton> &nbsp;
+
+          </CRow>
         </CCardBody>
         <CCardFooter>
-              <CRow >
-                
-                <CInput label="Libelle" type="text" placeholder="Libelle" v-model="dashboardItem.libelle" class="col-lg-12"/>
+          <CRow>
 
-            <CTextarea class="col-lg-12" label="Description" type="text" placeholder="Description" v-model="dashboardItem.description"  rows="9"/>
-             
-            <CInput label="Ordre" type="text" placeholder="Ordre décroissante" v-model="dashboardItem.i" class="col-lg-4"/>
-            <CInput label="Largeur [1 à 12]" type="text" placeholder="de 1 à 12" v-model="dashboardItem.w" class="col-lg-4"/>
-        </CRow>
-        </CCardFooter>
-          <CCardFooter>
-            
-            <CRow  class="col-lg-12 text-justify">
+            <CInput label="Libelle" type="text" placeholder="Libelle" v-model="dashboardItem.libelle"
+              class="col-lg-12" />
+
+            <CCol col="12" lg="12">
+              <label for="">Description</label>
+              <quill-editor :content="dashboardItem.description" v-model="dashboardItem.description" />
+            </CCol>
+            <CInput label="Ordre" type="text" placeholder="Ordre décroissante" v-model="dashboardItem.i"
+              class="col-lg-4" />
+            <CInput label="Largeur [1 à 12]" type="text" placeholder="de 1 à 12" v-model="dashboardItem.w"
+              class="col-lg-4" />
+          <div class="col-lg-4"></div>
            
-           <CButton color="primary" @click="store()">Ajouter</CButton> &nbsp;
-      <CButton color="secondary" @click="goBack">Retour</CButton>
-     
-   </CRow>
+            <label for="" class="col-lg-12">Seuil</label>
+            <CSelect :value.sync="dashboardItem.typeseuil" class="col-lg-4"
+            :options="options">
+            </CSelect>
 
-          </CCardFooter>
+            <CInput v-if="dashboardItem.typeseuil == 'VALEUR_REFERENCE'" type="text" placeholder="Ex. 15" v-model="dashboardItem.valeur_reference"
+              class="col-lg-4" />
+            <CSelect v-if="dashboardItem.typeseuil == 'DATE_REFERENCE'" :value.sync="dashboardItem.typeseuil" class="col-lg-4"
+            :options="annees">
+            </CSelect>
+            <CInput v-if="dashboardItem.typeseuil" type="text" placeholder="Couleur #F00" v-model="dashboardItem.couleur"
+              class="col-lg-4" />
+          </CRow>
+        </CCardFooter>
+        <CCardFooter>
+
+          <CRow class="col-lg-12 text-justify">
+
+            <CButton color="primary" @click="store()">Ajouter</CButton> &nbsp;
+            <CButton color="secondary" @click="goBack">Retour</CButton>
+
+          </CRow>
+
+        </CCardFooter>
       </CCard>
     </CCol>
     <CCol col="12" lg="6">
       <div>
-                  <IndicateursSecteur
-                    v-if="graphique == 'SECTEUR' &&refreshing"
-                    :donneeSearch="donneeSearch" :refreshing="refreshing"
-                  />
-                  <IndicateurBarChart
-                    v-if="graphique == 'HISTOGRAMME' &&refreshing"
-                    :donneeSearch="donneeSearch" :refreshing="refreshing"
-                  />
-                  
-                  <IndicateursShow
-                    v-if="graphique == 'FIXE' &&refreshing"
-                    :donneeSearch="donneeSearch" :refreshing="refreshing"
-                  />
-                </div>
+        <IndicateursSecteur v-if="graphique == 'SECTEUR' &&refreshing" :donneeSearch="donneeSearch"
+          :refreshing="refreshing" />
+        <IndicateurBarChart v-if="graphique == 'HISTOGRAMME' &&refreshing" :donneeSearch="donneeSearch"
+          :refreshing="refreshing" />
+
+        <IndicateursShow v-if="graphique == 'FIXE' &&refreshing" :donneeSearch="donneeSearch"
+          :refreshing="refreshing" />
+      </div>
     </CCol>
   </CRow>
 </template>
@@ -282,9 +235,16 @@ export default {
       desagregations: [],
       communes: [],
       annees: [],
+      date_references: [],
       anneesSelect: null,
       indicateurliste: [],
-      refreshing:false
+      refreshing:false,
+      options : [
+        { label: '', value: '' },
+        { label: 'Moyenne', value: 'MOYENNE' },
+        { label: 'Valeur de référence', value: 'VALEUR_REFERENCE' },
+        { label: 'Date de référence', value: 'DATE_REFERENCE' }
+      ],
     }
   },
   methods: {

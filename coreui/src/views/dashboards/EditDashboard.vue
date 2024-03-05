@@ -1,13 +1,18 @@
 <template>
   <CRow>
-    <CCol col="12" lg="6">
+    <CCol col="12" lg="12">
       <CCard>
         <CCardBody>
           <h3>
-            Modifier dashboard
+            Modifier le dashboard
           </h3>
-            <CInput label="Libelle" type="text" placeholder="Libelle" v-model="dashboard.libelle"/>
-            <CTextarea label="Description" type="text" placeholder="Description" v-model="dashboard.description"  rows="9"/>
+          <CCol col="12" lg="6">
+            <CInput label="Libelle" type="text" placeholder="Libelle" v-model="dashboard.libelle"></CInput>
+          </CCol>
+          <CCol col="12" lg="12">
+            <quill-editor :content="dashboard.description" v-model="dashboard.description" />
+          </CCol>
+          <BR></BR>
           <CButton color="primary" @click="update()">Modifier</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
         </CCardBody>

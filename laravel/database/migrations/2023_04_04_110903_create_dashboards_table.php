@@ -16,7 +16,7 @@ class CreateDashboardsTable extends Migration
         Schema::create('dashboards', function (Blueprint $table) {
             $table->id();
             $table->string('libelle',255)->nullable();
-            $table->string('description',255)->nullable();
+            $table->text('description')->nullable();
             $table->tinyInteger('updated')->nullable()->default(0);
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();

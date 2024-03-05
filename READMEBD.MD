@@ -30,3 +30,6 @@ ALTER TABLE `communes` ADD `categorie` INT(11) NULL AFTER `defaut`, ADD `urlSite
 
 
 SELECT * FROM `donnees`,indicateurs,sous_groupes WHERE donnees.indicateur_id=indicateurs.id and sous_groupes.id=indicateurs.sous_groupe_id
+
+20240303
+ALTER TABLE `dashboards` CHANGE `description` `description` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;

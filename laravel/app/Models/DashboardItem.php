@@ -13,6 +13,7 @@ class DashboardItem extends Model
     protected $fillable = [
         'dashboard_id',
         'libelle',
+        'description',
         'requete',
         'graphique',
         'i',

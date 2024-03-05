@@ -12,6 +12,7 @@ class Dashboard extends Model
 
     protected $fillable = [
         'libelle',
+        'description',
         'updated_by',
         'created_by',
         'updated_at',
