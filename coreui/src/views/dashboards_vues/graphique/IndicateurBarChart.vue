@@ -1,19 +1,9 @@
 <template>  
       <CRow class="col-lg-12">
-        <CChartBar  v-if="choixgraphiquelocal=='HISTOGRAMME'"
-          :datasets="datasets"
-          :options="computedOptions"
-          :labels="labels"
-          style="min-height: 50vh" class="col-lg-12"
-        />
         
-        <CChartLine  v-if="choixgraphiquelocal=='COURBE'"
-            :datasets="datasets"
-            :options="computedOptions"
-            :labels="labels"
-            style="min-height: 50vh" class="col-lg-12"
-            pointed
-          />  
+        <highcharts type="chart" :options="chartOptions"  class="col-lg-12"></highcharts>
+
+ 
     <CRow form class="form-group col-lg-12" v-if="anneelist.length > 1||periodelist.length>1" style="display: inline-flex;"> 
       <CCol sm="12" class="custom-control-inline">
          
@@ -54,28 +44,46 @@
 import { CChartBar } from "@coreui/vue-chartjs";
 import { CChartLine } from "@coreui/vue-chartjs";
 import { deepObjectsMerge } from "@coreui/utils/src";
-var FileSaver = require('file-saver');
+var FileSaver = require('file-saver'); 
+import { BarChart  } from 'highcharts-vue'
 
 export default {
   name: "IndicateurBarChart",
-  components: { CChartBar,CChartLine },
-  props: ["donneeSearch","refreshing","choixgraphique"],
+  components: { CChartBar,CChartLine,BarChart   },
+  props: ["donneeSearch","refreshing","choixgraphique","seuil"],
   data() {
     return {
       an: null,
       compteur: 0,
       choixgraphiquelocal: null,
       anneelist: [],
-      periodelist:[],
-      indicateurTitle:"",
-      index:Math.random()*100,
+      periodelist: [],
+      indicateurTitle: "",
+      index: Math.random() * 100,
       data1: [],
       labels: [],
       items: [],
       datasets: [],
       togglePress: false,
-      indicateur:"",
-    };
+      indicateur: "",
+      chartOptions: {
+        chart: {
+          type: 'column',
+        },
+        xAxis: {
+          categories: []
+        },
+        plotOptions: {
+            series: {
+                colorByPoint: true,
+            }
+        },
+        series: [{
+          data: [1,2,3] ,// sample data,
+                colorByPoint: true,
+        }]
+      }
+    }
   },
   watch: {
     reloadParams() {
@@ -125,7 +133,7 @@ export default {
       return deepObjectsMerge(this.defaultDatasets, this.datasets || {});
     },
     computedOptions() {
-      return deepObjectsMerge(this.defaultOptions, this.options || {});
+      return deepObjectsMerge(this.defaultOptions, {});
     },
   },
   methods: {
@@ -194,6 +202,30 @@ export default {
           couleurs.push(`hsl(${teinte},${saturation}%,${luminosite}%)`)
         }
     },
+    async seuilControle() {
+      let self = this;
+
+      if(this.seuil.type_seuil == 'DATE_REFERENCE') {
+        self.donneeSearch['periode'] = this.seuil.seuil_periode;
+        self.donneeSearch['periode_value'] = [this.seuil.seuil_periode_value];
+        self.donneeSearch['annee'] = [this.seuil.seuil_annee];
+      this.$axios
+        .post(this.$apiAdress + '/api/donnees/findBy?token=' + localStorage.getItem("api_token"),
+          self.donneeSearch
+        )
+        .then(function (response) {
+          let items = response.data;
+          if(items.length>0){
+            self.seuil.seuil_valeur_reference = items[0].valeur;
+          }
+          this.getDatasets();
+        }
+        );
+      }
+      else {
+        this.getDatasets();
+      }
+      },
     async getDatasets() {
       let self = this;
       this.$axios
@@ -219,6 +251,15 @@ export default {
             },
           ];
           self.updatedPeriodeInList(self.items);
+          if(self.seuil?.type_seuil == 'MOYENNE') {
+            self.seuil.seuil_valeur_reference = 0;
+            if (self.items && self.items.length > 0){
+              for (let x of self.items){
+                self.seuil.seuil_valeur_reference = self.seuil.seuil_valeur_reference + x.valeur;
+              }
+              self.seuil.seuil_valeur_reference = self.seuil.seuil_valeur_reference / self.items.length;
+            }
+          }
           // Verifier si nous avons plusieurs année
           if (self.items && self.items.length > 0) {
             self.indicateurTitle = self.items[0].indicateur;
@@ -249,9 +290,19 @@ export default {
             self.datasets[0].data = []
             self.labels = []
             for (let d of self.items) {
-              self.datasets[0].data.push({
+              if(self.seuil?.type_seuil && self.seuil.seuil_valeur_reference>d.valeur){
+                self.datasets[0].data.push({
                     y: d.valeur,
+                    color:self.seuil.seuil_couleur
                 });
+              }
+              else 
+              {
+                self.datasets[0].data.push({
+                    y: d.valeur,
+                    color:"#F00"
+                });
+              }
               if (self.anneelist.length > 1 && self.periodelist.length > 1 && d.periode != "ANNUEL") {
                 self.labels.push(d.periode_value + " " + d.annee)
               }
@@ -269,9 +320,11 @@ export default {
                 self.labels.push(d.indicateur);
               }
             }
-
+            self.chartOptions. xAxis .categories = self.labels;
+            self.chartOptions.series[0].data = self.datasets[0].data ; 
+            self.chartOptions.series[0].name = self.indicateurTitle ;
+            self.chartOptions.title.text = self.indicateurTitle ;
           }
-          self.label = self.indicateur;
         })
         .catch(function (error) {
           console.log(error.response.status == 401);
@@ -307,7 +360,7 @@ export default {
     },
   },
   mounted: function () {
-    this.getDatasets();
+    this.seuilControle();
     this.choixgraphiquelocal = this.choixgraphique;
     
     if(localStorage.getItem("choixgraphiquelocal")){

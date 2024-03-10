@@ -26,7 +26,7 @@
         />
         <IndicateurBarChart
           v-if="item.graphique == 'HISTOGRAMME'"
-          :donneeSearch="JSON.parse(item.requete)" :refreshing="true"
+          :donneeSearch="JSON.parse(item.requete)" :refreshing="true" :seuil="item"
         />
         <IndicateursShow
           v-if="item.graphique == 'FIXE'"
