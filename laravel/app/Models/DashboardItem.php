@@ -16,6 +16,14 @@ class DashboardItem extends Model
         'description',
         'requete',
         'graphique',
+        
+        'type_seuil',
+        'seuil_valeur_reference',
+        'seuil_periode',
+        'seuil_periode_value',
+        'seuil_annee',
+        'seuil_couleur',
+        
         'i',
         'x',
         'y',

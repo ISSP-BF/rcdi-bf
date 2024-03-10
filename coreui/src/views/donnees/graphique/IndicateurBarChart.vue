@@ -191,7 +191,7 @@ export default {
           couleurs.push(`hsl(${teinte},${saturation}%,${luminosite}%)`)
         }
     },
-    getDatasets() {
+    async getDatasets() {
       let self = this;
      console.log(self.donneeSearch)
       axios

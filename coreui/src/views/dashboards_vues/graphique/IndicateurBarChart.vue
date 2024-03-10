@@ -53,8 +53,7 @@
 <script>
 import { CChartBar } from "@coreui/vue-chartjs";
 import { CChartLine } from "@coreui/vue-chartjs";
-import { getColor, deepObjectsMerge } from "@coreui/utils/src";
-import axios from "axios";
+import { deepObjectsMerge } from "@coreui/utils/src";
 var FileSaver = require('file-saver');
 
 export default {
@@ -197,66 +196,69 @@ export default {
     },
     async getDatasets() {
       let self = this;
-      axios
+      this.$axios
         .post(this.$apiAdress + '/api/donnees/findBy?token=' + localStorage.getItem("api_token"),
           self.donneeSearch
         )
         .then(function (response) {
           self.items = response.data;
           self.datasets = [
-            {fill: false,
-        lineTension: 0.1,  
-        pointBorderColor: '#E46651',  
-        pointHoverBackgroundColor: '#E46651',
-        pointHoverBorderColor: '#E46651',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-              label: self.items&&self.items.length>0?self.items[0].indicateur:'',
+            {
+              fill: false,
+              lineTension: 0.1,
+              pointBorderColor: '#E46651',
+              pointHoverBackgroundColor: '#E46651',
+              pointHoverBorderColor: '#E46651',
+              pointHoverBorderWidth: 2,
+              pointRadius: 1,
+              pointHitRadius: 10,
+              label: self.items && self.items.length > 0 ? self.items[0].indicateur : '',
               backgroundColor: '#f87979',
-              borderColor:["#E46651"],
+              borderColor: ["#E46651"],
               data: [],
             },
           ];
           self.updatedPeriodeInList(self.items);
           // Verifier si nous avons plusieurs année
-          if (self.items&&self.items.length>0) {
-            self.indicateurTitle=self.items[0].indicateur;
+          if (self.items && self.items.length > 0) {
+            self.indicateurTitle = self.items[0].indicateur;
             self.anneelist = [];
             for (let x of self.items) {
               let verif = false;
-              for(let y of self.anneelist){
-                if(y===x.annee){
-                  verif=true;
+              for (let y of self.anneelist) {
+                if (y === x.annee) {
+                  verif = true;
                   break;
                 }
               }
-              if(!verif){self.anneelist.push(x.annee)}
+              if (!verif) { self.anneelist.push(x.annee) }
             }
-            
+
 
             self.periodelist = []
             for (let x of self.items) {
               let verif = false;
-              for(let y of self.periodelist){
-                if(y===x.periode_value){
-                  verif=true;
+              for (let y of self.periodelist) {
+                if (y === x.periode_value) {
+                  verif = true;
                   break;
                 }
               }
-              if(!verif){self.periodelist.push(x.periode_value)}
+              if (!verif) { self.periodelist.push(x.periode_value) }
             }
             self.datasets[0].data = []
-            self.labels =  [ ]
+            self.labels = []
             for (let d of self.items) {
-              self.datasets[0].data.push(d.valeur);
-              if(self.anneelist.length > 1&&self.periodelist.length>1&&d.periode!="ANNUEL"){
-                self.labels.push(d.periode_value+" "+d.annee)
+              self.datasets[0].data.push({
+                    y: d.valeur,
+                });
+              if (self.anneelist.length > 1 && self.periodelist.length > 1 && d.periode != "ANNUEL") {
+                self.labels.push(d.periode_value + " " + d.annee)
               }
               else if (self.anneelist.length > 1) {
                 self.labels.push(d.annee);
-              } 
-              else if(self.periodelist.length>1){
+              }
+              else if (self.periodelist.length > 1) {
                 self.labels.push(d.periode_value)
               }
               else if (d.niveau2) {
@@ -272,7 +274,7 @@ export default {
           self.label = self.indicateur;
         })
         .catch(function (error) {
-          console.log(error.response.status==401);
+          console.log(error.response.status == 401);
           if (
             error.response &&
             error.response.data.message == "The given data was invalid."
@@ -286,7 +288,7 @@ export default {
           } else {
             // if(error.response.status==401)
             // self.$router.push({ path: "login" });
-            self.$toasted.show(self.message,{type:"error"});
+            self.$toasted.show(self.message, { type: "error" });
             console.log(error);
           }
         });

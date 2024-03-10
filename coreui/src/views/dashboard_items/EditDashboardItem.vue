@@ -19,6 +19,23 @@
             
             <CInput label="Ordre" type="text" placeholder="Ordre décroissante" v-model="dashboardItem.i" class="col-lg-4"/>
             <CInput label="Largeur [1 à 12]" type="text" placeholder="de 1 à 12" v-model="dashboardItem.w" class="col-lg-4"/>
+          
+            <div class="col-lg-4"></div>
+           
+           <label for="" class="col-lg-12">Seuil</label>
+           <CSelect :value.sync="dashboardItem.type_seuil" class="col-lg-4"
+           :options="options">
+           </CSelect>
+
+           <CInput v-if="dashboardItem.type_seuil == 'VALEUR_REFERENCE'" type="text" placeholder="Ex. 15" v-model="dashboardItem.seuil_valeur_reference"
+             class="col-lg-4" />
+           <CSelect v-if="dashboardItem.type_seuil == 'DATE_REFERENCE'" :value.sync="dashboardItem.seuil_periode_value" class="col-lg-3"
+           :options="choixPeriodes">
+           </CSelect>
+           <CInput  v-if="dashboardItem.type_seuil == 'DATE_REFERENCE'" type="text" placeholder="" v-model="dashboardItem.seuil_annee"
+             class="col-lg-2" />
+           <CInput v-if="dashboardItem.type_seuil" type="text" placeholder="Couleur #F00" v-model="dashboardItem.seuil_couleur"
+             class="col-lg-3" />
           </CRow>
         </CCardBody>
         <CCardFooter>
@@ -112,9 +129,18 @@ export default {
         y: "",
         w: "",
         h: "",
+        type_seuil: "",
         static: true,
       },refreshing:false,
       message: "",
+      options : [
+        { label: '', value: '' },
+        { label: 'Moyenne', value: 'MOYENNE' },
+        { label: 'Valeur de référence', value: 'VALEUR_REFERENCE' },
+        { label: 'Date de référence', value: 'DATE_REFERENCE' }
+      ],
+      periodes: [],
+      annees: [],
     };
   },
   methods: {
@@ -123,6 +149,48 @@ export default {
     },
     visualiser(){
         this.refreshing = !this.refreshing;
+    },
+    
+    updatedListPeriode(choix) {
+      this.choixPeriodes = [];
+      switch (choix) {
+        case "TRIMESTRIEL":
+          this.choixPeriodes = [
+            { value: 1, label: "Trimestre 1" },
+            { value: 2, label: "Trimestre 2" },
+            { value: 3, label: "Trimestre 3" },
+            { value: 4, label: "Trimestre 4" },
+          ];
+          break;
+        case "MENSUEL":
+          this.choixPeriodes = [
+            { value: 1, label: "Janvier" },
+            { value: 2, label: "Février" },
+            { value: 3, label: "Mars" },
+            { value: 4, label: "Avril" },
+            { value: 5, label: "Mai" },
+            { value: 6, label: "Juin" },
+            { value: 7, label: "Juillet" },
+            { value: 8, label: "Aout" },
+            { value: 9, label: "Septembre" },
+            { value: 10, label: "Octobre" },
+            { value: 11, label: "Novembre" },
+            { value: 12, label: "Décembre" },
+          ];
+          break;
+        case "SEMESTRIEL":
+          this.choixPeriodes = [
+            { value: 1, label: "Semestre 1" },
+            { value: 2, label: "Semestre 2" },
+          ];
+          break;
+        case "ANNUEL":
+          this.choixPeriodes = [];
+          break;
+
+        default:
+          break;
+      }
     },
     update() {
       let self = this;
@@ -167,6 +235,7 @@ export default {
       )
       .then(function (response) {
         self.dashboardItem = response.data;
+        self.updatedListPeriode (self.dashboardItem['seuil_periode']);
       })
       .catch(function (error) {
         console.log(error);

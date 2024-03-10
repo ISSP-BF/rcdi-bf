@@ -74,6 +74,8 @@ Vue.prototype.$apiAdressSite = 'https://rcdi.bf/wp-json/wp/v2/posts';
 
 Vue.config.performance = true
 
+import axios from "axios";
+Vue.prototype.$axios = axios
 
 Vue.use(loading, {
     bg: '#ebedef',

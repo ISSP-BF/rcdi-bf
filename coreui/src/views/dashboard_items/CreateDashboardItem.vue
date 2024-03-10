@@ -109,16 +109,19 @@
           <div class="col-lg-4"></div>
            
             <label for="" class="col-lg-12">Seuil</label>
-            <CSelect :value.sync="dashboardItem.typeseuil" class="col-lg-4"
+            <CSelect :value.sync="dashboardItem.type_seuil" class="col-lg-4"
             :options="options">
             </CSelect>
 
-            <CInput v-if="dashboardItem.typeseuil == 'VALEUR_REFERENCE'" type="text" placeholder="Ex. 15" v-model="dashboardItem.valeur_reference"
+            <CInput v-if="dashboardItem.type_seuil == 'VALEUR_REFERENCE'" type="text" placeholder="Ex. 15" v-model="dashboardItem.seuil_valeur_reference"
               class="col-lg-4" />
-            <CSelect v-if="dashboardItem.typeseuil == 'DATE_REFERENCE'" :value.sync="dashboardItem.typeseuil" class="col-lg-4"
+            <CSelect v-if="dashboardItem.type_seuil == 'DATE_REFERENCE'" :value.sync="dashboardItem.seuil_periode_value" class="col-lg-2"
+            :options="choixPeriodes">
+            </CSelect>
+            <CSelect v-if="dashboardItem.type_seuil == 'DATE_REFERENCE'" :value.sync="dashboardItem.seuil_annee" class="col-lg-2"
             :options="annees">
             </CSelect>
-            <CInput v-if="dashboardItem.typeseuil" type="text" placeholder="Couleur #F00" v-model="dashboardItem.couleur"
+            <CInput v-if="dashboardItem.type_seuil" type="text" placeholder="Couleur #F00" v-model="dashboardItem.seuil_couleur"
               class="col-lg-4" />
           </CRow>
         </CCardFooter>
@@ -231,10 +234,10 @@ export default {
       indicateurs: [],
       sous_groupes: [],
       periodes: [],
+      annees: [],
       periodeList: ["MENSUEL", "TRIMESTRIEL", "SEMESTRIEL", "ANNUEL"],
       desagregations: [],
       communes: [],
-      annees: [],
       date_references: [],
       anneesSelect: null,
       indicateurliste: [],
@@ -277,7 +280,9 @@ export default {
         self.dashboardItem['requete'] = JSON.stringify(this.donneeSearch);
         self.dashboardItem['graphique'] = this.graphique;
         self.dashboardItem['dashboard_id'] = this.$route.params.dashboard;
+        self.dashboardItem['seuil_periode'] = this.donnee.periode;
         console.log(self.dashboardItem)
+
         axios.post(  this.$apiAdress + '/api/dashboard-items?token=' + localStorage.getItem("api_token"),
           self.dashboardItem
         )

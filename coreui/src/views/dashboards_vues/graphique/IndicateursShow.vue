@@ -9,8 +9,7 @@
       <CWidgetDropdown :color="item.couleur" :header="item.valeur+''" :text="item.titre+''"
             >
         <template #footer>
-          <div class="mt-3 mx-3"
-          />
+          <div class="mt-3 mx-3"></div>
         </template>
       </CWidgetDropdown>
     </CCol>  
@@ -18,7 +17,6 @@
 </template>
 
 <script> 
-import axios from 'axios'
 
 export default {
   name: 'IndicateursShow', 
@@ -99,7 +97,7 @@ export default {
     },
     async getDatasets(){
       let self = this;
-      axios.post(  this.$apiAdress + '/api/donnees/findBy?token=' + localStorage.getItem("api_token"),
+      this.$axios.post(  this.$apiAdress + '/api/donnees/findBy?token=' + localStorage.getItem("api_token"),
       self.donneeSearch
         )
         .then(function (response) {

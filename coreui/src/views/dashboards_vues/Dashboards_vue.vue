@@ -2,7 +2,7 @@
   <div 
     class="row col-lg-12"> 
     <div class="col-lg-12">
-    <p v-html="reponsed"></p>
+    <p v-html="dashboard.description"></p>
   </div>
   <div 
     v-for="item in items" 
@@ -14,9 +14,9 @@
       accent-color="primary"  
           v-if="item.graphique !== 'FIXE'"
     >
-      <CCardHeader>{{ item.libelle }}
+      <CCardHeader><h6><b>{{ item.libelle }}</b></h6>
         <div>
-          Description {{ item.description }}
+          <p v-html="item.description"></p>
         </div>
       </CCardHeader> 
       <CCardBody>
@@ -96,7 +96,7 @@ export default {
       gridKey: 0,
       items: [], 
       message: '',
-      reponsed:'Resumé : Les centres de santé au Burkina Faso offrent des soins de santé de base tels que des consultations, des vaccinations et des traitements pour les maladies courantes. Cependant, ils font face à des défis tels que des ressources limitées, des pénuries de personnel et des infrastructures inadéquates.',
+      dashboard: {},
     }
   },
   watch: {
@@ -125,6 +125,13 @@ export default {
         console.log(error);
         //self.$router.push({ path: '/login' });
       });
+      axios.get(  this.$apiAdress + '/api/dashboards/' + id + '?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+      self.dashboard = response.data;
+    }).catch(function (error) {
+      console.log(error);
+      self.$router.push({ path: '/login' });
+    });
     },
     saveGrid () {
       this.storedLayout = JSON.parse(JSON.stringify(this.layout))

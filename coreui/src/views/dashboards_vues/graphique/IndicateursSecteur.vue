@@ -68,7 +68,6 @@
 
 <script>
 import { CChartPie } from "@coreui/vue-chartjs";
-import axios from "axios";
 var FileSaver = require("file-saver");
 import { getColor, deepObjectsMerge } from "@coreui/utils/src";
 import { CChartDoughnut } from "@coreui/vue-chartjs";
@@ -231,7 +230,7 @@ export default {
     },
     async getDatasets() {
       let self = this;
-      axios
+      this.$axios
         .post(
           this.$apiAdress +
             "/api/donnees/findBy?token=" +

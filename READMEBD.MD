@@ -33,3 +33,5 @@ SELECT * FROM `donnees`,indicateurs,sous_groupes WHERE donnees.indicateur_id=ind
 
 20240303
 ALTER TABLE `dashboards` CHANGE `description` `description` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;
+20240310
+ALTER TABLE `dashboard_items` ADD `type_seuil` ENUM('VALEUR_REFERENCE','DATE_REFERENCE','MOYENNE') NULL AFTER `description`, ADD `seuil_valeur_reference` FLOAT NULL AFTER `type_seuil`, ADD `seuil_periode` ENUM('TRIMESTRIEL','MENSUEL','ANNUEL') NULL AFTER `seuil_valeur_reference`, ADD `seuil_periode_value` INT(11) NULL AFTER `seuil_periode`, ADD `seuil_annee` INT(11) NULL AFTER `seuil_periode_value`, ADD `seuil_couleur` VARCHAR(255) NULL AFTER `seuil_annee`;
