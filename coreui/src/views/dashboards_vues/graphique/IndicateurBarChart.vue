@@ -1,56 +1,41 @@
-<template>  
-      <CRow class="col-lg-12">
-        
-        <highcharts type="chart" :options="chartOptions"  class="col-lg-12"></highcharts>
+<template>
+  <CRow class="col-lg-12">
 
- 
-    <CRow form class="form-group col-lg-12" v-if="anneelist.length > 1||periodelist.length>1" style="display: inline-flex;"> 
+    <highcharts type="chart" :options="chartOptions" class="col-lg-12"></highcharts>
+
+
+    <CRow form class="form-group col-lg-12" v-if="anneelist.length > 1 || periodelist.length > 1"
+      style="display: inline-flex;">
       <CCol sm="12" class="custom-control-inline">
-         
-        <div
-          role="group"
-          class="custom-control custom-control-inline custom-radio"
-        >
-          <input
-            :id="'HISTOGRAMME'+index" 
-            type="radio"
-            class="custom-control-input"
-            v-model="choixgraphiquelocal"
-            value="HISTOGRAMME"
-          />
-          <label :for="'HISTOGRAMME'+index"  class="custom-control-label"> HISTOGRAMME </label>
-         </div>
-        <div
-          role="group"
-          class="custom-control custom-control-inline custom-radio"
-        >
-          <input
-            :id="'COURBE'+index"
-            type="radio"
-            class="custom-control-input"
-            v-model="choixgraphiquelocal"
-            value="COURBE"
-          />
-          <label :for="'COURBE'+index" class="custom-control-label"> COURBE </label>
+
+        <div role="group" class="custom-control custom-control-inline custom-radio">
+          <input :id="'HISTOGRAMME' + index" type="radio" class="custom-control-input" v-model="chartOptions.chart.type"
+            value="column" />
+          <label :for="'HISTOGRAMME' + index" class="custom-control-label"> HISTOGRAMME </label>
+        </div>
+        <div role="group" class="custom-control custom-control-inline custom-radio">
+          <input :id="'COURBE' + index" type="radio" class="custom-control-input" v-model="chartOptions.chart.type"
+            value="line" />
+          <label :for="'COURBE' + index" class="custom-control-label"> COURBE </label>
         </div>
       </CCol>
     </CRow>
-  
-      </CRow>
-      
+
+  </CRow>
+
 </template>
 
 <script>
 import { CChartBar } from "@coreui/vue-chartjs";
 import { CChartLine } from "@coreui/vue-chartjs";
 import { deepObjectsMerge } from "@coreui/utils/src";
-var FileSaver = require('file-saver'); 
-import { BarChart  } from 'highcharts-vue'
+var FileSaver = require('file-saver');
+import { BarChart } from 'highcharts-vue'
 
 export default {
   name: "IndicateurBarChart",
-  components: { CChartBar,CChartLine,BarChart   },
-  props: ["donneeSearch","refreshing","choixgraphique","seuil"],
+  components: { CChartBar, CChartLine, BarChart },
+  props: ["donneeSearch", "refreshing", "choixgraphique", "seuil"],
   data() {
     return {
       an: null,
@@ -67,37 +52,49 @@ export default {
       togglePress: false,
       indicateur: "",
       chartOptions: {
-        chart: {
-          type: 'column',
+        credits: {
+          text: '',
+          href: '#'
         },
+        title: { text: '' },
+        chart: {
+          type: 'line',
+        },
+        borderColor: '#F0F',
         xAxis: {
           categories: []
         },
         plotOptions: {
-            series: {
-                colorByPoint: true,
-            }
+          series: {
+            colorByPoint: true,
+            zones: [{
+              value: 2,
+              color: '#F00'
+            }, {
+              color: '#90ed7d'
+            }]
+          }
         },
         series: [{
-          data: [1,2,3] ,// sample data,
-                colorByPoint: true,
+          data: [],// sample data,
+          colorByPoint: true,
         }]
       }
     }
   },
   watch: {
     reloadParams() {
-      if(!this.choixgraphiquelocal){this.choixgraphiquelocal="HISTOGRAMME"}
-      localStorage.setItem("choixgraphiquelocal",JSON.stringify(this.choixgraphiquelocal))
+      if (!this.choixgraphiquelocal) { this.choixgraphiquelocal = "column" }
+      localStorage.setItem("choixgraphiquelocal", JSON.stringify(this.choixgraphiquelocal))
       this.getDatasets();
     },
   },
-  computed:{
+  computed: {
     reloadParams() {
       return [this.refreshing
       ];
     },
-    
+
     defaultDatasets() {
       return [
         {
@@ -137,95 +134,96 @@ export default {
     },
   },
   methods: {
-    exporter(){
+    exporter() {
       this.successModal = true;
-      if(!this.items||this.items.length==0){
-      this.$toasted.show("Pas de données",{type:"warning"});
-      return;
+      if (!this.items || this.items.length == 0) {
+        this.$toasted.show("Pas de données", { type: "warning" });
+        return;
       }
 
-      var blob = new Blob([this.convertToCSV(this.items)], {type: "text/csv;charset=utf-8"});
-      FileSaver.saveAs(blob, this.indicateur+" "+this.anneelist.toLocaleString() +".csv");
+      var blob = new Blob([this.convertToCSV(this.items)], { type: "text/csv;charset=utf-8" });
+      FileSaver.saveAs(blob, this.indicateur + " " + this.anneelist.toLocaleString() + ".csv");
       this.successModal = false;
     },
     convertToCSV(arr) {
-      arr.forEach(item=>{
-          Object.keys(arr[0]).forEach(champ => {
-              item[champ]=item[champ]?item[champ].toString().trim():item[champ]
-            });
-        })
-        const array = [Object.keys(arr[0])].concat(arr)
-        return array.map(it => {
-            return Object.values(it).join(';').toString()
-        }).join('\n')
+      arr.forEach(item => {
+        Object.keys(arr[0]).forEach(champ => {
+          item[champ] = item[champ] ? item[champ].toString().trim() : item[champ]
+        });
+      })
+      const array = [Object.keys(arr[0])].concat(arr)
+      return array.map(it => {
+        return Object.values(it).join(';').toString()
+      }).join('\n')
     },
-    updatedPeriodeInList(listValue){
-        let choixPeriodes = [];
-        listValue.forEach(d=>{
+    updatedPeriodeInList(listValue) {
+      let choixPeriodes = [];
+      listValue.forEach(d => {
         switch (d.periode) {
           case "TRIMESTRIEL":
-            choixPeriodes = [{value:1,label:"Trimestre 1"},{value:2,label:"Trimestre 2"},{value:3,label:"Trimestre 3"},{value:4,label:"Trimestre 4"},]
+            choixPeriodes = [{ value: 1, label: "Trimestre 1" }, { value: 2, label: "Trimestre 2" }, { value: 3, label: "Trimestre 3" }, { value: 4, label: "Trimestre 4" },]
             break;
           case "MENSUEL":
-          choixPeriodes = [
-            {value:1,label:"Janvier"},{value:2,label:"Février"},{value:3,label:"Mars"},{value:4,label:"Avril"},
-            {value:5,label:"Mai"},{value:6,label:"Juin"},{value:7,label:"Juillet"},{value:8,label:"Aout"},
-            {value:9,label:"Septembre"},{value:10,label:"Octobre"},{value:11,label:"Novembre"},{value:12,label:"Décembre"},
-          ]
+            choixPeriodes = [
+              { value: 1, label: "Janvier" }, { value: 2, label: "Février" }, { value: 3, label: "Mars" }, { value: 4, label: "Avril" },
+              { value: 5, label: "Mai" }, { value: 6, label: "Juin" }, { value: 7, label: "Juillet" }, { value: 8, label: "Aout" },
+              { value: 9, label: "Septembre" }, { value: 10, label: "Octobre" }, { value: 11, label: "Novembre" }, { value: 12, label: "Décembre" },
+            ]
             break;
           case "SEMESTRIEL":
-        choixPeriodes = [{value:1,label:"Semestre 1"},{value:2,label:"Semestre 2"}]
+            choixPeriodes = [{ value: 1, label: "Semestre 1" }, { value: 2, label: "Semestre 2" }]
             break;
           case "ANNUEL":
             choixPeriodes = [];
             break;
-        
+
           default:
             break;
         }
-        if(d.periode!="ANNUEL"){
-          d.periode_value = choixPeriodes[d.periode_value-1].label;
+        if (d.periode != "ANNUEL") {
+          d.periode_value = choixPeriodes[d.periode_value - 1].label;
         }
 
       })
-        
+
 
     },
-    genererTableauCouleur(nombre){
-        const teinteBase = Math.floor(Math.random()*360);
-        const variationTeinte = 360/nombre;
-        const couleurs = [];
-        for(let i=0;i<nombre;i++){
-          const teinte = (teinteBase+i*variationTeinte)%360;
-          const saturation = Math.floor(Math.random()*31)+70;
-          const luminosite = Math.floor(Math.random()*31)+50;
-          couleurs.push(`hsl(${teinte},${saturation}%,${luminosite}%)`)
-        }
+    genererTableauCouleur(nombre) {
+      const teinteBase = Math.floor(Math.random() * 360);
+      const variationTeinte = 360 / nombre;
+      const couleurs = [];
+      for (let i = 0; i < nombre; i++) {
+        const teinte = (teinteBase + i * variationTeinte) % 360;
+        const saturation = Math.floor(Math.random() * 31) + 70;
+        const luminosite = Math.floor(Math.random() * 31) + 50;
+        couleurs.push(`hsl(${teinte},${saturation}%,${luminosite}%)`)
+      }
     },
     async seuilControle() {
       let self = this;
-
-      if(this.seuil.type_seuil == 'DATE_REFERENCE') {
-        self.donneeSearch['periode'] = this.seuil.seuil_periode;
-        self.donneeSearch['periode_value'] = [this.seuil.seuil_periode_value];
-        self.donneeSearch['annee'] = [this.seuil.seuil_annee];
-      this.$axios
-        .post(this.$apiAdress + '/api/donnees/findBy?token=' + localStorage.getItem("api_token"),
-          self.donneeSearch
-        )
-        .then(function (response) {
-          let items = response.data;
-          if(items.length>0){
-            self.seuil.seuil_valeur_reference = items[0].valeur;
+      let donneeSearch = JSON.parse(JSON.stringify(self.donneeSearch));
+      if (this.seuil.type_seuil == 'DATE_REFERENCE') {
+        donneeSearch['periode'] = this.seuil.seuil_periode;
+        donneeSearch['periode_value'] = [this.seuil.seuil_periode_value];
+        donneeSearch['annee'] = [this.seuil.seuil_annee];
+        this.$axios
+          .post(this.$apiAdress + '/api/donnees/findBy?token=' + localStorage.getItem("api_token"),
+            donneeSearch
+          )
+          .then(function (response) {
+            let itemsSeuil = response.data;
+            console.log(itemsSeuil, "itemsSeuil", self.seuil)
+            if (itemsSeuil.length > 0) {
+              self.seuil.seuil_valeur_reference = itemsSeuil[0].valeur;
+            }
+            self.getDatasets();
           }
-          this.getDatasets();
-        }
-        );
+          );
       }
       else {
         this.getDatasets();
       }
-      },
+    },
     async getDatasets() {
       let self = this;
       this.$axios
@@ -251,15 +249,21 @@ export default {
             },
           ];
           self.updatedPeriodeInList(self.items);
-          if(self.seuil?.type_seuil == 'MOYENNE') {
+          if (self.seuil?.type_seuil == 'MOYENNE') {
             self.seuil.seuil_valeur_reference = 0;
-            if (self.items && self.items.length > 0){
-              for (let x of self.items){
+            if (self.items && self.items.length > 0) {
+              for (let x of self.items) {
                 self.seuil.seuil_valeur_reference = self.seuil.seuil_valeur_reference + x.valeur;
               }
               self.seuil.seuil_valeur_reference = self.seuil.seuil_valeur_reference / self.items.length;
             }
           }
+          
+            if (self.seuil?.type_seuil) {
+              self.chartOptions.plotOptions.series.zones = [
+                { value: self.seuil.seuil_valeur_reference, color: '#F00'},
+                { color: self.seuil.seuil_couleur }]
+            }
           // Verifier si nous avons plusieurs année
           if (self.items && self.items.length > 0) {
             self.indicateurTitle = self.items[0].indicateur;
@@ -290,17 +294,16 @@ export default {
             self.datasets[0].data = []
             self.labels = []
             for (let d of self.items) {
-              if(self.seuil?.type_seuil && self.seuil.seuil_valeur_reference>d.valeur){
+              if (self.seuil?.type_seuil && d.valeur > self.seuil.seuil_valeur_reference) {
                 self.datasets[0].data.push({
-                    y: d.valeur,
-                    color:self.seuil.seuil_couleur
+                  y: d.valeur,
+                  color: self.seuil.seuil_couleur
                 });
               }
-              else 
-              {
+              else {
                 self.datasets[0].data.push({
-                    y: d.valeur,
-                    color:"#F00"
+                  y: d.valeur,
+                  color: "#F00"
                 });
               }
               if (self.anneelist.length > 1 && self.periodelist.length > 1 && d.periode != "ANNUEL") {
@@ -320,14 +323,13 @@ export default {
                 self.labels.push(d.indicateur);
               }
             }
-            self.chartOptions. xAxis .categories = self.labels;
-            self.chartOptions.series[0].data = self.datasets[0].data ; 
-            self.chartOptions.series[0].name = self.indicateurTitle ;
-            self.chartOptions.title.text = self.indicateurTitle ;
+            self.chartOptions.xAxis.categories = self.labels;
+            self.chartOptions.series[0].data = self.datasets[0].data;
+            self.chartOptions.series[0].name = self.indicateurTitle;
+            //self.chartOptions.title.text = self.indicateurTitle ;
           }
         })
         .catch(function (error) {
-          console.log(error.response.status == 401);
           if (
             error.response &&
             error.response.data.message == "The given data was invalid."
@@ -362,11 +364,11 @@ export default {
   mounted: function () {
     this.seuilControle();
     this.choixgraphiquelocal = this.choixgraphique;
-    
-    if(localStorage.getItem("choixgraphiquelocal")){
+
+    if (localStorage.getItem("choixgraphiquelocal")) {
       this.choixgraphiquelocal = JSON.parse(localStorage.getItem("choixgraphiquelocal"))
-    }else 
-    if(!this.choixgraphiquelocal){this.choixgraphiquelocal="HISTOGRAMME"}
+    } else
+      if (!this.choixgraphiquelocal) { this.choixgraphiquelocal = "column" }
   },
 };
 </script>
@@ -376,11 +378,13 @@ div:-webkit-full-screen {
   height: 100%;
   background-color: white;
 }
+
 div:-moz-full-screen {
   width: 100%;
   height: 100%;
   background-color: white;
 }
+
 div:fullscreen {
   width: 100%;
   height: 100%;

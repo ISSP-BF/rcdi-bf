@@ -129,6 +129,9 @@ class MenuElementController extends Controller
         if($request->input('type') !== 'title' && $request->input('parent') !== 'none'){
             $menus->parent_id = $request->input('parent');
         }
+        if($request->input('parent') === 'none') {
+            $menus->parent_id = null;
+        }
         $menus->sequence = $this->getNextSequence( $request->input('menu') );
         $menus->save();
         foreach($request->input('role') as $role){

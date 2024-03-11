@@ -118,7 +118,7 @@
             />
 
             <CRow v-if="!togglePress">
-              <CCol col="12" lg="2">
+              <CCol col="12" lg="3">
                 <div>
                   <h3>Filtre</h3>
 
@@ -312,7 +312,7 @@
                   &nbsp;
                 </div>
               </CCol>
-              <CCol col="12" lg="8">
+              <CCol col="12" lg="9">
                 <div>
                   <IndicateursSecteur
                     v-if="vueGraphe == 'SECTEUR'"
@@ -331,9 +331,9 @@
 
                 </div>
               </CCol>
-              <CCol col="12" lg="2">
+              <CCol col="12" lg="2" v-if="false">
                 <div>
-                  <h3>Filtre</h3>
+                  <h3>Filtre2</h3>
 
                   <div class="row">
                     
