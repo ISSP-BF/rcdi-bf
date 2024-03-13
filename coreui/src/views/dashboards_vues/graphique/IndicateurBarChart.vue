@@ -58,7 +58,7 @@ export default {
         },
         title: { text: '' },
         chart: {
-          type: 'line',
+          type: 'column',
         },
         borderColor: '#F0F',
         xAxis: {

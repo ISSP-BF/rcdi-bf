@@ -4,15 +4,24 @@
     <div class="col-lg-12">
     <p v-html="dashboard.description"></p>
   </div>
-  <div 
+  <div class="row col-lg-12">
+  <div class="col-lg-3 pt-6 pb-6">
+    <div v-for="item in items" role="group" class="col-lg-12 custom-control custom-control-inline custom-checkbox">
+      <input :id="'o' + item.id" type="checkbox" class="custom-control-input" v-model="item.isVisible"
+            value="column" />
+      <label :for="'o' + item.id" class="custom-control-label"> {{ item.libelle }} </label>
+    </div>
+  </div>
+  <div class="col-lg-9">
+    <div 
     v-for="item in items" 
     :key="item.id"
-      :class="'col-lg-'+item.w"
+      :class="'col-lg-12 '+item.w"
       class="no-margin"
   >
     <CCard 
       accent-color="primary"  
-          v-if="item.graphique !== 'FIXE'"
+          v-if="item.graphique !== 'FIXE' && item.isVisible == true"
     >
       <CCardHeader><h6><b>{{ item.libelle }}</b></h6>
         <div>
@@ -21,25 +30,26 @@
       </CCardHeader> 
       <CCardBody>
         <IndicateursSecteur
-          v-if="item.graphique == 'SECTEUR'"
+          v-if="item.graphique == 'SECTEUR' && item.isVisible == true"
           :donneeSearch="JSON.parse(item.requete)" :refreshing="true"
         />
         <IndicateurBarChart
-          v-if="item.graphique == 'HISTOGRAMME'"
+          v-if="item.graphique == 'HISTOGRAMME' && item.isVisible == true"
           :donneeSearch="JSON.parse(item.requete)" :refreshing="true" :seuil="item"
         />
         <IndicateursShow
-          v-if="item.graphique == 'FIXE'"
+          v-if="item.graphique == 'FIXE' && item.isVisible == true"
           :donneeSearch="JSON.parse(item.requete)" :refreshing="true"
         />
       </CCardBody>  
     </CCard>
         <IndicateursShow
-          v-if="item.graphique == 'FIXE'"
+          v-if="item.graphique == 'FIXE' && item.isVisible == true"
           :donneeSearch="JSON.parse(item.requete)" :refreshing="true"
         /> 
   </div> 
-  
+</div>
+</div>
   <CButton block color="link" class="px-0" @click="voirGraphique()">Voir d'autre graphique</CButton>
   </div>
 </template>
@@ -49,7 +59,8 @@ import axios from 'axios'
 import IndicateursSecteur from "./graphique/IndicateursSecteur";
 import IndicateurBarChart from "./graphique/IndicateurBarChart";
 import IndicateursShow from "./graphique/IndicateursShow";
-import { GridLayout, GridItem } from 'vue-grid-layout'
+import { GridLayout, GridItem } from 'vue-grid-layout';
+
 const baseLayout = [
   { i: '0', x: 0, y: 0, w: 4, h: 16, accent: 'primary' },
   { i: '1', x: 4, y: 0, w: 4, h: 12, accent: 'secondary', static: true },
@@ -86,7 +97,7 @@ export default {
     IndicateursSecteur,
     IndicateurBarChart,IndicateursShow,
     GridLayout,
-    GridItem,
+    GridItem
   },
   data: () => {
     return { 
