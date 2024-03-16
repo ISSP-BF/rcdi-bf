@@ -13,16 +13,8 @@
     </div>
   </div>
   <div class="col-lg-9">
-    <div 
-    v-for="item in items" 
-    :key="item.id"
-      :class="'col-lg-12 '+item.w"
-      class="no-margin"
-  >
-    <CCard 
-      accent-color="primary"  
-          v-if="item.graphique !== 'FIXE' && item.isVisible == true"
-    >
+    <div v-for="item in items" :key="item.id" :class="'col-lg-12 '+item.w" class="no-margin">
+    <CCard accent-color="primary" v-if=" item.isVisible == true">
       <CCardHeader><h6><b>{{ item.libelle }}</b></h6>
         <div>
           <p v-html="item.description"></p>
@@ -31,22 +23,16 @@
       <CCardBody>
         <IndicateursSecteur
           v-if="item.graphique == 'SECTEUR' && item.isVisible == true"
-          :donneeSearch="JSON.parse(item.requete)" :refreshing="true"
-        />
+          :donneeSearch="JSON.parse(item.requete)" :refreshing="true"/>
         <IndicateurBarChart
           v-if="item.graphique == 'HISTOGRAMME' && item.isVisible == true"
           :donneeSearch="JSON.parse(item.requete)" :refreshing="true" :seuil="item"
         />
         <IndicateursShow
           v-if="item.graphique == 'FIXE' && item.isVisible == true"
-          :donneeSearch="JSON.parse(item.requete)" :refreshing="true"
-        />
+          :donneeSearch="JSON.parse(item.requete)" :refreshing="true" :seuil="item"/> 
       </CCardBody>  
     </CCard>
-        <IndicateursShow
-          v-if="item.graphique == 'FIXE' && item.isVisible == true"
-          :donneeSearch="JSON.parse(item.requete)" :refreshing="true"
-        /> 
   </div> 
 </div>
 </div>

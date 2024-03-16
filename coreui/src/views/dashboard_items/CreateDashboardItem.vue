@@ -16,6 +16,12 @@
                   <CSelect label="Groupe" class="col-lg-12" :value.sync="donnee.groupe_id" :plain="true"
                     :options="groupes" @change="findSousGroupeByGroupe($event)">
                   </CSelect>
+                  
+                  <CSelect label="Localisation" class="col-lg-12" :value.sync="donnee.localisation_id"
+                        :plain="true" :options="localisations"
+                        @change="findSousGroupeByLocalisation($event)"
+                      >
+                      </CSelect>
                   <CSelect label="Sous Groupe" class="col-lg-12" :value.sync="donnee.sous_groupe_id" :plain="true"
                     :options="sous_groupes" @change="findIndicateurBySousGroupe($event)">
                   </CSelect>
@@ -121,8 +127,24 @@
             <CSelect v-if="dashboardItem.type_seuil == 'DATE_REFERENCE'" :value.sync="dashboardItem.seuil_annee" class="col-lg-2"
             :options="annees">
             </CSelect>
-            <CInput v-if="dashboardItem.type_seuil" type="text" placeholder="Couleur #F00" v-model="dashboardItem.seuil_couleur"
+            <CInput v-if="dashboardItem.type_seuil && dashboardItem.type_seuil !== 'INTERVALLE'" type="text" placeholder="Couleur #F001" v-model="dashboardItem.seuil_couleur"
               class="col-lg-4" />
+            <div class="col-lg-12" v-if="dashboardItem.type_seuil == 'INTERVALLE' && refreshingSegment">
+              <div class="row"  :key="index" v-for="(item, index) in dashboardItem.seuil_segment_list">
+                <CInput type="text" placeholder="Ex. 1" v-model="item.value"
+                class="col-lg-3" />
+                <CInput type="text" placeholder="Ex. 10" v-model="item.fin"
+                class="col-lg-3" />
+                <CInput type="text" placeholder="Ex. FFF" v-model="item.color"
+                class="col-lg-4" />
+                <CButton class="form-group" size="sm" color="danger" @click="deleteSegment(index)">
+                  <CIcon  color="danger" name="cil-x-circle" />
+                </CButton>
+              </div>
+              <CButton size="sm" color="primary" @click="ajouterSegment()">
+                  <CIcon name="cil-plus" />
+                </CButton>
+            </div>
           </CRow>
         </CCardFooter>
         <CCardFooter>
@@ -161,6 +183,7 @@ import IndicateursSecteur from "../donnees/graphique/IndicateursSecteur";
 import IndicateurBarChart from "../donnees/graphique/IndicateurBarChart";
 import IndicateursShow from "./graphique/IndicateursShow";
 
+// Import the styles too, globally
 export default {
   name: 'Requete',
   components: {
@@ -206,7 +229,9 @@ export default {
         annee: null,
         indice: null,
         source: null,
+        seuil_segment_list:[],
       },
+      localisations:[],
       donnee: {
         region_id: null,
         province_id: null,
@@ -246,8 +271,10 @@ export default {
         { label: '', value: '' },
         { label: 'Moyenne', value: 'MOYENNE' },
         { label: 'Valeur de référence', value: 'VALEUR_REFERENCE' },
-        { label: 'Date de référence', value: 'DATE_REFERENCE' }
+        { label: 'Date de référence', value: 'DATE_REFERENCE' },
+        { label: 'Intervalle', value: 'INTERVALLE' }
       ],
+      refreshingSegment:true,
     }
   },
   methods: {
@@ -281,6 +308,7 @@ export default {
         self.dashboardItem['graphique'] = this.graphique;
         self.dashboardItem['dashboard_id'] = this.$route.params.dashboard;
         self.dashboardItem['seuil_periode'] = this.donnee.periode;
+        self.dashboardItem['seuil_segment_list'] = JSON.stringify(self.dashboardItem['seuil_segment_list']);
         console.log(self.dashboardItem)
 
         axios.post(  this.$apiAdress + '/api/dashboard-items?token=' + localStorage.getItem("api_token"),
@@ -309,6 +337,24 @@ export default {
             }
         });
     },
+    ajouterSegment(){
+      this.refreshingSegment = false;
+      if (!this.dashboardItem.seuil_segment_list){
+        this.dashboardItem.seuil_segment_list=[];
+        this.ajouterSegment();
+      }
+      else {
+        this.dashboardItem.seuil_segment_list.push({});
+      }
+        console.log("======",this.dashboardItem.seuil_segment_list);
+      this.refreshingSegment = true;
+     },
+    deleteSegment(index){ 
+      this.refreshingSegment = false;
+       this.dashboardItem.seuil_segment_list.splice(index,1);
+      this.refreshingSegment = true;
+        console.log("======"+index);
+     },
     updatedListPeriode(choix) {
       this.choixPeriodes = [];
       this.selectedPeriode_values = [];
@@ -353,7 +399,25 @@ export default {
       this.donnee.periode_value =
         this.choixPeriodes.length > 0 ? this.choixPeriodes[0].value : null;
     },
+    
+    findLocalisationByGroupe(event){
+      
+      this.donnee.localisation_id = null
+      let self = this;
+      axios.get(  this.$apiAdress + '/api/indicateurs/findLocalisationByGroupe/'+self.donnee.groupe_id+'?token=' + localStorage.getItem("api_token"))
+    .then(function (response) {
+        self.localisations = response.data;
+        let lest = [{label:'Niveau Commune',value:null}]
+        lest.push(...self.localisations);
+        lest.push({label:'Niveau Désagrégé',value:-1});
+        self.localisations = lest;
+    }).catch(function (error) {
+      self.localisations  = []
+    });
+    }, 
     findSousGroupeByGroupe(event) {
+       this.findLocalisationByGroupe(event);
+       this.findIndicateurByGroupe(event);
       this.sous_groupes = [];
       let self = this;
       axios
@@ -379,6 +443,7 @@ export default {
         });
     },
     findIndicateurByGroupe(event) {
+      let self = this;
       axios
         .get(
           this.$apiAdress +
@@ -428,6 +493,35 @@ export default {
           // self.$router.push({ path: 'login' });
         });
     },
+     
+     findSousGroupeByLocalisation(event) { 
+       this.sous_groupes = [];
+       let self = this;
+       let localisationId = null;
+       if(self.donnee.localisation_id!==-1){
+        localisationId = self.donnee.localisation_id;
+       }
+       
+       axios
+         .get(
+           this.$apiAdress +
+             "/api/donnees/findSousGroupeByLocalisation/" +
+             localisationId  +"/"+self.donnee.groupe_id+
+             "?token=" +
+             localStorage.getItem("api_token")
+         )
+         .then(function (response) {
+           self.sous_groupes = response.data;
+ 
+           let lest = [{ label: "", value: null }];
+           lest.push(...self.sous_groupes);
+           self.sous_groupes = lest;
+         })
+         .catch(function (error) {
+           self.indicateurs = [];
+          //  self.$router.push({ path: "login" });
+         });
+     },
     findIndicateurBySousGroupe(event) {
       console.log(event);
       let self = this;

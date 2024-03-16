@@ -26,7 +26,7 @@ import {
     cibEyeem,
     cibOpenstreetmap,
     cilAccountLogout,
-    cilSun
+    cilSun,cilPlus
 } from '@coreui/icons'
 import {
     cifUs,
@@ -112,6 +112,7 @@ export const iconsSet = Object.assign({}, { logo }, {
     cibOpenstreetmap,
     cilAccountLogout,
     cilSun,
+    cilPlus,
     cilChartPie,
     cilCheck,
     cilChevronBottom,

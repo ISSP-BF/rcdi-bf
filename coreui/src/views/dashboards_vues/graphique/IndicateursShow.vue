@@ -1,17 +1,17 @@
 <template>
   <CRow>
-    <CCol :sm="12/items.length" :lg="12/items.length" v-for="item in items" 
-    :key="item.id">
-    <div style="display: none;height:fit-content;border:dotted">{{ item.titre = item.indicateur +" "+ (
+    <CCol :sm="seuil.w" :lg="seuil.w" v-for="item in items" 
+    :key="item.id" style="padding: 0 !important;">
+    {{ item.titre =seuil.w < 2 ? '' : " "+ (
       anneelist.length > 1&&periodelist.length>1&&item.periode!="ANNUEL"?item.periode_value+" "+item.annee:
     anneelist.length > 1?item.annee:
-    periodelist.length>1?item.periode_value+" "+item.annee:item.periode!="ANNUEL"?item.periode_value+" "+item.annee:item.annee) }}</div>
-      <CWidgetDropdown :color="item.couleur" :header="item.valeur+''" :text="item.titre+''"
+    periodelist.length>1?item.periode_value+" "+item.annee:item.periode!="ANNUEL"?item.periode_value+" "+item.annee:item.annee) }}
+      <CCard :color="item.couleur">
+        <CCardBody class="text-center">{{item.valeur}}</CCardBody>
+      </CCard>
+      <!-- <CWidgetDropdown :color="item.couleur" :header="item.valeur+''" :text="item.titre+''"
             >
-        <template #footer>
-          <div class="mt-3 mx-3"></div>
-        </template>
-      </CWidgetDropdown>
+      </CWidgetDropdown> -->
     </CCol>  
   </CRow>
 </template>
@@ -20,7 +20,7 @@
 
 export default {
   name: 'IndicateursShow', 
-  props: ["donneeSearch", "refreshing"],
+  props: ["donneeSearch", "refreshing","seuil"],
   data () {
     return {
       donnee:{
