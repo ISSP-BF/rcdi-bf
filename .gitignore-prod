@@ -24,7 +24,6 @@
 
 /coreui/.DS_Store
 /coreui/node_modules
-/coreui/dist
 /coreui/coverage
 
 /coreui/tests/e2e/reports/
