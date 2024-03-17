@@ -1,16 +1,15 @@
 <template>
-  <CRow>
+  <CRow v-if="refreshing">
     <CCol :sm="seuil.w" :lg="seuil.w" v-for="item in items" 
     :key="item.id" style="padding: 0 !important;">
     {{ item.titre =seuil.w < 2 ? '' : " "+ (
       anneelist.length > 1&&periodelist.length>1&&item.periode!="ANNUEL"?item.periode_value+" "+item.annee:
     anneelist.length > 1?item.annee:
     periodelist.length>1?item.periode_value+" "+item.annee:item.periode!="ANNUEL"?item.periode_value+" "+item.annee:item.annee) }}
-      <CCard :color="item.couleur">
-        <CCardBody class="text-center">{{item.valeur}}</CCardBody>
+      <CCard :style="{ backgroundColor: item.couleur }">
+        <CCardBody class="text-center text-white">{{item.valeur}}</CCardBody>
       </CCard>
-      <!-- <CWidgetDropdown :color="item.couleur" :header="item.valeur+''" :text="item.titre+''"
-            >
+      <!-- <CWidgetDropdown :style="{ backgroundColor: item.couleur }" :header="item.valeur+''" :text="item.titre+''">
       </CWidgetDropdown> -->
     </CCol>  
   </CRow>
@@ -29,7 +28,9 @@ export default {
       },items:[],
       anneelist: [],
       periodelist:[],
-      couleurs:[]
+      couleurs:[],
+      seuilcopy:null
+
     }
   },
   watch: {
@@ -87,61 +88,66 @@ export default {
           default:
             break;
         }
-        if(d.periode!="ANNUEL"){
+        if (d.periode!="ANNUEL") {
           d.periode_value = choixPeriodes[d.periode_value-1].label;
         }
-
-      })
-        
-
+      });
     },
     async getDatasets(){
       let self = this;
-      this.$axios.post(  this.$apiAdress + '/api/donnees/findBy?token=' + localStorage.getItem("api_token"),
-      self.donneeSearch
-        )
+      this.$axios.post(this.$apiAdress + '/api/donnees/findBy?token=' + localStorage.getItem("api_token"),
+      self.donneeSearch)
         .then(function (response) {
           self.items = response.data; 
           self.updatedPeriodeInList(self.items);
-          self.couleurs = self.genererTableauCouleur(self.items.length);
-          for(let i=0;i<self.items.length;i++){
-            self.items[i]['couleur'] = self.couleurs[i];
-          }
+          
+          if (self.seuil?.type_seuil=='INTERVALLE'){
+            for (let i=0; i<self.items.length; i++) {
+              //self.items[i]['couleur'] = self.couleurs[i];
+              self.seuilcopy?.seuil_segment_list?.forEach(data => {
+                if (self.items[i]['valeur'] >= data.debut && self.items[i]['valeur'] <= data.value)
+                  self.items[i]['couleur'] = data.color;
+              });
+            }
+        }
+
           self.anneelist = [];
             for (let x of self.items) {
               let verif = false;
               for(let y of self.anneelist){
-                if(y===x.annee){
-                  verif=true;
+                if(y === x.annee){
+                  verif = true;
                   break;
                 }
               }
-              if(!verif){self.anneelist.push(x.annee)}
+              if (!verif) {
+                self.anneelist.push(x.annee);
+              }
             }
-            
 
-            self.periodelist = []
-            for (let x of self.items) {
-              let verif = false;
-              for(let y of self.periodelist){
-                if(y===x.periode_value){
-                  verif=true;
-                  break;
-                }
+          self.periodelist = []
+          for (let x of self.items) {
+            let verif = false;
+            for (let y of self.periodelist) {
+              if (y===x.periode_value) {
+                verif = true;
+                break;
               }
-              if(!verif){self.periodelist.push(x.periode_value)}
             }
+            if(!verif){self.periodelist.push(x.periode_value)}
+          }
         
         }).catch(function (error) {
-            if(error.response.data.message == 'The given data was invalid.'){
+          console.log(error)
+            if (error.response?.data?.message == 'The given data was invalid.') {
               self.message = '';
               for (let key in error.response.data.errors) {
                 if (error.response.data.errors.hasOwnProperty(key)) {
                   self.message += error.response.data.errors[key][0] + '  ';
                 }
               }
-            }else{
-              self.$router.push({ path: 'login' }); 
+            } else {
+              self.$router.push({ path: '/login' }); 
             }
         });
     }
@@ -149,6 +155,10 @@ export default {
   },
   mounted: function(){
     let self = this;
+    self.seuilcopy = JSON.parse(JSON.stringify(self.seuil));
+    if (self.seuilcopy?.type_seuil=='INTERVALLE'){
+            self.seuilcopy['seuil_segment_list'] = JSON.parse(self.seuilcopy?.seuil_segment_list);
+          }   
     self.getDatasets();
   }
 }

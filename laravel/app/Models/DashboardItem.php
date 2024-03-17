@@ -16,6 +16,7 @@ class DashboardItem extends Model
         'description',
         'requete',
         'graphique',
+        'seuil_segment_list',
         
         'type_seuil',
         'seuil_valeur_reference',

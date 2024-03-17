@@ -22,23 +22,38 @@
           
             <div class="col-lg-4"></div>
            
-           <label for="" class="col-lg-12">Seuil</label>
-           <CSelect :value.sync="dashboardItem.type_seuil" class="col-lg-4"
-           :options="options">
-           </CSelect>
+            <label for="" class="col-lg-12">Seuil</label>
+            <CSelect :value.sync="dashboardItem.type_seuil" class="col-lg-4"
+            :options="options">
+            </CSelect>
 
-           <CInput v-if="dashboardItem.type_seuil == 'VALEUR_REFERENCE'" type="text" placeholder="Ex. 15" v-model="dashboardItem.seuil_valeur_reference"
-             class="col-lg-4" />
-           <CSelect v-if="dashboardItem.type_seuil == 'DATE_REFERENCE'" :value.sync="dashboardItem.seuil_periode_value" class="col-lg-3"
-           :options="choixPeriodes">
-           </CSelect>
-           <CInput  v-if="dashboardItem.type_seuil == 'DATE_REFERENCE'" type="text" placeholder="" v-model="dashboardItem.seuil_annee"
-             class="col-lg-2" />
-           <CInput v-if="dashboardItem.type_seuil" type="text" placeholder="Couleur #F00" v-model="dashboardItem.seuil_couleur"
-             class="col-lg-3" />
+            <CInput v-if="dashboardItem.type_seuil == 'VALEUR_REFERENCE'" type="text" placeholder="Ex. 15" v-model="dashboardItem.seuil_valeur_reference"
+              class="col-lg-4" />
+            <CSelect v-if="dashboardItem.type_seuil == 'DATE_REFERENCE'" :value.sync="dashboardItem.seuil_periode_value" class="col-lg-2"
+            :options="choixPeriodes">
+            </CSelect>
+            <CSelect v-if="dashboardItem.type_seuil == 'DATE_REFERENCE'" :value.sync="dashboardItem.seuil_annee" class="col-lg-2"
+            :options="annees">
+            </CSelect>
+            <CInput v-if="dashboardItem.type_seuil && dashboardItem.type_seuil !== 'INTERVALLE'" type="text" placeholder="Couleur #F001" v-model="dashboardItem.seuil_couleur"
+              class="col-lg-4" />
+            <div class="col-lg-12" v-if="dashboardItem.type_seuil == 'INTERVALLE' && refreshingSegment">
+              <div class="row"  :key="index" v-for="(item, index) in dashboardItem.seuil_segment_list">
+                <CInput type="text" placeholder="Ex. 1" v-model="item.debut"
+                class="col-lg-3" />
+                <CInput type="text" placeholder="Ex. 10" v-model="item.value"
+                class="col-lg-3" />
+                <CInput type="text" placeholder="Ex. FFF" v-model="item.color"
+                class="col-lg-4" />
+                <CButton class="form-group" size="sm" color="danger" @click="deleteSegment(index)">
+                  <CIcon  color="danger" name="cil-x-circle" />
+                </CButton>
+              </div>
+              <CButton size="sm" color="primary" @click="ajouterSegment()">
+                  <CIcon name="cil-plus" />
+                </CButton>
+            </div>
           </CRow>
-        </CCardBody>
-        <CCardFooter>
           
 
           <CRow class="align-items-center">
@@ -71,8 +86,7 @@
                       </div>
                     </div> 
                   </CRow>
-                  
-        </CCardFooter>
+                </CCardBody>
         <CCardFooter>
           <CRow class="col-lg-12 text-justify">
             <CButton color="primary" @click="update()">Modifier</CButton> &nbsp;
@@ -131,15 +145,19 @@ export default {
         h: "",
         type_seuil: "",
         static: true,
+        seuil_segment_list:[],
       },refreshing:false,
+      refreshingSegment:true,
       message: "",
       options : [
         { label: '', value: '' },
         { label: 'Moyenne', value: 'MOYENNE' },
         { label: 'Valeur de référence', value: 'VALEUR_REFERENCE' },
-        { label: 'Date de référence', value: 'DATE_REFERENCE' }
+        { label: 'Date de référence', value: 'DATE_REFERENCE' },
+        { label: 'Intervalle', value: 'INTERVALLE' }
       ],
       periodes: [],
+      choixPeriodes:[],
       annees: [],
     };
   },
@@ -192,8 +210,27 @@ export default {
           break;
       }
     },
+    ajouterSegment(){
+      this.refreshingSegment = false;
+      if (!this.dashboardItem.seuil_segment_list){
+        this.dashboardItem.seuil_segment_list=[];
+        this.ajouterSegment();
+      }
+      else {
+        this.dashboardItem.seuil_segment_list.push({});
+      }
+        console.log("======",this.dashboardItem.seuil_segment_list);
+      this.refreshingSegment = true;
+     },
+    deleteSegment(index){ 
+      this.refreshingSegment = false;
+       this.dashboardItem.seuil_segment_list.splice(index,1);
+      this.refreshingSegment = true;
+        console.log("======"+index);
+     },
     update() {
       let self = this;
+      self.dashboardItem['seuil_segment_list'] = JSON.stringify(self.dashboardItem['seuil_segment_list']);
       axios
         .put(
           this.$apiAdress +
@@ -235,6 +272,7 @@ export default {
       )
       .then(function (response) {
         self.dashboardItem = response.data;
+        self.dashboardItem['seuil_segment_list'] = JSON.parse(self.dashboardItem['seuil_segment_list']);
         self.updatedListPeriode (self.dashboardItem['seuil_periode']);
       })
       .catch(function (error) {

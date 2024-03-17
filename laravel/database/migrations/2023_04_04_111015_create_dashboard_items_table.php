@@ -33,6 +33,7 @@ class CreateDashboardItemsTable extends Migration
             $table->integer('seuil_periode_value')->unsigned();
             $table->integer('seuil_annee')->unsigned();
             $table->string('seuil_couleur',255)->nullable();
+            $table->text('seuil_segment_list')->nullable();
             $table->integer('i')->default(0)->nullable();
             $table->integer('x')->default(0)->nullable();
             $table->integer('y')->default(0)->nullable();

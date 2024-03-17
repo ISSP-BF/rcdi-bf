@@ -67,12 +67,7 @@ export default {
         plotOptions: {
           series: {
             colorByPoint: true,
-            zones: [{
-              value: 2,
-              color: '#F00'
-            }, {
-              color: '#90ed7d'
-            }]
+            zones: []
           }
         },
         series: [{
@@ -264,6 +259,9 @@ export default {
                 { value: self.seuil.seuil_valeur_reference, color: '#F00'},
                 { color: self.seuil.seuil_couleur }]
             }
+            if (self.seuil?.type_seuil=='INTERVALLE'){
+              self.chartOptions.plotOptions.series.zones = JSON.parse(self.seuil?.seuil_segment_list);
+            }
           // Verifier si nous avons plusieurs année
           if (self.items && self.items.length > 0) {
             self.indicateurTitle = self.items[0].indicateur;
@@ -303,7 +301,7 @@ export default {
               else {
                 self.datasets[0].data.push({
                   y: d.valeur,
-                  color: "#F00"
+                  color: "#0F0"
                 });
               }
               if (self.anneelist.length > 1 && self.periodelist.length > 1 && d.periode != "ANNUEL") {
