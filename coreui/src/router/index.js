@@ -7,7 +7,9 @@ const TheContainer = () =>
 
 // Views
 const Dashboard = () =>
-    import ('@/views/Dashboard')
+import ('@/views/Dashboard')
+const DashboardActeur = () =>
+    import ('@/views/DashboardActeur')
 
 const Colors = () =>
     import ('@/views/theme/Colors')
@@ -571,7 +573,7 @@ export default router
 function configRoutes() {
     return [{
             path: '/',
-            redirect: '/dashboard',
+            redirect: '/acceuil',
             name: 'Accueil',
             component: TheContainer,
             children: [{
@@ -583,9 +585,14 @@ function configRoutes() {
                     }
                 },
                 {
-                    path: 'dashboard',
+                    path: 'acceuil',
                     name: 'Tableau de bord',
                     component: Dashboard
+                },
+                {
+                    path: 'dashboard/:id',
+                    name: 'Tableau de bord',
+                    component: DashboardActeur
                 },
                 {
                     path: 'colors',
