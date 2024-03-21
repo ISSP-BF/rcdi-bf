@@ -10,7 +10,6 @@ class Indicateur extends Model
 {
 
     use HasFactory;
-    use SoftDeletes;
 
     protected $fillable = [
         'code',

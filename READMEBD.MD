@@ -48,3 +48,5 @@ ALTER TABLE `dashboard_items` CHANGE `type_seuil` `type_seuil` ENUM('VALEUR_REFE
 
 20240321
 ALTER TABLE `dashboards` ADD `role` VARCHAR(255) NULL AFTER `updated`;
+ALTER TABLE `dashboard_items` ADD `seuil_couleur_superieur` VARCHAR(255) NULL AFTER `seuil_segment_list`;
+ALTER TABLE `dashboard_items` ADD `seuil_couleur_inferieur` VARCHAR(255) NULL AFTER `seuil_segment_list`;

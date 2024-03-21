@@ -23,7 +23,8 @@ class DashboardItem extends Model
         'seuil_periode',
         'seuil_periode_value',
         'seuil_annee',
-        'seuil_couleur',
+        'seuil_couleur_superieur',
+        'seuil_couleur_inferieur',
         
         'i',
         'x',
