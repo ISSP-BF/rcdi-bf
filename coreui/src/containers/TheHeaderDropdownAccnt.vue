@@ -46,9 +46,9 @@ export default {
           localStorage.removeItem('roles');
           self.$router.push({ path: '/login' });
         }).catch(function (error) {
-          //localStorage.removeItem('api_token');
-          //localStorage.removeItem('roles');
-          //self.$router.push({ path: '/login' });
+          localStorage.removeItem('api_token');
+          localStorage.removeItem('roles');
+          self.$router.push({ path: '/login' });
           console.log(error);
         });
     },

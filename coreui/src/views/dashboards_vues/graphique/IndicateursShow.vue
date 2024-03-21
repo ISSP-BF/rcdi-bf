@@ -1,13 +1,13 @@
 <template>
   <CRow v-if="refreshing">
     <CCol :sm="seuil.w" :lg="seuil.w" v-for="item in items" 
-    :key="item.id" style="padding: 0 !important;">
-    {{ item.titre =seuil.w < 2 ? '' : " "+ (
+    :key="item.id" style="padding: 0 !important;display: grid !important;;">
+    {{ item.titre =seuil.w < 0 ? '' : " "+ (
       anneelist.length > 1&&periodelist.length>1&&item.periode!="ANNUEL"?item.periode_value+" "+item.annee:
     anneelist.length > 1?item.annee:
     periodelist.length>1?item.periode_value+" "+item.annee:item.periode!="ANNUEL"?item.periode_value+" "+item.annee:item.annee) }}
       <CCard :style="{ backgroundColor: item.couleur }">
-        <CCardBody class="text-center text-white">{{item.valeur}}</CCardBody>
+        <CCardBody class="text-center"><b>{{item.valeur}}</b></CCardBody>
       </CCard>
       <!-- <CWidgetDropdown :style="{ backgroundColor: item.couleur }" :header="item.valeur+''" :text="item.titre+''">
       </CWidgetDropdown> -->
@@ -73,9 +73,9 @@ export default {
             break;
           case "MENSUEL":
           choixPeriodes = [
-            {value:1,label:"Janvier"},{value:2,label:"Février"},{value:3,label:"Mars"},{value:4,label:"Avril"},
-            {value:5,label:"Mai"},{value:6,label:"Juin"},{value:7,label:"Juillet"},{value:8,label:"Aout"},
-            {value:9,label:"Septembre"},{value:10,label:"Octobre"},{value:11,label:"Novembre"},{value:12,label:"Décembre"},
+            {value:1,label:"Jan."},{value:2,label:"Fév."},{value:3,label:"Mrs."},{value:4,label:"Avr."},
+            {value:5,label:"Mai"},{value:6,label:"Jui."},{value:7,label:"Juil."},{value:8,label:"Aou."},
+            {value:9,label:"Sept."},{value:10,label:"Oct."},{value:11,label:"Nov."},{value:12,label:"Déc."},
           ]
             break;
           case "SEMESTRIEL":
@@ -107,7 +107,6 @@ export default {
           )
           .then(function (response) {
             let itemsSeuil = response.data;
-            console.log(itemsSeuil, "itemsSeuil", self.seuil)
             if (itemsSeuil.length > 0) {
               self.seuil.seuil_valeur_reference = itemsSeuil[0].valeur;
             }
@@ -132,7 +131,7 @@ export default {
               //self.items[i]['couleur'] = self.couleurs[i];
               self.seuilcopy?.seuil_segment_list?.forEach(data => {
                 if (self.items[i]['valeur'] >= data.debut && self.items[i]['valeur'] <= data.value)
-                  self.items[i]['couleur'] = data.color;
+                  self.items[i]['couleur'] = data.color; return;
               });
             }
           }
@@ -149,10 +148,9 @@ export default {
           if (self.seuil?.type_seuil !== 'INTERVALLE') {
             for (let x of self.items) {
                 if (x.valeur > self.seuil.seuil_valeur_reference) {
-                  x.couleur = self.seuil.seuil_couleur;
-                  console.log("======",self.seuil.seuil_couleur)
+                  x.couleur = self.seuil.seuil_couleur_superieur;
                 }
-                else x.couleur = "#0F0";
+                else x.couleur = self.seuil.seuil_couleur_superieur;
               }
           }
 

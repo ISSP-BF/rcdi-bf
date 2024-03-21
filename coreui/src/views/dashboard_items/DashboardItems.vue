@@ -57,6 +57,11 @@
         </CCardBody>  
       </CCard>
       </transition>
+    <CCol>
+      
+      <CButton color="success" @click="visualiser()"> <CIcon name="cil-speedometer"/>Visualiser</CButton> &nbsp;
+                    <CButton color="secondary" size="sm" @click="redirectionElement()">Retour  </CButton>
+    </CCol>
     </CCol>
   </CRow>
 </template>
@@ -142,6 +147,11 @@ export default {
         console.log(error);
         // self.$router.push({ path: '/login' });
       });
+    },visualiser(){
+      this.$router.push('/dashboard-personalise/'+ this.$route.params.dashboard);
+    },
+    redirectionElement () {
+      this.$router.push('/dashboards');
     },
     getdashboardItemsByDashboardId (){
       let self = this;

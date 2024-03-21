@@ -35,7 +35,9 @@
             <CSelect v-if="dashboardItem.type_seuil == 'DATE_REFERENCE'" :value.sync="dashboardItem.seuil_annee" class="col-lg-2"
             :options="annees">
             </CSelect>
-            <CInput v-if="dashboardItem.type_seuil && dashboardItem.type_seuil !== 'INTERVALLE'" type="text" placeholder="Couleur #F001" v-model="dashboardItem.seuil_couleur"
+            <CInput v-if="dashboardItem.type_seuil && dashboardItem.type_seuil !== 'INTERVALLE'" type="text" placeholder="Couleur Inférieur #F00" v-model="dashboardItem.seuil_couleur_inferieur"
+              class="col-lg-4" />
+            <CInput v-if="dashboardItem.type_seuil && dashboardItem.type_seuil !== 'INTERVALLE'" type="text" placeholder="Couleur supérieur #0F0" v-model="dashboardItem.seuil_couleur_superieur"
               class="col-lg-4" />
             <div class="col-lg-12" v-if="dashboardItem.type_seuil == 'INTERVALLE' && refreshingSegment">
               <div class="row"  :key="index" v-for="(item, index) in dashboardItem.seuil_segment_list">

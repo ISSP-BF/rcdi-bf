@@ -1,8 +1,10 @@
 <template>
   <CRow class="col-lg-12">
 
-    <highcharts type="chart" :options="chartOptions" class="col-lg-12"></highcharts>
-
+    <highcharts type="chart" :options="chartOptions" class="col-lg-12" v-if="chartOptions.chart.type !== 'FIXE'"></highcharts>
+    <IndicateursShow  class="col-lg-12"
+          v-if="chartOptions.chart.type == 'FIXE'"
+          :donneeSearch="donneeSearch" :refreshing="true" :seuil="seuil"/> 
 
     <CRow form class="form-group col-lg-12" v-if="anneelist.length > 1 || periodelist.length > 1"
       style="display: inline-flex;">
@@ -18,6 +20,11 @@
             value="line" />
           <label :for="'COURBE' + index" class="custom-control-label"> COURBE </label>
         </div>
+        <div role="group" class="custom-control custom-control-inline custom-radio">
+          <input :id="'FIXE' + index" type="radio" class="custom-control-input" v-model="chartOptions.chart.type"
+            value="FIXE" />
+          <label :for="'FIXE' + index" class="custom-control-label"> FIXE </label>
+        </div>
       </CCol>
     </CRow>
 
@@ -31,10 +38,11 @@ import { CChartLine } from "@coreui/vue-chartjs";
 import { deepObjectsMerge } from "@coreui/utils/src";
 var FileSaver = require('file-saver');
 import { BarChart } from 'highcharts-vue'
+import IndicateursShow from "./IndicateursShow";
 
 export default {
   name: "IndicateurBarChart",
-  components: { CChartBar, CChartLine, BarChart },
+  components: { CChartBar, CChartLine, BarChart,IndicateursShow },
   props: ["donneeSearch", "refreshing", "choixgraphique", "seuil"],
   data() {
     return {
@@ -183,17 +191,6 @@ export default {
 
 
     },
-    genererTableauCouleur(nombre) {
-      const teinteBase = Math.floor(Math.random() * 360);
-      const variationTeinte = 360 / nombre;
-      const couleurs = [];
-      for (let i = 0; i < nombre; i++) {
-        const teinte = (teinteBase + i * variationTeinte) % 360;
-        const saturation = Math.floor(Math.random() * 31) + 70;
-        const luminosite = Math.floor(Math.random() * 31) + 50;
-        couleurs.push(`hsl(${teinte},${saturation}%,${luminosite}%)`)
-      }
-    },
     async seuilControle() {
       let self = this;
       let donneeSearch = JSON.parse(JSON.stringify(self.donneeSearch));
@@ -254,10 +251,10 @@ export default {
             }
           }
           
-            if (self.seuil?.type_seuil) {
+            if (self.seuil?.type_seuil!=='INTERVALLE') {
               self.chartOptions.plotOptions.series.zones = [
-                { value: self.seuil.seuil_valeur_reference, color: '#F00'},
-                { color: self.seuil.seuil_couleur }]
+                { value: self.seuil.seuil_valeur_reference, color: self.seuil.seuil_couleur_inferieur},
+                { color: self.seuil.seuil_couleur_superieur }]
             }
             if (self.seuil?.type_seuil=='INTERVALLE'){
               self.chartOptions.plotOptions.series.zones = JSON.parse(self.seuil?.seuil_segment_list);
@@ -292,12 +289,30 @@ export default {
             self.datasets[0].data = []
             self.labels = []
             for (let d of self.items) {
-              if (self.seuil?.type_seuil && d.valeur > self.seuil.seuil_valeur_reference) {
+              if (self.seuil?.type_seuil!="INTERVALLE" && d.valeur > self.seuil.seuil_valeur_reference) {
                 self.datasets[0].data.push({
                   y: d.valeur,
-                  color: self.seuil.seuil_couleur
+                  color: self.seuil.seuil_couleur_superieur
                 });
               }
+              if (self.seuil?.type_seuil!="INTERVALLE" && d.valeur < self.seuil.seuil_valeur_reference) {
+                self.datasets[0].data.push({
+                  y: d.valeur,
+                  color: self.seuil.seuil_couleur_inferieur
+                });
+              }
+              else if(self.seuil?.type_seuil=="INTERVALLE"){
+                self.seuilcopy?.seuil_segment_list?.forEach(data => {
+                  if (d['valeur'] >= data.debut && d['valeur'] <= data.value){
+                    d['color'] = data.color;
+                    console.log(data.color)
+                    self.datasets[0].data.push({
+                      y: d.valeur,
+                      color: data.color
+                    });
+                  }
+                });
+                }
               else {
                 self.datasets[0].data.push({
                   y: d.valeur,
@@ -360,6 +375,11 @@ export default {
     },
   },
   mounted: function () {
+    let self=this;
+    self.seuilcopy = JSON.parse(JSON.stringify(self.seuil));
+    if (self.seuilcopy?.type_seuil=='INTERVALLE'){
+            self.seuilcopy['seuil_segment_list'] = JSON.parse(self.seuilcopy?.seuil_segment_list);
+    }
     this.seuilControle();
     this.choixgraphiquelocal = this.choixgraphique;
 
