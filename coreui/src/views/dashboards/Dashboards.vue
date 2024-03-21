@@ -35,6 +35,11 @@
                   <strong>{{item.description}}</strong>
                 </td>
               </template>
+              <template #acteur="{item}">
+                <td>
+                  <strong>{{item.role}}</strong>
+                </td>
+              </template>
               
               <template #actions="{item}">
                 <td>
@@ -74,7 +79,7 @@ export default {
   data: () => {
     return {
       items: [],
-      fields: ['id', 'dashboard', 'description','actions'],
+      fields: ['id', 'dashboard', 'description','acteur','actions'],
       currentPage: 1,
       perPage: 5,
       totalRows: 0,

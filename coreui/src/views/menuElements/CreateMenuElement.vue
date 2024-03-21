@@ -156,6 +156,7 @@ export default {
             // self.message = 'Successfully created menu element.';
             self.$toasted.show("Le menu a été créé avec succès",{type:"success"});
             self.showAlert();
+            self.goBack();
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';

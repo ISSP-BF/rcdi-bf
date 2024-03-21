@@ -3,34 +3,22 @@
     <div></div>
 
 
-    <CRow v-if="!refreshing2">
+    <CRow v-if="refreshing2">
       <CCol xs="12" lg="12">
         <CCard>
           <CCardBody>
             <CTabs add-tab-classes="mt-1">
-              <CTab active>
+              <CTab active v-for="item in items" :key="item.id">
                 <template slot="title">
-                  <CIcon name="cil-chart-pie" /> SANTE
+                  <CIcon name="cil-chart-pie" /> {{ item.libelle }}
                 </template>
-                <DashboardsVue :idData="1"></DashboardsVue>
-              </CTab>
-              <CTab>
-                <template slot="title">
-                  <CIcon name="cil-chart-pie" /> EDUCATION
-                </template>
-                <DashboardsVue :idData="2"></DashboardsVue>
-              </CTab>
-              <CTab>
-                <template slot="title">
-                  <CIcon name="cil-chart-pie" /> ETAT CIVIL
-                </template>
-                <DashboardsVue :idData="3"></DashboardsVue>
+                <DashboardsVue :idData="item.id"></DashboardsVue>
               </CTab>
               <CTab>
                 <template slot="title">
                   <CIcon name="cil-calculator" /> DEMOGRAPHIE
                 </template>
-                <CCardBody v-if="!refreshing2">
+                <CCardBody v-if="refreshing2">
                   <IndicateursShow :commune_id="commune_id" :annee="annee" />
                   <CRow>
                     <CCol sm="6" lg="6">
@@ -97,7 +85,7 @@ import DashboardsVue from "./dashboards_vues/Dashboards_vue"
 import axios from "axios";
 
 export default {
-  name: "Dashboard",
+  name: "DashboardActeur",
   components: {
     IndicateursShow,
     IndicateursSecteur1,
@@ -136,71 +124,41 @@ export default {
       actualites: null,
       slide: 0,
       sliding: null,
+      items: [],
     };
   },
+  watch: {
+    reloadParams() {
+      // this.refreshing = false;
+      this.getDashboard();
+    },
+  },
+  computed: {
+    reloadParams() {
+      return [this.$route.params.acteurOuRole];
+    },
+  },
   methods: {
-    color(value) {
-      let $color;
-      if (value <= 25) {
-        $color = "info";
-      } else if (value > 25 && value <= 50) {
-        $color = "success";
-      } else if (value > 50 && value <= 75) {
-        $color = "warning";
-      } else if (value > 75 && value <= 100) {
-        $color = "danger";
-      }
-      return $color;
-    },
-    onSlideStart(slide) {
-      this.sliding = true;
-    },
-    onSlideEnd(slide) {
-      this.sliding = false;
-    },
-    anneeValidator(val) {
-      return val ? (val <= 2022 && val >= 1900 ? null : false) : null;
-    },
     refresh() {
       if (!Array.isArray(this.annee)) {
         this.annee = [this.annee];
       }
-
       this.refreshing = true;
-      // setTimeout(() => {
-      //   this.refreshing = false;
-      //   this.refreshing2 = true;
-      //   // setTimeout(() => {
-      //   //   this.refreshing2 = false;
-      //   // }, 1);
-      // }, 1);
     },
-    strippedContent(string) {
-      string = string.replace(/<\/?[^>]+>/gi, " ");
-      string = string.replace("&hellip;", "...");
-      string = string.replace(/&nbsp;/g, " ");
-      return string;
-    },
-    visiterLePost(n) {
-      window.open(n.link, "_blank");
-    },
-    async getPost() {
+    async getDashboard(){
       let self = this;
-      this.refreshing = true;
-      // if(!this.commune)return;
-      axios
-        .get(this.commune.urlSiteWeb + "?categories=" + this.commune.categorie)
-        .then(function (response) {
-          let actualites = response.data;
-          for (let actualite of actualites) {
-            actualite["imageAcceuil"] =
-              actualite["yoast_head_json"]["og_image"][0]["url"];
-          }
-          self.actualites = actualites;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      const acteurOuRole = self.$route.params.acteurOuRole;
+
+
+      axios.get(  this.$apiAdress + '/api/dashboards-acteur/' + acteurOuRole + '?token=' + localStorage.getItem("api_token") )
+      .then(function (response) {
+        self.items = response.data;
+        self.refreshing2 = true;
+      }).catch(function (error) {
+        self.refreshing2 = true;
+        console.log(error);
+        // self.$router.push({ path: '/login' });
+      });
     },
     async getCommuneDefaut() {
       let self = this;
@@ -212,10 +170,6 @@ export default {
           self.commune = response.data;
           self.commune_id = self.commune.id;
           self.communelabel = self.commune.commune.toLowerCase();
-          // setTimeout(() => {
-            self.getPost();
-          // }, 500);
-          // self.refresh();
         })
         .catch(function (error) {
           console.log(error);
@@ -235,7 +189,7 @@ export default {
     } else {
       this.commune_id = null;
     }
-    this.getPost();
+    this.getDashboard();
     this.getCommuneDefaut();
   },
 };

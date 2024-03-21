@@ -17,6 +17,7 @@ class CreateDashboardsTable extends Migration
             $table->id();
             $table->string('libelle',255)->nullable();
             $table->text('description')->nullable();
+            $table->string('role');
             $table->tinyInteger('updated')->nullable()->default(0);
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();

@@ -6,6 +6,7 @@
         <CCardBody>
           <h4>Libelle: {{ dashboard.libelle }}</h4>
           <h4>Description : {{ dashboard.description }}</h4> 
+          <h4>Acteur : {{ dashboard.role }}</h4> 
           <CButton color="secondary" @click="goBack">Retour</CButton>
         </CCardBody>
       </CCard>

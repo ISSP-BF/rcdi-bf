@@ -147,7 +147,7 @@ export default {
           }
         }).catch(function (error) {
           console.log(error);
-          self.$router.push({ path: 'login' }); 
+          self.$router.push({ path: '/login' }); 
         });
     },
     save() {
@@ -169,7 +169,7 @@ export default {
             self.name = '';
             // self.message = 'Successfully edited menu element.';
             self.$toasted.show("Le menu a été modifié avec succès",{type:"success"});
-            self.showAlert();
+            self.showAlert();self.goBack()
         }).catch(function (error) {
             if(error.response.data.message == 'The given data was invalid.'){
               self.message = '';
@@ -182,7 +182,7 @@ export default {
               self.showAlert();
             }else{
               console.log(error);
-              self.$router.push({ path: 'login' }); 
+              self.$router.push({ path: '/login' }); 
             }
         });
     },

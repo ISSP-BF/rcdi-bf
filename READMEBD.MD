@@ -37,6 +37,7 @@ ALTER TABLE `dashboards` CHANGE `description` `description` TEXT CHARACTER SET u
 ALTER TABLE `dashboard_items` ADD `type_seuil` ENUM('VALEUR_REFERENCE','DATE_REFERENCE','MOYENNE') NULL AFTER `description`, ADD `seuil_valeur_reference` FLOAT NULL AFTER `type_seuil`, ADD `seuil_periode` ENUM('TRIMESTRIEL','MENSUEL','ANNUEL') NULL AFTER `seuil_valeur_reference`, ADD `seuil_periode_value` INT(11) NULL AFTER `seuil_periode`, ADD `seuil_annee` INT(11) NULL AFTER `seuil_periode_value`, ADD `seuil_couleur` VARCHAR(255) NULL AFTER `seuil_annee`;
 ALTER TABLE `dashboard_items` CHANGE `seuil_periode` `seuil_periode` ENUM('TRIMESTRIEL','MENSUEL','ANNUEL','SEMESTRIEL') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;
 
+ALTER TABLE `dashboard_items` ADD `seuil_segment_list` TEXT NULL AFTER `seuil_couleur`;
 
 exportation des donnees
 
@@ -45,5 +46,5 @@ SELECT donnees.`id`, `indicateur_id`,indicateurs.libelle as libelle_indicateur, 
 ALTER TABLE `dashboard_items` ADD `seuil_segment_list` TEXT NULL AFTER `seuil_couleur`;
 ALTER TABLE `dashboard_items` CHANGE `type_seuil` `type_seuil` ENUM('VALEUR_REFERENCE','DATE_REFERENCE','MOYENNE','INTERVALLE') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;
 
-
-SELECT donnees.*,indicateurs.libelle as indicateur,(select libelle from groupes where groupes.id=indicateurs.groupe_id) as groupe, (select libelle from sous_groupes where sous_groupes.id=indicateurs.sous_groupe_id) as sous_groupe FROM `donnees`, indicateurs  WHERE donnees.indicateur_id=indicateurs.id
+20240321
+ALTER TABLE `dashboards` ADD `role` VARCHAR(255) NULL AFTER `updated`;

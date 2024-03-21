@@ -79,7 +79,8 @@ export default {
           ]
             break;
           case "SEMESTRIEL":
-        choixPeriodes = [{value:1,label:"Semestre 1"},{value:2,label:"Semestre 2"}]
+        choixPeriodes = [
+          {value: 1, label: "Semestre 1"},{value: 2,label: "Semestre 2"}]
             break;
           case "ANNUEL":
             choixPeriodes = [];
@@ -93,6 +94,31 @@ export default {
         }
       });
     },
+    async seuilControle() {
+      let self = this;
+      let donneeSearch = JSON.parse(JSON.stringify(self.donneeSearch));
+      if (this.seuil.type_seuil == 'DATE_REFERENCE') {
+        donneeSearch['periode'] = this.seuil.seuil_periode;
+        donneeSearch['periode_value'] = [this.seuil.seuil_periode_value];
+        donneeSearch['annee'] = [this.seuil.seuil_annee];
+        this.$axios
+          .post(this.$apiAdress + '/api/donnees/findBy?token=' + localStorage.getItem("api_token"),
+            donneeSearch
+          )
+          .then(function (response) {
+            let itemsSeuil = response.data;
+            console.log(itemsSeuil, "itemsSeuil", self.seuil)
+            if (itemsSeuil.length > 0) {
+              self.seuil.seuil_valeur_reference = itemsSeuil[0].valeur;
+            }
+            self.getDatasets();
+          }
+          );
+      }
+      else {
+        this.getDatasets();
+      }
+    },
     async getDatasets(){
       let self = this;
       this.$axios.post(this.$apiAdress + '/api/donnees/findBy?token=' + localStorage.getItem("api_token"),
@@ -101,7 +127,7 @@ export default {
           self.items = response.data; 
           self.updatedPeriodeInList(self.items);
           
-          if (self.seuil?.type_seuil=='INTERVALLE'){
+          if (self.seuil?.type_seuil=='INTERVALLE') {
             for (let i=0; i<self.items.length; i++) {
               //self.items[i]['couleur'] = self.couleurs[i];
               self.seuilcopy?.seuil_segment_list?.forEach(data => {
@@ -109,13 +135,32 @@ export default {
                   self.items[i]['couleur'] = data.color;
               });
             }
-        }
+          }
+          
+          if (self.seuil?.type_seuil == 'MOYENNE') {
+            self.seuil.seuil_valeur_reference = 0;
+            if (self.items && self.items.length > 0) {
+              for (let x of self.items) {
+                self.seuil.seuil_valeur_reference = self.seuil.seuil_valeur_reference + x.valeur;
+              }
+              self.seuil.seuil_valeur_reference = self.seuil.seuil_valeur_reference / self.items.length;
+            }
+          }
+          if (self.seuil?.type_seuil !== 'INTERVALLE') {
+            for (let x of self.items) {
+                if (x.valeur > self.seuil.seuil_valeur_reference) {
+                  x.couleur = self.seuil.seuil_couleur;
+                  console.log("======",self.seuil.seuil_couleur)
+                }
+                else x.couleur = "#0F0";
+              }
+          }
 
           self.anneelist = [];
             for (let x of self.items) {
               let verif = false;
-              for(let y of self.anneelist){
-                if(y === x.annee){
+              for (let y of self.anneelist) {
+                if (y === x.annee) {
                   verif = true;
                   break;
                 }
@@ -134,7 +179,9 @@ export default {
                 break;
               }
             }
-            if(!verif){self.periodelist.push(x.periode_value)}
+            if (!verif) {
+              self.periodelist.push(x.periode_value);
+            }
           }
         
         }).catch(function (error) {
@@ -147,7 +194,7 @@ export default {
                 }
               }
             } else {
-              self.$router.push({ path: '/login' }); 
+              //self.$router.push({ path: '/login' }); 
             }
         });
     }
@@ -158,8 +205,8 @@ export default {
     self.seuilcopy = JSON.parse(JSON.stringify(self.seuil));
     if (self.seuilcopy?.type_seuil=='INTERVALLE'){
             self.seuilcopy['seuil_segment_list'] = JSON.parse(self.seuilcopy?.seuil_segment_list);
-          }   
-    self.getDatasets();
+    }
+    this.seuilControle();
   }
 }
 </script>

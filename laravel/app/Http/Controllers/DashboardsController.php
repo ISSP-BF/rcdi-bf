@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Dashboard;
+use App\Services\RolesService;
 
 class DashboardsController extends Controller
 {
@@ -18,7 +19,7 @@ class DashboardsController extends Controller
     {
         //$this->middleware('auth:api');
         
-        $this->middleware('auth:api', ['except' => ['show']]);
+        $this->middleware('auth:api', ['except' => ['show','findByActeur']]);
     }
 
     /**
@@ -31,6 +32,16 @@ class DashboardsController extends Controller
         $dashboards = Dashboard::all();
         return response()->json( $dashboards );
     }
+    /**
+     * Find by dashboard ID
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function findByActeur($role)
+    {
+        $dashboards = Dashboard::where("role","like",'%'.$role.'%')->get();
+        return response()->json($dashboards);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -39,7 +50,9 @@ class DashboardsController extends Controller
      */
     public function create()
     {
-        // return response()->json( $statuses );
+            return response()->json([
+                'roles'    => RolesService::get()
+            ]);
     }
 
     /**
@@ -115,4 +128,5 @@ class DashboardsController extends Controller
             'status' => 200
         ], 200);
     }
+
 }

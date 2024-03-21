@@ -12,6 +12,20 @@
           <CCol col="12" lg="12">
             <quill-editor :content="dashboard.description" v-model="dashboard.description" />
           </CCol>
+          
+          <CCol col="12" lg="12">
+            <p>Roles</p>
+            <div class="m-3">
+              <CInputCheckbox
+                  v-for="rol in role"
+                  :key="rol"
+                  :label="rol"
+                  name="selectRoles"
+                  @update:checked="selectRadioSelectRole(rol)"
+              />
+            </div>
+          </CCol>
+            
           <BR></BR>
           <CButton color="primary" @click="store()">Ajouter</CButton> &nbsp;
           <CButton color="secondary" @click="goBack">Retour</CButton>
@@ -33,9 +47,11 @@ export default {
   },
   data: () => {
     return {
+        role: [],
         dashboard: {
           libelle: '',
-          description: ''
+          description: '',
+          role: []
         },
         message: '',
         dismissSecs: 7,
@@ -47,10 +63,19 @@ export default {
     goBack() {
       this.$router.go(-1)
           },
+    selectRadioSelectRole(role){
+      let temp = this.dashboard.role.indexOf(role); 
+      if (temp > -1) {
+        this.dashboard.role.splice(temp, 1);
+      }else{
+        this.dashboard.role.push(role);
+      }
+    },
     store() {
         let self = this;
         console.log(self.dashboard)
-        axios.post(  this.$apiAdress + '/api/dashboards?token=' + localStorage.getItem("api_token"),
+        this.dashboard.role = this.dashboard?.role?.toString();
+        axios.post(this.$apiAdress + '/api/dashboards?token=' + localStorage.getItem("api_token"),
           self.dashboard
         )
         .then(function (response) {
@@ -76,6 +101,16 @@ export default {
             }
         });
     },
+    getRoles() {
+      let self = this;
+      axios.get(  this.$apiAdress + '/api/dashboards/create?token=' + localStorage.getItem("api_token") )
+      .then(function (response) {
+        self.role = response.data.roles;
+      }).catch(function (error) {
+        console.log(error);
+        self.$router.push({ path: '/login' });
+      });
+    },
     countDownChanged (dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     },
@@ -84,6 +119,7 @@ export default {
     },
   },
   mounted: function(){
+    this.getRoles();
   }
 }
 

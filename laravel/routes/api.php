@@ -102,6 +102,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get('donnees/findIndicateurByGroupe/{groupe_id}', 'DonneesController@findIndicateurByGroupe');
     Route::post('donneespaginate/{pageSize}/{pageIndex}/{column}/{asc}', 'DonneesController@paginate');
     Route::resource('dashboards', 'DashboardsController');
+    Route::get('dashboards-acteur/{role}', 'DashboardsController@findByActeur');
     Route::get('dashboard-items/findBy/{dashboard_id}', 'DashboardItemsController@findBy');
     Route::resource('dashboard-items', 'DashboardItemsController');
     Route::resource('ecoles', 'EcolesController');

@@ -586,11 +586,11 @@ function configRoutes() {
                 },
                 {
                     path: 'acceuil',
-                    name: 'Tableau de bord',
+                    name: 'Acceuil',
                     component: Dashboard
                 },
                 {
-                    path: 'dashboard/:id',
+                    path: 'dashboard/:acteurOuRole',
                     name: 'Tableau de bord',
                     component: DashboardActeur
                 },
