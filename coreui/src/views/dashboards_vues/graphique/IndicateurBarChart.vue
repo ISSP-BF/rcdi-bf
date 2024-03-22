@@ -295,6 +295,7 @@ export default {
                   color: self.seuil.seuil_couleur_superieur
                 });
               }
+              else
               if (self.seuil?.type_seuil!="INTERVALLE" && d.valeur < self.seuil.seuil_valeur_reference) {
                 self.datasets[0].data.push({
                   y: d.valeur,
@@ -305,7 +306,6 @@ export default {
                 self.seuilcopy?.seuil_segment_list?.forEach(data => {
                   if (d['valeur'] >= data.debut && d['valeur'] <= data.value){
                     d['color'] = data.color;
-                    console.log(data.color)
                     self.datasets[0].data.push({
                       y: d.valeur,
                       color: data.color
