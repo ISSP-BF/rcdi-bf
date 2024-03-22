@@ -8,7 +8,7 @@
         <CCard>
           <CCardBody>
             <CTabs add-tab-classes="mt-1">
-              <CTab active v-for="item in items" :key="item.id">
+              <CTab active v-for="item in items" :key="item.id+'oo'">
                 <template slot="title">
                   <CIcon name="cil-chart-pie" /> {{ item.libelle }}
                 </template>
