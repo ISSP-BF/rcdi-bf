@@ -7,7 +7,7 @@
     anneelist.length > 1?item.annee:
     periodelist.length>1?item.periode_value+" "+item.annee:item.periode!="ANNUEL"?item.periode_value+" "+item.annee:item.annee) }}
       <CCard :style="{ backgroundColor: item.couleur }">
-        <CCardBody class="text-center"><b>{{item.valeur}}</b></CCardBody>
+        <CCardBody class="text-center"><b style="display: flex;">{{item.valeur}}</b></CCardBody>
       </CCard>
       <!-- <CWidgetDropdown :style="{ backgroundColor: item.couleur }" :header="item.valeur+''" :text="item.titre+''">
       </CWidgetDropdown> -->
@@ -150,7 +150,7 @@ export default {
                 if (x.valeur > self.seuil.seuil_valeur_reference) {
                   x.couleur = self.seuil.seuil_couleur_superieur;
                 }
-                else x.couleur = self.seuil.seuil_couleur_superieur;
+                else x.couleur = self.seuil.seuil_couleur_inferieur;
               }
           }
 

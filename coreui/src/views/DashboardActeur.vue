@@ -153,9 +153,15 @@ export default {
       axios.get(  this.$apiAdress + '/api/dashboards-acteur/' + acteurOuRole + '?token=' + localStorage.getItem("api_token") )
       .then(function (response) {
         self.items = response.data;
+        self.refreshing2 = false;
+        setTimeout(() => {
         self.refreshing2 = true;
+        }, 10);
       }).catch(function (error) {
+        self.refreshing2 = false;
+        setTimeout(() => {
         self.refreshing2 = true;
+        }, 10);
         console.log(error);
         // self.$router.push({ path: '/login' });
       });
