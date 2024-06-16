@@ -89,7 +89,7 @@ class IndicateursController extends Controller
      */
     public function findByGroupe($id)
     {
-        $indicateurs = IndicateurOptimise::select('*','libelle as label', 'id as value')->where('groupe_id',"=",$id)->get();
+        $indicateurs = IndicateurOptimise::select('*','libelle as label', 'id as value')->where('groupe_id',"=",$id)->orderBy('libelle', 'asc')->get();
         return $indicateurs;
     } 
 
@@ -123,7 +123,7 @@ class IndicateursController extends Controller
      */
     public function findBySousGroupe($id)
     {
-        $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->where('sous_groupe_id',"=",$id)->get();
+        $indicateurs = Indicateur::select('*','libelle as label', 'id as value')->where('sous_groupe_id',"=",$id)->orderBy('libelle', 'asc')->get();
         return $indicateurs;
     } 
 

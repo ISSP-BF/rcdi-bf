@@ -50,3 +50,12 @@ ALTER TABLE `dashboard_items` CHANGE `type_seuil` `type_seuil` ENUM('VALEUR_REFE
 ALTER TABLE `dashboards` ADD `role` VARCHAR(255) NULL AFTER `updated`;
 ALTER TABLE `dashboard_items` ADD `seuil_couleur_superieur` VARCHAR(255) NULL AFTER `seuil_segment_list`;
 ALTER TABLE `dashboard_items` ADD `seuil_couleur_inferieur` VARCHAR(255) NULL AFTER `seuil_segment_list`;
+
+
+DELETE FROM donnees
+WHERE id IN (
+    SELECT id
+    FROM (
+        SELECT id,indicateur_id,periode,annee,localisation_id,COUNT(*) AS cnt FROM donnees where periode = "ANNUEL" GROUP BY indicateur_id,periode,annee,localisation_id HAVING cnt > 1
+    ) AS doublons
+);

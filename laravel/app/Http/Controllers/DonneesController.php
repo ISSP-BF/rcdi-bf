@@ -249,7 +249,7 @@ class DonneesController extends Controller
             // 'groupe' => 'required',
             'periode' => 'required',
             'indicateur_id'     => 'required',
-            'annee' => 'required',
+            //'annee' => 'required',
         ]);
         $donnees = DB::table('donnees')->
         leftJoin('indicateurs', function($join){

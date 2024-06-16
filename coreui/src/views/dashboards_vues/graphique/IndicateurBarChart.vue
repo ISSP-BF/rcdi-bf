@@ -251,7 +251,7 @@ export default {
             }
           }
           
-            if (self.seuil?.type_seuil!=='INTERVALLE') {
+            if (self.seuil?.type_seuil&&self.seuil?.type_seuil!=='INTERVALLE') {
               self.chartOptions.plotOptions.series.zones = [
                 { value: self.seuil.seuil_valeur_reference, color: self.seuil.seuil_couleur_inferieur},
                 { color: self.seuil.seuil_couleur_superieur }]
@@ -289,14 +289,14 @@ export default {
             self.datasets[0].data = []
             self.labels = []
             for (let d of self.items) {
-              if (self.seuil?.type_seuil!="INTERVALLE" && d.valeur > self.seuil.seuil_valeur_reference) {
+              if (self.seuil?.type_seuil&&self.seuil?.type_seuil!="INTERVALLE" && d.valeur > self.seuil.seuil_valeur_reference) {
                 self.datasets[0].data.push({
                   y: d.valeur,
                   color: self.seuil.seuil_couleur_superieur
                 });
               }
               else
-              if (self.seuil?.type_seuil!="INTERVALLE" && d.valeur < self.seuil.seuil_valeur_reference) {
+              if (self.seuil?.type_seuil&&self.seuil?.type_seuil!="INTERVALLE" && d.valeur < self.seuil.seuil_valeur_reference) {
                 self.datasets[0].data.push({
                   y: d.valeur,
                   color: self.seuil.seuil_couleur_inferieur
@@ -309,7 +309,7 @@ export default {
                     self.datasets[0].data.push({
                       y: d.valeur,
                       color: data.color
-                    });
+                    });return;
                   }
                 });
                 }
