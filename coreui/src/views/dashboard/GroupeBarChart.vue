@@ -79,6 +79,7 @@ export default {
             commune_id:this.commune_id,
             annee:this.annee
           };
+          if(this.annee)
       axios.post(  this.$apiAdress + '/api/indicateurs-old/findBy?token=' + localStorage.getItem("api_token"),
          criteria
         )
