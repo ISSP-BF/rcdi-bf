@@ -17,10 +17,6 @@ class FormationSanitaireNewDatasController extends Controller
 {
     public function refresh_request(Request $request)
     {
-        if (!Schema::hasTable('formation_sanitaire_new_datas')) {
-            createFormationSanitaireNewDatasTable();
-        }
-
         if ($request->commune == 3006) {
             config()->set('database.connections.mysql.database', 'rcdib2270922_2ncj5');
             DB::disconnect('mysql');
@@ -29,7 +25,10 @@ class FormationSanitaireNewDatasController extends Controller
             if (app()->configurationIsCached()) {
                 Artisan::call('config:clear');
             }
-            $datas = FormationSanitaire::all();
+            if (!Schema::hasTable('formation_sanitaire_new_datas')) {
+                createFormationSanitaireNewDatasTable();
+            }
+            $datas = FormationSanitaire::whereHas('new_data')->with('new_data')->get();
         } elseif ($request->commune == 2208) {
             config()->set('database.connections.mysql.database', 'rcdib2270922_3s7qqy');
             DB::disconnect('mysql');
@@ -38,7 +37,10 @@ class FormationSanitaireNewDatasController extends Controller
             if (app()->configurationIsCached()) {
                 Artisan::call('config:clear');
             }
-            $datas = FormationSanitaire::all();
+            if (!Schema::hasTable('formation_sanitaire_new_datas')) {
+                createFormationSanitaireNewDatasTable();
+            }
+            $datas = FormationSanitaire::whereHas('new_data')->with('new_data')->get();
         } else {
             $databases = ['rcdib2270922_2ncj5', 'rcdib2270922_3s7qqy'];
             $datas = collect();
@@ -51,7 +53,7 @@ class FormationSanitaireNewDatasController extends Controller
                     if (app()->configurationIsCached()) {
                         Artisan::call('config:clear');
                     }
-                    $data = FormationSanitaire::all();
+                    $data = FormationSanitaire::whereHas('new_data')->with('new_data')->get();
                     $datas = $datas->merge($data);
                 } catch (\Exception $e) {
                     logger()->error("Erreur lors de l'accès à la base de données $db: " . $e->getMessage());
@@ -73,13 +75,30 @@ class FormationSanitaireNewDatasController extends Controller
 
     public function admin_dash()
     {
-        return view('welcome');
+        $databases = ['rcdib2270922_2ncj5', 'rcdib2270922_3s7qqy'];
+        $results = collect();
+        foreach ($databases as $db) {
+            try {
+                config()->set('database.connections.mysql.database', $db);
+                DB::disconnect('mysql');
+                DB::purge('mysql');
+                DB::reconnect('mysql');
+                if (app()->configurationIsCached()) {
+                    Artisan::call('config:clear');
+                }
+                $data = FormationSanitaire::whereHas('new_data')->with('new_data')->get();
+                $results = $results->merge($data);
+            } catch (\Exception $e) {
+                logger()->error("Erreur lors de l'accès à la base de données $db: " . $e->getMessage());
+            }
+        }
+        return view('welcome', compact('results'));
     }
 
     public function uploade_file_store(Request $request)
     {
 
-        // $datas = FormationSanitaire::all();
+        // $datas = FormationSanitaire::with('new_data')->get();
         // dd($datas);
 
 

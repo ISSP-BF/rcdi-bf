@@ -3,6 +3,9 @@
 namespace App\Imports;
 
 use App\Models\FormationSanitaireNewDatas;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -15,9 +18,36 @@ class ImportFormationSanitaireNewDatas implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
+        if ($row['commune'] == "Manga") {
+            config()->set('database.connections.mysql.database', 'rcdib2270922_2ncj5');
+            DB::disconnect('mysql');
+            DB::purge('mysql');
+            DB::reconnect('mysql');
+            if (app()->configurationIsCached()) {
+                Artisan::call('config:clear');
+            }
+            if (!Schema::hasTable('formation_sanitaire_new_datas')) {
+                createFormationSanitaireNewDatasTable();
+            }
+        } elseif ($row['commune'] == "TENADO") {
+            config()->set('database.connections.mysql.database', 'rcdib2270922_3s7qqy');
+            DB::disconnect('mysql');
+            DB::purge('mysql');
+            DB::reconnect('mysql');
+            if (app()->configurationIsCached()) {
+                Artisan::call('config:clear');
+            }
+            if (!Schema::hasTable('formation_sanitaire_new_datas')) {
+                createFormationSanitaireNewDatasTable();
+            }
+        }
+        
         $data = FormationSanitaireNewDatas::create([
             'formation_sanitaires_id' => $row['localisation_id'],
-            // 'annee_id' => $row['annee_id'],
+            'annee_id' => $row['annee_id'],
+            'commune' => $row['commune'],
+            'gps_latitude' => $row['gps_latitude'],
+            'gps_longitude' => $row['gps_longitude'],
             'q113' => $row['q113'],
             'q117' => $row['q117'],
             'effectif_medspeci' => $row['effectif_medspeci'],

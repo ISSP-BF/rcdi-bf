@@ -15,7 +15,8 @@ use App\Http\Controllers\FormationSanitaireNewDatasController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () { return view('admin_login'); });
-Route::get('/', function () { return view('welcome'); });
+// Route::get('/', function () { return view('welcome'); });
+Route::get('/',[FormationSanitaireNewDatasController::class,'admin_dash'])->name('home');
 Route::get('/uploade_file_page', function () { return view('uploade_file_page'); })->name('uploade_file_page');
 Route::post('/uploade_file_store',[FormationSanitaireNewDatasController::class,'uploade_file_store'])->name('uploade_file_store');
 Route::get('/admin_dash',[FormationSanitaireNewDatasController::class,'admin_dash'])->name('admin_dash');

@@ -136,7 +136,7 @@
                                 <div class="mx-4">
                                     <label class="form-label">Commune</label>
                                     <select class="form-select" id="communeSelect">
-                                        <option value="">Tout</option>
+                                        <option value="0000">Tout</option>
                                         <option value="3006">Manga</option>
                                         <option value="2208">Ténado</option>
                                     </select>
@@ -1098,9 +1098,6 @@
 							<a href="#" class="btn btn-primary">New Project</a>
 						</div> -->
                     </div>
-                    <div class="row">
-
-                    </div>
 
                     <div class="row">
                         <div class="col-12 col-md-3 col-xxl-3 d-flex order-1 order-xxl-1">
@@ -1133,39 +1130,55 @@
                                             <tbody>
                                                 <tr>
                                                     <td><i class="fas fa-circle text-primary fa-fw"></i>Nombre de CM</td>
-                                                    <td class="text-end">4306</td>
+                                                    <td class="text-end" id="cm_filtered"></td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class="fas fa-circle text-secondary fa-fw"></i> Nombre de CMA</td>
-                                                    <td class="text-end">3801</td>
+                                                    <td class="text-end" id="cma_filtered"></td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class="fas fa-circle text-success fa-fw"></i> Nombre de CSPS</td>
-                                                    <td class="text-end">1689</td>
+                                                    <td class="text-end" id="csps_filtered"></td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class="fas fa-circle text-info fa-fw"></i> Nombre de Cabinet de soins</td>
-                                                    <td class="text-end">3251</td>
+                                                    <td class="text-end" id="cabinet_filtered"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><i class="fas fa-circle text-warning fa-fw"></i> Nombre de Medecins</td>
-                                                    <td class="text-end">3251</td>
+                                                    <td><i class="fas fa-circle text-primary fa-fw"></i>Nombre de Centre de kinésithérapie</td>
+                                                    <td class="text-end" id="kine_filtered"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="fas fa-circle text-warning fa-fw"></i> Nombre de médecins spécialistes</td>
+                                                    <td class="text-end" id="effectif_medspeci"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="fas fa-circle text-primary fa-fw"></i>Nombre de médecins généralistes</td>
+                                                    <td class="text-end" id="effectif_medgen"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="fas fa-circle text-secondary fa-fw"></i> Nombre d'attachés de santé</td>
+                                                    <td class="text-end" id="effectif_attach"></td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class="fas fa-circle text-body-secondary fa-fw"></i> Nombre de Sage-femme</td>
-                                                    <td class="text-end">3251</td>
+                                                    <td class="text-end" id="sagef"></td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class="fas fa-circle text-body-tertiary fa-fw"></i> Nombre d'Infirmier</td>
-                                                    <td class="text-end">3251</td>
+                                                    <td class="text-end" id="infirmier"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="fas fa-circle text-success fa-fw"></i> Effectif des autres agents de santé</td>
+                                                    <td class="text-end" id="autrep"></td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class="fas fa-circle text-body-emphasis fa-fw"></i> Nombre de Logement</td>
-                                                    <td class="text-end">3251</td>
+                                                    <td class="text-end" id="nbre_log"></td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class="fas fa-circle text-danger fa-fw"></i> Nombre d'ambulances</td>
-                                                    <td class="text-end">3251</td>
+                                                    <td class="text-end" id="nb_ambulance"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1213,35 +1226,73 @@
     </div>
 
     <script>
+        var map = L.map('map').setView([12.2418505, -1.5567604999999958], 7);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 20,
+            // attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        var polygon = L.polygon([
+            [51.509, -0.08],
+            [51.503, -0.06],
+            [51.51, -0.047],
+        ], {
+            color: 'red'
+        }).addTo(map);
+
+        // Récupération des tokens et éléments nécessaires
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const regionSelect = document.getElementById('regionSelect');
+        const communeSelect = document.getElementById('communeSelect');
+
+        var markersGroup = L.layerGroup().addTo(map);
+
         document.addEventListener("DOMContentLoaded", function() {
-            // var map = L.map('map').setView([12.2418505, -1.5567604999999958], 7);
-            // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            //     maxZoom: 20,
-            //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            // }).addTo(map);
+            var results = @json($results);
+            let effectif_medspeci = 0;
+            let effectif_medgen = 0;
+            let effectif_attach = 0;
+            let sagef = 0;
+            let infirmier = 0;
+            let autrep = 0;
+            let nbre_log = 0;
+            let nb_ambulance = 0;
 
-            // var marker = L.marker([12.2418505, -1.5567604999999958]).addTo(map);
+            results.forEach(result => {
+                var marker = L.marker([result.lat, result.lon]);
+                marker.bindPopup("<b>" + result.nom_structure + "</b><br><div class='d-grid'><a style='color:white' class='btn btn-lg btn-primary' href=''>voir plus</a></div>");
+                markersGroup.addLayer(marker);
 
-            // // var circle = L.circle([51.508, -0.11], {
-            // // 	color: 'red',
-            // // 	fillColor: '#f03',
-            // // 	fillOpacity: 0.5,
-            // // 	radius: 500
-            // // }).addTo(map);
+                effectif_medspeci += result.new_data[0].effectif_medspeci || 0;
+                effectif_medgen += result.new_data[0].effectif_medgen || 0;
+                effectif_attach += result.new_data[0].effectif_attach || 0;
+                sagef += result.new_data[0].sagef || 0;
+                infirmier += result.new_data[0].infirmier || 0;
+                autrep += result.new_data[0].autrep || 0;
+                nbre_log += result.new_data[0].nbre_log || 0;
+                nb_ambulance += result.new_data[0].nb_ambulance || 0;
+            });
 
-            // var polygon = L.polygon([
-            //     [51.509, -0.08],
-            //     // [51.505, -0.09],
-            //     [51.503, -0.06],
-            //     [51.51, -0.047],
-            // ], {
-            //     color: 'red'
-            // }).addTo(map);
+            const cm_filtered = results.filter(item => item.new_data[0].q113 === 'CM' || item.new_data[0].q113 === 'centre médical').length;
+            const cma_filtered = results.filter(item => item.new_data[0].q113 === 'CMA').length;
+            const csps_filtered = results.filter(item => item.new_data[0].q113 === 'CSPS').length;
+            const cabinet_filtered = results.filter(item => item.new_data[0].q113 === 'cabinet de soins infirmiers').length;
+            const kine_filtered = results.filter(item => item.new_data[0].q113 === 'centre de kinésithérapie').length;
 
-            // marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-            // polygon.bindPopup("I am a polygon.");
+            document.getElementById('cm_filtered').innerHTML = cm_filtered;
+            document.getElementById('cma_filtered').innerHTML = cma_filtered;
+            document.getElementById('csps_filtered').innerHTML = csps_filtered;
+            document.getElementById('cabinet_filtered').innerHTML = cabinet_filtered;
+            document.getElementById('kine_filtered').innerHTML = kine_filtered;
+            document.getElementById('effectif_medspeci').innerHTML = effectif_medspeci;
+            document.getElementById('effectif_medgen').innerHTML = effectif_medgen;
+            document.getElementById('effectif_attach').innerHTML = effectif_attach;
+            document.getElementById('sagef').innerHTML = sagef;
+            document.getElementById('infirmier').innerHTML = infirmier;
+            document.getElementById('autrep').innerHTML = autrep;
+            document.getElementById('nbre_log').innerHTML = nbre_log;
+            document.getElementById('nb_ambulance').innerHTML = nb_ambulance;
 
-            // Pie chart
             new Chart(document.getElementById("chartjs-dashboard-pie"), {
                 type: "pie",
                 data: {
@@ -1274,37 +1325,6 @@
                 }
             });
         });
-    </script>
-
-    <script>
-        var map = L.map('map').setView([12.2418505, -1.5567604999999958], 7);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 20,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
-
-        // var marker = L.marker([12.2418505, -1.5567604999999958]).addTo(map);
-
-        // var circle = L.circle([51.508, -0.11], {
-        // 	color: 'red',
-        // 	fillColor: '#f03',
-        // 	fillOpacity: 0.5,
-        // 	radius: 500
-        // }).addTo(map);
-
-        var polygon = L.polygon([
-            [51.509, -0.08],
-            // [51.505, -0.09],
-            [51.503, -0.06],
-            [51.51, -0.047],
-        ], {
-            color: 'red'
-        }).addTo(map);
-
-        // Récupération des tokens et éléments nécessaires
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        const regionSelect = document.getElementById('regionSelect');
-        const communeSelect = document.getElementById('communeSelect');
 
         // Fonction pour exécuter une requête à chaque changement
         async function handleFilterChange() {
@@ -1320,20 +1340,76 @@
                         'X-CSRF-TOKEN': csrfToken // Ajout du token CSRF pour Laravel
                     }
                 });
-
-                console.log(response.data);
+                markersGroup.clearLayers();
                 if (response.data.results.length > 0) {
+                    // const cm_filtered = response.data.results.filter(item => item.new_data.q113 === 'CM').length;
+                    const cm_filtered = response.data.results.filter(item => item.new_data[0].q113 === 'CM' || item.new_data[0].q113 === 'centre médical').length;
+                    const cma_filtered = response.data.results.filter(item => item.new_data[0].q113 === 'CMA').length;
+                    const csps_filtered = response.data.results.filter(item => item.new_data[0].q113 === 'CSPS').length;
+                    const cabinet_filtered = response.data.results.filter(item => item.new_data[0].q113 === 'cabinet de soins infirmiers').length;
+                    const kine_filtered = response.data.results.filter(item => item.new_data[0].q113 === 'centre de kinésithérapie').length;
+
+                    document.getElementById('cm_filtered').innerHTML = cm_filtered;
+                    document.getElementById('cma_filtered').innerHTML = cma_filtered;
+                    document.getElementById('csps_filtered').innerHTML = csps_filtered;
+                    document.getElementById('cabinet_filtered').innerHTML = cabinet_filtered;
+                    document.getElementById('kine_filtered').innerHTML = kine_filtered;
+
+                    let polygonCoordinates = [];
+                    let effectif_medspeci = 0;
+            let effectif_medgen = 0;
+            let effectif_attach = 0;
+            let sagef = 0;
+            let infirmier = 0;
+            let autrep = 0;
+            let nbre_log = 0;
+            let nb_ambulance = 0;
                     response.data.results.forEach(result => {
-                        var marker = L.marker([result.lat, result.lon]).addTo(map);
-                            marker.bindPopup("<b>"+result.nom_structure+"</b><br><div class='d-grid'><a style='color:white' class='btn btn-lg btn-primary' href=''>voir plus</a></div>");
+                        polygonCoordinates.push([result.new_data[0].gps_latitude, result.new_data[0].gps_longitude]);
+                        var marker = L.marker([result.lat, result.lon]);
+                        marker.bindPopup("<b>" + result.nom_structure + "</b><br><div class='d-grid'><a style='color:white' class='btn btn-lg btn-primary' href=''>voir plus</a></div>");
+                        markersGroup.addLayer(marker);
+
+                        effectif_medspeci += result.new_data[0].effectif_medspeci || 0;
+                        effectif_medgen += result.new_data[0].effectif_medgen || 0;
+                        effectif_attach += result.new_data[0].effectif_attach || 0;
+                        sagef += result.new_data[0].sagef || 0;
+                        infirmier += result.new_data[0].infirmier || 0;
+                        autrep += result.new_data[0].autrep || 0;
+                        nbre_log += result.new_data[0].nbre_log || 0;
+                        nb_ambulance += result.new_data[0].nb_ambulance || 0;
                     });
-                } else {
-                }
+
+                    document.getElementById('effectif_medspeci').innerHTML = effectif_medspeci;
+                    document.getElementById('effectif_medgen').innerHTML = effectif_medgen;
+                    document.getElementById('effectif_attach').innerHTML = effectif_attach;
+                    document.getElementById('sagef').innerHTML = sagef;
+                    document.getElementById('infirmier').innerHTML = infirmier;
+                    document.getElementById('autrep').innerHTML = autrep;
+                    document.getElementById('nbre_log').innerHTML = nbre_log;
+                    document.getElementById('nb_ambulance').innerHTML = nb_ambulance;
+
+                    var bounds = markersGroup.getBounds();
+                    if (bounds.isValid()) {
+                        map.fitBounds(bounds);
+                    }
+
+                    if (polygonCoordinates.length > 2) {
+                        console.log(polygonCoordinates);
+                        var polygon = L.polygon(polygonCoordinates, {
+                            color: 'red',
+                            weight: 2,
+                            fillOpacity: 0.4
+                        }).addTo(map);
+                        polygon.bindPopup("Zone délimitée par les points sélectionnés.");
+                    }
+
+                } else {}
             } catch (error) {
                 console.error("Erreur lors de la requête :", error);
             }
         }
-        
+
         // Écouteurs d'événements pour les listes déroulantes
         regionSelect.addEventListener('change', handleFilterChange);
         communeSelect.addEventListener('change', handleFilterChange);

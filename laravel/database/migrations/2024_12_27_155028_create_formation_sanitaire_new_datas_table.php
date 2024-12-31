@@ -17,6 +17,9 @@ class CreateFormationSanitaireNewDatasTable extends Migration
             $table->id();
             $table->integer('formation_sanitaires_id')->unsigned();
             $table->integer('annee_id')->nullable();
+            $table->string('commune')->nullable();
+            $table->string('gps_latitude')->nullable();
+            $table->string('gps_longitude')->nullable();
             $table->string('q113')->nullable();
             $table->string('q117')->nullable();
             $table->integer('effectif_medspeci')->nullable();

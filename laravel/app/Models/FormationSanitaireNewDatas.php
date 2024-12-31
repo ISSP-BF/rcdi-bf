@@ -17,6 +17,9 @@ class FormationSanitaireNewDatas extends Model
     protected $fillable = [
         'formation_sanitaires_id',
         'annee_id',
+        'commune',
+        'gps_latitude',
+        'gps_longitude',
         'q113',
         'q117',
         'effectif_medspeci',
