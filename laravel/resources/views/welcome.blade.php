@@ -19,6 +19,7 @@
     <title>Cartographie des formations sanitaires RCDI</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
     <!-- BEGIN SETTINGS -->
@@ -108,7 +109,7 @@
                             </label>
                         </div>
                     </li>
-                    <form action="{{ route('refresh_request') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('refresh_request') }}" method="POST" enctype="multipart/form-data" id="filterForm">
                         @csrf
                         <!-- <li class="sidebar-header">
                             Situation
@@ -119,9 +120,9 @@
                                 <div class="mx-4">
                                     <label class="form-label">Année</label>
                                     <select class="form-select" id="anneeSelect">
+                                        <option value="2024">2024</option>
                                         <option value="">Tout</option>
                                         <option value="2023">2023</option>
-                                        <option value="2024">2024</option>
                                     </select>
                                 </div>
                                 <div class="mx-4">
@@ -136,8 +137,8 @@
                                     <label class="form-label">Commune</label>
                                     <select class="form-select" id="communeSelect">
                                         <option value="">Tout</option>
-                                        <option value="Manga">Manga</option>
-                                        <option value="Ténado">Ténado</option>
+                                        <option value="3006">Manga</option>
+                                        <option value="2208">Ténado</option>
                                     </select>
                                 </div>
                                 <div class="mx-4">
@@ -1046,11 +1047,11 @@
 
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav navbar-align">
-                        <li class="nav-item dropdown">
+                        <!-- <li class="nav-item dropdown">
                             <a class="nav-flag dropdown-toggle" href="#" id="languageDropdown"
                                 data-bs-toggle="dropdown">
                                 <img src="{{ URL::asset('assets/img/flags/fr.png') }}" alt="Français" />
-                            </a>
+                                </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
                                 <a class="dropdown-item" href="#">
                                     <img src="{{ URL::asset('assets/img/flags/fr.png') }}" alt="Français" width="20" class="align-middle me-1" />
@@ -1061,7 +1062,7 @@
                                     <span class="align-middle">Anglais</span>
                                 </a>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-icon js-fullscreen d-none d-lg-block" href="#">
                                 <div class="position-relative">
@@ -1213,29 +1214,29 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var map = L.map('map').setView([12.2418505, -1.5567604999999958], 7);
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 20,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(map);
-
-            var marker = L.marker([12.2418505, -1.5567604999999958]).addTo(map);
-
-            // var circle = L.circle([51.508, -0.11], {
-            // 	color: 'red',
-            // 	fillColor: '#f03',
-            // 	fillOpacity: 0.5,
-            // 	radius: 500
+            // var map = L.map('map').setView([12.2418505, -1.5567604999999958], 7);
+            // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            //     maxZoom: 20,
+            //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             // }).addTo(map);
 
-            var polygon = L.polygon([
-                [51.509, -0.08],
-                // [51.505, -0.09],
-                [51.503, -0.06],
-                [51.51, -0.047],
-            ], {
-                color: 'red'
-            }).addTo(map);
+            // var marker = L.marker([12.2418505, -1.5567604999999958]).addTo(map);
+
+            // // var circle = L.circle([51.508, -0.11], {
+            // // 	color: 'red',
+            // // 	fillColor: '#f03',
+            // // 	fillOpacity: 0.5,
+            // // 	radius: 500
+            // // }).addTo(map);
+
+            // var polygon = L.polygon([
+            //     [51.509, -0.08],
+            //     // [51.505, -0.09],
+            //     [51.503, -0.06],
+            //     [51.51, -0.047],
+            // ], {
+            //     color: 'red'
+            // }).addTo(map);
 
             // marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
             // polygon.bindPopup("I am a polygon.");
@@ -1269,46 +1270,73 @@
                     legend: {
                         display: false
                     },
-                    cutoutPercentage: 70
+                    cutoutPercentage: 60
                 }
             });
         });
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-                    const region = document.getElementById('regionSelect').value;
-                    const commune = document.getElementById('communeSelect').value;
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        var map = L.map('map').setView([12.2418505, -1.5567604999999958], 7);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 20,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
 
-                    fetch("{{ route('refresh_request') }}", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "X-CSRF-TOKEN": csrfToken
-                            },
-                            body: JSON.stringify({
-                                region: region,
-                                commune: commune
-                            })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            // Mettre à jour les résultats
-                            const resultsDiv = document.getElementById('results');
-                            resultsDiv.innerHTML = ''; // Vider les anciens résultats
+        // var marker = L.marker([12.2418505, -1.5567604999999958]).addTo(map);
 
-                            // Afficher les nouveaux résultats
-                            data.results.forEach(result => {
-                                const resultItem = document.createElement('div');
-                                resultItem.textContent = result.name; // Ajustez en fonction de vos données
-                                resultsDiv.appendChild(resultItem);
-                            });
-                        })
-                        .catch(error => {
-                            console.error("Erreur :", error);
-                        });
+        // var circle = L.circle([51.508, -0.11], {
+        // 	color: 'red',
+        // 	fillColor: '#f03',
+        // 	fillOpacity: 0.5,
+        // 	radius: 500
+        // }).addTo(map);
+
+        var polygon = L.polygon([
+            [51.509, -0.08],
+            // [51.505, -0.09],
+            [51.503, -0.06],
+            [51.51, -0.047],
+        ], {
+            color: 'red'
+        }).addTo(map);
+
+        // Récupération des tokens et éléments nécessaires
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const regionSelect = document.getElementById('regionSelect');
+        const communeSelect = document.getElementById('communeSelect');
+
+        // Fonction pour exécuter une requête à chaque changement
+        async function handleFilterChange() {
+            const region = regionSelect.value;
+            const commune = communeSelect.value;
+
+            try {
+                const response = await axios.post("{{ route('refresh_request') }}", {
+                    region: region,
+                    commune: commune
+                }, {
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Ajout du token CSRF pour Laravel
+                    }
+                });
+
+                console.log(response.data);
+                if (response.data.results.length > 0) {
+                    response.data.results.forEach(result => {
+                        var marker = L.marker([result.lat, result.lon]).addTo(map);
+                            marker.bindPopup("<b>"+result.nom_structure+"</b><br><div class='d-grid'><a style='color:white' class='btn btn-lg btn-primary' href=''>voir plus</a></div>");
+                    });
+                } else {
                 }
+            } catch (error) {
+                console.error("Erreur lors de la requête :", error);
+            }
+        }
+        
+        // Écouteurs d'événements pour les listes déroulantes
+        regionSelect.addEventListener('change', handleFilterChange);
+        communeSelect.addEventListener('change', handleFilterChange);
     </script>
 
 

@@ -108,6 +108,6 @@ class FormationSanitaireNewDatas extends Model
         'q9309_6',
         'q9309_7',
         'q9309_8',
-        'q9309_9'
+        'q9309_9',
     ];
 }
