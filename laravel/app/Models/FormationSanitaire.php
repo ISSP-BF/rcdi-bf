@@ -54,9 +54,10 @@ class FormationSanitaire extends Model
         $query =  $this->hasMany(FormationSanitaireNewDatas::class, 'formation_sanitaires_id', 'id');
         if ($annee_id !== null) {
             $query->where('annee_id', $annee_id);
-        } else {
-            $query->where('annee_id', Date('Y'));
         }
+        // else {
+        //     $query->where('annee_id', Date('Y')-1);
+        // }
         return $query;
     }
 

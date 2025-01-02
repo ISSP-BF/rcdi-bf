@@ -18,6 +18,7 @@ class ImportFormationSanitaireNewDatas implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
+        // dd($row);
         if ($row['commune'] == "Manga") {
             config()->set('database.connections.mysql.database', 'rcdib2270922_2ncj5');
             DB::disconnect('mysql');
@@ -29,7 +30,7 @@ class ImportFormationSanitaireNewDatas implements ToModel, WithHeadingRow
             if (!Schema::hasTable('formation_sanitaire_new_datas')) {
                 createFormationSanitaireNewDatasTable();
             }
-        } elseif ($row['commune'] == "TENADO") {
+        } elseif ($row['commune'] == "Tenado") {
             config()->set('database.connections.mysql.database', 'rcdib2270922_3s7qqy');
             DB::disconnect('mysql');
             DB::purge('mysql');

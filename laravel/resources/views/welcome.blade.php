@@ -66,7 +66,7 @@
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
-                <a class='sidebar-brand' href='#'>
+                <a class='sidebar-brand' href="{{ route('home') }}">
                     <img src="{{ URL::asset('img/avatars/logo-full.png') }}" class="img-fluid rounded me-1" />
                 </a>
 
@@ -119,15 +119,22 @@
                             <div>
                                 <div class="mx-4">
                                     <label class="form-label">Année</label>
-                                    <select class="form-select" id="anneeSelect">
-                                        <option value="2024">2024</option>
-                                        <option value="">Tout</option>
-                                        <option value="2023">2023</option>
-                                    </select>
+                                    <select class="form-select" id="anneeSelect"></select>
                                 </div>
+
+                                <script>
+                                    const annee = document.getElementById('anneeSelect');
+                                    const currentYear = new Date().getFullYear();
+                                    for (let year = currentYear; year >= 2020; year--) {
+                                        const option = document.createElement('option');
+                                        option.value = year;
+                                        option.textContent = year;
+                                        annee.appendChild(option);
+                                    }
+                                </script>
                                 <div class="mx-4">
                                     <label class="form-label">Milieu</label>
-                                    <select class="form-select" id="regionSelect">
+                                    <select class="form-select" id="milieuSelect">
                                         <option value="">Tout</option>
                                         <option value="Rural">Rural</option>
                                         <option value="Urbain">Urbain</option>
@@ -962,7 +969,7 @@
 						</div> -->
 
                         <div class="d-grid">
-                            <a href="#" class="btn btn-outline-primary" target="_blank">Télécharger les donnérs</a>
+                            <a href="#" class="btn btn-outline-primary">Télécharger les donnérs</a>
                         </div>
                     </div>
                 </div>
@@ -1033,14 +1040,14 @@
                             Resources
                         </a>
                         <div class="dropdown-menu" aria-labelledby="resourcesDropdown">
-                            <a class="dropdown-item" href="https://adminkit.io/" target="_blank"><i
+                            <a class="dropdown-item" href="https://adminkit.io/"><i
                                     class="align-middle me-1" data-feather="home"></i>
                                 Homepage</a>
-                            <a class="dropdown-item" href="https://adminkit.io/docs/" target="_blank"><i
+                            <a class="dropdown-item" href="https://adminkit.io/docs/"><i
                                     class="align-middle me-1" data-feather="book-open"></i>
                                 Documentation</a>
                             <a class="dropdown-item" href="https://adminkit.io/docs/getting-started/changelog/"
-                                target="_blank"><i class="align-middle me-1" data-feather="edit"></i> Changelog</a>
+                            ><i class="align-middle me-1" data-feather="edit"></i> Changelog</a>
                         </div>
                     </li>
                 </ul> -->
@@ -1191,7 +1198,7 @@
 
                                 <div class="card-body px-4">
                                     <!-- <div id="world_map" style="height:600px;"></div> -->
-                                    <div id="map" style="height:700px;"></div>
+                                    <div id="map" style="height:800px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -1203,13 +1210,14 @@
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row text-muted">
-                        <div class="col-6 text-start">
+                        <div class="col-4 text-start">
                             <p class="mb-0">
-                                <a href="#" target="_blank"
+                                <a href="{{ route('home') }}"
                                     class="text-muted"><strong>ISSP</strong></a> &copy;
                             </p>
                         </div>
-                        <div class="col-6 text-end">
+                        <a href="{{ route('uploade_file_page') }}" class="text-muted col-4"></a>
+                        <div class="col-4 text-end">
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <a class="text-muted" href="#">Support</a>
@@ -1242,7 +1250,8 @@
 
         // Récupération des tokens et éléments nécessaires
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        const regionSelect = document.getElementById('regionSelect');
+        const anneeSelect = document.getElementById('anneeSelect');
+        const milieuSelect = document.getElementById('milieuSelect');
         const communeSelect = document.getElementById('communeSelect');
 
         var markersGroup = L.layerGroup().addTo(map);
@@ -1328,12 +1337,14 @@
 
         // Fonction pour exécuter une requête à chaque changement
         async function handleFilterChange() {
-            const region = regionSelect.value;
+            const annee_id = anneeSelect.value;
+            const milieu = milieuSelect.value;
             const commune = communeSelect.value;
 
             try {
                 const response = await axios.post("{{ route('refresh_request') }}", {
-                    region: region,
+                    annee_id: annee_id,
+                    milieu: milieu,
                     commune: commune
                 }, {
                     headers: {
@@ -1357,20 +1368,20 @@
 
                     let polygonCoordinates = [];
                     let effectif_medspeci = 0;
-            let effectif_medgen = 0;
-            let effectif_attach = 0;
-            let sagef = 0;
-            let infirmier = 0;
-            let autrep = 0;
-            let nbre_log = 0;
-            let nb_ambulance = 0;
+                    let effectif_medgen = 0;
+                    let effectif_attach = 0;
+                    let sagef = 0;
+                    let infirmier = 0;
+                    let autrep = 0;
+                    let nbre_log = 0;
+                    let nb_ambulance = 0;
                     response.data.results.forEach(result => {
                         polygonCoordinates.push([result.new_data[0].gps_latitude, result.new_data[0].gps_longitude]);
                         var marker = L.marker([result.lat, result.lon]);
                         marker.bindPopup("<b>" + result.nom_structure + "</b><br><div class='d-grid'><a style='color:white' class='btn btn-lg btn-primary' href=''>voir plus</a></div>");
                         markersGroup.addLayer(marker);
 
-                        effectif_medspeci += result.new_data[0].effectif_medspeci || 0;
+                        effectif_medspeci += result.new_data[0].effectif_medspeci ?? 0;
                         effectif_medgen += result.new_data[0].effectif_medgen || 0;
                         effectif_attach += result.new_data[0].effectif_attach || 0;
                         sagef += result.new_data[0].sagef || 0;
@@ -1404,15 +1415,30 @@
                         polygon.bindPopup("Zone délimitée par les points sélectionnés.");
                     }
 
-                } else {}
+                } else {
+                    document.getElementById('cm_filtered').innerHTML = 0;
+                    document.getElementById('cma_filtered').innerHTML = 0;
+                    document.getElementById('csps_filtered').innerHTML = 0;
+                    document.getElementById('cabinet_filtered').innerHTML = 0;
+                    document.getElementById('kine_filtered').innerHTML = 0;
+                    document.getElementById('effectif_medspeci').innerHTML = 0;
+                    document.getElementById('effectif_medgen').innerHTML = 0;
+                    document.getElementById('effectif_attach').innerHTML = 0;
+                    document.getElementById('sagef').innerHTML = 0;
+                    document.getElementById('infirmier').innerHTML = 0;
+                    document.getElementById('autrep').innerHTML = 0;
+                    document.getElementById('nbre_log').innerHTML = 0;
+                    document.getElementById('nb_ambulance').innerHTML = 0;
+                }
             } catch (error) {
                 console.error("Erreur lors de la requête :", error);
             }
         }
 
         // Écouteurs d'événements pour les listes déroulantes
-        regionSelect.addEventListener('change', handleFilterChange);
+        anneeSelect.addEventListener('change', handleFilterChange);
         communeSelect.addEventListener('change', handleFilterChange);
+        milieuSelect.addEventListener('change', handleFilterChange);
     </script>
 
 

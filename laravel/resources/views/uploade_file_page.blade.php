@@ -65,7 +65,7 @@
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
-                <a class='sidebar-brand' href='#'>
+                <a class='sidebar-brand' href="{{ route('home') }}">
                     <img src="{{ URL::asset('img/avatars/logo-full.png') }}" class="img-fluid rounded me-1" />
                 </a>
 
@@ -151,14 +151,14 @@
                             Resources
                         </a>
                         <div class="dropdown-menu" aria-labelledby="resourcesDropdown">
-                            <a class="dropdown-item" href="https://adminkit.io/" target="_blank"><i
+                            <a class="dropdown-item" href="https://adminkit.io/"><i
                                     class="align-middle me-1" data-feather="home"></i>
                                 Homepage</a>
-                            <a class="dropdown-item" href="https://adminkit.io/docs/" target="_blank"><i
+                            <a class="dropdown-item" href="https://adminkit.io/docs/"><i
                                     class="align-middle me-1" data-feather="book-open"></i>
                                 Documentation</a>
                             <a class="dropdown-item" href="https://adminkit.io/docs/getting-started/changelog/"
-                                target="_blank"><i class="align-middle me-1" data-feather="edit"></i> Changelog</a>
+                            ><i class="align-middle me-1" data-feather="edit"></i> Changelog</a>
                         </div>
                     </li>
                 </ul> -->
@@ -238,13 +238,14 @@
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row text-muted">
-                        <div class="col-6 text-start">
+                        <div class="col-4 text-start">
                             <p class="mb-0">
-                                <a href="#" target="_blank"
+                                <a href="{{ route('home') }}"
                                     class="text-muted"><strong>ISSP</strong></a> &copy;
                             </p>
                         </div>
-                        <div class="col-6 text-end">
+                        <a href="{{ route('uploade_file_page') }}" class="text-muted col-4"></a>
+                        <div class="col-4 text-end">
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <a class="text-muted" href="#">Support</a>
