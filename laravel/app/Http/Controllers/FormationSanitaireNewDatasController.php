@@ -48,6 +48,20 @@ class FormationSanitaireNewDatasController extends Controller
                         $query->where('q117', $milieu);
                     });
                 };
+                if (isset($request->type)) {
+                    $type = $request->type;
+                    $data = $data->whereHas('new_data', function ($query) use ($type) {
+                        $query->where('q113', $type);
+                    });
+                };
+
+                if (isset($request->checkboxes)) {
+                    foreach ($request->checkboxes as $item) {
+                        $data = $data->whereHas('new_data', function ($query) use ($item) {
+                            $query->where($item, 1);
+                        });
+                    };
+                };
                 $data = $data->get();
                 $datas = $datas->merge($data);
             } catch (\Exception $e) {
