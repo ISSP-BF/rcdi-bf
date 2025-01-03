@@ -10475,7 +10475,7 @@
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', handleFilterChange);
         });
-    </>
+    </script>
 
 
 </body>
