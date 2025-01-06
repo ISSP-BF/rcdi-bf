@@ -36,7 +36,7 @@ class ImportFormationSanitaireNewDatas implements ToModel, WithHeadingRow
             createFormationSanitaireNewDatasTable();
         }
 
-        $exist_data = FormationSanitaireNewDatas::where('annee_id', $row['annee_id'])->where('commune', $row['commune'])->where('formation_sanitaires_id', $row['localisation_id'])->get();
+        $exist_data = FormationSanitaireNewDatas::where('annee_id', $row['annee_id'])->where('commune', $row['commune'])->where('formation_sanitaires_id', $row['localisation_id'])->first();
         if ($exist_data) {
             $exist_data->update([
                 'formation_sanitaires_id' => $row['localisation_id'],
