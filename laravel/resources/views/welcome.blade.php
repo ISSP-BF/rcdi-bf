@@ -10274,7 +10274,7 @@
             let nb_ambulance = 0;
 
             results.forEach(result => {
-                var marker = L.marker([result.lat, result.lon]);
+                var marker = L.marker([result.new_data[0].gps_latitude, result.new_data[0].gps_longitude]);
                 marker.bindPopup("<b>" + result.nom_structure + "</b><br><div class='d-grid'><a style='color:white' class='btn btn-lg btn-primary' href=''>voir plus</a></div>");
                 markersGroup.addLayer(marker);
 
@@ -10389,7 +10389,7 @@
                     let nb_ambulance = 0;
                     response.data.results.forEach(result => {
                         polygonCoordinates.push([result.new_data[0].gps_latitude, result.new_data[0].gps_longitude]);
-                        var marker = L.marker([result.lat, result.lon]);
+                        var marker = L.marker([result.new_data[0].gps_latitude, result.new_data[0].gps_longitude]);
                         // marker.bindPopup("<b>" + result.nom_structure + "</b><br><div class='d-grid'><button type='button' style='color:white' class='btn btn-lg btn-primary' data-bs-toggle='modal' data-bs-target='#centeredModalPrimary' data_result='"+result+"'>voir plus</button></div>");
 
                         var button = document.createElement('button');
