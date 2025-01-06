@@ -21,26 +21,19 @@ class ImportFormationSanitaireNewDatas implements ToModel, WithHeadingRow
         // dd($row);
         if ($row['commune'] == "Manga") {
             config()->set('database.connections.mysql.database', 'rcdib2270922_2ncj5');
-            DB::disconnect('mysql');
-            DB::purge('mysql');
-            DB::reconnect('mysql');
-            if (app()->configurationIsCached()) {
-                Artisan::call('config:clear');
-            }
-            if (!Schema::hasTable('formation_sanitaire_new_datas')) {
-                createFormationSanitaireNewDatasTable();
-            }
+            config()->set('database.connections.mysql.username', 'rcdib2270922_2ncj5');
         } elseif ($row['commune'] == "Tenado") {
             config()->set('database.connections.mysql.database', 'rcdib2270922_3s7qqy');
-            DB::disconnect('mysql');
-            DB::purge('mysql');
-            DB::reconnect('mysql');
-            if (app()->configurationIsCached()) {
-                Artisan::call('config:clear');
-            }
-            if (!Schema::hasTable('formation_sanitaire_new_datas')) {
-                createFormationSanitaireNewDatasTable();
-            }
+            config()->set('database.connections.mysql.username', 'rcdib2270922_3s7qqy');
+        }
+        DB::disconnect('mysql');
+        DB::purge('mysql');
+        DB::reconnect('mysql');
+        if (app()->configurationIsCached()) {
+            Artisan::call('config:clear');
+        }
+        if (!Schema::hasTable('formation_sanitaire_new_datas')) {
+            createFormationSanitaireNewDatasTable();
         }
         
         $data = FormationSanitaireNewDatas::create([

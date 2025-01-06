@@ -30,6 +30,7 @@ class FormationSanitaireNewDatasController extends Controller
         foreach ($databases as $db) {
             try {
                 config()->set('database.connections.mysql.database', $db);
+                config()->set('database.connections.mysql.username', $db);
                 DB::disconnect('mysql');
                 DB::purge('mysql');
                 DB::reconnect('mysql');
@@ -83,6 +84,7 @@ class FormationSanitaireNewDatasController extends Controller
         foreach ($databases as $db) {
             try {
                 config()->set('database.connections.mysql.database', $db);
+                config()->set('database.connections.mysql.username', $db);
                 DB::disconnect('mysql');
                 DB::purge('mysql');
                 DB::reconnect('mysql');

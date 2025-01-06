@@ -10403,7 +10403,7 @@
                         button.innerText = 'voir plus';
                         button.addEventListener('click', function() {
                             document.getElementById('modal-title').innerHTML = result.nom_structure;
-                            console.log(result);
+                            // console.log(result);
                         });
                         var popupContent = "<b>" + result.nom_structure + "</b><br><div class='d-grid'></div>";
                         var divContainer = document.createElement('div');
