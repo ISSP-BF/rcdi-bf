@@ -137,6 +137,7 @@ class ImportFormationSanitaireNewDatas implements ToModel, WithHeadingRow
                 'q9309_8' => $row['q9309_8'],
                 'q9309_9' => $row['q9309_9'],
             ]);
+            $data = $exist_data;
         } else {
             $data = FormationSanitaireNewDatas::create([
                 'formation_sanitaires_id' => $row['localisation_id'],
