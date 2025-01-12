@@ -184,7 +184,7 @@ function configDB($db_name)
         throw new \Exception("La base de données {$db_name} n'existe pas.");
     }
     config()->set('database.connections.mysql.database', $db_name);
-    // config()->set('database.connections.mysql.username', $db_name);
+    config()->set('database.connections.mysql.username', $db_name);
     DB::disconnect('mysql');
     DB::purge('mysql');
     DB::reconnect('mysql');
