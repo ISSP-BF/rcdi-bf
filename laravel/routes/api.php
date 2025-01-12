@@ -171,34 +171,31 @@ Route::group(['middleware' => 'api'], function ($router) {
         Route::get('/roles/move/move-up',      'RolesController@moveUp')->name('roles.up');
         Route::get('/roles/move/move-down',    'RolesController@moveDown')->name('roles.down');
     });
-
-
-
-
-    Route::post('/mobile_login', [MobileApiController::class, 'mobile_login']);
-    Route::post('/mobile_register', [MobileApiController::class, 'mobile_register']);
-    Route::get('/mobile_acte_naissances', [MobileApiController::class, 'mobile_acte_naissances']);
-    Route::get('/mobile_acte_deces', [MobileApiController::class, 'mobile_acte_deces']);
-    Route::get('/mobile_acte_mariages', [MobileApiController::class, 'mobile_acte_mariages']);
-    Route::get('/mobile_consultation_prenatales', [MobileApiController::class, 'mobile_consultation_prenatales']);
-    Route::get('/mobile_consultation_postnatales', [MobileApiController::class, 'mobile_consultation_postnatales']);
-    Route::get('/mobile_ptmes', [MobileApiController::class, 'mobile_ptmes']);
-    Route::get('/mobile_accouchements', [MobileApiController::class, 'mobile_accouchements']);
-    Route::get('/mobile_vaccination_enfants', [MobileApiController::class, 'mobile_vaccination_enfants']);
-    Route::get('/mobile_planification_familiales', [MobileApiController::class, 'mobile_planification_familiales']);
-    Route::get('/mobile_morbilite_paludismes', [MobileApiController::class, 'mobile_morbilite_paludismes']);
-    Route::get('/mobile_service_curatifs', [MobileApiController::class, 'mobile_service_curatifs']);
-    Route::get('/mobile_systeme_information_sanitaires', [MobileApiController::class, 'mobile_systeme_information_sanitaires']);
-    Route::get('/mobile_indicateur_carte_sanitaires', [MobileApiController::class, 'mobile_indicateur_carte_sanitaires']);
-    Route::get('/mobile_pre_scolaires', [MobileApiController::class, 'mobile_pre_scolaires']);
-    Route::get('/mobile_primaires', [MobileApiController::class, 'mobile_primaires']);
-    Route::get('/mobile_post_primaires', [MobileApiController::class, 'mobile_post_primaires']);
-    Route::get('/mobile_fichier_villages', [MobileApiController::class, 'mobile_fichier_villages']);
-    Route::get('/mobile_groupes', [MobileApiController::class, 'mobile_groupes']);
-    Route::get('/mobile_sous_groupes', [MobileApiController::class, 'mobile_sous_groupes']);
-    Route::get('/mobile_desagregations', [MobileApiController::class, 'mobile_desagregations']);
-    Route::get('/mobile_indicateurs', [MobileApiController::class, 'mobile_indicateurs']);
-    Route::get('/mobile_sous_indicateurs', [MobileApiController::class, 'mobile_sous_indicateurs']);
-    Route::get('/mobile_donnees', [MobileApiController::class, 'mobile_donnees']);
 });
+
+Route::post('/mobile_login', [MobileApiController::class, 'mobile_login']);
+Route::post('/mobile_register', [MobileApiController::class, 'mobile_register']);
+Route::get('/mobile_acte_naissances', [MobileApiController::class, 'mobile_acte_naissances']);
+Route::get('/mobile_acte_deces', [MobileApiController::class, 'mobile_acte_deces']);
+Route::get('/mobile_acte_mariages', [MobileApiController::class, 'mobile_acte_mariages']);
+Route::get('/mobile_consultation_prenatales', [MobileApiController::class, 'mobile_consultation_prenatales']);
+Route::get('/mobile_consultation_postnatales', [MobileApiController::class, 'mobile_consultation_postnatales']);
+Route::get('/mobile_ptmes', [MobileApiController::class, 'mobile_ptmes']);
+Route::get('/mobile_accouchements', [MobileApiController::class, 'mobile_accouchements']);
+Route::get('/mobile_vaccination_enfants', [MobileApiController::class, 'mobile_vaccination_enfants']);
+Route::get('/mobile_planification_familiales', [MobileApiController::class, 'mobile_planification_familiales']);
+Route::get('/mobile_morbilite_paludismes', [MobileApiController::class, 'mobile_morbilite_paludismes']);
+Route::get('/mobile_service_curatifs', [MobileApiController::class, 'mobile_service_curatifs']);
+Route::get('/mobile_systeme_information_sanitaires', [MobileApiController::class, 'mobile_systeme_information_sanitaires']);
+Route::get('/mobile_indicateur_carte_sanitaires', [MobileApiController::class, 'mobile_indicateur_carte_sanitaires']);
+Route::get('/mobile_pre_scolaires', [MobileApiController::class, 'mobile_pre_scolaires']);
+Route::get('/mobile_primaires', [MobileApiController::class, 'mobile_primaires']);
+Route::get('/mobile_post_primaires', [MobileApiController::class, 'mobile_post_primaires']);
+Route::get('/mobile_fichier_villages', [MobileApiController::class, 'mobile_fichier_villages']);
+Route::get('/mobile_groupes', [MobileApiController::class, 'mobile_groupes']);
+Route::get('/mobile_sous_groupes', [MobileApiController::class, 'mobile_sous_groupes']);
+Route::get('/mobile_desagregations', [MobileApiController::class, 'mobile_desagregations']);
+Route::get('/mobile_indicateurs', [MobileApiController::class, 'mobile_indicateurs']);
+Route::get('/mobile_sous_indicateurs', [MobileApiController::class, 'mobile_sous_indicateurs']);
+Route::get('/mobile_donnees', [MobileApiController::class, 'mobile_donnees']);
 
