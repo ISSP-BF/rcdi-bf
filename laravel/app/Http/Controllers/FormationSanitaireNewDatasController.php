@@ -29,14 +29,7 @@ class FormationSanitaireNewDatasController extends Controller
         }
         foreach ($databases as $db) {
             try {
-                config()->set('database.connections.mysql.database', $db);
-                config()->set('database.connections.mysql.username', $db);
-                DB::disconnect('mysql');
-                DB::purge('mysql');
-                DB::reconnect('mysql');
-                if (app()->configurationIsCached()) {
-                    Artisan::call('config:clear');
-                }
+                configDB($db);
                 if (isset($request->annee_id)) {
                     $annee_id = $request->annee_id;
                 }
@@ -83,14 +76,7 @@ class FormationSanitaireNewDatasController extends Controller
         $annee_id = date('Y');
         foreach ($databases as $db) {
             try {
-                config()->set('database.connections.mysql.database', $db);
-                config()->set('database.connections.mysql.username', $db);
-                DB::disconnect('mysql');
-                DB::purge('mysql');
-                DB::reconnect('mysql');
-                if (app()->configurationIsCached()) {
-                    Artisan::call('config:clear');
-                }
+                configDB($db);
                 $data = FormationSanitaire::whereHas('new_data', function ($query) use ($annee_id) {
                     $query->where('annee_id', $annee_id);
                 })->with('new_data')->get();

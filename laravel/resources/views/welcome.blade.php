@@ -165,10 +165,10 @@
                             Indicateurs
                         </li>
                         <li class="sidebar-item">
-                            <a data-bs-target="#dashboards" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                            <a data-bs-target="#infrastructures" data-bs-toggle="collapse" class="sidebar-link collapsed">
                                 <i class="align-middle" data-feather="home"></i> <span class="align-middle">Infrastructures</span>
                             </a>
-                            <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <ul id="infrastructures" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                                 <li class="sidebar-item sidebar-link">
                                     <label class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="log">
@@ -228,10 +228,10 @@
                             </ul>
                         </li>
                         <li class="sidebar-item">
-                            <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                            <a data-bs-target="#services" data-bs-toggle="collapse" class="sidebar-link collapsed">
                                 <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Services</span>
                             </a>
-                            <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                            <ul id="services" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                                 <li class="sidebar-item sidebar-link">
                                     <label class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="offre_service_1">
@@ -514,10 +514,10 @@
                             </ul> -->
                         </li>
                         <li class="sidebar-item">
-                            <a data-bs-target="#ui" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                            <a data-bs-target="#materiels" data-bs-toggle="collapse" class="sidebar-link collapsed">
                                 <i class="align-middle" data-feather="briefcase"></i> <span class="align-middle">Matériels et équipements</span>
                             </a>
-                            <ul id="ui" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                            <ul id="materiels" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                                 <li class="sidebar-item sidebar-link">
                                     <label class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="q8408a_1">
@@ -1223,8 +1223,56 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body m-3">
-                    <p class="mb-0">Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user
-                        notifications, or completely custom content.</p>
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <img class="card-img-top" src="{{ URL::asset('assets/img/photos/materiel.jpeg') }}" alt="Matériels-img">
+                                <div class="card-header px-4 pt-4">
+                                    <h3 class="mb-0">Matériels et équipements</h3>
+                                </div>
+                                <div class="card-body px-4 pt-2">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
+                                        sed ipsum.</p>
+                                </div>
+                                <table class="table table-responsive table-striped" style="width:100%">
+                                    <tbody id="materielsTableBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <img class="card-img-top" src="{{ URL::asset('assets/img/photos/services.jpg') }}" alt="Services-img">
+                                <div class="card-header px-4 pt-4">
+                                    <h3 class="mb-0">Services</h3>
+                                </div>
+                                <div class="card-body px-4 pt-2">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
+                                        sed ipsum.</p>
+                                </div>
+                                <table class="table table-responsive table-striped" style="width:100%">
+                                    <tbody id="servicesTableBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <img class="card-img-top" src="{{ URL::asset('assets/img/photos/infras.jpg') }}" alt="Infrastructures-img">
+                                <div class="card-header px-4 pt-4">
+                                    <h3 class="mb-0">Infrastructures</h3>
+                                </div>
+                                <div class="card-body px-4 pt-2">
+                                    <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
+                                        sed ipsum.</p>
+                                </div>
+                                <table class="table table-responsive table-striped" style="width:100%">
+                                    <tbody id="infrastructuresTableBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -10387,6 +10435,52 @@
                     let autrep = 0;
                     let nbre_log = 0;
                     let nb_ambulance = 0;
+
+
+
+
+                    // Récupérer les cases à cocher pour "dashboards" et "pages"
+                    const infrastructuresCheckboxes = document.querySelectorAll('#infrastructures .form-check-input');
+                    const servicesCheckboxes = document.querySelectorAll('#services .form-check-input');
+                    const materielsCheckboxes = document.querySelectorAll('#materiels .form-check-input');
+
+                    // Fonction pour créer les lignes de tableau pour une liste de checkboxes
+                    function populateTable(checkboxes, tableBodySelector, result) {
+                        const tableBody = document.querySelector(tableBodySelector);
+                        tableBody.innerHTML = ''; // Réinitialiser le contenu du tableau
+
+                        checkboxes.forEach(checkbox => {
+                            const label = checkbox.nextElementSibling.textContent.trim(); // Texte associé à la case
+                            const id = checkbox.id; // ID de la case
+                            const row = document.createElement('tr');
+
+                            // Colonne du nom du champ
+                            const fieldCell = document.createElement('td');
+                            fieldCell.className = 'd-md-table-cell';
+                            fieldCell.textContent = label;
+
+                            // Colonne de la valeur (OUI/NON)
+                            const valueCell = document.createElement('td');
+                            const badge = document.createElement('span');
+                            badge.className = 'badge';
+                            if (result.new_data[0][id] === 1) {
+                                badge.classList.add('bg-success');
+                                badge.textContent = 'OUI';
+                            } else {
+                                badge.classList.add('bg-danger');
+                                badge.textContent = 'NON';
+                            }
+                            valueCell.appendChild(badge);
+
+                            // Ajouter les cellules à la ligne
+                            row.appendChild(fieldCell);
+                            row.appendChild(valueCell);
+
+                            // Ajouter la ligne au tableau
+                            tableBody.appendChild(row);
+                        });
+                    }
+
                     response.data.results.forEach(result => {
                         polygonCoordinates.push([result.new_data[0].gps_latitude, result.new_data[0].gps_longitude]);
                         var marker = L.marker([result.new_data[0].gps_latitude, result.new_data[0].gps_longitude]);
@@ -10404,6 +10498,11 @@
                         button.addEventListener('click', function() {
                             document.getElementById('modal-title').innerHTML = result.nom_structure;
                             // console.log(result);
+
+                            // Remplir les tables dans le modal
+                            populateTable(infrastructuresCheckboxes, '#infrastructuresTableBody', result);
+                            populateTable(servicesCheckboxes, '#servicesTableBody', result);
+                            populateTable(materielsCheckboxes, '#materielsTableBody', result);
                         });
                         var popupContent = "<b>" + result.nom_structure + "</b><br><div class='d-grid'></div>";
                         var divContainer = document.createElement('div');
