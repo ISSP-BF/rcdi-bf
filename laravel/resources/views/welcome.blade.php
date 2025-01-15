@@ -1230,10 +1230,10 @@
                                 <div class="card-header px-4 pt-4">
                                     <h3 class="mb-0">Matériels et équipements</h3>
                                 </div>
-                                <div class="card-body px-4 pt-2">
+                                <!-- <div class="card-body px-4 pt-2">
                                     <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
                                         sed ipsum.</p>
-                                </div>
+                                </div> -->
                                 <table class="table table-responsive table-striped" style="width:100%">
                                     <tbody id="materielsTableBody">
                                     </tbody>
@@ -1246,10 +1246,10 @@
                                 <div class="card-header px-4 pt-4">
                                     <h3 class="mb-0">Services</h3>
                                 </div>
-                                <div class="card-body px-4 pt-2">
+                                <!-- <div class="card-body px-4 pt-2">
                                     <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
                                         sed ipsum.</p>
-                                </div>
+                                </div> -->
                                 <table class="table table-responsive table-striped" style="width:100%">
                                     <tbody id="servicesTableBody">
                                     </tbody>
@@ -1262,10 +1262,10 @@
                                 <div class="card-header px-4 pt-4">
                                     <h3 class="mb-0">Infrastructures</h3>
                                 </div>
-                                <div class="card-body px-4 pt-2">
+                                <!-- <div class="card-body px-4 pt-2">
                                     <p>Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
                                         sed ipsum.</p>
-                                </div>
+                                </div> -->
                                 <table class="table table-responsive table-striped" style="width:100%">
                                     <tbody id="infrastructuresTableBody">
                                     </tbody>
