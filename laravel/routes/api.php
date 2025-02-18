@@ -208,6 +208,6 @@ Route::get('/mobile_notes', [MobileApiController::class, 'mobile_notes']);
 Route::post('/mobile_indicateurs-old/findBy', [MobileApiController::class, 'mobile_indicateurs_findBy']);
 Route::get('/mobile_dashboard-items/findBy/{dashboard_id}', [MobileApiController::class, 'mobile_dashboard_items_findBy']);
 Route::post('/mobile_donnees/findBy', [MobileApiController::class, 'mobile_donnees_findBy']);
-Route::get('/ByGroupemobile_indicateurs/find/{id}', [MobileApiController::class, 'mobile_indicateurs_findByGroupe']);
+Route::get('/mobile_indicateurs/findByGroupe/{id}', [MobileApiController::class, 'mobile_indicateurs_findByGroupe']);
 Route::get('/mobile_sous_groupes/findByGroupe/{id}', [MobileApiController::class, 'mobile_sous_groupes_findByGroupe']);
 Route::get('/mobile_donnees/findAnneeByIndicateur/{indicateur_id}', [MobileApiController::class, 'mobile_donnees_findAnneeByIndicateur']);
