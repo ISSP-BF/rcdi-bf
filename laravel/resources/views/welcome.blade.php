@@ -95,17 +95,17 @@
                         </div> -->
 
                         <div>
-                            <label class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inline-radios-example" value="option1">
-                                <span class="form-check-label">Chart </span>
-                            </label>
-                            <label class="form-check form-check-inline">
+                            <!-- <label class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="inline-radios-example">
                                 <span class="form-check-label">Grid </span>
-                            </label>
+                            </label> -->
                             <label class="form-check form-check-inline">
                                 <input checked class="form-check-input" type="radio" name="inline-radios-example" value="option3">
                                 <span class="form-check-label">Map</span>
+                            </label>
+                            <label class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inline-radios-example" value="option1">
+                                <span class="form-check-label">Chart </span>
                             </label>
                         </div>
                     </li>
@@ -10295,10 +10295,23 @@
             }
         ];
         var polygonsDataInverse = inverserCoordonneesPolygons(polygonsData);
+        // polygonsDataInverse.forEach(data => {
+        //     L.polygon(data.coords, {
+        //         color: data.color
+        //     }).addTo(map);
+        // });
         polygonsDataInverse.forEach(data => {
-            L.polygon(data.coords, {
+            var polygon = L.polygon(data.coords, {
                 color: data.color
             }).addTo(map);
+
+            // Ajout d'un événement "click" sur chaque polygone
+            polygon.on('click', function() {
+                var bounds = polygon.getBounds(); // Récupère les limites du polygone
+                map.fitBounds(bounds, {
+                    padding: [25, 25]
+                }); // Zoom et centre sur le polygone
+            });
         });
 
 

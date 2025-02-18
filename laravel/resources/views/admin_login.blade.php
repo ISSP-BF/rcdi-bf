@@ -150,8 +150,7 @@
       }
     }, 15000);
   });
-</script></body>
+</script>
+</body>
 
-
-<!-- Mirrored from demo.adminkit.io/pages-sign-in by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 Dec 2024 12:14:03 GMT -->
 </html>

@@ -198,4 +198,16 @@ Route::get('/mobile_desagregations', [MobileApiController::class, 'mobile_desagr
 Route::get('/mobile_indicateurs', [MobileApiController::class, 'mobile_indicateurs']);
 Route::get('/mobile_sous_indicateurs', [MobileApiController::class, 'mobile_sous_indicateurs']);
 Route::get('/mobile_donnees', [MobileApiController::class, 'mobile_donnees']);
+Route::get('/mobile_communes', [MobileApiController::class, 'mobile_communes']);
 
+Route::get('/mobile_communes', [MobileApiController::class, 'mobile_communes']);
+Route::get('/mobile_provinces', [MobileApiController::class, 'mobile_provinces']);
+Route::get('/mobile_regions', [MobileApiController::class, 'mobile_regions']);
+Route::get('/mobile_notes', [MobileApiController::class, 'mobile_notes']);
+
+Route::post('/mobile_indicateurs-old/findBy', [MobileApiController::class, 'mobile_indicateurs_findBy']);
+Route::get('/mobile_dashboard-items/findBy/{dashboard_id}', [MobileApiController::class, 'mobile_dashboard_items_findBy']);
+Route::post('/mobile_donnees/findBy', [MobileApiController::class, 'mobile_donnees_findBy']);
+Route::get('/mobile_indicateurs/findByGroupe//{id}', [MobileApiController::class, 'mobile_indicateurs_findByGroupe']);
+Route::get('/mobile_sous_groupes/findByGroupe//{id}', [MobileApiController::class, 'mobile_sous_groupes_findByGroupe']);
+Route::get('/mobile_donnees/findAnneeByIndicateur/{indicateur_id}', [MobileApiController::class, 'mobile_donnees_findAnneeByIndicateur']);

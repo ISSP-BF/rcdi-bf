@@ -25,6 +25,8 @@ Route::get('/{any}', function () {
    return view('coreui.homepage');
 })->where('any', '.*');
 
+Route::get('politic_rcdi', function () { return view('politic_rcdi'); })->name('politic_rcdi');
+
 Route::get('indicateurs/getcommunesliste', 'IndicateursController@getcommunesliste');
 
 Route::post('/import',[FormationSanitaireNewDatasController::class,'import'])->name('import');
