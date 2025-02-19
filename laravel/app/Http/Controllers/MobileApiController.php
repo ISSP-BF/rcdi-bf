@@ -1329,7 +1329,7 @@ class MobileApiController extends Controller
                 if (isset($request->annee) && $request->annee != null && $request->annee != 0) {
                     $donnees->whereIn('donnees.annee', $request['annee'])->orderBy("annee", "ASC")->orderBy("periode_value", "ASC");
                 }
-                $datas = $donnees;
+                $datas = $donnees->get();
             } catch (\Exception $e) {
                 continue;
             }
