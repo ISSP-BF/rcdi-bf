@@ -20,12 +20,11 @@ Route::get('/',[FormationSanitaireNewDatasController::class,'admin_dash'])->name
 Route::get('/uploade_file_page', function () { return view('uploade_file_page'); })->name('uploade_file_page');
 Route::post('/uploade_file_store',[FormationSanitaireNewDatasController::class,'uploade_file_store'])->name('uploade_file_store');
 Route::get('/admin_dash',[FormationSanitaireNewDatasController::class,'admin_dash'])->name('admin_dash');
+Route::get('/politic_rcdi', function () { return view('politic_rcdi'); })->name('politic_rcdi');
 
 Route::get('/{any}', function () {
    return view('coreui.homepage');
 })->where('any', '.*');
-
-Route::get('/politic_rcdi', function () { return view('politic_rcdi'); })->name('politic_rcdi');
 
 Route::get('indicateurs/getcommunesliste', 'IndicateursController@getcommunesliste');
 
